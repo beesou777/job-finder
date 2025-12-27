@@ -13,6 +13,11 @@ function createDataSource(): DataSource {
     throw new Error("DATABASE_URL environment variable is not set");
   }
 
+  // Allow temporary sync override for initial setup (use with caution!)
+  const shouldSynchronize = 
+    process.env.DATABASE_SYNC === "true" || 
+    (process.env.NODE_ENV !== "production" && process.env.DATABASE_SYNC !== "false");
+
   // Try to parse the URL into individual components for better password handling
   try {
     const url = new URL(dbUrl);
@@ -23,8 +28,8 @@ function createDataSource(): DataSource {
       username: url.username,
       password: url.password || "", // Ensure it's a string
       database: url.pathname.slice(1), // Remove leading slash
-      synchronize: process.env.NODE_ENV !== "production", // Disable in production
-      logging: false,
+      synchronize: shouldSynchronize,
+      logging: process.env.NODE_ENV === "development",
       entities: [Job, User, Category],
       migrations: [],
       subscribers: [],
@@ -40,8 +45,8 @@ function createDataSource(): DataSource {
     return new DataSource({
       type: "postgres",
       url: dbUrl,
-      synchronize: process.env.NODE_ENV !== "production",
-      logging: false,
+      synchronize: shouldSynchronize,
+      logging: process.env.NODE_ENV === "development",
       entities: [Job, User, Category],
       migrations: [],
       subscribers: [],
@@ -62,9 +67,34 @@ export async function getDataSource() {
       if (!appDataSource.isInitialized) {
         await appDataSource.initialize();
         console.log("✅ Database connection initialized");
+        
+        // In production, check if tables exist and log warning if synchronize is disabled
+        if (process.env.NODE_ENV === "production") {
+          try {
+            const queryRunner = appDataSource.createQueryRunner();
+            const tables = await queryRunner.getTables();
+            console.log(`📊 Database has ${tables.length} tables`);
+            
+            // Check if required tables exist
+            const requiredTables = ['jobs', 'user', 'category'];
+            const existingTableNames = tables.map(t => t.name.toLowerCase());
+            const missingTables = requiredTables.filter(
+              req => !existingTableNames.includes(req)
+            );
+            
+            if (missingTables.length > 0) {
+              console.warn(`⚠️  Missing tables: ${missingTables.join(', ')}`);
+              console.warn(`⚠️  Database schema may not be initialized. Consider running migrations or enabling synchronize temporarily.`);
+            }
+            await queryRunner.release();
+          } catch (checkError) {
+            console.warn("⚠️  Could not check database schema:", checkError);
+          }
+        }
       }
-    } catch (error) {
-      console.error("❌ Database connection failed:", error);
+    } catch (error: any) {
+      console.error("❌ Database connection failed:", error?.message || error);
+      console.error("Full error:", error);
       // Reset datasource on error to allow retry
       appDataSource = null;
       throw error;

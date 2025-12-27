@@ -73,6 +73,34 @@ This usually means:
 - Incorrect `NEXTAUTH_URL` (must match your Vercel domain)
 - Database connection issues
 
+### "No Data Visible in Production"
+This is usually caused by:
+
+1. **Database Tables Not Created**
+   - Check Vercel logs for "Missing tables" warnings
+   - Solution: Temporarily set `DATABASE_SYNC=true`, redeploy, then remove it
+   - Or check schema: `POST /api/db/init` with admin password
+
+2. **Empty Database**
+   - Your production database might be empty
+   - Solution: Run scraper or import data
+   - Use dashboard or API: `POST /api/scrape` with admin password
+
+3. **Environment Variables Not Set**
+   - Verify `NEXT_PUBLIC_API` is set to your production URL
+   - Verify `DATABASE_URL` is correct
+   - Check Vercel environment variables are set for Production environment
+
+4. **API Fetch Errors**
+   - Check browser console for fetch errors
+   - Check Vercel function logs for API errors
+   - Verify `NEXT_PUBLIC_API` matches your domain exactly
+
+5. **Database Connection Issues**
+   - Check if database allows connections from Vercel
+   - Verify connection string format
+   - Check database is not paused (Supabase free tier pauses after inactivity)
+
 ### Database Connection Errors
 1. Verify `DATABASE_URL` is correct
 2. Check if your database allows connections from Vercel's IPs
@@ -85,9 +113,24 @@ This usually means:
 
 ## Post-Deployment Steps
 
-1. **Create Admin User**: Use the registration API or run the init script locally pointing to production DB
-2. **Test Database Connection**: Visit any page that uses the database
-3. **Check Logs**: Monitor Vercel function logs for any errors
+1. **Initialize Database Schema** (IMPORTANT):
+   - If tables don't exist, you have two options:
+   
+   **Option A: Temporary Synchronize (Quick Fix)**
+   - In Vercel, add environment variable: `DATABASE_SYNC=true`
+   - Redeploy your application
+   - Once tables are created, **REMOVE** `DATABASE_SYNC` or set it to `false`
+   - ⚠️ **Warning**: Only use this for initial setup. Remove it after first deployment!
+   
+   **Option B: Check Schema Status**
+   - Call the init endpoint: `POST https://your-app.vercel.app/api/db/init`
+   - Headers: `Authorization: Bearer your-admin-password`
+   - This will tell you which tables are missing
+
+2. **Create Admin User**: Use the registration API or run the init script locally pointing to production DB
+3. **Test Database Connection**: Visit any page that uses the database
+4. **Check Logs**: Monitor Vercel function logs for any errors
+5. **Verify Data**: Make sure you've scraped jobs or imported data into production database
 
 ## Example Environment Variables
 

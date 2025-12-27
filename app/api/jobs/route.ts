@@ -81,10 +81,19 @@ export async function GET(request: NextRequest) {
       offset,
       categories: categoryList,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching jobs:", error);
+    console.error("Error details:", {
+      message: error?.message,
+      stack: error?.stack,
+      name: error?.name,
+    });
     return NextResponse.json(
-      { success: false, error: "Failed to fetch jobs" },
+      { 
+        success: false, 
+        error: "Failed to fetch jobs",
+        details: process.env.NODE_ENV === "development" ? error?.message : undefined
+      },
       { status: 500 }
     );
   }

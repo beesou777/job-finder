@@ -34,15 +34,19 @@ export const metadata: Metadata = {
 
 async function getJobs() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/jobs?limit=50`, {
+    // Use absolute URL in production, relative in development
+    const apiUrl = process.env.NEXT_PUBLIC_API || process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const res = await fetch(`${apiUrl}/api/jobs?limit=50`, {
       cache: "no-store",
     });
     
     if (!res.ok) {
+      console.error(`Failed to fetch jobs: ${res.status} ${res.statusText}`);
       return { data: [], total: 0 };
     }
     
-    return res.json();
+    const result = await res.json();
+    return result;
   } catch (error) {
     console.error("Error fetching jobs:", error);
     return { data: [], total: 0 };
@@ -51,9 +55,10 @@ async function getJobs() {
 
 async function getStats() {
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API || process.env.NEXTAUTH_URL || 'http://localhost:3000';
     const [jobsRes, internshipsRes] = await Promise.all([
-      fetch(`${process.env.NEXT_PUBLIC_API}/api/jobs?type=job`, { cache: "no-store" }),
-      fetch(`${process.env.NEXT_PUBLIC_API}/api/jobs?type=internship`, { cache: "no-store" }),
+      fetch(`${apiUrl}/api/jobs?type=job`, { cache: "no-store" }),
+      fetch(`${apiUrl}/api/jobs?type=internship`, { cache: "no-store" }),
     ]);
     
     const jobs = jobsRes.ok ? await jobsRes.json() : { total: 0 };
@@ -65,17 +70,20 @@ async function getStats() {
       total: (jobs.total || 0) + (internships.total || 0),
     };
   } catch (error) {
+    console.error("Error fetching stats:", error);
     return { totalJobs: 0, totalInternships: 0, total: 0 };
   }
 }
 
 async function getCategories() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API}/api/categories?popular=true&limit=12`, {
+    const apiUrl = process.env.NEXT_PUBLIC_API || process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const res = await fetch(`${apiUrl}/api/categories?popular=true&limit=12`, {
       cache: "no-store",
     });
     
     if (!res.ok) {
+      console.error(`Failed to fetch categories: ${res.status} ${res.statusText}`);
       return { data: [] };
     }
     
