@@ -4,6 +4,15 @@ import { compare } from "bcryptjs";
 import { getDataSource } from "@/lib/db";
 import { User } from "@/entities/User";
 
+// Validate required environment variables
+if (!process.env.NEXTAUTH_SECRET) {
+  console.error("⚠️  NEXTAUTH_SECRET is not set. Authentication will not work properly.");
+}
+
+if (!process.env.NEXTAUTH_URL) {
+  console.warn("⚠️  NEXTAUTH_URL is not set. Using default or inferred URL.");
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({

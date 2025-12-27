@@ -23,22 +23,34 @@ function createDataSource(): DataSource {
       username: url.username,
       password: url.password || "", // Ensure it's a string
       database: url.pathname.slice(1), // Remove leading slash
-      synchronize: true, // Set to false in production
+      synchronize: process.env.NODE_ENV !== "production", // Disable in production
       logging: false,
       entities: [Job, User, Category],
       migrations: [],
       subscribers: [],
+      extra: {
+        // Connection pool settings for serverless
+        max: 1, // Limit connections for serverless
+        connectionTimeoutMillis: 10000,
+        idleTimeoutMillis: 30000,
+      },
     });
   } catch (error) {
     // Fallback to using URL directly if parsing fails
     return new DataSource({
       type: "postgres",
       url: dbUrl,
-      synchronize: true,
+      synchronize: process.env.NODE_ENV !== "production",
       logging: false,
       entities: [Job, User, Category],
       migrations: [],
       subscribers: [],
+      extra: {
+        // Connection pool settings for serverless
+        max: 1, // Limit connections for serverless
+        connectionTimeoutMillis: 10000,
+        idleTimeoutMillis: 30000,
+      },
     });
   }
 }
@@ -46,8 +58,17 @@ function createDataSource(): DataSource {
 export async function getDataSource() {
   if (!appDataSource) {
     appDataSource = createDataSource();
-    await appDataSource.initialize();
-    console.log("✅ Database connection initialized");
+    try {
+      if (!appDataSource.isInitialized) {
+        await appDataSource.initialize();
+        console.log("✅ Database connection initialized");
+      }
+    } catch (error) {
+      console.error("❌ Database connection failed:", error);
+      // Reset datasource on error to allow retry
+      appDataSource = null;
+      throw error;
+    }
   }
   return appDataSource;
 }
