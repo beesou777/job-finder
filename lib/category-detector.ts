@@ -43,30 +43,10 @@ export async function detectCategoryFromJob(
       "it", "ict", "information technology", "system administrator", "network administrator",
       "devops", "cloud", "infrastructure", "sysadmin", "it administrator", "it admin"
     ],
-    "Software Development": [
-      "software", "developer", "programming", "coding", "programmer", "backend", "full stack",
-      "fullstack", "mern", "mean", "stack developer", "senior developer", "principal engineer",
-      "staff engineer", "engineering", "engineer", "dot net", ".net", "ruby on rails", "rails"
-    ],
-    "Web Development": [
-      "web developer", "web dev", "frontend", "react", "angular", "vue", "next.js", "javascript",
-      "typescript", "html", "css", "front-end", "front end"
-    ],
-    "Mobile Development": [
-      "mobile", "android", "ios", "react native", "flutter", "kotlin", "swift", "mobile app",
-      "mobile developer", "kmp", "kotlin multiplatform"
-    ],
     "Data Science": [
       "data science", "data scientist", "data analyst", "data engineer", "data analytics",
       "machine learning", "ml", "ai", "artificial intelligence", "python", "data visualization",
       "analytics", "big data", "data analytics", "data science with python"
-    ],
-    "UI/UX Design": [
-      "ui/ux", "ui ux", "user interface", "user experience", "ux designer", "ui designer",
-      "designer", "design", "figma", "sketch", "prototype"
-    ],
-    "Graphic Design": [
-      "graphic design", "graphic designer", "photoshop", "illustrator", "adobe"
     ],
     "Digital Marketing": [
       "digital marketing", "seo", "search engine", "social media", "ppc", "google ads",

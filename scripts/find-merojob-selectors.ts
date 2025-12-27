@@ -24,7 +24,7 @@ async function findSelectors() {
       if (content.includes("job") || content.includes("vacancy") || content.includes("__NEXT_DATA__")) {
         console.log(`\nFound script tag ${i} with job-related content`);
         if (content.includes("__NEXT_DATA__")) {
-          const match = content.match(/__NEXT_DATA__\s*=\s*({.+?});/s);
+          const match = content.match(/__NEXT_DATA__\s*=\s*({[\s\S]+?});/);
           if (match) {
             try {
               const nextData = JSON.parse(match[1]);

@@ -11,7 +11,7 @@ export async function GET(
     const jobRepository = dataSource.getRepository(Job);
 
     const job = await jobRepository.findOne({
-      where: { id: parseInt(params.id) },
+      where: { id: params.id },
     });
 
     if (!job) {
@@ -42,7 +42,7 @@ export async function DELETE(
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
 
-    const result = await jobRepository.delete(parseInt(params.id));
+    const result = await jobRepository.delete(params.id);
 
     if (result.affected === 0) {
       return NextResponse.json(

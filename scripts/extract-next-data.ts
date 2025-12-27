@@ -22,7 +22,7 @@ async function extractNextData() {
     $("script").each((i, el) => {
       const content = $(el).html() || "";
       if (content.includes("__NEXT_DATA__")) {
-        const match = content.match(/__NEXT_DATA__\s*=\s*({.+?});/s);
+        const match = content.match(/__NEXT_DATA__\s*=\s*({[\s\S]+?});/);
         if (match) {
           try {
             nextData = JSON.parse(match[1]);

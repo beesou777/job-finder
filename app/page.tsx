@@ -150,7 +150,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
-      {jobPostingStructuredData.map((data, index) => (
+      {jobPostingStructuredData.map((data: any, index: number) => (
         <script
           key={index}
           type="application/ld+json"

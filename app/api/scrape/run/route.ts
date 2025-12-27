@@ -18,11 +18,23 @@ export async function POST() {
       try {
         // Check if job already exists
         const existing = await jobRepository.findOne({
-          where: { url: jobData.url },
+          where: { applyUrl: jobData.url },
         });
 
         if (!existing) {
-          await jobRepository.save(jobData);
+          // Map JobResult to Job entity format
+          const job = jobRepository.create({
+            title: jobData.title,
+            applyUrl: jobData.url,
+            company: jobData.company,
+            location: jobData.location,
+            source: jobData.source,
+            description: jobData.description || null,
+            categoryOld: jobData.category || null,
+            type: "job" as const,
+          } as any);
+
+          await jobRepository.save(job);
           saved++;
         } else {
           duplicates++;
