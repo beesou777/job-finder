@@ -1,0 +1,94 @@
+🚀 QUICK SETUP GUIDE - Nepal Job Scraper
+==========================================
+
+Follow these steps to get your application running:
+
+STEP 1: Install Dependencies
+----------------------------
+npm install
+
+
+STEP 2: Setup Environment Variables
+-----------------------------------
+Create a .env file in the root directory with:
+
+DATABASE_URL=postgresql://postgres:yourpassword@localhost:5432/nepal_jobs
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=generate-with-openssl-rand-base64-32
+NEXT_PUBLIC_API=http://localhost:3000
+
+To generate a secure NEXTAUTH_SECRET:
+openssl rand -base64 32
+
+
+STEP 3: Setup PostgreSQL Database
+---------------------------------
+# Login to PostgreSQL
+psql -U postgres
+
+# Create database
+CREATE DATABASE nepal_jobs;
+
+# Exit
+\q
+
+
+STEP 4: Start the Development Server
+------------------------------------
+npm run dev
+
+This will:
+- Start Next.js on http://localhost:3000
+- Auto-create database tables (TypeORM synchronize: true)
+
+
+STEP 5: Create Admin User
+-------------------------
+Option A - Using the initialization script:
+npm run init-admin
+
+Option B - Using the registration API:
+curl -X POST http://localhost:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@example.com","password":"admin123"}'
+
+
+STEP 6: Login and Scrape Jobs
+-----------------------------
+1. Visit http://localhost:3000/login
+2. Login with: admin@example.com / admin123
+3. Go to Dashboard: http://localhost:3000/dashboard
+4. Click "Run Scraper Now"
+5. Wait 30-60 seconds for scraping to complete
+6. Visit homepage to see scraped jobs!
+
+
+ALTERNATIVE: Run Scraper from CLI
+---------------------------------
+npm run scrape
+
+
+TROUBLESHOOTING
+---------------
+- Database connection failed?
+  → Check PostgreSQL is running: pg_isready
+  → Verify DATABASE_URL in .env
+
+- TypeORM errors?
+  → Delete .next folder: rm -rf .next
+  → Restart: npm run dev
+
+- Port 3000 already in use?
+  → Run on different port: PORT=3001 npm run dev
+
+
+NEXT STEPS
+----------
+✅ Change default admin password
+✅ Set up automated scraping (cron job)
+✅ Deploy to production (Vercel, Railway, etc.)
+✅ Add more features as needed
+
+
+For detailed documentation, see README.md
+
