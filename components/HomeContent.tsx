@@ -147,32 +147,28 @@ export default function HomeContent() {
         />
       ))}
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white py-20 px-4">
-        <div className="container mx-auto text-center">
-          <div className="max-w-3xl mx-auto">
-            <div className="flex items-center justify-center mb-6">
-              <Sparkles className="w-12 h-12 mr-3" />
-              <h1 className="text-5xl md:text-6xl font-bold">JobKhoj</h1>
-            </div>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
-              Nepal's #1 Job Finder - Your Career Journey Starts Here
+      {/* Hero Section - Minimal */}
+      <section className="bg-white border-b">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+              Find Jobs in Nepal
+            </h1>
+            <p className="text-lg text-gray-600 mb-8">
+              Browse {stats.total} job opportunities from top Nepali job portals
             </p>
-            <p className="text-lg mb-8 text-blue-200">
-              Find the latest jobs and internships from top Nepali job portals. 
-              Search across MeroCareer, JobsNepal, KumariJob, InternSathi, and more.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link href="/jobs">
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 text-lg px-8 py-6">
-                  <Search className="mr-2 w-5 h-5" />
-                  Browse Jobs
+                <Button size="lg" className="px-6">
+                  <Briefcase className="mr-2 w-4 h-4" />
+                  Jobs ({stats.totalJobs})
                 </Button>
               </Link>
               <Link href="/internships">
-                <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6">
-                  <Star className="mr-2 w-5 h-5" />
-                  Find Internships
+                <Button size="lg" variant="outline" className="px-6">
+                  <Users className="mr-2 w-4 h-4" />
+                  Internships ({stats.totalInternships})
                 </Button>
               </Link>
             </div>
@@ -180,77 +176,136 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center">
-                  <Briefcase className="w-8 h-8 text-blue-600 mr-4" />
-                  <div>
-                    <p className="text-3xl font-bold">{stats.totalJobs.toLocaleString()}</p>
-                    <p className="text-muted-foreground">Active Jobs</p>
-                  </div>
+      {/* Stats Cards */}
+      <section className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600 mb-1 font-medium">Total Opportunities</p>
+                  <p className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{stats.total}</p>
                 </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center">
-                  <Star className="w-8 h-8 text-purple-600 mr-4" />
-                  <div>
-                    <p className="text-3xl font-bold">{stats.totalInternships.toLocaleString()}</p>
-                    <p className="text-muted-foreground">Internships</p>
-                  </div>
+                <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl shadow-lg">
+                  <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center">
-                  <TrendingUp className="w-8 h-8 text-green-600 mr-4" />
-                  <div>
-                    <p className="text-3xl font-bold">{stats.total.toLocaleString()}</p>
-                    <p className="text-muted-foreground">Total Opportunities</p>
-                  </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600 mb-1 font-medium">Active Jobs</p>
+                  <p className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{stats.totalJobs}</p>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
+                <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl shadow-lg">
+                  <Briefcase className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
+            <CardContent className="pt-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600 mb-1 font-medium">Internships</p>
+                  <p className="text-4xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">{stats.totalInternships}</p>
+                </div>
+                <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl shadow-lg">
+                  <Users className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
-      {/* Categories Section */}
-      {categories.length > 0 && (
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-6 text-center">Popular Categories</h2>
-            <div className="flex flex-wrap gap-3 justify-center">
-              {categories.map((category: any) => (
-                <Link key={category.id} href={`/jobs?category=${category.id}`}>
-                  <Badge variant="secondary" className="px-4 py-2 text-base cursor-pointer hover:bg-primary hover:text-primary-foreground transition-colors">
-                    {category.name}
-                    {category.jobCount > 0 && (
-                      <span className="ml-2 text-xs opacity-70">({category.jobCount})</span>
-                    )}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Features Section */}
+      <section className="container mx-auto px-4 py-20">
+          <div className="text-center mb-16">
+          <Badge className="mb-4 px-4 py-1 bg-primary/10 text-primary border-primary/20">
+            Why Choose JobKhoj
+          </Badge>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Everything You Need to{" "}
+            <span className="text-gradient">Land Your Dream Job</span>
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Nepal's most comprehensive job search platform - aggregating opportunities from all major portals
+          </p>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-blue-400 hover:-translate-y-2 bg-white">
+            <CardContent className="pt-8 pb-8">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                  <Search className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">Comprehensive Search</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Search across multiple job portals from one place. Filter by category, 
+                location, job type, and more to find exactly what you're looking for.
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-purple-400 hover:-translate-y-2 bg-white">
+            <CardContent className="pt-8 pb-8">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-4 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                  <Zap className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">Updated Daily</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Our automated system scrapes the latest job postings daily from top 
+                Nepali job portals, ensuring you never miss an opportunity.
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-indigo-400 hover:-translate-y-2 bg-white">
+            <CardContent className="pt-8 pb-8">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-4 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                  <MapPin className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900">Nepal-Wide Coverage</h3>
+              </div>
+              <p className="text-gray-600 leading-relaxed">
+                Find opportunities in Kathmandu, Pokhara, Lalitpur, and cities 
+                throughout Nepal. Remote and on-site positions available.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
-      {/* Jobs Section */}
-      <section className="py-12 bg-gray-50">
+      {/* Latest Jobs Section */}
+      <section className="bg-gradient-to-b from-muted/50 to-background py-20">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold">Latest Job Opportunities</h2>
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <Star className="w-6 h-6 text-primary" />
+                <Badge className="bg-primary/10 text-primary border-primary/20">
+                  Fresh Opportunities
+                </Badge>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-3">
+                Latest Job Opportunities
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                Discover the most recent job postings from top companies in Nepal
+              </p>
+            </div>
             <Link href="/jobs">
-              <Button variant="outline">
-                View All
-                <ArrowRight className="ml-2 w-4 h-4" />
+              <Button size="lg" className="hidden md:flex gradient-primary text-white shadow-lg hover:shadow-xl transition-all">
+                View All Jobs
+                <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
           </div>
@@ -290,66 +345,142 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose JobKhoj?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <Zap className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Fast & Easy</h3>
-                <p className="text-muted-foreground">
-                  Search across multiple job portals in one place. Save time and find your dream job faster.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <Users className="w-12 h-12 text-blue-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Comprehensive</h3>
-                <p className="text-muted-foreground">
-                  Aggregated listings from top Nepali job portals including MeroCareer, JobsNepal, and more.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6 text-center">
-                <MapPin className="w-12 h-12 text-green-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold mb-2">Location-Based</h3>
-                <p className="text-muted-foreground">
-                  Find jobs in Kathmandu, Pokhara, and cities across Nepal. Filter by location easily.
-                </p>
-              </CardContent>
-            </Card>
+      {/* Popular Categories */}
+      {categories && categories.length > 0 && (
+        <section className="container mx-auto px-4 py-20">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Explore by <span className="text-gradient">Category</span>
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Find opportunities in your field of interest
+            </p>
           </div>
-        </div>
-      </section>
+          <div className="flex flex-wrap gap-4 justify-center">
+            {categories.map((category: any) => (
+              <Link key={category.id} href={`/jobs?category=${category.id}`}>
+                <Badge 
+                  variant="secondary" 
+                  className="text-base px-6 py-3 cursor-pointer hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 shadow-md hover:shadow-lg border-2 border-gray-300 hover:border-primary text-gray-900 font-semibold"
+                >
+                  {category.name}
+                  {category.jobCount > 0 && (
+                    <span className="ml-2 text-xs opacity-75">
+                      ({category.jobCount})
+                    </span>
+                  )}
+                </Badge>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Start Your Career Journey?</h2>
-          <p className="text-xl mb-8 text-blue-100">
-            Browse thousands of job opportunities and find your perfect match today.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/jobs">
-              <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 text-lg px-8 py-6">
-                <Briefcase className="mr-2 w-5 h-5" />
-                Explore Jobs
-              </Button>
-            </Link>
-            <Link href="/internships">
-              <Button size="lg" variant="outline" className="border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6">
-                <Star className="mr-2 w-5 h-5" />
-                Find Internships
-              </Button>
-            </Link>
+      {/* Helpful Resources Section */}
+      <section className="bg-gradient-to-b from-background to-muted/30 py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Resources to Help You <span className="text-gradient">Succeed</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Everything you need to land your dream job in Nepal
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-blue-400 hover:-translate-y-2 bg-white">
+              <CardContent className="pt-8 pb-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                    <FileText className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Resume Tips</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  Learn how to create a standout resume that gets noticed by employers. 
+                  Get tips on formatting, keywords, and highlighting your achievements.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-purple-400 hover:-translate-y-2 bg-white">
+              <CardContent className="pt-8 pb-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-4 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Interview Prep</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  Prepare for success with common interview questions, body language tips, 
+                  and strategies to make a great first impression.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-indigo-400 hover:-translate-y-2 bg-white">
+              <CardContent className="pt-8 pb-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-4 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                    <TrendingUp className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Career Growth</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  Discover career paths, salary insights, and growth opportunities 
+                  in Nepal's job market. Plan your professional journey.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-green-400 hover:-translate-y-2 bg-white">
+              <CardContent className="pt-8 pb-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-4 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                    <Clock className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Daily Updates</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  New job opportunities are added daily from top Nepali job portals. 
+                  Check back regularly to never miss an opportunity.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-orange-400 hover:-translate-y-2 bg-white">
+              <CardContent className="pt-8 pb-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-4 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                    <MapPin className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Location Based</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  Find jobs in Kathmandu, Pokhara, Lalitpur, and cities across Nepal. 
+                  Filter by location to find opportunities near you.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="group hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 hover:border-pink-400 hover:-translate-y-2 bg-white">
+              <CardContent className="pt-8 pb-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="p-4 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl shadow-lg group-hover:scale-110 transition-transform">
+                    <Sparkles className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Free Service</h3>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  JobKhoj is completely free to use. No sign-up required. 
+                  Browse jobs, apply directly, and start your career journey today.
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
     </div>
   );
 }
-
