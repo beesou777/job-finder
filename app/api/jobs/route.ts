@@ -47,13 +47,12 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Get total count before pagination
-    const total = await query.getCount();
+    // Get total count before pagination (clone query to avoid state issues)
+    const totalQuery = query.clone();
+    const total = await totalQuery.getCount();
     
     // Apply pagination
-    query = query.skip(offset).take(limit);
-
-    const jobs = await query.getMany();
+    const jobs = await query.skip(offset).take(limit).getMany();
     
     console.log(`Found ${jobs.length} jobs for categoryId: ${categoryId || 'all'}, total: ${total}`);
 
