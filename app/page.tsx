@@ -37,18 +37,23 @@ export const metadata: Metadata = {
 
 async function getJobs() {
   try {
+    console.log("[SSR] Starting getJobs()...");
     const dataSource = await getDataSource();
-    const jobRepository = dataSource.getRepository(Job);
+    console.log("[SSR] Database connection obtained");
     
+    const jobRepository = dataSource.getRepository(Job);
     const now = new Date();
     
     // Get total count
+    console.log("[SSR] Counting total jobs...");
     const total = await jobRepository
       .createQueryBuilder("job")
       .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
       .getCount();
+    console.log(`[SSR] Total jobs count: ${total}`);
     
     // Get jobs with pagination
+    console.log("[SSR] Fetching jobs...");
     const jobs = await jobRepository
       .createQueryBuilder("job")
       .leftJoinAndSelect("job.category", "category")
@@ -59,9 +64,18 @@ async function getJobs() {
     
     console.log(`[SSR] Found ${jobs.length} jobs, total: ${total}`);
     
+    if (jobs.length === 0 && total === 0) {
+      console.warn("[SSR] WARNING: No jobs found in database. Database might be empty or connection failed.");
+    }
+    
     return { data: jobs, total };
-  } catch (error) {
-    console.error("Error fetching jobs:", error);
+  } catch (error: any) {
+    console.error("[SSR] Error fetching jobs:", error);
+    console.error("[SSR] Error details:", {
+      message: error?.message,
+      stack: error?.stack,
+      name: error?.name,
+    });
     return { data: [], total: 0 };
   }
 }
@@ -155,9 +169,44 @@ async function getCategories() {
 }
 
 export default async function Home() {
-  const { data: jobs, total } = await getJobs();
-  const stats = await getStats();
-  const { data: categories } = await getCategories();
+  console.log("[SSR] ========== Home component rendering ==========");
+  console.log("[SSR] Environment:", {
+    NODE_ENV: process.env.NODE_ENV,
+    hasDATABASE_URL: !!process.env.DATABASE_URL,
+  });
+  
+  let jobs: any[] = [];
+  let total = 0;
+  let stats = { totalJobs: 0, totalInternships: 0, total: 0 };
+  let categories: any[] = [];
+  let dbError: string | null = null;
+  
+  try {
+    const result = await getJobs();
+    jobs = result.data || [];
+    total = result.total || 0;
+    console.log(`[SSR] Home: Received ${jobs.length} jobs, total: ${total}`);
+  } catch (error: any) {
+    dbError = error?.message || "Unknown error";
+    console.error("[SSR] Failed to get jobs:", error);
+  }
+  
+  try {
+    stats = await getStats();
+    console.log(`[SSR] Home: Stats - ${stats.totalJobs} jobs, ${stats.totalInternships} internships`);
+  } catch (error: any) {
+    console.error("[SSR] Failed to get stats:", error);
+  }
+  
+  try {
+    const result = await getCategories();
+    categories = result.data || [];
+    console.log(`[SSR] Home: Received ${categories.length} categories`);
+  } catch (error: any) {
+    console.error("[SSR] Failed to get categories:", error);
+  }
+  
+  console.log("[SSR] ========== Rendering with data ==========");
 
   // Structured Data for SEO
   const structuredData = {
@@ -399,6 +448,16 @@ export default async function Home() {
                 We're currently fetching the latest job opportunities from top Nepali job portals. 
                 Please check back soon for new opportunities.
               </p>
+              {process.env.NODE_ENV === "development" && (
+                <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded text-left text-sm">
+                  <p className="font-semibold mb-2">Debug Info:</p>
+                  <p>Total in DB: {total}</p>
+                  <p>Jobs fetched: {jobs.length}</p>
+                  <p>Stats: {stats.totalJobs} jobs, {stats.totalInternships} internships</p>
+                  <p>Categories: {categories.length}</p>
+                  {dbError && <p className="text-red-600">Error: {dbError}</p>}
+                </div>
+              )}
             </CardContent>
           </Card>
         ) : (
