@@ -5,6 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Briefcase, TrendingUp, Users, MapPin, Zap, ArrowRight, Sparkles, Star, Clock, FileText } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
+import { getDataSource } from "@/lib/db";
+import { Job } from "@/entities/Job";
+import { Category } from "@/entities/Category";
 
 export const metadata: Metadata = {
   title: "JobKhoj - Find Jobs in Nepal | Latest Job Opportunities & Internships",
@@ -34,19 +37,29 @@ export const metadata: Metadata = {
 
 async function getJobs() {
   try {
-    // Use absolute URL in production, relative in development
-    const apiUrl = process.env.NEXT_PUBLIC_API || process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const res = await fetch(`${apiUrl}/api/jobs?limit=50`, {
-      cache: "no-store",
-    });
+    const dataSource = await getDataSource();
+    const jobRepository = dataSource.getRepository(Job);
     
-    if (!res.ok) {
-      console.error(`Failed to fetch jobs: ${res.status} ${res.statusText}`);
-      return { data: [], total: 0 };
-    }
+    const now = new Date();
     
-    const result = await res.json();
-    return result;
+    // Get total count
+    const total = await jobRepository
+      .createQueryBuilder("job")
+      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+      .getCount();
+    
+    // Get jobs with pagination
+    const jobs = await jobRepository
+      .createQueryBuilder("job")
+      .leftJoinAndSelect("job.category", "category")
+      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+      .orderBy("job.createdAt", "DESC")
+      .take(50)
+      .getMany();
+    
+    console.log(`[SSR] Found ${jobs.length} jobs, total: ${total}`);
+    
+    return { data: jobs, total };
   } catch (error) {
     console.error("Error fetching jobs:", error);
     return { data: [], total: 0 };
@@ -55,19 +68,30 @@ async function getJobs() {
 
 async function getStats() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API || process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const [jobsRes, internshipsRes] = await Promise.all([
-      fetch(`${apiUrl}/api/jobs?type=job`, { cache: "no-store" }),
-      fetch(`${apiUrl}/api/jobs?type=internship`, { cache: "no-store" }),
+    const dataSource = await getDataSource();
+    const jobRepository = dataSource.getRepository(Job);
+    
+    const now = new Date();
+    
+    const [totalJobs, totalInternships] = await Promise.all([
+      jobRepository
+        .createQueryBuilder("job")
+        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+        .andWhere("job.type = :type", { type: "job" })
+        .getCount(),
+      jobRepository
+        .createQueryBuilder("job")
+        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+        .andWhere("job.type = :type", { type: "internship" })
+        .getCount(),
     ]);
     
-    const jobs = jobsRes.ok ? await jobsRes.json() : { total: 0 };
-    const internships = internshipsRes.ok ? await internshipsRes.json() : { total: 0 };
+    console.log(`[SSR] Stats: ${totalJobs} jobs, ${totalInternships} internships`);
     
     return {
-      totalJobs: jobs.total || 0,
-      totalInternships: internships.total || 0,
-      total: (jobs.total || 0) + (internships.total || 0),
+      totalJobs,
+      totalInternships,
+      total: totalJobs + totalInternships,
     };
   } catch (error) {
     console.error("Error fetching stats:", error);
@@ -77,17 +101,53 @@ async function getStats() {
 
 async function getCategories() {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API || process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const res = await fetch(`${apiUrl}/api/categories?popular=true&limit=12`, {
-      cache: "no-store",
-    });
+    const dataSource = await getDataSource();
+    const categoryRepository = dataSource.getRepository(Category);
+    const jobRepository = dataSource.getRepository(Job);
     
-    if (!res.ok) {
-      console.error(`Failed to fetch categories: ${res.status} ${res.statusText}`);
-      return { data: [] };
+    const now = new Date();
+    
+    // Get categories that have active jobs, ordered by job count
+    const categoriesWithJobs = await categoryRepository
+      .createQueryBuilder("category")
+      .leftJoin("category.jobs", "job")
+      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+      .select("category.id", "id")
+      .addSelect("category.name", "name")
+      .addSelect("category.slug", "slug")
+      .addSelect("COUNT(job.id)", "jobCount")
+      .groupBy("category.id")
+      .having("COUNT(job.id) > 0")
+      .orderBy("COUNT(job.id)", "DESC")
+      .limit(12)
+      .getRawMany();
+    
+    const categories = categoriesWithJobs.map((c: any) => ({
+      id: c.id,
+      name: c.name,
+      slug: c.slug,
+      jobCount: parseInt(c.jobCount) || 0,
+    }));
+    
+    // If no categories with jobs, show all categories
+    if (categories.length === 0) {
+      const allCategories = await categoryRepository.find({
+        order: { name: "ASC" },
+        take: 12,
+      });
+      return {
+        data: allCategories.map((c) => ({
+          id: c.id,
+          name: c.name,
+          slug: c.slug,
+          jobCount: 0,
+        })),
+      };
     }
     
-    return res.json();
+    console.log(`[SSR] Found ${categories.length} categories`);
+    
+    return { data: categories };
   } catch (error) {
     console.error("Error fetching categories:", error);
     return { data: [] };
