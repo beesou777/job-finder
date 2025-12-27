@@ -58,20 +58,32 @@ export async function GET(request: NextRequest) {
     console.log(`Found ${jobs.length} jobs for categoryId: ${categoryId || 'all'}, total: ${total}`);
 
     // Get unique categories for filtering (exclude expired jobs)
-    const categories = await categoryRepository
-      .createQueryBuilder("category")
-      .innerJoin("category.jobs", "job")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now: new Date() })
-      .andWhere(type ? "job.type = :type" : "1=1", type ? { type } : {})
-      .select("category.id", "id")
-      .addSelect("category.name", "name")
-      .addSelect("category.slug", "slug")
-      .distinct(true)
-      .getRawMany();
+    let categoryList: any[] = [];
+    try {
+      let categoryQuery = categoryRepository
+        .createQueryBuilder("category")
+        .innerJoin("category.jobs", "job")
+        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now: new Date() });
+      
+      if (type) {
+        categoryQuery = categoryQuery.andWhere("job.type = :type", { type });
+      }
+      
+      const categories = await categoryQuery
+        .select("category.id", "id")
+        .addSelect("category.name", "name")
+        .addSelect("category.slug", "slug")
+        .distinct(true)
+        .getRawMany();
 
-    const categoryList = categories
-      .map((c: any) => ({ id: c.id, name: c.name, slug: c.slug }))
-      .sort((a, b) => a.name.localeCompare(b.name));
+      categoryList = categories
+        .map((c: any) => ({ id: c.id, name: c.name, slug: c.slug }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    } catch (categoryError: any) {
+      console.error("Error fetching categories (non-fatal):", categoryError?.message);
+      // Continue without categories - don't fail the whole request
+      categoryList = [];
+    }
 
     return NextResponse.json({
       success: true,
@@ -87,12 +99,15 @@ export async function GET(request: NextRequest) {
       message: error?.message,
       stack: error?.stack,
       name: error?.name,
+      query: error?.query,
+      parameters: error?.parameters,
     });
     return NextResponse.json(
       { 
         success: false, 
         error: "Failed to fetch jobs",
-        details: process.env.NODE_ENV === "development" ? error?.message : undefined
+        details: process.env.NODE_ENV === "development" ? error?.message : undefined,
+        type: error?.name,
       },
       { status: 500 }
     );

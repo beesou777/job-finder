@@ -81,10 +81,22 @@ export async function GET(request: NextRequest) {
       data: categories,
       total: categories.length,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching categories:", error);
+    console.error("Error details:", {
+      message: error?.message,
+      stack: error?.stack,
+      name: error?.name,
+      query: error?.query,
+      parameters: error?.parameters,
+    });
     return NextResponse.json(
-      { success: false, error: "Failed to fetch categories" },
+      { 
+        success: false, 
+        error: "Failed to fetch categories",
+        details: process.env.NODE_ENV === "development" ? error?.message : undefined,
+        type: error?.name,
+      },
       { status: 500 }
     );
   }
