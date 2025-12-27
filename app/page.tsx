@@ -5,9 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Briefcase, TrendingUp, Users, MapPin, Zap, ArrowRight, Sparkles, Star, Clock, FileText } from "lucide-react";
 import Link from "next/link";
 import { Metadata } from "next";
-import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
-import { Category } from "@/entities/Category";
 
 export const metadata: Metadata = {
   title: "JobKhoj - Find Jobs in Nepal | Latest Job Opportunities & Internships",
@@ -37,176 +34,104 @@ export const metadata: Metadata = {
 
 async function getJobs() {
   try {
-    console.log("[SSR] Starting getJobs()...");
-    const dataSource = await getDataSource();
-    console.log("[SSR] Database connection obtained");
+    // Use absolute URL - construct from environment or use localhost fallback
+    const baseUrl = process.env.NEXT_PUBLIC_API || 
+                    process.env.NEXTAUTH_URL || 
+                    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+                    'http://localhost:3000';
     
-    const jobRepository = dataSource.getRepository(Job);
-    const now = new Date();
+    const apiUrl = `${baseUrl}/api/jobs?limit=50`;
+    console.log(`[API] Fetching jobs from: ${apiUrl}`);
     
-    // Get total count
-    console.log("[SSR] Counting total jobs...");
-    const total = await jobRepository
-      .createQueryBuilder("job")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-      .getCount();
-    console.log(`[SSR] Total jobs count: ${total}`);
+    const res = await fetch(apiUrl, {
+      cache: "no-store",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
     
-    // Get jobs with pagination
-    console.log("[SSR] Fetching jobs...");
-    const jobs = await jobRepository
-      .createQueryBuilder("job")
-      .leftJoinAndSelect("job.category", "category")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-      .orderBy("job.createdAt", "DESC")
-      .take(50)
-      .getMany();
-    
-    console.log(`[SSR] Found ${jobs.length} jobs, total: ${total}`);
-    
-    if (jobs.length === 0 && total === 0) {
-      console.warn("[SSR] WARNING: No jobs found in database. Database might be empty or connection failed.");
+    if (!res.ok) {
+      console.error(`[API] Failed to fetch jobs: ${res.status} ${res.statusText}`);
+      return { data: [], total: 0 };
     }
     
-    return { data: jobs, total };
+    const result = await res.json();
+    console.log(`[API] Received ${result.data?.length || 0} jobs, total: ${result.total || 0}`);
+    
+    return {
+      data: result.data || [],
+      total: result.total || 0,
+    };
   } catch (error: any) {
-    console.error("[SSR] Error fetching jobs:", error);
-    console.error("[SSR] Error details:", {
-      message: error?.message,
-      stack: error?.stack,
-      name: error?.name,
-    });
+    console.error("[API] Error fetching jobs:", error?.message || error);
     return { data: [], total: 0 };
   }
 }
 
 async function getStats() {
   try {
-    const dataSource = await getDataSource();
-    const jobRepository = dataSource.getRepository(Job);
+    const baseUrl = process.env.NEXT_PUBLIC_API || 
+                    process.env.NEXTAUTH_URL || 
+                    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+                    'http://localhost:3000';
     
-    const now = new Date();
-    
-    const [totalJobs, totalInternships] = await Promise.all([
-      jobRepository
-        .createQueryBuilder("job")
-        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-        .andWhere("job.type = :type", { type: "job" })
-        .getCount(),
-      jobRepository
-        .createQueryBuilder("job")
-        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-        .andWhere("job.type = :type", { type: "internship" })
-        .getCount(),
+    const [jobsRes, internshipsRes] = await Promise.all([
+      fetch(`${baseUrl}/api/jobs?type=job&limit=1`, { cache: "no-store" }),
+      fetch(`${baseUrl}/api/jobs?type=internship&limit=1`, { cache: "no-store" }),
     ]);
     
-    console.log(`[SSR] Stats: ${totalJobs} jobs, ${totalInternships} internships`);
+    const jobs = jobsRes.ok ? await jobsRes.json() : { total: 0 };
+    const internships = internshipsRes.ok ? await internshipsRes.json() : { total: 0 };
+    
+    console.log(`[API] Stats: ${jobs.total || 0} jobs, ${internships.total || 0} internships`);
     
     return {
-      totalJobs,
-      totalInternships,
-      total: totalJobs + totalInternships,
+      totalJobs: jobs.total || 0,
+      totalInternships: internships.total || 0,
+      total: (jobs.total || 0) + (internships.total || 0),
     };
-  } catch (error) {
-    console.error("Error fetching stats:", error);
+  } catch (error: any) {
+    console.error("[API] Error fetching stats:", error?.message || error);
     return { totalJobs: 0, totalInternships: 0, total: 0 };
   }
 }
 
 async function getCategories() {
   try {
-    const dataSource = await getDataSource();
-    const categoryRepository = dataSource.getRepository(Category);
-    const jobRepository = dataSource.getRepository(Job);
+    const baseUrl = process.env.NEXT_PUBLIC_API || 
+                    process.env.NEXTAUTH_URL || 
+                    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+                    'http://localhost:3000';
     
-    const now = new Date();
+    const res = await fetch(`${baseUrl}/api/categories?popular=true&limit=12`, {
+      cache: "no-store",
+    });
     
-    // Get categories that have active jobs, ordered by job count
-    const categoriesWithJobs = await categoryRepository
-      .createQueryBuilder("category")
-      .leftJoin("category.jobs", "job")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-      .select("category.id", "id")
-      .addSelect("category.name", "name")
-      .addSelect("category.slug", "slug")
-      .addSelect("COUNT(job.id)", "jobCount")
-      .groupBy("category.id")
-      .having("COUNT(job.id) > 0")
-      .orderBy("COUNT(job.id)", "DESC")
-      .limit(12)
-      .getRawMany();
-    
-    const categories = categoriesWithJobs.map((c: any) => ({
-      id: c.id,
-      name: c.name,
-      slug: c.slug,
-      jobCount: parseInt(c.jobCount) || 0,
-    }));
-    
-    // If no categories with jobs, show all categories
-    if (categories.length === 0) {
-      const allCategories = await categoryRepository.find({
-        order: { name: "ASC" },
-        take: 12,
-      });
-      return {
-        data: allCategories.map((c) => ({
-          id: c.id,
-          name: c.name,
-          slug: c.slug,
-          jobCount: 0,
-        })),
-      };
+    if (!res.ok) {
+      console.error(`[API] Failed to fetch categories: ${res.status} ${res.statusText}`);
+      return { data: [] };
     }
     
-    console.log(`[SSR] Found ${categories.length} categories`);
+    const result = await res.json();
+    console.log(`[API] Received ${result.data?.length || 0} categories`);
     
-    return { data: categories };
-  } catch (error) {
-    console.error("Error fetching categories:", error);
+    return {
+      data: result.data || [],
+    };
+  } catch (error: any) {
+    console.error("[API] Error fetching categories:", error?.message || error);
     return { data: [] };
   }
 }
 
 export default async function Home() {
-  console.log("[SSR] ========== Home component rendering ==========");
-  console.log("[SSR] Environment:", {
-    NODE_ENV: process.env.NODE_ENV,
-    hasDATABASE_URL: !!process.env.DATABASE_URL,
-  });
+  console.log("[API] ========== Home component rendering ==========");
   
-  let jobs: any[] = [];
-  let total = 0;
-  let stats = { totalJobs: 0, totalInternships: 0, total: 0 };
-  let categories: any[] = [];
-  let dbError: string | null = null;
+  const { data: jobs, total } = await getJobs();
+  const stats = await getStats();
+  const { data: categories } = await getCategories();
   
-  try {
-    const result = await getJobs();
-    jobs = result.data || [];
-    total = result.total || 0;
-    console.log(`[SSR] Home: Received ${jobs.length} jobs, total: ${total}`);
-  } catch (error: any) {
-    dbError = error?.message || "Unknown error";
-    console.error("[SSR] Failed to get jobs:", error);
-  }
-  
-  try {
-    stats = await getStats();
-    console.log(`[SSR] Home: Stats - ${stats.totalJobs} jobs, ${stats.totalInternships} internships`);
-  } catch (error: any) {
-    console.error("[SSR] Failed to get stats:", error);
-  }
-  
-  try {
-    const result = await getCategories();
-    categories = result.data || [];
-    console.log(`[SSR] Home: Received ${categories.length} categories`);
-  } catch (error: any) {
-    console.error("[SSR] Failed to get categories:", error);
-  }
-  
-  console.log("[SSR] ========== Rendering with data ==========");
+  console.log(`[API] Home: ${jobs.length} jobs, ${stats.total} total, ${categories.length} categories`);
 
   // Structured Data for SEO
   const structuredData = {
@@ -448,16 +373,6 @@ export default async function Home() {
                 We're currently fetching the latest job opportunities from top Nepali job portals. 
                 Please check back soon for new opportunities.
               </p>
-              {process.env.NODE_ENV === "development" && (
-                <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded text-left text-sm">
-                  <p className="font-semibold mb-2">Debug Info:</p>
-                  <p>Total in DB: {total}</p>
-                  <p>Jobs fetched: {jobs.length}</p>
-                  <p>Stats: {stats.totalJobs} jobs, {stats.totalInternships} internships</p>
-                  <p>Categories: {categories.length}</p>
-                  {dbError && <p className="text-red-600">Error: {dbError}</p>}
-                </div>
-              )}
             </CardContent>
           </Card>
         ) : (
