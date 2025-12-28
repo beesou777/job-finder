@@ -20,7 +20,7 @@ import { JobData } from "./core/types";
 export interface ScraperConfig {
   baseUrl: string;
   source: string;
-  listScraper: (url: string) => Promise<{ detailUrls: string[]; hasMore: boolean; nextPageUrl?: string }>;
+  listScraper: (url: string) => Promise<{ detailUrls: string[]; hasMore: boolean; nextPageUrl?: string; preFetchedJobs?: JobData[] }>;
   detailScraper: (url: string) => Promise<JobData | null>;
   maxPages?: number;
   maxJobs?: number;
@@ -162,11 +162,10 @@ export async function runAllScrapers(): Promise<JobData[]> {
           try {
             const listResult = await config.listScraper(currentUrl);
             
-            // Check if this scraper returned pre-fetched jobs (Intern Sathi GraphQL)
-            if ((listResult as any).preFetchedJobs) {
-              const jobs = (listResult as any).preFetchedJobs as JobData[];
-              preFetchedJobs.push(...jobs);
-              console.log(`    ✅ Fetched ${jobs.length} jobs directly from API (total: ${preFetchedJobs.length})`);
+            // Check if this scraper returned pre-fetched jobs (Intern Sathi GraphQL, JobsNepal, etc.)
+            if (listResult.preFetchedJobs && listResult.preFetchedJobs.length > 0) {
+              preFetchedJobs.push(...listResult.preFetchedJobs);
+              console.log(`    ✅ Fetched ${listResult.preFetchedJobs.length} jobs directly from list page (total: ${preFetchedJobs.length})`);
             } else {
               listResult.detailUrls.forEach((url) => detailUrls.add(url));
               console.log(`    ✅ Found ${listResult.detailUrls.length} job links (total: ${detailUrls.size})`);
@@ -185,10 +184,10 @@ export async function runAllScrapers(): Promise<JobData[]> {
         }
       }
 
-      // Step 3: Handle pre-fetched jobs (Intern Sathi) or scrape detail pages
+      // Step 3: Handle pre-fetched jobs (Intern Sathi, JobsNepal, etc.) or scrape detail pages
       if (preFetchedJobs.length > 0) {
-        // Intern Sathi: We already have all the data from GraphQL API
-        console.log(`  ⚡ Using pre-fetched jobs from GraphQL API (${preFetchedJobs.length} jobs)`);
+        // Jobs already fetched from list page API or HTML
+        console.log(`  ⚡ Using pre-fetched jobs from list page (${preFetchedJobs.length} jobs)`);
         allJobs.push(...preFetchedJobs.slice(0, config.maxJobs || 50));
       } else if (detailUrls.size > 0) {
         // Other sites: Scrape detail pages
