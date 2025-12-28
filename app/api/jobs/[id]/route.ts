@@ -1,16 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getDataSource } from "@/lib/db";
+import { Job } from "@/entities/Job";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const job = await prisma.job.findUnique({
+    const dataSource = await getDataSource();
+    const jobRepository = dataSource.getRepository(Job);
+
+    const job = await jobRepository.findOne({
       where: { id: params.id },
-      include: {
-        category: true,
-      }
     });
 
     if (!job) {
@@ -38,22 +39,23 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const result = await prisma.job.delete({
-      where: { id: params.id },
-    });
+    const dataSource = await getDataSource();
+    const jobRepository = dataSource.getRepository(Job);
 
-    return NextResponse.json({
-      success: true,
-      message: "Job deleted successfully",
-    });
-  } catch (error: any) {
-    if (error.code === 'P2025') {
-      // Record not found
+    const result = await jobRepository.delete(params.id);
+
+    if (result.affected === 0) {
       return NextResponse.json(
         { success: false, error: "Job not found" },
         { status: 404 }
       );
     }
+
+    return NextResponse.json({
+      success: true,
+      message: "Job deleted successfully",
+    });
+  } catch (error) {
     console.error("Error deleting job:", error);
     return NextResponse.json(
       { success: false, error: "Failed to delete job" },
@@ -61,3 +63,4 @@ export async function DELETE(
     );
   }
 }
+

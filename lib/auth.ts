@@ -1,7 +1,8 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
-import { prisma } from "@/lib/prisma";
+import { getDataSource } from "@/lib/db";
+import { User } from "@/entities/User";
 
 
 export const authOptions: NextAuthOptions = {
@@ -18,7 +19,10 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
-          const user = await prisma.user.findUnique({
+          const dataSource = await getDataSource();
+          const userRepository = dataSource.getRepository(User);
+
+          const user = await userRepository.findOne({
             where: { email: credentials.email },
           });
 
@@ -68,3 +72,4 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
 };
+

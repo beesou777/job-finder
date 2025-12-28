@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getDataSource } from "@/lib/db";
+import { Job } from "@/entities/Job";
 import { runAllScrapers } from "@/lib/scraper-runner";
 
 export async function POST() {
   try {
+    const dataSource = await getDataSource();
+    const jobRepository = dataSource.getRepository(Job);
+
     console.log("🔄 Starting scraping process...");
     const results = await runAllScrapers();
 
@@ -13,24 +17,24 @@ export async function POST() {
     for (const jobData of results) {
       try {
         // Check if job already exists
-        const existing = await prisma.job.findUnique({
+        const existing = await jobRepository.findOne({
           where: { applyUrl: jobData.url },
         });
 
         if (!existing) {
-          // Create new job
-          await prisma.job.create({
-            data: {
-              title: jobData.title,
-              applyUrl: jobData.url,
-              company: jobData.company || null,
-              location: jobData.location || null,
-              source: jobData.source,
-              description: jobData.description || null,
-              categoryOld: jobData.category || null,
-              type: "job",
-            },
-          });
+          // Map JobResult to Job entity format
+          const job = jobRepository.create({
+            title: jobData.title,
+            applyUrl: jobData.url,
+            company: jobData.company,
+            location: jobData.location,
+            source: jobData.source,
+            description: jobData.description || null,
+            categoryOld: jobData.category || null,
+            type: "job" as const,
+          } as any);
+
+          await jobRepository.save(job);
           saved++;
         } else {
           duplicates++;
@@ -55,3 +59,4 @@ export async function POST() {
     );
   }
 }
+

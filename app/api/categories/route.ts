@@ -1,66 +1,48 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getDataSource } from "@/lib/db";
+import { Category } from "@/entities/Category";
+import { Job } from "@/entities/Job";
 
 export const revalidate = 300; // Cache for 5 minutes
 
 export async function GET(request: NextRequest) {
   try {
+    const dataSource = await getDataSource();
+    const categoryRepository = dataSource.getRepository(Category);
+
     const searchParams = request.nextUrl.searchParams;
-    const popular = searchParams.get("popular") === "true";
+    const popular = searchParams.get("popular") === "true"; // Get popular categories (with jobs)
     const limit = parseInt(searchParams.get("limit") || "20");
 
     let categories;
 
     if (popular) {
       // Get categories that have active jobs, ordered by job count
-      const now = new Date();
-      const categoriesWithJobs = await prisma.category.findMany({
-        where: {
-          jobs: {
-            some: {
-              OR: [
-                { expiresAt: null },
-                { expiresAt: { gt: now } }
-              ]
-            }
-          }
-        },
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-          _count: {
-            select: {
-              jobs: {
-                where: {
-                  OR: [
-                    { expiresAt: null },
-                    { expiresAt: { gt: now } }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        orderBy: {
-          jobs: {
-            _count: 'desc'
-          }
-        },
-        take: limit,
-      });
+      const categoriesWithJobs = await categoryRepository
+        .createQueryBuilder("category")
+        .leftJoin("category.jobs", "job")
+        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now: new Date() })
+        .select("category.id", "id")
+        .addSelect("category.name", "name")
+        .addSelect("category.slug", "slug")
+        .addSelect("COUNT(job.id)", "jobCount")
+        .groupBy("category.id")
+        .having("COUNT(job.id) > 0")
+        .orderBy("COUNT(job.id)", "DESC")
+        .limit(limit)
+        .getRawMany();
 
-      categories = categoriesWithJobs.map((c) => ({
+      categories = categoriesWithJobs.map((c: any) => ({
         id: c.id,
         name: c.name,
         slug: c.slug,
-        jobCount: c._count.jobs,
+        jobCount: parseInt(c.jobCount) || 0,
       }));
 
       // If no categories with jobs, show all categories
       if (categories.length === 0) {
-        const allCategories = await prisma.category.findMany({
-          orderBy: { name: 'asc' },
+        const allCategories = await categoryRepository.find({
+          order: { name: "ASC" },
           take: limit,
         });
         categories = allCategories.map((c) => ({
@@ -71,25 +53,29 @@ export async function GET(request: NextRequest) {
         }));
       }
     } else {
-      // Get all categories with job counts
-      const allCategories = await prisma.category.findMany({
-        orderBy: { name: 'asc' },
+      // Get all categories
+      const allCategories = await categoryRepository.find({
+        order: { name: "ASC" },
         take: limit,
-        include: {
-          _count: {
-            select: {
-              jobs: true,
-            }
-          }
-        }
       });
 
-      categories = allCategories.map((category) => ({
-        id: category.id,
-        name: category.name,
-        slug: category.slug,
-        jobCount: category._count.jobs,
-      }));
+      // Get job counts for each category
+      categories = await Promise.all(
+        allCategories.map(async (category) => {
+          const jobCount = await dataSource.getRepository(Job).count({
+            where: {
+              categoryId: category.id,
+            },
+            // Don't filter by expiresAt here to show all categories
+          });
+          return {
+            id: category.id,
+            name: category.name,
+            slug: category.slug,
+            jobCount,
+          };
+        })
+      );
     }
 
     const response = NextResponse.json({
@@ -108,6 +94,8 @@ export async function GET(request: NextRequest) {
       message: error?.message,
       stack: error?.stack,
       name: error?.name,
+      query: error?.query,
+      parameters: error?.parameters,
     });
     return NextResponse.json(
       { 
@@ -120,3 +108,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+

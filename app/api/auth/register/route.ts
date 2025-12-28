@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { hash } from "bcryptjs";
-import { prisma } from "@/lib/prisma";
+import { getDataSource } from "@/lib/db";
+import { User } from "@/entities/User";
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,8 +14,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const dataSource = await getDataSource();
+    const userRepository = dataSource.getRepository(User);
+
     // Check if user exists
-    const existingUser = await prisma.user.findUnique({
+    const existingUser = await userRepository.findOne({
       where: { email },
     });
 
@@ -29,13 +33,13 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await hash(password, 10);
 
     // Create user
-    await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        role: "user",
-      },
+    const user = userRepository.create({
+      email,
+      password: hashedPassword,
+      role: "user",
     });
+
+    await userRepository.save(user);
 
     return NextResponse.json({
       success: true,
@@ -49,3 +53,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

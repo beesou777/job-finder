@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Prisma doesn't need external packages config
+  experimental: {
+    serverComponentsExternalPackages: ['typeorm'],
+  },
 }
 
 module.exports = nextConfig

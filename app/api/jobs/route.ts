@@ -1,147 +1,102 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { getDataSource } from "@/lib/db";
+import { Job } from "@/entities/Job";
 
 export async function GET(request: NextRequest) {
   try {
+    const dataSource = await getDataSource();
+    const jobRepository = dataSource.getRepository(Job);
+
     const searchParams = request.nextUrl.searchParams;
     const source = searchParams.get("source");
-    const type = searchParams.get("type") as "job" | "internship" | null;
-    const categoryId = searchParams.get("category");
+    const type = searchParams.get("type"); // "job" or "internship"
+    const categoryId = searchParams.get("category"); // Now expects category ID
     const search = searchParams.get("search");
     const limit = parseInt(searchParams.get("limit") || "50");
     const offset = parseInt(searchParams.get("offset") || "0");
 
     const now = new Date();
     
-    // Build where clause
-    const where: any = {
-      OR: [
-        { expiresAt: null },
-        { expiresAt: { gt: now } }
-      ]
-    };
+    let query = jobRepository
+      .createQueryBuilder("job")
+      .leftJoin("job.category", "category")
+      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+      .orderBy("job.createdAt", "DESC");
 
+    // Apply filters
     if (source) {
-      where.source = source;
+      query = query.andWhere("job.source = :source", { source });
     }
 
     if (type) {
-      where.type = type;
+      query = query.andWhere("job.type = :type", { type });
     }
 
     if (categoryId) {
-      where.categoryId = categoryId;
+      query = query.andWhere("job.categoryId = :categoryId", { categoryId });
       console.log(`Filtering by categoryId: ${categoryId}`);
     }
 
     // Full-text search
     if (search) {
-      const searchConditions = {
-        OR: [
-          { title: { contains: search, mode: 'insensitive' as const } },
-          { company: { contains: search, mode: 'insensitive' as const } },
-          { description: { contains: search, mode: 'insensitive' as const } },
-          { category: { name: { contains: search, mode: 'insensitive' as const } } }
-        ]
-      };
-      
-      where.AND = [
-        {
-          OR: [
-            { expiresAt: null },
-            { expiresAt: { gt: now } }
-          ]
-        },
-        searchConditions
-      ];
-      delete where.OR; // Remove the original OR since we're using AND now
+      query = query.andWhere(
+        "(job.title ILIKE :search OR job.company ILIKE :search OR category.name ILIKE :search OR job.description ILIKE :search)",
+        { search: `%${search}%` }
+      );
     }
 
-    // Get total count
-    const total = await prisma.job.count({ where });
+    // Get total count before pagination (clone query to avoid state issues)
+    const totalQuery = query.clone();
+    const total = await totalQuery.getCount();
     
-    // Get jobs with pagination
-    const jobs = await prisma.job.findMany({
-      where,
-      include: {
-        category: true,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      skip: offset,
-      take: limit,
-      select: {
-        id: true,
-        title: true,
-        company: true,
-        location: true,
-        applyUrl: true,
-        type: true,
-        createdAt: true,
-        expiresAt: true,
-        salaryText: true,
-        jobType: true,
-        source: true,
-        category: {
-          select: {
-            id: true,
-            name: true,
-            slug: true,
-          }
-        }
-      }
-    });
+    // Optimized: Use getRawMany with explicit field selection to exclude description
+    const jobsRaw = await query
+      .select("job.id", "id")
+      .addSelect("job.title", "title")
+      .addSelect("job.company", "company")
+      .addSelect("job.location", "location")
+      .addSelect("job.applyUrl", "applyUrl")
+      .addSelect("job.type", "type")
+      .addSelect("job.createdAt", "createdAt")
+      .addSelect("job.expiresAt", "expiresAt")
+      .addSelect("job.salaryText", "salaryText")
+      .addSelect("job.jobType", "jobType")
+      .addSelect("job.source", "source")
+      .addSelect("category.id", "category_id")
+      .addSelect("category.name", "category_name")
+      .addSelect("category.slug", "category_slug")
+      .skip(offset)
+      .take(limit)
+      .getRawMany();
+    
+    // Map raw results to match expected format
+    const jobs = jobsRaw.map((row: any) => ({
+      id: row.id,
+      title: row.title,
+      company: row.company,
+      location: row.location,
+      applyUrl: row.applyUrl,
+      type: row.type,
+      createdAt: row.createdAt,
+      expiresAt: row.expiresAt,
+      salaryText: row.salaryText,
+      jobType: row.jobType,
+      source: row.source,
+      category: row.category_id ? {
+        id: row.category_id,
+        name: row.category_name,
+        slug: row.category_slug,
+      } : null,
+    }));
     
     console.log(`Found ${jobs.length} jobs for categoryId: ${categoryId || 'all'}, total: ${total}`);
 
-    // Get unique categories for filtering
-    let categoryList: any[] = [];
-    try {
-      const categoryWhere: any = {
-        jobs: {
-          some: {
-            OR: [
-              { expiresAt: null },
-              { expiresAt: { gt: now } }
-            ]
-          }
-        }
-      };
-
-      if (type) {
-        categoryWhere.jobs.some.type = type;
-      }
-
-      const categories = await prisma.category.findMany({
-        where: categoryWhere,
-        select: {
-          id: true,
-          name: true,
-          slug: true,
-        },
-        distinct: ['id'],
-        orderBy: {
-          name: 'asc',
-        }
-      });
-
-      categoryList = categories;
-    } catch (categoryError: any) {
-      console.error("Error fetching categories (non-fatal):", categoryError?.message);
-      categoryList = [];
-    }
-
     const response = NextResponse.json({
       success: true,
-      data: jobs.map(job => ({
-        ...job,
-        category: job.category || null,
-      })),
+      data: jobs,
       total,
       limit,
       offset,
-      categories: categoryList,
     });
 
     // Add caching headers for list views
@@ -156,6 +111,8 @@ export async function GET(request: NextRequest) {
       message: error?.message,
       stack: error?.stack,
       name: error?.name,
+      query: error?.query,
+      parameters: error?.parameters,
     });
     return NextResponse.json(
       { 
@@ -168,3 +125,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
