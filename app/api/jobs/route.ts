@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
+import { Category } from "@/entities/Category";
 
 export async function GET(request: NextRequest) {
   try {
@@ -91,12 +92,42 @@ export async function GET(request: NextRequest) {
     
     console.log(`Found ${jobs.length} jobs for categoryId: ${categoryId || 'all'}, total: ${total}`);
 
+    // Get unique categories for filtering (exclude expired jobs)
+    let categoryList: any[] = [];
+    try {
+      const categoryRepository = dataSource.getRepository(Category);
+      let categoryQuery = categoryRepository
+        .createQueryBuilder("category")
+        .innerJoin("category.jobs", "job")
+        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+      
+      if (type) {
+        categoryQuery = categoryQuery.andWhere("job.type = :type", { type });
+      }
+      
+      const categories = await categoryQuery
+        .select("category.id", "id")
+        .addSelect("category.name", "name")
+        .addSelect("category.slug", "slug")
+        .distinct(true)
+        .getRawMany();
+
+      categoryList = categories
+        .map((c: any) => ({ id: c.id, name: c.name, slug: c.slug }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    } catch (categoryError: any) {
+      console.error("Error fetching categories (non-fatal):", categoryError?.message);
+      // Continue without categories - don't fail the whole request
+      categoryList = [];
+    }
+
     const response = NextResponse.json({
       success: true,
       data: jobs,
       total,
       limit,
       offset,
+      categories: categoryList,
     });
 
     // Add caching headers for list views

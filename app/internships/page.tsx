@@ -22,16 +22,31 @@ async function getInternships(search?: string, category?: string) {
     if (search) params.append("search", search);
     if (category) params.append("category", category);
 
+    // For server-side fetch in Next.js, use absolute URL
+    // Try to construct from environment variables, fallback to localhost
+    const baseUrl = process.env.NEXT_PUBLIC_API || 
+                    process.env.NEXTAUTH_URL || 
+                    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null) ||
+                    "http://localhost:3000";
+    
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/api/jobs?${params.toString()}`,
-      { cache: "no-store" }
+      `${baseUrl}/api/jobs?${params.toString()}`,
+      { 
+        cache: "no-store",
+      }
     );
 
     if (!res.ok) {
+      console.error(`Failed to fetch internships: ${res.status} ${res.statusText}`);
       return { data: [], total: 0, categories: [] };
     }
 
-    return res.json();
+    const data = await res.json();
+    return {
+      data: data.data || [],
+      total: data.total || 0,
+      categories: data.categories || [],
+    };
   } catch (error) {
     console.error("Error fetching internships:", error);
     return { data: [], total: 0, categories: [] };
