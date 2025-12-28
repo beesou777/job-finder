@@ -11,24 +11,61 @@ export async function GET(request: NextRequest) {
     const jobRepository = dataSource.getRepository(Job);
 
     const searchParams = request.nextUrl.searchParams;
-    const source = searchParams.get("source");
+    const jobType = searchParams.get("jobType");
+    const urgency = searchParams.get("urgency");
     const type = searchParams.get("type"); // "job" or "internship"
     const categoryId = searchParams.get("category"); // Now expects category ID
+    const location = searchParams.get("location");
     const search = searchParams.get("search");
-    const limit = parseInt(searchParams.get("limit") || "50");
+    const limit = parseInt(searchParams.get("limit") || "12");
     const offset = parseInt(searchParams.get("offset") || "0");
+    
+    console.log(`[API] Pagination: limit=${limit}, offset=${offset}`);
 
     const now = new Date();
     
     let query = jobRepository
       .createQueryBuilder("job")
-      .leftJoin("job.category", "category")
+      .leftJoinAndSelect("job.category", "category")
       .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-      .orderBy("job.createdAt", "DESC");
+      .orderBy("COALESCE(job.postedAt, job.createdAt)", "DESC");
 
     // Apply filters
-    if (source) {
-      query = query.andWhere("job.source = :source", { source });
+    if (jobType) {
+      query = query.andWhere("job.jobType = :jobType", { jobType });
+    }
+
+    // Urgency filter based on expiresAt (how many days left)
+    if (urgency) {
+      switch (urgency) {
+        case "today":
+          // Jobs expiring today (within 24 hours)
+          const todayEnd = new Date(now);
+          todayEnd.setHours(23, 59, 59, 999);
+          query = query.andWhere("job.expiresAt >= :now AND job.expiresAt <= :todayEnd", { now, todayEnd });
+          break;
+        case "3days":
+          // Jobs expiring within 3 days
+          const threeDaysFromNow = new Date(now);
+          threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
+          threeDaysFromNow.setHours(23, 59, 59, 999);
+          query = query.andWhere("job.expiresAt >= :now AND job.expiresAt <= :threeDaysFromNow", { now, threeDaysFromNow });
+          break;
+        case "7days":
+          // Jobs expiring within 7 days
+          const sevenDaysFromNow = new Date(now);
+          sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
+          sevenDaysFromNow.setHours(23, 59, 59, 999);
+          query = query.andWhere("job.expiresAt >= :now AND job.expiresAt <= :sevenDaysFromNow", { now, sevenDaysFromNow });
+          break;
+        case "30days":
+          // Jobs expiring within 30 days
+          const thirtyDaysFromNow = new Date(now);
+          thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+          thirtyDaysFromNow.setHours(23, 59, 59, 999);
+          query = query.andWhere("job.expiresAt >= :now AND job.expiresAt <= :thirtyDaysFromNow", { now, thirtyDaysFromNow });
+          break;
+      }
     }
 
     if (type) {
@@ -38,6 +75,10 @@ export async function GET(request: NextRequest) {
     if (categoryId) {
       query = query.andWhere("job.categoryId = :categoryId", { categoryId });
       console.log(`Filtering by categoryId: ${categoryId}`);
+    }
+
+    if (location) {
+      query = query.andWhere("job.location ILIKE :location", { location: `%${location}%` });
     }
 
     // Full-text search
@@ -52,47 +93,35 @@ export async function GET(request: NextRequest) {
     const totalQuery = query.clone();
     const total = await totalQuery.getCount();
     
-    // Optimized: Use getRawMany with explicit field selection to exclude description
-    const jobsRaw = await query
-      .select("job.id", "id")
-      .addSelect("job.title", "title")
-      .addSelect("job.company", "company")
-      .addSelect("job.location", "location")
-      .addSelect("job.applyUrl", "applyUrl")
-      .addSelect("job.type", "type")
-      .addSelect("job.createdAt", "createdAt")
-      .addSelect("job.expiresAt", "expiresAt")
-      .addSelect("job.salaryText", "salaryText")
-      .addSelect("job.jobType", "jobType")
-      .addSelect("job.source", "source")
-      .addSelect("category.id", "category_id")
-      .addSelect("category.name", "category_name")
-      .addSelect("category.slug", "category_slug")
+    // Use getMany() instead of getRawMany() to ensure pagination works correctly
+    // leftJoinAndSelect already loads the category relation
+    const jobsEntities = await query
       .skip(offset)
       .take(limit)
-      .getRawMany();
+      .getMany();
     
-    // Map raw results to match expected format
-    const jobs = jobsRaw.map((row: any) => ({
-      id: row.id,
-      title: row.title,
-      company: row.company,
-      location: row.location,
-      applyUrl: row.applyUrl,
-      type: row.type,
-      createdAt: row.createdAt,
-      expiresAt: row.expiresAt,
-      salaryText: row.salaryText,
-      jobType: row.jobType,
-      source: row.source,
-      category: row.category_id ? {
-        id: row.category_id,
-        name: row.category_name,
-        slug: row.category_slug,
+    // Map entities to the expected format
+    const jobs = jobsEntities.map((job) => ({
+      id: job.id,
+      title: job.title,
+      company: job.company,
+      location: job.location,
+      applyUrl: job.applyUrl,
+      type: job.type,
+      createdAt: job.createdAt,
+      postedAt: job.postedAt || job.createdAt,
+      expiresAt: job.expiresAt,
+      salaryText: job.salaryText || "Negotiable",
+      jobType: job.jobType,
+      source: job.source,
+      category: job.category ? {
+        id: job.category.id,
+        name: job.category.name,
+        slug: job.category.slug,
       } : null,
     }));
     
-    console.log(`Found ${jobs.length} jobs for categoryId: ${categoryId || 'all'}, total: ${total}`);
+    console.log(`[API] Found ${jobs.length} jobs (limit: ${limit}, offset: ${offset}) for categoryId: ${categoryId || 'all'}, total: ${total}`);
 
     const response = NextResponse.json({
       success: true,

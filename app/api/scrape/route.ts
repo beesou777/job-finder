@@ -136,11 +136,22 @@ export async function POST(request: NextRequest) {
             jobData.expiresAt = calculateExpirationDate(jobData.deadline);
           }
 
+          // Normalize jobType to enum
+          const { normalizeJobType } = await import("@/src/scrapers/core/normalizeJobType");
+          const normalizedJobType = normalizeJobType(jobData.jobType || null);
+
+          // Set defaults
+          const salaryText = jobData.salaryText?.trim() || "Negotiable";
+          const postedAt = new Date(); // Use current date as posted date
+
           // Create job entity
           const job = jobRepository.create({
             ...jobData,
             categoryId,
             categoryOld: jobData.category || null,
+            jobType: normalizedJobType,
+            salaryText,
+            postedAt,
           } as any);
 
           try {

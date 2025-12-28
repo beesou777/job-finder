@@ -5,11 +5,12 @@ import { JobCard } from "@/components/JobCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Briefcase, TrendingUp, Users, MapPin, Zap, ArrowRight, Sparkles, Star, Clock, FileText } from "lucide-react";
+import { Search, Briefcase, TrendingUp, Users, MapPin, Zap, ArrowRight, Sparkles, Star, Clock, FileText, Shield, Info } from "lucide-react";
 import Link from "next/link";
 
 export default function HomeContent() {
   const [jobs, setJobs] = useState<any[]>([]);
+  const [internships, setInternships] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [stats, setStats] = useState({ totalJobs: 0, totalInternships: 0, total: 0 });
   const [categories, setCategories] = useState<any[]>([]);
@@ -26,8 +27,9 @@ export default function HomeContent() {
       console.log("[Client] Fetching data from API...");
       
       // Optimized: Fetch all data in parallel with optimized endpoints
-      const [jobsRes, categoriesRes, statsRes] = await Promise.all([
-        fetch("/api/jobs?limit=50"),
+      const [jobsRes, internshipsRes, categoriesRes, statsRes] = await Promise.all([
+        fetch("/api/jobs?limit=6&type=job"),
+        fetch("/api/jobs?limit=6&type=internship"),
         fetch("/api/categories?popular=true&limit=12"),
         fetch("/api/stats"),
       ]);
@@ -40,6 +42,15 @@ export default function HomeContent() {
         console.log(`[Client] Loaded ${jobsData.data?.length || 0} jobs`);
       } else {
         console.error(`[Client] Failed to fetch jobs: ${jobsRes.status}`);
+      }
+
+      // Process internships
+      if (internshipsRes.ok) {
+        const internshipsData = await internshipsRes.json();
+        setInternships(internshipsData.data || []);
+        console.log(`[Client] Loaded ${internshipsData.data?.length || 0} internships`);
+      } else {
+        console.error(`[Client] Failed to fetch internships: ${internshipsRes.status}`);
       }
 
       // Process stats - use optimized stats endpoint
@@ -162,9 +173,6 @@ export default function HomeContent() {
     </Card>
   );
 
-  const SkeletonBadge = () => (
-    <div className="h-10 bg-gray-200 rounded-full w-24 animate-pulse"></div>
-  );
 
   return (
     <div className="min-h-screen">
@@ -334,7 +342,7 @@ export default function HomeContent() {
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <Star className="w-6 h-6 text-primary" />
-                <Badge className="bg-primary/10 text-primary border-primary/20">
+                <Badge className="bg-primary/10 text-primary border-primary/20 hover:bg-primary/10 hover:text-primary hover:border-primary/20">
                   Fresh Opportunities
                 </Badge>
               </div>
@@ -397,46 +405,102 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* Popular Categories */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Explore by <span className="text-gradient">Category</span>
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            Find opportunities in your field of interest
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-4 justify-center">
-          {loading ? (
-            <>
-              <SkeletonBadge />
-              <SkeletonBadge />
-              <SkeletonBadge />
-              <SkeletonBadge />
-              <SkeletonBadge />
-              <SkeletonBadge />
-              <SkeletonBadge />
-              <SkeletonBadge />
-            </>
-          ) : categories && categories.length > 0 ? (
-            categories.map((category: any) => (
-              <Link key={category.id} href={`/jobs?category=${category.id}`}>
-                <Badge 
-                  variant="secondary" 
-                  className="text-base px-6 py-3 cursor-pointer hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110 shadow-md hover:shadow-lg border-2 border-gray-300 hover:border-primary text-gray-900 font-semibold"
-                >
-                  {category.name}
-                  {category.jobCount > 0 && (
-                    <span className="ml-2 text-xs opacity-75">
-                      ({category.jobCount})
-                    </span>
-                  )}
+      {/* Latest Internships Section */}
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <Users className="w-6 h-6 text-purple-600" />
+                <Badge className="bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-100 hover:text-purple-700 hover:border-purple-200">
+                  Fresh Opportunities
                 </Badge>
-              </Link>
-            ))
-          ) : null}
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-3">
+                Latest Internship Opportunities
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                Discover the most recent internship postings from top companies in Nepal
+              </p>
+            </div>
+            <Link href="/internships">
+              <Button size="lg" className="hidden md:flex bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:shadow-xl transition-all">
+                View All Internships
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
+          
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+          </div>
+        ) : internships.length === 0 ? (
+          <Card className="border-2 border-dashed">
+            <CardContent className="pt-16 pb-16 text-center">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-purple-100 to-pink-100 rounded-full flex items-center justify-center">
+                <Users className="w-10 h-10 text-purple-600" />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">No Internships Available Yet</h3>
+              <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+                We're currently fetching the latest internship opportunities from top Nepali job portals. 
+                Please check back soon for new opportunities.
+              </p>
+            </CardContent>
+          </Card>
+        ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {internships.slice(0, 6).map((internship: any) => (
+                  <JobCard key={internship.id} job={internship} />
+                ))}
+              </div>
+              {internships.length > 6 && (
+                <div className="text-center mt-10">
+                  <Link href="/internships">
+                    <Button size="lg" variant="outline" className="border-2 px-8 py-6 text-lg hover:bg-purple-600 hover:text-white transition-colors border-purple-600">
+                      View All Internships
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </Link>
+                </div>
+              )}
+            </>
+          )}
         </div>
+      </section>
+
+      {/* About Our Scraping Section */}
+      <section className="container mx-auto px-4 py-16">
+        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200">
+          <CardContent className="pt-8 pb-8 px-6 md:px-10">
+            <div className="flex items-start gap-4 mb-4">
+              <div className="p-3 bg-blue-100 rounded-lg shrink-0">
+                <Info className="w-6 h-6 text-blue-600" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">About Our Service</h3>
+                <p className="text-gray-700 leading-relaxed mb-3">
+                  JobKhoj is a job aggregator that collects job listings from various Nepali job portals to provide you with a comprehensive search experience. We use automated systems to gather publicly available job postings, ensuring you have access to the latest opportunities all in one place.
+                </p>
+                <div className="flex items-start gap-3 mt-4 p-4 bg-white/80 rounded-lg border border-blue-100">
+                  <Shield className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-semibold text-gray-900 mb-1">Ethical & Transparent</p>
+                    <p className="text-sm text-gray-600">
+                      We only collect publicly available information. We don't break any terms of service, and we respect the original job sources. All job applications are handled directly through the original job portals.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </section>
 
       {/* Helpful Resources Section */}

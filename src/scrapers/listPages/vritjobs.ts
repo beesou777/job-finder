@@ -210,13 +210,13 @@ async function fetchJobsForLevel(
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         },
         timeout: 15000,
-      });
+      }) as any
 
       if (response.data?.results && Array.isArray(response.data.results)) {
         // Filter out expired jobs and map to JobData
         const now = new Date();
         const totalJobs = response.data.results.length;
-        const validJobs = response.data.results.filter((job) => {
+        const validJobs = response.data.results.filter((job: VritJobsJob) => {
           if (!job.expiry_date) return true; // Include jobs without expiry date
           const expiryDate = new Date(job.expiry_date);
           return expiryDate > now; // Only include jobs where expiry is in the future

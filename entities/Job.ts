@@ -1,6 +1,18 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Index, ManyToOne, JoinColumn } from "typeorm";
 import { Category } from "./Category";
 
+export enum JobTypeEnum {
+  FULL_TIME = "full-time",
+  PART_TIME = "part-time",
+  CONTRACT = "contract",
+  REMOTE = "remote",
+  HYBRID = "hybrid",
+  ONSITE = "onsite",
+  FREELANCE = "freelance",
+  TEMPORARY = "temporary",
+  INTERNSHIP = "internship",
+}
+
 @Entity("jobs")
 export class Job {
   @PrimaryGeneratedColumn("uuid")
@@ -19,7 +31,7 @@ export class Job {
   @Column({ type: "varchar", nullable: true })
   location: string;
 
-  @Column({ type: "varchar", nullable: true })
+  @Column({ type: "varchar", nullable: true, default: "Negotiable" })
   salaryText: string;
 
   @Column({ type: "varchar", nullable: true })
@@ -29,8 +41,12 @@ export class Job {
   @Index()
   expiresAt: Date;
 
-  @Column({ type: "varchar", nullable: true })
-  jobType: string;
+  @Column({
+    type: "varchar",
+    nullable: true,
+  })
+  @Index()
+  jobType: JobTypeEnum | null;
 
   @ManyToOne(() => Category, { nullable: true, onDelete: "SET NULL" })
   @JoinColumn({ name: "categoryId" })
@@ -58,6 +74,10 @@ export class Job {
 
   @Column({ type: "text", nullable: true })
   requirements: string;
+
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Index()
+  postedAt: Date;
 
   @CreateDateColumn()
   createdAt: Date;
