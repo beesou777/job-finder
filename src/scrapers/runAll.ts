@@ -13,6 +13,8 @@ import { scrapeInternSathiList } from "./listPages/internsathi";
 import { scrapeInternSathiDetail } from "./detailPages/internsathi";
 import { scrapeJobAxleList } from "./listPages/jobaxle";
 import { scrapeJobAxleDetail } from "./detailPages/jobaxle";
+import { scrapeVritJobsList } from "./listPages/vritjobs";
+import { scrapeVritJobsDetail } from "./detailPages/vritjobs";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -90,6 +92,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     detailScraper: scrapeJobAxleDetail,
     listingUrls: ["https://jobaxle.com"], // API endpoint is used directly
     maxPages: 10, // Will fetch all pages automatically
+    maxJobs: 200,
+  },
+  {
+    baseUrl: "https://vritjobs.com",
+    source: "vritjobs",
+    listScraper: scrapeVritJobsList,
+    detailScraper: scrapeVritJobsDetail,
+    listingUrls: ["https://api.vritjobs.com/api/jobs/?is_public=true&page=1&search=&size=30"], // API endpoint
+    maxPages: 10, // Will fetch all pages automatically via API
     maxJobs: 200,
   },
   // Note: sajilojob.com and internnepal.com domains not found
