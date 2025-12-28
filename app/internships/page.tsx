@@ -22,16 +22,29 @@ async function getInternships(search?: string, category?: string) {
     if (search) params.append("search", search);
     if (category) params.append("category", category);
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API}/api/jobs?${params.toString()}`,
-      { cache: "no-store" }
-    );
+    // For server-side rendering, construct the full URL
+    const baseUrl = process.env.NEXT_PUBLIC_API 
+      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
 
-    if (!res.ok) {
-      return { data: [], total: 0, categories: [] };
-    }
+    const [internshipsRes, categoriesRes] = await Promise.all([
+      fetch(`${baseUrl}/api/jobs?${params.toString()}`, { 
+        cache: "no-store",
+        headers: { 'Content-Type': 'application/json' }
+      }),
+      fetch(`${baseUrl}/api/categories`, { 
+        cache: "no-store",
+        headers: { 'Content-Type': 'application/json' }
+      }),
+    ]);
 
-    return res.json();
+    const internshipsData = internshipsRes.ok ? await internshipsRes.json() : { success: false, data: [], total: 0 };
+    const categoriesData = categoriesRes.ok ? await categoriesRes.json() : { success: false, data: [] };
+
+    return {
+      data: internshipsData.success ? internshipsData.data : [],
+      total: internshipsData.total || 0,
+      categories: categoriesData.success ? categoriesData.data : [],
+    };
   } catch (error) {
     console.error("Error fetching internships:", error);
     return { data: [], total: 0, categories: [] };
@@ -109,7 +122,7 @@ export default async function InternshipsPage({
                     variant={searchParams.category === cat.id ? "default" : "outline"}
                     className={`px-4 py-2 text-sm cursor-pointer transition-all font-semibold ${
                       searchParams.category === cat.id
-                        ? "bg-gradient-primary text-white border-0 shadow-md"
+                        ? "bg-gradient-primary text-white border-0 shadow-md hover:text-white text-primary text-gray-900"
                         : "hover:bg-primary/10 hover:border-primary/50 text-gray-900 border-gray-300"
                     }`}
                   >
