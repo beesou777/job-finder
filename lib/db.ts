@@ -28,8 +28,9 @@ function createDataSource(): DataSource {
       username: url.username,
       password: url.password || "", // Ensure it's a string
       database: url.pathname.slice(1), // Remove leading slash
-      synchronize: true,
+      synchronize: false,
       logging: true,
+      migrationsRun: false,
       entities: [Job, User, Category],
       migrations: [],
       subscribers: [],
@@ -69,15 +70,23 @@ export async function getDataSource() {
         console.log("✅ Database connection initialized");
         
         // In production, check if tables exist and log warning if synchronize is disabled
-        if (process.env.NODE_ENV === "production") {
+        // Skip during build time to avoid errors
+        if (process.env.NODE_ENV === "production" && !process.env.NEXT_PHASE) {
           try {
             const queryRunner = appDataSource.createQueryRunner();
-            const tables = await queryRunner.getTables();
+            // Use a simpler query to check tables instead of getTables() which queries typeorm_metadata
+            const tableNames = await queryRunner.query(`
+              SELECT table_name 
+              FROM information_schema.tables 
+              WHERE table_schema = 'public' 
+              AND table_type = 'BASE TABLE'
+            `);
+            const tables = tableNames.map((row: any) => row.table_name);
             console.log(`📊 Database has ${tables.length} tables`);
             
             // Check if required tables exist
             const requiredTables = ['jobs', 'user', 'category'];
-            const existingTableNames = tables.map(t => t.name.toLowerCase());
+            const existingTableNames = tables.map((t: string) => t.toLowerCase());
             const missingTables = requiredTables.filter(
               req => !existingTableNames.includes(req)
             );
@@ -87,8 +96,11 @@ export async function getDataSource() {
               console.warn(`⚠️  Database schema may not be initialized. Consider running migrations or enabling synchronize temporarily.`);
             }
             await queryRunner.release();
-          } catch (checkError) {
-            console.warn("⚠️  Could not check database schema:", checkError);
+          } catch (checkError: any) {
+            // Silently ignore schema check errors during build or if metadata table doesn't exist
+            if (checkError?.code !== '42P01' && !process.env.NEXT_PHASE) {
+              console.warn("⚠️  Could not check database schema:", checkError?.message || checkError);
+            }
           }
         }
       }

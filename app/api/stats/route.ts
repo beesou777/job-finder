@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
 
-export const revalidate = 60; // Cache for 60 seconds
+// Mark route as dynamic to prevent static generation
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {

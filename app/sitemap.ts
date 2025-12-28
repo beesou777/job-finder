@@ -27,7 +27,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]
 
+  // Try to fetch dynamic content from database, but don't fail if unavailable during build
   try {
+    if (!process.env.DATABASE_URL) {
+      return routes
+    }
+    
     const dataSource = await getDataSource()
     const jobRepository = dataSource.getRepository(Job)
     const categoryRepository = dataSource.getRepository(Category)

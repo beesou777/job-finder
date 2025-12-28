@@ -3,7 +3,8 @@ import { getDataSource } from "@/lib/db";
 import { Category } from "@/entities/Category";
 import { Job } from "@/entities/Job";
 
-export const revalidate = 300; // Cache for 5 minutes
+// Mark route as dynamic to prevent static generation
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
