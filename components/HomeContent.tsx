@@ -25,12 +25,11 @@ export default function HomeContent() {
       
       console.log("[Client] Fetching data from API...");
       
-      // Fetch all data in parallel
-      const [jobsRes, categoriesRes, jobsCountRes, internshipsCountRes] = await Promise.all([
+      // Optimized: Fetch all data in parallel with optimized endpoints
+      const [jobsRes, categoriesRes, statsRes] = await Promise.all([
         fetch("/api/jobs?limit=50"),
         fetch("/api/categories?popular=true&limit=12"),
-        fetch("/api/jobs?type=job&limit=1"),
-        fetch("/api/jobs?type=internship&limit=1"),
+        fetch("/api/stats"),
       ]);
 
       // Process jobs
@@ -43,16 +42,20 @@ export default function HomeContent() {
         console.error(`[Client] Failed to fetch jobs: ${jobsRes.status}`);
       }
 
-      // Process stats - fetch from jobs API for accurate counts
-      const jobsCount = jobsCountRes.ok ? (await jobsCountRes.json()).total : 0;
-      const internshipsCount = internshipsCountRes.ok ? (await internshipsCountRes.json()).total : 0;
-      
-      setStats({
-        totalJobs: jobsCount,
-        totalInternships: internshipsCount,
-        total: jobsCount + internshipsCount,
-      });
-      console.log(`[Client] Stats: ${jobsCount} jobs, ${internshipsCount} internships`);
+      // Process stats - use optimized stats endpoint
+      if (statsRes.ok) {
+        const statsData = await statsRes.json();
+        setStats({
+          totalJobs: statsData.data?.totalJobs || 0,
+          totalInternships: statsData.data?.totalInternships || 0,
+          total: statsData.data?.total || 0,
+        });
+        console.log(`[Client] Stats: ${statsData.data?.totalJobs || 0} jobs, ${statsData.data?.totalInternships || 0} internships`);
+      } else {
+        console.error(`[Client] Failed to fetch stats: ${statsRes.status}`);
+        // Fallback to 0 if stats fail
+        setStats({ totalJobs: 0, totalInternships: 0, total: 0 });
+      }
 
       // Process categories
       if (categoriesRes.ok) {

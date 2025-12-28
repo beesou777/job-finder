@@ -3,6 +3,8 @@ import { getDataSource } from "@/lib/db";
 import { Category } from "@/entities/Category";
 import { Job } from "@/entities/Job";
 
+export const revalidate = 300; // Cache for 5 minutes
+
 export async function GET(request: NextRequest) {
   try {
     const dataSource = await getDataSource();
@@ -76,11 +78,16 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       data: categories,
       total: categories.length,
     });
+
+    // Add caching headers
+    response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
+
+    return response;
   } catch (error: any) {
     console.error("Error fetching categories:", error);
     console.error("Error details:", {

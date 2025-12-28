@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
-import { Category } from "@/entities/Category";
 
 export async function GET(request: NextRequest) {
   try {
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
-    const categoryRepository = dataSource.getRepository(Category);
 
     const searchParams = request.nextUrl.searchParams;
     const source = searchParams.get("source");
@@ -21,7 +19,7 @@ export async function GET(request: NextRequest) {
     
     let query = jobRepository
       .createQueryBuilder("job")
-      .leftJoinAndSelect("job.category", "category")
+      .leftJoin("job.category", "category")
       .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
       .orderBy("job.createdAt", "DESC");
 
@@ -51,47 +49,62 @@ export async function GET(request: NextRequest) {
     const totalQuery = query.clone();
     const total = await totalQuery.getCount();
     
-    // Apply pagination
-    const jobs = await query.skip(offset).take(limit).getMany();
+    // Optimized: Use getRawMany with explicit field selection to exclude description
+    const jobsRaw = await query
+      .select("job.id", "id")
+      .addSelect("job.title", "title")
+      .addSelect("job.company", "company")
+      .addSelect("job.location", "location")
+      .addSelect("job.applyUrl", "applyUrl")
+      .addSelect("job.type", "type")
+      .addSelect("job.createdAt", "createdAt")
+      .addSelect("job.expiresAt", "expiresAt")
+      .addSelect("job.salaryText", "salaryText")
+      .addSelect("job.jobType", "jobType")
+      .addSelect("job.source", "source")
+      .addSelect("category.id", "category_id")
+      .addSelect("category.name", "category_name")
+      .addSelect("category.slug", "category_slug")
+      .skip(offset)
+      .take(limit)
+      .getRawMany();
+    
+    // Map raw results to match expected format
+    const jobs = jobsRaw.map((row: any) => ({
+      id: row.id,
+      title: row.title,
+      company: row.company,
+      location: row.location,
+      applyUrl: row.applyUrl,
+      type: row.type,
+      createdAt: row.createdAt,
+      expiresAt: row.expiresAt,
+      salaryText: row.salaryText,
+      jobType: row.jobType,
+      source: row.source,
+      category: row.category_id ? {
+        id: row.category_id,
+        name: row.category_name,
+        slug: row.category_slug,
+      } : null,
+    }));
     
     console.log(`Found ${jobs.length} jobs for categoryId: ${categoryId || 'all'}, total: ${total}`);
 
-    // Get unique categories for filtering (exclude expired jobs)
-    let categoryList: any[] = [];
-    try {
-      let categoryQuery = categoryRepository
-        .createQueryBuilder("category")
-        .innerJoin("category.jobs", "job")
-        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now: new Date() });
-      
-      if (type) {
-        categoryQuery = categoryQuery.andWhere("job.type = :type", { type });
-      }
-      
-      const categories = await categoryQuery
-        .select("category.id", "id")
-        .addSelect("category.name", "name")
-        .addSelect("category.slug", "slug")
-        .distinct(true)
-        .getRawMany();
-
-      categoryList = categories
-        .map((c: any) => ({ id: c.id, name: c.name, slug: c.slug }))
-        .sort((a, b) => a.name.localeCompare(b.name));
-    } catch (categoryError: any) {
-      console.error("Error fetching categories (non-fatal):", categoryError?.message);
-      // Continue without categories - don't fail the whole request
-      categoryList = [];
-    }
-
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       data: jobs,
       total,
       limit,
       offset,
-      categories: categoryList,
     });
+
+    // Add caching headers for list views
+    if (!search && !categoryId) {
+      response.headers.set("Cache-Control", "public, s-maxage=30, stale-while-revalidate=60");
+    }
+
+    return response;
   } catch (error: any) {
     console.error("Error fetching jobs:", error);
     console.error("Error details:", {
