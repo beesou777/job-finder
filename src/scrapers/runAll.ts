@@ -63,13 +63,13 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     maxJobs: 50,
   },
   {
-    baseUrl: "https://ramrojob.com",
+    baseUrl: "https://www.ramrojob.com",
     source: "ramrojob",
     listScraper: scrapeRamroJobList,
     detailScraper: scrapeRamroJobDetail,
-    listingUrls: ["https://ramrojob.com/jobs"],
-    maxPages: 5,
-    maxJobs: 50,
+    listingUrls: ["https://www.ramrojob.com/advance_search"], // API endpoint
+    maxPages: 10, // Will fetch all pages automatically via API
+    maxJobs: 200,
   },
   {
     baseUrl: "https://internsathi.com",
