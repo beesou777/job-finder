@@ -125,16 +125,46 @@ export default function HomeContent() {
     "url": job.applyUrl
   }));
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading jobs...</p>
+  // Skeleton components
+  const SkeletonCard = () => (
+    <Card className="bg-white border shadow-md">
+      <CardContent className="pt-6">
+        <div className="flex items-center justify-between">
+          <div className="flex-1">
+            <div className="h-4 bg-gray-200 rounded w-32 mb-2 animate-pulse"></div>
+            <div className="h-10 bg-gray-200 rounded w-24 animate-pulse"></div>
+          </div>
+          <div className="w-14 h-14 bg-gray-200 rounded-xl animate-pulse"></div>
         </div>
-      </div>
-    );
-  }
+      </CardContent>
+    </Card>
+  );
+
+  const SkeletonJobCard = () => (
+    <Card className="border-2 border-gray-200 bg-white h-full">
+      <CardContent className="pt-6">
+        <div className="space-y-4">
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <div className="h-6 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+            </div>
+            <div className="h-6 bg-gray-200 rounded w-16 animate-pulse"></div>
+          </div>
+          <div className="space-y-2">
+            <div className="h-4 bg-gray-200 rounded w-full animate-pulse"></div>
+            <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+          </div>
+          <div className="h-10 bg-gray-200 rounded w-full animate-pulse mt-4"></div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  const SkeletonBadge = () => (
+    <div className="h-10 bg-gray-200 rounded-full w-24 animate-pulse"></div>
+  );
 
   return (
     <div className="min-h-screen">
@@ -182,45 +212,55 @@ export default function HomeContent() {
       {/* Stats Cards */}
       <section className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1 font-medium">Total Opportunities</p>
-                  <p className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{stats.total}</p>
-                </div>
-                <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl shadow-lg">
-                  <TrendingUp className="w-8 h-8 text-white" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1 font-medium">Active Jobs</p>
-                  <p className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{stats.totalJobs}</p>
-                </div>
-                <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl shadow-lg">
-                  <Briefcase className="w-8 h-8 text-white" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 mb-1 font-medium">Internships</p>
-                  <p className="text-4xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">{stats.totalInternships}</p>
-                </div>
-                <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl shadow-lg">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          {loading ? (
+            <>
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </>
+          ) : (
+            <>
+              <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1 font-medium">Total Opportunities</p>
+                      <p className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{stats.total}</p>
+                    </div>
+                    <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl shadow-lg">
+                      <TrendingUp className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1 font-medium">Active Jobs</p>
+                      <p className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">{stats.totalJobs}</p>
+                    </div>
+                    <div className="p-3 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl shadow-lg">
+                      <Briefcase className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="bg-white border shadow-md hover:shadow-lg transition-all">
+                <CardContent className="pt-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-gray-600 mb-1 font-medium">Internships</p>
+                      <p className="text-4xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">{stats.totalInternships}</p>
+                    </div>
+                    <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl shadow-lg">
+                      <Users className="w-8 h-8 text-white" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </>
+          )}
         </div>
       </section>
 
@@ -313,7 +353,16 @@ export default function HomeContent() {
             </Link>
           </div>
           
-        {jobs.length === 0 ? (
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+            <SkeletonJobCard />
+          </div>
+        ) : jobs.length === 0 ? (
           <Card className="border-2 border-dashed">
             <CardContent className="pt-16 pb-16 text-center">
               <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
@@ -349,18 +398,29 @@ export default function HomeContent() {
       </section>
 
       {/* Popular Categories */}
-      {categories && categories.length > 0 && (
-        <section className="container mx-auto px-4 py-20">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Explore by <span className="text-gradient">Category</span>
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Find opportunities in your field of interest
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-4 justify-center">
-            {categories.map((category: any) => (
+      <section className="container mx-auto px-4 py-20">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+            Explore by <span className="text-gradient">Category</span>
+          </h2>
+          <p className="text-xl text-muted-foreground">
+            Find opportunities in your field of interest
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-4 justify-center">
+          {loading ? (
+            <>
+              <SkeletonBadge />
+              <SkeletonBadge />
+              <SkeletonBadge />
+              <SkeletonBadge />
+              <SkeletonBadge />
+              <SkeletonBadge />
+              <SkeletonBadge />
+              <SkeletonBadge />
+            </>
+          ) : categories && categories.length > 0 ? (
+            categories.map((category: any) => (
               <Link key={category.id} href={`/jobs?category=${category.id}`}>
                 <Badge 
                   variant="secondary" 
@@ -374,10 +434,10 @@ export default function HomeContent() {
                   )}
                 </Badge>
               </Link>
-            ))}
-          </div>
-        </section>
-      )}
+            ))
+          ) : null}
+        </div>
+      </section>
 
       {/* Helpful Resources Section */}
       <section className="bg-gradient-to-b from-background to-muted/30 py-20">
