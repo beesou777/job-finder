@@ -77,6 +77,19 @@ interface VritJobsAPIResponse {
 }
 
 /**
+ * Convert title to URL slug format
+ */
+function titleToSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+    .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
+}
+
+/**
  * Clean HTML content
  */
 function cleanHtml(html: string): string {
@@ -117,8 +130,9 @@ function formatSalary(
  * Map VritJobs API response to JobData
  */
 function mapToJobData(job: VritJobsJob): JobData {
-  // Construct apply URL (assuming structure: /jobs/{public_id})
-  const applyUrl = `${BASE_URL}/jobs/${job.public_id}`;
+  // Construct apply URL: /jobs/{title-slug}/{id}
+  const titleSlug = titleToSlug(job.title);
+  const applyUrl = `${BASE_URL}/jobs/${titleSlug}/${job.id}`;
 
   // Format deadline from expiry_date
   let deadline: string | undefined;
@@ -150,8 +164,9 @@ function mapToJobData(job: VritJobsJob): JobData {
   // Format job type (timing.name like "Full Time", "Part Time")
   const jobType = job.timing?.name || undefined;
 
-  // Detect if it's an internship based on title and position
-  const isInternship = detectJobType(job.title, applyUrl, job.category?.name);
+  // Determine if it's an internship based on level (level 5 = Intern)
+  // Level 2 = Entry level, Level 3 = Mid level, Level 4 = Senior, Level 5 = Intern
+  const isInternship = job.level?.id === 5 ? "internship" : "job";
 
   // Calculate expiration date
   const expiresAt = job.expiry_date
@@ -175,8 +190,78 @@ function mapToJobData(job: VritJobsJob): JobData {
 }
 
 /**
+ * Fetch jobs for a specific level
+ */
+async function fetchJobsForLevel(
+  level: number,
+  levelName: string
+): Promise<JobData[]> {
+  const jobs: JobData[] = [];
+  let currentPage = 1;
+  let nextUrl: string | null = `${API_BASE}?is_public=true&page=${currentPage}&search=&size=30&level=${level}`;
+
+  while (nextUrl) {
+    try {
+      const response = await axios.get<VritJobsAPIResponse>(nextUrl, {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        timeout: 15000,
+      });
+
+      if (response.data?.results && Array.isArray(response.data.results)) {
+        // Filter out expired jobs and map to JobData
+        const now = new Date();
+        const totalJobs = response.data.results.length;
+        const validJobs = response.data.results.filter((job) => {
+          if (!job.expiry_date) return true; // Include jobs without expiry date
+          const expiryDate = new Date(job.expiry_date);
+          return expiryDate > now; // Only include jobs where expiry is in the future
+        });
+
+        const expiredCount = totalJobs - validJobs.length;
+        if (expiredCount > 0) {
+          console.log(`[VritJobs ${levelName}] Filtered out ${expiredCount} expired job(s) on page ${currentPage}`);
+        }
+
+        const mappedJobs = validJobs.map(mapToJobData);
+        jobs.push(...mappedJobs);
+
+        console.log(
+          `[VritJobs ${levelName}] Fetched page ${currentPage}, ${mappedJobs.length} jobs (total: ${jobs.length})`
+        );
+
+        // Get next page URL from API response
+        nextUrl = response.data.next;
+        currentPage++;
+
+        // Add small delay between requests
+        if (nextUrl) {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
+      } else {
+        console.warn(`[VritJobs ${levelName}] No data in response for page ${currentPage}`);
+        break;
+      }
+    } catch (pageError: any) {
+      console.error(
+        `[VritJobs ${levelName}] Error fetching page ${currentPage}:`,
+        pageError.message
+      );
+      break;
+    }
+  }
+
+  return jobs;
+}
+
+/**
  * Scrape VritJobs using REST API
- * Fetches all pages and returns pre-fetched jobs
+ * Fetches all pages for all levels and returns pre-fetched jobs
+ * Level 2 = Entry level, Level 3 = Mid level, Level 4 = Senior, Level 5 = Intern
  */
 export async function scrapeVritJobsList(url: string): Promise<{
   detailUrls: string[];
@@ -186,69 +271,27 @@ export async function scrapeVritJobsList(url: string): Promise<{
 }> {
   try {
     const allJobs: JobData[] = [];
-    let currentPage = 1;
-    // Use the provided URL if it's a full API URL, otherwise construct it
-    let nextUrl: string | null = url.includes('api.vritjobs.com') 
-      ? url 
-      : `${API_BASE}?is_public=true&page=${currentPage}&search=&size=30`;
+    
+    // Fetch jobs for all levels
+    const levels = [
+      { id: 2, name: "Entry level" },
+      { id: 3, name: "Mid level" },
+      { id: 4, name: "Senior" },
+      { id: 5, name: "Intern" },
+    ];
 
-    // Fetch all pages using the 'next' field from API response
-    while (nextUrl) {
-      try {
-        const response = await axios.get<VritJobsAPIResponse>(nextUrl, {
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-          },
-          timeout: 15000,
-        });
-
-        if (response.data?.results && Array.isArray(response.data.results)) {
-          // Filter out expired jobs and map to JobData
-          const now = new Date();
-          const totalJobs = response.data.results.length;
-          const validJobs = response.data.results.filter((job) => {
-            if (!job.expiry_date) return true; // Include jobs without expiry date
-            const expiryDate = new Date(job.expiry_date);
-            return expiryDate > now; // Only include jobs where expiry is in the future
-          });
-
-          const expiredCount = totalJobs - validJobs.length;
-          if (expiredCount > 0) {
-            console.log(`[VritJobs] Filtered out ${expiredCount} expired job(s) on page ${currentPage}`);
-          }
-
-          const jobs = validJobs.map(mapToJobData);
-          allJobs.push(...jobs);
-
-          console.log(
-            `[VritJobs] Fetched page ${currentPage}, ${jobs.length} jobs (total: ${allJobs.length})`
-          );
-
-          // Get next page URL from API response
-          nextUrl = response.data.next;
-          currentPage++;
-
-          // Add small delay between requests
-          if (nextUrl) {
-            await new Promise((resolve) => setTimeout(resolve, 500));
-          }
-        } else {
-          console.warn(`[VritJobs] No data in response for page ${currentPage}`);
-          break;
-        }
-      } catch (pageError: any) {
-        console.error(
-          `[VritJobs] Error fetching page ${currentPage}:`,
-          pageError.message
-        );
-        break;
-      }
+    console.log(`[VritJobs] Fetching jobs for all levels...`);
+    
+    // Fetch all levels in parallel for better performance
+    const levelPromises = levels.map((level) => fetchJobsForLevel(level.id, level.name));
+    const levelResults = await Promise.all(levelPromises);
+    
+    // Combine all jobs
+    for (const levelJobs of levelResults) {
+      allJobs.push(...levelJobs);
     }
 
-    console.log(`✅ VritJobs: Fetched ${allJobs.length} jobs from API`);
+    console.log(`✅ VritJobs: Fetched ${allJobs.length} jobs from API across all levels`);
 
     // Return detail URLs for compatibility (though we already have the jobs)
     const detailUrls = allJobs.map((job) => job.applyUrl);
