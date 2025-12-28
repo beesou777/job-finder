@@ -75,14 +75,14 @@ export function JobCard({ job }: JobCardProps) {
               <span className="truncate text-gray-600 font-medium">{job.location}</span>
             </div>
           )}
-          {job.salaryText && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="p-1.5 bg-green-100 rounded-lg">
-                <DollarSign className="w-3.5 h-3.5 flex-shrink-0 text-green-600" />
-              </div>
-              <span className="truncate text-gray-600 font-medium">{job.salaryText}</span>
+          <div className="flex items-center gap-2 text-sm">
+            <div className="p-1.5 bg-green-100 rounded-lg">
+              <DollarSign className="w-3.5 h-3.5 flex-shrink-0 text-green-600" />
             </div>
-          )}
+            <span className="truncate text-gray-600 font-medium">
+              {job.salaryText || "Negotiable"}
+            </span>
+          </div>
           {job.deadline && (
             <div className="flex items-center gap-2 text-sm">
               <div className="p-1.5 bg-orange-100 rounded-lg">
