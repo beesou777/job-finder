@@ -27,8 +27,7 @@ export async function GET(request: NextRequest) {
     let query = jobRepository
       .createQueryBuilder("job")
       .leftJoinAndSelect("job.category", "category")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-      .orderBy("COALESCE(job.postedAt, job.createdAt)", "DESC");
+      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
     // Apply filters
     if (jobType) {
@@ -93,9 +92,11 @@ export async function GET(request: NextRequest) {
     const totalQuery = query.clone();
     const total = await totalQuery.getCount();
     
-    // Use getMany() instead of getRawMany() to ensure pagination works correctly
+    // Order by postedAt first (migration ensures this is set), then createdAt as fallback
     // leftJoinAndSelect already loads the category relation
     const jobsEntities = await query
+      .orderBy("job.postedAt", "DESC", "NULLS LAST")
+      .addOrderBy("job.createdAt", "DESC")
       .skip(offset)
       .take(limit)
       .getMany();

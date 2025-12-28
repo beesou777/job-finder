@@ -15,13 +15,13 @@ export function Navbar() {
 
           <div className="flex items-center gap-2">
             <Link href="/jobs">
-              <Button variant="ghost" size="sm" className="hover:bg-gray-100">
+              <Button variant="ghost" size="sm" className="hover:bg-gray-100 hover:text-gray-900">
                 <Briefcase className="w-4 h-4 mr-1" />
                 Jobs
               </Button>
             </Link>
             <Link href="/internships">
-              <Button variant="ghost" size="sm" className="hover:bg-gray-100">
+              <Button variant="ghost" size="sm" className="hover:bg-gray-100 hover:text-gray-900">
                 <Users className="w-4 h-4 mr-1" />
                 Internships
               </Button>
