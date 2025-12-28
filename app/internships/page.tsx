@@ -1,65 +1,77 @@
+"use client";
+
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { JobCard } from "@/components/JobCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search, Filter } from "lucide-react";
-import { Metadata } from "next";
+import { Search, Filter, Loader2 } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Internships in Nepal - Find Internship Opportunities",
-  description: "Discover internship opportunities in Nepal. Find internships in IT, Marketing, Finance, and more. Start your career journey with top companies in Nepal.",
-  keywords: ["internships nepal", "internship opportunities nepal", "nepal internships", "internship kathmandu"],
-  openGraph: {
-    title: "Internships in Nepal - Find Internship Opportunities | JobKhoj",
-    description: "Discover internship opportunities in Nepal. Start your career journey today.",
-  },
-};
+function InternshipsPageContent() {
+  const searchParams = useSearchParams();
+  const [internships, setInternships] = useState<any[]>([]);
+  const [total, setTotal] = useState(0);
+  const [categories, setCategories] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchValue, setSearchValue] = useState(searchParams.get("search") || "");
 
-async function getInternships(search?: string, category?: string) {
-  try {
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams.get("search"), searchParams.get("category")]);
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      const search = searchParams.get("search") || "";
+      const category = searchParams.get("category") || "";
+
+      const params = new URLSearchParams();
+      params.append("type", "internship");
+      if (search) params.append("search", search);
+      if (category) params.append("category", category);
+
+      const [internshipsRes, categoriesRes] = await Promise.all([
+        fetch(`/api/jobs?${params.toString()}`),
+        fetch(`/api/categories`),
+      ]);
+
+      if (internshipsRes.ok) {
+        const internshipsData = await internshipsRes.json();
+        setInternships(internshipsData.success ? internshipsData.data : []);
+        setTotal(internshipsData.total || 0);
+      }
+
+      if (categoriesRes.ok) {
+        const categoriesData = await categoriesRes.json();
+        setCategories(categoriesData.success ? categoriesData.data : []);
+      }
+    } catch (error) {
+      console.error("Error fetching internships:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
     const params = new URLSearchParams();
-    params.append("type", "internship");
-    if (search) params.append("search", search);
+    if (searchValue) params.append("search", searchValue);
+    const category = searchParams.get("category");
     if (category) params.append("category", category);
+    window.location.href = `/internships?${params.toString()}`;
+  };
 
-    // For server-side rendering, construct the full URL
-    const baseUrl = process.env.NEXT_PUBLIC_API 
-      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+  const selectedCategory = searchParams.get("category");
 
-    const [internshipsRes, categoriesRes] = await Promise.all([
-      fetch(`${baseUrl}/api/jobs?${params.toString()}`, { 
-        cache: "no-store",
-        headers: { 'Content-Type': 'application/json' }
-      }),
-      fetch(`${baseUrl}/api/categories`, { 
-        cache: "no-store",
-        headers: { 'Content-Type': 'application/json' }
-      }),
-    ]);
-
-    const internshipsData = internshipsRes.ok ? await internshipsRes.json() : { success: false, data: [], total: 0 };
-    const categoriesData = categoriesRes.ok ? await categoriesRes.json() : { success: false, data: [] };
-
-    return {
-      data: internshipsData.success ? internshipsData.data : [],
-      total: internshipsData.total || 0,
-      categories: categoriesData.success ? categoriesData.data : [],
-    };
-  } catch (error) {
-    console.error("Error fetching internships:", error);
-    return { data: [], total: 0, categories: [] };
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
   }
-}
-
-export default async function InternshipsPage({
-  searchParams,
-}: {
-  searchParams: { search?: string; category?: string };
-}) {
-  const { data: internships, total, categories } = await getInternships(
-    searchParams.search,
-    searchParams.category
-  );
 
   return (
     <div className="min-h-screen">
@@ -79,17 +91,16 @@ export default async function InternshipsPage({
 
       {/* Search and Filters */}
       <div className="mb-6 space-y-4">
-        <form action="/internships" method="get" className="flex gap-2">
+        <form onSubmit={handleSearch} className="flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
-              name="search"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Search internships..."
-              defaultValue={searchParams.search}
               className="pl-10"
             />
           </div>
-          <input type="hidden" name="category" value={searchParams.category || ""} />
           <Button type="submit">Search</Button>
         </form>
 
@@ -103,9 +114,9 @@ export default async function InternshipsPage({
             <div className="flex flex-wrap gap-2">
               <a href="/internships">
                 <Badge 
-                  variant={!searchParams.category ? "default" : "outline"}
+                  variant={!selectedCategory ? "default" : "outline"}
                   className={`px-4 py-2 text-sm cursor-pointer transition-all ${
-                    !searchParams.category 
+                    !selectedCategory 
                       ? "bg-gradient-primary text-white border-0 shadow-md text-primary" 
                       : "hover:bg-primary/10 hover:border-primary/50"
                   }`}
@@ -113,23 +124,26 @@ export default async function InternshipsPage({
                   All Categories
                 </Badge>
               </a>
-              {categories.map((cat: any) => (
-                <a 
-                  key={cat.id} 
-                  href={`/internships?category=${cat.id}`}
-                >
-                  <Badge
-                    variant={searchParams.category === cat.id ? "default" : "outline"}
-                    className={`px-4 py-2 text-sm cursor-pointer transition-all font-semibold ${
-                      searchParams.category === cat.id
-                        ? "bg-gradient-primary text-white border-0 shadow-md hover:text-white text-primary text-gray-900"
-                        : "hover:bg-primary/10 hover:border-primary/50 text-gray-900 border-gray-300"
-                    }`}
+              {categories.map((cat: any) => {
+                const isSelected = selectedCategory === cat.id;
+                return (
+                  <a 
+                    key={cat.id} 
+                    href={`/internships?category=${cat.id}`}
                   >
-                    {cat.name}
-                  </Badge>
-                </a>
-              ))}
+                    <Badge
+                      variant={isSelected ? "default" : "outline"}
+                      className={`px-4 py-2 text-sm cursor-pointer transition-all font-semibold ${
+                        isSelected
+                          ? "bg-gradient-primary text-white border-0 shadow-md hover:text-white text-primary text-gray-900"
+                          : "hover:bg-primary/10 hover:border-primary/50 text-gray-900 border-gray-300"
+                      }`}
+                    >
+                      {cat.name}
+                    </Badge>
+                  </a>
+                );
+              })}
             </div>
           </div>
         )}
@@ -170,6 +184,18 @@ export default async function InternshipsPage({
         )}
       </div>
     </div>
+  );
+}
+
+export default function InternshipsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    }>
+      <InternshipsPageContent />
+    </Suspense>
   );
 }
 

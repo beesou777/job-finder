@@ -85,7 +85,6 @@ export async function GET(request: NextRequest) {
       total: categories.length,
     });
 
-    // Add caching headers
     response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
 
     return response;
