@@ -264,6 +264,41 @@ curl -X POST http://localhost:3000/api/scrape/run \
   -H "Cookie: next-auth.session-token=YOUR_TOKEN"
 ```
 
+## 🤖 Automated Scraping (GitHub Actions)
+
+The scraper can run automatically using GitHub Actions on a daily schedule.
+
+### Setup GitHub Actions Workflow
+
+1. **Add Secrets to GitHub (Optional):**
+   - Go to your repository → Settings → Secrets and variables → Actions
+   - Add `API_URL` secret only if you want to override the default URL (default: `https://job-khoj.vercel.app`)
+
+2. **Workflow File:**
+   - `.github/workflows/daily-scraper-api.yml` - Calls your deployed API endpoint (recommended)
+   - `.github/workflows/daily-scraper.yml` - Runs scraper script directly (alternative, requires DATABASE_URL)
+
+The workflow runs daily at midnight UTC and calls your deployed API at `https://job-khoj.vercel.app/api/scrape/run`.
+
+### Manual Trigger
+
+```bash
+# Via GitHub CLI
+gh workflow run "Daily Job Scraper"
+
+# Or trigger from GitHub Actions UI:
+# 1. Go to Actions tab
+# 2. Select "Daily Job Scraper"
+# 3. Click "Run workflow"
+```
+
+### Test the API Endpoint
+
+```bash
+curl -X POST https://job-khoj.vercel.app/api/scrape/run \
+  -H "Content-Type: application/json"
+```
+
 ## 🗃️ Database Schema
 
 ### Job Entity

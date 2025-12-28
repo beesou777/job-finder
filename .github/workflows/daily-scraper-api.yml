@@ -1,0 +1,37 @@
+name: Daily Job Scraper
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # ⏰ Runs every day at 00:00 UTC
+  workflow_dispatch:        # 👉 So you can trigger it manually too
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call scraper endpoint
+        run: |
+          echo "⚡ Hitting the scraper endpoint..."
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
+            -X POST "https://job-khoj.vercel.app/api/scrape/run")
+
+          echo "📡 Status Code: $STATUS"
+          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 300 ]; then
+            echo "✅ Scraper ran successfully!"
+          else
+            echo "❌ Something flopped. Status: $STATUS"
+            exit 1
+          fi
+
+      - name: Create issue if failed
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: "🚨 Daily Scrape Failed",
+              body: "The cron job failed. Go fix your API, babe. 😭",
+              labels: ["bug", "scraper"]
+            })
