@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("user")
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  jobs      Job[]
+
+  @@index([name])
+  @@map("categories")
+}
+
+model Job {
+  id          String    @id @default(uuid())
+  title       String
+  applyUrl    String    @unique @map("apply_url")
+  company     String?
+  location    String?
+  salaryText  String?   @map("salary_text")
+  deadline    String?
+  expiresAt   DateTime? @map("expires_at")
+  jobType     String?   @map("job_type")
+  categoryId  String?   @map("category_id")
+  categoryOld String?   @map("category_old")
+  type        String    @default("job") // "job" | "internship"
+  source      String    @default("unknown")
+  description String?   @db.Text
+  requirements String?  @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at")
+  
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@index([applyUrl])
+  @@index([expiresAt])
+  @@index([categoryId])
+  @@index([categoryOld])
+  @@index([type])
+  @@index([source])
+  @@map("jobs")
+}
+

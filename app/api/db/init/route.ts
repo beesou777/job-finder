@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDataSource } from "@/lib/db";
+import { prisma } from "@/lib/prisma";
 
 /**
- * Initialize database schema in production
- * This endpoint should be called once after deployment to create tables
- * 
- * Security: Add authentication in production!
+ * Check database schema status
+ * With Prisma, use migrations instead of synchronize
  */
 export async function POST(request: NextRequest) {
   try {
@@ -20,50 +18,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const dataSource = await getDataSource();
-    
-    // Check if tables exist
-    const queryRunner = dataSource.createQueryRunner();
-    const tables = await queryRunner.getTables();
-    const existingTableNames = tables.map(t => t.name.toLowerCase());
-    
-    const requiredTables = ['jobs', 'user', 'category'];
-    const missingTables = requiredTables.filter(
-      req => !existingTableNames.includes(req)
-    );
-
-    if (missingTables.length > 0) {
-      // Temporarily enable synchronize to create tables
-      console.log("⚠️  Missing tables detected. Creating schema...");
+    // Check if tables exist by trying to query them
+    try {
+      const jobCount = await prisma.job.count();
+      const userCount = await prisma.user.count();
+      const categoryCount = await prisma.category.count();
       
-      // Note: This requires recreating the DataSource with synchronize enabled
-      // For production, it's better to use migrations
+      return NextResponse.json({
+        success: true,
+        message: "Database schema is initialized",
+        tables: {
+          jobs: jobCount,
+          user: userCount,
+          categories: categoryCount,
+        },
+        note: "To create/update schema, run: npx prisma migrate dev (dev) or npx prisma migrate deploy (production)"
+      });
+    } catch (error: any) {
+      // If tables don't exist, Prisma will throw an error
       return NextResponse.json({
         success: false,
-        error: "Tables are missing. Please enable synchronize temporarily or run migrations.",
-        missingTables,
-        existingTables: existingTableNames,
-        suggestion: "Set DATABASE_SYNC=true in environment variables temporarily, then redeploy"
-      });
+        error: "Database schema is not initialized",
+        details: process.env.NODE_ENV === "development" ? error?.message : undefined,
+        suggestion: "Run 'npx prisma migrate deploy' to initialize the database schema"
+      }, { status: 500 });
     }
-
-    await queryRunner.release();
-
-    return NextResponse.json({
-      success: true,
-      message: "Database schema is initialized",
-      tables: existingTableNames,
-    });
   } catch (error: any) {
     console.error("Database initialization error:", error);
     return NextResponse.json(
       {
         success: false,
-        error: "Failed to initialize database",
+        error: "Failed to check database",
         details: process.env.NODE_ENV === "development" ? error?.message : undefined,
       },
       { status: 500 }
     );
   }
 }
-

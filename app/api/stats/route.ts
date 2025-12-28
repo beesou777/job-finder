@@ -1,53 +1,61 @@
 import { NextResponse } from "next/server";
-import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
+import { prisma } from "@/lib/prisma";
 
 export const revalidate = 60; // Cache for 60 seconds
 
 export async function GET() {
   try {
-    const dataSource = await getDataSource();
-    const jobRepository = dataSource.getRepository(Job);
     const now = new Date();
 
-    // Optimized: Get all counts in a single query
-    const stats = await jobRepository
-      .createQueryBuilder("job")
-      .select("job.type", "type")
-      .addSelect("COUNT(*)", "count")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-      .groupBy("job.type")
-      .getRawMany();
+    // Get counts by type
+    const [jobsCount, internshipsCount] = await Promise.all([
+      prisma.job.count({
+        where: {
+          type: 'job',
+          OR: [
+            { expiresAt: null },
+            { expiresAt: { gt: now } }
+          ]
+        }
+      }),
+      prisma.job.count({
+        where: {
+          type: 'internship',
+          OR: [
+            { expiresAt: null },
+            { expiresAt: { gt: now } }
+          ]
+        }
+      })
+    ]);
 
-    // Parse results
-    let totalJobs = 0;
-    let totalInternships = 0;
-    
-    for (const stat of stats) {
-      if (stat.type === "job") {
-        totalJobs = parseInt(stat.count) || 0;
-      } else if (stat.type === "internship") {
-        totalInternships = parseInt(stat.count) || 0;
+    const total = jobsCount + internshipsCount;
+
+    // Get source breakdown
+    const bySourceRaw = await prisma.job.groupBy({
+      by: ['source'],
+      where: {
+        OR: [
+          { expiresAt: null },
+          { expiresAt: { gt: now } }
+        ]
+      },
+      _count: {
+        id: true
       }
-    }
+    });
 
-    const total = totalJobs + totalInternships;
-
-    // Get source breakdown (optional, can be removed if not needed)
-    const bySource = await jobRepository
-      .createQueryBuilder("job")
-      .select("job.source", "source")
-      .addSelect("COUNT(*)", "count")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-      .groupBy("job.source")
-      .getRawMany();
+    const bySource = bySourceRaw.map(item => ({
+      source: item.source,
+      count: item._count.id
+    }));
 
     const response = NextResponse.json({
       success: true,
       data: {
         total,
-        totalJobs,
-        totalInternships,
+        totalJobs: jobsCount,
+        totalInternships: internshipsCount,
         bySource,
       },
     });
@@ -64,4 +72,3 @@ export async function GET() {
     );
   }
 }
-
