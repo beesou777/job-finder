@@ -13,7 +13,7 @@ jobs:
         run: |
           echo "⚡ Hitting the scraper endpoint..."
           STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
-            -X POST "https://job-khoj.vercel.app/api/scrape/run")
+            -X POST "https://kamkhoj.eventeir.ai/api/scrape/run")
 
           echo "📡 Status Code: $STATUS"
           if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 300 ]; then

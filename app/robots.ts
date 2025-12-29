@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin', '/api/'],
       },
     ],
-    sitemap: 'https://job-khoj.vercel.app/sitemap.xml',
+    sitemap: 'https://kamkhoj.eventeir.ai/sitemap.xml',
   }
 }
 

@@ -272,13 +272,13 @@ The scraper can run automatically using GitHub Actions on a daily schedule.
 
 1. **Add Secrets to GitHub (Optional):**
    - Go to your repository → Settings → Secrets and variables → Actions
-   - Add `API_URL` secret only if you want to override the default URL (default: `https://job-khoj.vercel.app`)
+   - Add `API_URL` secret only if you want to override the default URL (default: `https://kamkhoj.eventeir.ai`)
 
 2. **Workflow File:**
    - `.github/workflows/daily-scraper-api.yml` - Calls your deployed API endpoint (recommended)
    - `.github/workflows/daily-scraper.yml` - Runs scraper script directly (alternative, requires DATABASE_URL)
 
-The workflow runs daily at midnight UTC and calls your deployed API at `https://job-khoj.vercel.app/api/scrape/run`.
+The workflow runs daily at midnight UTC and calls your deployed API at `https://kamkhoj.eventeir.ai/api/scrape/run`.
 
 ### Manual Trigger
 
@@ -295,7 +295,7 @@ gh workflow run "Daily Job Scraper"
 ### Test the API Endpoint
 
 ```bash
-curl -X POST https://job-khoj.vercel.app/api/scrape/run \
+curl -X POST https://kamkhoj.eventeir.ai/api/scrape/run \
   -H "Content-Type: application/json"
 ```
 

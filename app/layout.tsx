@@ -47,13 +47,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://job-khoj.vercel.app",
+    url: "https://kamkhoj.eventeir.ai",
     siteName: "JobKhoj",
     title: "JobKhoj - Nepal's #1 Job Finder | Jobs & Internships in Nepal",
     description: "Find the latest jobs and internships in Nepal. Search across top Nepali job portals.",
     images: [
       {
-        url: "https://job-khoj.vercel.app/og-image.png",
+        url: "https://kamkhoj.eventeir.ai/og-image.png",
         width: 1200,
         height: 630,
         alt: "JobKhoj - Nepal's Job Finder",
@@ -64,10 +64,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "JobKhoj - Nepal's #1 Job Finder",
     description: "Find the latest jobs and internships in Nepal",
-    images: ["https://job-khoj.vercel.app/og-image.png"],
+    images: ["https://kamkhoj.eventeir.ai/og-image.png"],
   },
   alternates: {
-    canonical: "https://job-khoj.vercel.app",
+    canonical: "https://kamkhoj.eventeir.ai",
   },
   verification: {
     // Add your verification codes here when available
