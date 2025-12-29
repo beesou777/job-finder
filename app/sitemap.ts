@@ -4,7 +4,7 @@ import { Job } from '@/entities/Job'
 import { Category } from '@/entities/Category'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_API || 'https://jobkhoj.com'
+  const baseUrl = process.env.NEXT_PUBLIC_API || 'https://job-khoj.vercel.app'
   
   const routes: MetadataRoute.Sitemap = [
     {

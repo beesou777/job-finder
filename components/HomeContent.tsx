@@ -89,12 +89,12 @@ export default function HomeContent() {
     "@type": "WebSite",
     "name": "JobKhoj",
     "description": "Nepal's #1 Job Finder - Find jobs and internships across Nepal",
-    "url": typeof window !== "undefined" ? window.location.origin : "https://jobkhoj.com",
+    "url": typeof window !== "undefined" ? window.location.origin : "https://job-khoj.vercel.app",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": `${typeof window !== "undefined" ? window.location.origin : "https://jobkhoj.com"}/jobs?search={search_term_string}`
+        "urlTemplate": `${typeof window !== "undefined" ? window.location.origin : "https://job-khoj.vercel.app"}/jobs?search={search_term_string}`
       },
       "query-input": "required name=search_term_string"
     }
