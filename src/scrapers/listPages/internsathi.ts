@@ -222,14 +222,14 @@ export async function scrapeInternSathiList(url: string): Promise<{
   preFetchedJobs?: JobData[]; // Return pre-fetched jobs to avoid double-fetching
 }> {
   try {
-    // Fetch both internships and jobs in parallel
-    const [internshipData, jobData] = await Promise.all([
-      fetchJobsByType("INTERNSHIP"),
-      fetchJobsByType("JOB"),
-    ]);
+    // First API call for JOB type
+    const jobData = await fetchJobsByType("JOB");
+    
+    // Second API call for INTERNSHIP type
+    const internshipData = await fetchJobsByType("INTERNSHIP");
 
     // Combine all jobs from both types
-    const allJobs = [...internshipData.jobs, ...jobData.jobs];
+    const allJobs = [...jobData.jobs, ...internshipData.jobs];
 
     if (allJobs.length === 0) {
       return { detailUrls: [], hasMore: false };
