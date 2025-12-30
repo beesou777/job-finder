@@ -146,7 +146,73 @@ function mapToJobData(job: InternSathiJob): JobData {
 }
 
 /**
+ * Helper function to fetch jobs for a specific opportunity type
+ */
+async function fetchJobsByType(
+  opportunityType: "INTERNSHIP" | "JOB"
+): Promise<{
+  jobs: InternSathiJob[];
+  hasMore: boolean;
+  nextPage: number | null;
+  currentPage: number;
+  lastPage: number;
+}> {
+  const variables = {
+    filter: {
+      search: "",
+      limit: 500,
+      sort: null,
+    },
+    input: {
+      jobStatus: "OPEN",
+      opportunityType: opportunityType,
+    },
+  };
+
+  const response = await axios.post<GraphQLResponse>(
+    GRAPHQL_API,
+    {
+      operationName: "getJobs",
+      query: GRAPHQL_QUERY,
+      variables,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      },
+      timeout: 15000,
+    }
+  );
+
+  if (!response.data?.data?.getJobs?.result) {
+    return {
+      jobs: [],
+      hasMore: false,
+      nextPage: null,
+      currentPage: 0,
+      lastPage: 0,
+    };
+  }
+
+  const getJobsData = response.data.data.getJobs;
+  const hasMore =
+    getJobsData.nextPage !== null &&
+    getJobsData.currentPage < getJobsData.lastPage;
+
+  return {
+    jobs: getJobsData.result,
+    hasMore,
+    nextPage: getJobsData.nextPage,
+    currentPage: getJobsData.currentPage,
+    lastPage: getJobsData.lastPage,
+  };
+}
+
+/**
  * Scrape Intern Sathi using GraphQL API
+ * Fetches both jobs and internships
  * Returns both detail URLs and pre-fetched job data
  */
 export async function scrapeInternSathiList(url: string): Promise<{
@@ -156,63 +222,32 @@ export async function scrapeInternSathiList(url: string): Promise<{
   preFetchedJobs?: JobData[]; // Return pre-fetched jobs to avoid double-fetching
 }> {
   try {
-    // Determine opportunity type from URL
-    const opportunityType = url.includes("/internships")
-      ? "INTERNSHIP"
-      : "JOB";
+    // Fetch both internships and jobs in parallel
+    const [internshipData, jobData] = await Promise.all([
+      fetchJobsByType("INTERNSHIP"),
+      fetchJobsByType("JOB"),
+    ]);
 
-    const variables = {
-      filter: {
-        search: "",
-        limit: 500,
-        sort: null,
-      },
-      input: {
-        jobStatus: "OPEN",
-        opportunityType: opportunityType,
-      },
-    };
+    // Combine all jobs from both types
+    const allJobs = [...internshipData.jobs, ...jobData.jobs];
 
-    const response = await axios.post<GraphQLResponse>(
-      GRAPHQL_API,
-      {
-        operationName: "getJobs",
-        query: GRAPHQL_QUERY,
-        variables,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        },
-        timeout: 15000,
-      }
-    );
-
-    if (!response.data?.data?.getJobs?.result) {
+    if (allJobs.length === 0) {
       return { detailUrls: [], hasMore: false };
     }
 
-    const jobs = response.data.data.getJobs.result;
-    
     // Map all jobs to JobData immediately (we have all the data from API)
-    const preFetchedJobs = jobs.map(mapToJobData);
-    
-    // Also return detail URLs for compatibility
-    const detailUrls = preFetchedJobs.map((job) => job.applyUrl);
+    const preFetchedJobs = allJobs.map(mapToJobData);
 
-    const hasMore =
-      response.data.data.getJobs.nextPage !== null &&
-      response.data.data.getJobs.currentPage <
-        response.data.data.getJobs.lastPage;
+    // Also return detail URLs for compatibility
+    const detailUrls = preFetchedJobs.map((job: JobData) => job.applyUrl);
+
+    // Consider hasMore if either type has more pages
+    const hasMore = internshipData.hasMore || jobData.hasMore;
 
     return {
       detailUrls,
       hasMore,
-      nextPageUrl: hasMore
-        ? `${url}?page=${response.data.data.getJobs.nextPage}`
-        : undefined,
+      nextPageUrl: hasMore ? `${url}?page=2` : undefined,
       preFetchedJobs, // Return pre-fetched jobs
     };
   } catch (error: any) {

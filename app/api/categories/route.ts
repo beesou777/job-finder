@@ -54,29 +54,25 @@ export async function GET(request: NextRequest) {
         }));
       }
     } else {
-      // Get all categories
-      const allCategories = await categoryRepository.find({
-        order: { name: "ASC" },
-        take: limit,
-      });
+      // Optimized: Get all categories with job counts in a single query
+      const allCategoriesWithCounts = await categoryRepository
+        .createQueryBuilder("category")
+        .leftJoin("category.jobs", "job")
+        .select("category.id", "id")
+        .addSelect("category.name", "name")
+        .addSelect("category.slug", "slug")
+        .addSelect("COUNT(job.id)", "jobCount")
+        .groupBy("category.id")
+        .orderBy("category.name", "ASC")
+        .limit(limit)
+        .getRawMany();
 
-      // Get job counts for each category
-      categories = await Promise.all(
-        allCategories.map(async (category) => {
-          const jobCount = await dataSource.getRepository(Job).count({
-            where: {
-              categoryId: category.id,
-            },
-            // Don't filter by expiresAt here to show all categories
-          });
-          return {
-            id: category.id,
-            name: category.name,
-            slug: category.slug,
-            jobCount,
-          };
-        })
-      );
+      categories = allCategoriesWithCounts.map((c: any) => ({
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        jobCount: parseInt(c.jobCount) || 0,
+      }));
     }
 
     const response = NextResponse.json({

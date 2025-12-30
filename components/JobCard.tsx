@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Building2, ExternalLink, DollarSign, Calendar, Sparkles, Clock } from "lucide-react";
+import { MapPin, Building2, ExternalLink, DollarSign, Calendar, Sparkles, Clock, Briefcase, ArrowRight } from "lucide-react";
 
 interface JobCardProps {
   job: {
@@ -13,6 +13,7 @@ interface JobCardProps {
     source: string;
     category?: string;
     type?: "job" | "internship";
+    jobType?: string;
     salaryText?: string;
     deadline?: string;
     expiresAt?: string | Date;
@@ -59,124 +60,94 @@ export function JobCard({ job }: JobCardProps) {
 
   const daysLeft = getDaysLeft();
 
+  // Determine job type text
+  const jobTypeText = job.jobType || (job.type === "internship" ? "Internship" : "Full Time");
+  const salaryText = job.salaryText || "Negotiable";
+
   return (
-    <Card className="h-full flex flex-col border-2 border-gray-200 bg-white relative overflow-hidden">
-      <CardHeader className="pb-3 relative z-10">
-        <div className="flex items-start justify-between mb-2">
+    <Card className="h-full flex flex-col border border-gray-300 bg-white">
+      <CardHeader className="pb-4 pt-6 px-6">
+        <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex-1 min-w-0">
-            <CardTitle className="text-xl mb-2 line-clamp-2 leading-tight font-bold text-gray-900">
+            <CardTitle className="text-lg font-semibold mb-2 line-clamp-2 leading-snug text-gray-900">
               {job.title}
             </CardTitle>
             {job.company && (
-              <CardDescription className="flex items-center gap-2 text-base mt-1">
-                <div className="p-1.5 bg-blue-100 rounded-lg">
-                  <Building2 className="w-4 h-4 flex-shrink-0 text-blue-600" />
-                </div>
-                <span className="truncate font-semibold text-gray-700">{job.company}</span>
+              <CardDescription className="flex items-center gap-2 mt-2">
+                <Building2 className="w-4 h-4 flex-shrink-0 text-gray-500" />
+                <span className="truncate text-sm font-medium text-gray-700">{job.company}</span>
               </CardDescription>
             )}
           </div>
-          <div className="flex flex-col gap-1 items-end ml-2">
+          <div className="flex flex-col gap-1.5 items-end ml-2 flex-shrink-0">
             {isNew && (
-              <Badge className="text-xs bg-gradient-to-r from-green-500 to-emerald-600 text-white border-0 shadow-md animate-pulse">
-                <Sparkles className="w-3 h-3 mr-1" />
+              <Badge className="text-[10px] px-2 py-0.5 bg-[#0A66C2] text-white border-0 font-medium">
                 New
               </Badge>
             )}
-            <Badge 
-              variant={job.type === "internship" ? "default" : "secondary"} 
-              className={`text-xs ${
-                job.type === "internship" 
-                  ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white border-0 shadow-md" 
-                  : "bg-gray-100 text-gray-700 border-gray-300"
-              }`}
-            >
+            <Badge className="text-[10px] px-2 py-0.5 bg-gray-100 hover:bg-gray-200 text-gray-600 border-0 font-normal">
               {job.type === "internship" ? "Internship" : job.source}
             </Badge>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col relative z-10">
-        <div className="space-y-3 mb-4">
-          {job.location && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className="p-1.5 bg-blue-100 rounded-lg">
-                <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-blue-600" />
-              </div>
-              <span className="truncate text-gray-600 font-medium">{job.location}</span>
-            </div>
-          )}
-          <div className="flex items-center gap-2 text-sm">
-            <div className="p-1.5 bg-green-100 rounded-lg">
-              <DollarSign className="w-3.5 h-3.5 flex-shrink-0 text-green-600" />
-            </div>
-            <span className="truncate text-gray-600 font-medium">
-              {job.salaryText || "Negotiable"}
-            </span>
-          </div>
+      <CardContent className="flex-1 flex flex-col px-6 pb-6">
+        {/* Horizontal Badges for Key Info */}
+        <div className="flex flex-wrap gap-2 mb-4">
           {(job.deadline || daysLeft !== null) && (
-            <div className="flex items-center gap-2 text-sm">
-              <div className={`p-1.5 rounded-lg ${
+            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
+              <Calendar className={`w-3.5 h-3.5 flex-shrink-0 ${
                 daysLeft !== null && daysLeft <= 3 
-                  ? "bg-red-100" 
+                  ? "text-red-500" 
                   : daysLeft !== null && daysLeft <= 7 
-                  ? "bg-orange-100" 
-                  : "bg-blue-100"
-              }`}>
-                <Calendar className={`w-3.5 h-3.5 flex-shrink-0 ${
-                  daysLeft !== null && daysLeft <= 3 
-                    ? "text-red-600" 
-                    : daysLeft !== null && daysLeft <= 7 
-                    ? "text-orange-600" 
-                    : "text-blue-600"
-                }`} />
-              </div>
-              <span className="text-gray-600 font-medium">
+                  ? "text-amber-500" 
+                  : "text-gray-500"
+              }`} />
+              <span className="truncate">
                 {daysLeft !== null ? (
-                  <span>
-                    {daysLeft < 0 ? (
-                      <span className="text-red-600 font-semibold">Expired</span>
-                    ) : daysLeft === 0 ? (
-                      <span className="text-orange-600 font-semibold">Expires today</span>
-                    ) : daysLeft === 1 ? (
-                      <span className="text-orange-600 font-semibold">1 day left</span>
-                    ) : daysLeft <= 7 ? (
-                      <span className="text-orange-600 font-semibold">{daysLeft} days left</span>
-                    ) : (
-                      <span>{daysLeft} days left</span>
-                    )}
-                    {job.deadline && (
-                      <span className="text-gray-500 ml-1">({job.deadline})</span>
-                    )}
-                  </span>
+                  daysLeft < 0 ? "Expired" : daysLeft === 0 ? "Expires today" : daysLeft === 1 ? "1 day left" : daysLeft <= 7 ? `${daysLeft} days left` : `${daysLeft} days left`
                 ) : (
-                  job.deadline ? `Deadline: ${job.deadline}` : "Deadline: Soon"
+                  job.deadline ? job.deadline : "Deadline: Soon"
                 )}
               </span>
-            </div>
+            </Badge>
           )}
-          <div className="flex items-center gap-2 text-xs text-gray-500 pt-1">
-            <Clock className="w-3 h-3" />
-            <span>Posted {daysAgo === 0 ? "today" : daysAgo === 1 ? "yesterday" : `${daysAgo} days ago`}</span>
-          </div>
+          {job.location && (
+            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
+              <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
+              <span className="truncate max-w-[200px]">{job.location}</span>
+            </Badge>
+          )}
+          {jobTypeText && (
+            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
+              <Briefcase className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
+              <span className="truncate">{jobTypeText}</span>
+            </Badge>
+          )}
+          {salaryText && (
+            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
+              <Briefcase className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
+              <span className="truncate">{salaryText}</span>
+            </Badge>
+          )}
         </div>
 
         {job.category && (
           <div className="flex flex-wrap gap-2 mb-4">
-            <Badge variant="outline" className="text-xs border-blue-200 bg-blue-50 text-blue-700 font-medium">
-              {typeof job.category === 'object' && job.category !== null && 'name' in job.category 
-                ? (job.category as { name: string }).name 
-                : String(job.category)}
+            <Badge className="text-xs px-2 py-0.5 border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 font-normal max-w-full">
+              <span className="truncate block">
+                {typeof job.category === 'object' && job.category !== null && 'name' in job.category 
+                  ? (job.category as { name: string }).name 
+                  : String(job.category)}
+              </span>
             </Badge>
           </div>
         )}
 
         <div className="mt-auto pt-4 border-t border-gray-200">
-          <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="block">
-            <Button className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-md border-0">
-              Apply Now
-              <ExternalLink className="w-3.5 h-3.5 ml-1" />
-            </Button>
+          <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-primary hover:text-primary/90 font-medium text-sm">
+            Apply Now
+            <ArrowRight className="w-4 h-4" />
           </a>
         </div>
       </CardContent>

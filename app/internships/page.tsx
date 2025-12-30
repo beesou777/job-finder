@@ -52,29 +52,24 @@ function InternshipsPageContent() {
       if (location) params.append("location", location);
       if (urgency) params.append("urgency", urgency);
 
-      const [internshipsRes, categoriesRes, filtersRes] = await Promise.all([
-        fetch(`/api/jobs?${params.toString()}`),
-        fetch(`/api/categories?popular=true&limit=20`),
-        fetch(`/api/filters?type=internship`),
-      ]);
+      // Use combined endpoint for faster loading (single API call instead of 3)
+      params.append("includeFilters", "true");
+      params.append("includeCategories", "true");
+      
+      const combinedRes = await fetch(`/api/jobs/combined?${params.toString()}`);
 
-      if (internshipsRes.ok) {
-        const internshipsData = await internshipsRes.json();
-        setInternships(internshipsData.success ? internshipsData.data : []);
-        setTotal(internshipsData.total || 0);
-      }
-
-      if (categoriesRes.ok) {
-        const categoriesData = await categoriesRes.json();
-        setCategories(categoriesData.success ? categoriesData.data : []);
-      }
-
-      if (filtersRes.ok) {
-        const filtersData = await filtersRes.json();
-        if (filtersData.success) {
-          setJobTypes(filtersData.data.jobTypes || []);
-          setLocations(filtersData.data.locations || []);
+      if (combinedRes.ok) {
+        const combinedData = await combinedRes.json();
+        
+        if (combinedData.success) {
+          setInternships(combinedData.data.jobs || []);
+          setTotal(combinedData.total || 0);
+          setCategories(combinedData.data.categories || []);
+          setJobTypes(combinedData.data.filters?.jobTypes || []);
+          setLocations(combinedData.data.filters?.locations || []);
         }
+      } else {
+        console.error(`[Internships Page] Failed to fetch data: ${combinedRes.status}`);
       }
     } catch (error) {
       console.error("Error fetching internships:", error);
@@ -187,65 +182,73 @@ function InternshipsPageContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Header */}
-      <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-6">
-          <h1 className="text-2xl md:text-3xl font-bold mb-2 text-gray-900">
-            {selectedCategoryName
-              ? `${selectedCategoryName} Internships`
-              : "Internships in Nepal"}
-          </h1>
-          <p className="text-gray-600 text-sm md:text-base">
-            Browse {total} internship opportunities from top companies
-          </p>
-        </div>
-      </div>
-      
-      <div className="container mx-auto px-4 py-6">
-        {/* Main Content */}
-        <div className="w-full">
-            {/* Search and Active Filters */}
-            <div className="mb-6 space-y-4">
-              <div className="flex gap-2">
+      <div className="bg-white border-b border-gray-200">
+        <div className="container mx-auto px-4 py-8 md:py-10">
+          {/* Header with Title and Description */}
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-3 text-gray-900">
+              {selectedCategoryName
+                ? `${selectedCategoryName} Internships`
+                : "Internships in Nepal"}
+            </h1>
+            <p className="text-lg text-gray-600">
+              Browse {total.toLocaleString()} internship opportunities from top companies
+            </p>
+          </div>
+
+          {/* Enhanced Search Bar */}
+          <div className="space-y-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <form onSubmit={handleSearch} className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                   <Input
                     value={searchValue}
                     onChange={(e) => setSearchValue(e.target.value)}
-                    placeholder="Search internships..."
-                    className="pl-10"
+                    placeholder="Search internships by title, company, or category..."
+                    className="pl-12 pr-4 h-12 text-base border-gray-300 focus:border-[#0A66C2] focus:ring-[#0A66C2]"
                   />
                 </form>
-                <Button type="button" onClick={() => {
-                  const params = new URLSearchParams(searchParams.toString());
-                  if (searchValue) {
-                    params.set("search", searchValue);
-                  } else {
-                    params.delete("search");
-                  }
-                  params.delete("page");
-                  router.push(`/internships?${params.toString()}`);
-                }}>Search</Button>
-                <FilterSidebar
-                  categories={categories}
-                  jobTypes={jobTypes}
-                  locations={locations}
-                  selectedCategory={selectedCategory}
-                  selectedJobType={selectedJobType}
-                  selectedLocation={selectedLocation}
-                  selectedUrgency={selectedUrgency}
-                  onCategoryChange={handleCategoryChange}
-                  onJobTypeChange={handleJobTypeChange}
-                  onLocationChange={handleLocationChange}
-                  onUrgencyChange={handleUrgencyChange}
-                />
+                <div className="flex gap-2">
+                  <Button 
+                    type="button" 
+                    onClick={() => {
+                      const params = new URLSearchParams(searchParams.toString());
+                      if (searchValue) {
+                        params.set("search", searchValue);
+                      } else {
+                        params.delete("search");
+                      }
+                      params.delete("page");
+                      router.push(`/internships?${params.toString()}`);
+                    }}
+                    className="h-12 px-6 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-sm"
+                  >
+                    Search
+                  </Button>
+                  <FilterSidebar
+                    categories={categories}
+                    jobTypes={jobTypes}
+                    locations={locations}
+                    selectedCategory={selectedCategory}
+                    selectedJobType={selectedJobType}
+                    selectedLocation={selectedLocation}
+                    selectedUrgency={selectedUrgency}
+                    onCategoryChange={handleCategoryChange}
+                    onJobTypeChange={handleJobTypeChange}
+                    onLocationChange={handleLocationChange}
+                    onUrgencyChange={handleUrgencyChange}
+                  />
+                </div>
               </div>
 
-              {/* Active Filters - Dice.com style */}
+             
+
+              {/* Active Filters */}
               {(selectedCategory || selectedJobType || selectedLocation || selectedUrgency || searchParams.get("search")) && (
-                <div className="flex flex-wrap gap-2 items-center">
+                <div className="flex flex-wrap gap-2 items-center pt-2 border-t border-gray-100">
+                  <span className="text-sm text-gray-500 font-medium mr-1">Active filters:</span>
                   {selectedCategory && (
-                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-200">
+                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
                       {selectedCategoryName}
                       <button
                         onClick={() => removeFilter("category")}
@@ -257,7 +260,7 @@ function InternshipsPageContent() {
                     </Badge>
                   )}
                   {selectedJobType && (
-                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-200">
+                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
                       {jobTypes.find((jt) => jt.value === selectedJobType)?.label || selectedJobType}
                       <button
                         onClick={() => removeFilter("jobType")}
@@ -269,7 +272,7 @@ function InternshipsPageContent() {
                     </Badge>
                   )}
                   {selectedLocation && (
-                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-200">
+                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
                       {selectedLocation}
                       <button
                         onClick={() => removeFilter("location")}
@@ -281,7 +284,7 @@ function InternshipsPageContent() {
                     </Badge>
                   )}
                   {selectedUrgency && (
-                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-200">
+                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
                       {selectedUrgency === "today" ? "Today" : selectedUrgency === "3days" ? "Last 3 days" : selectedUrgency === "7days" ? "Last 7 days" : selectedUrgency === "30days" ? "Last 30 days" : selectedUrgency}
                       <button
                         onClick={() => removeFilter("urgency")}
@@ -293,7 +296,7 @@ function InternshipsPageContent() {
                     </Badge>
                   )}
                   {searchParams.get("search") && (
-                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 hover:bg-blue-200 border-blue-200">
+                    <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
                       {searchParams.get("search")}
                       <button
                         onClick={() => removeFilter("search")}
@@ -305,25 +308,27 @@ function InternshipsPageContent() {
                     </Badge>
                   )}
                   <Button
-                    variant="ghost"
-                    size="sm"
                     onClick={() => {
                       router.push("/internships");
                       setSearchValue("");
                     }}
-                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                    className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 text-sm font-medium bg-transparent border-0"
                   >
-                    Clear filters
+                    Clear all
                   </Button>
                 </div>
               )}
-            </div>
-
-
+          </div>
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 py-6">
+        {/* Main Content */}
+        <div className="w-full">
             {/* Internships List */}
             <div>
               {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                   {[...Array(ITEMS_PER_PAGE)].map((_, i) => (
                     <SkeletonJobCard key={i} />
                   ))}
@@ -350,7 +355,7 @@ function InternshipsPageContent() {
                 </div>
               ) : (
                 <>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
                     {internships.map((internship: any) => (
                       <JobCard key={internship.id} job={internship} />
                     ))}

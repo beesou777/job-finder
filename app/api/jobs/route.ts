@@ -92,9 +92,25 @@ export async function GET(request: NextRequest) {
     const totalQuery = query.clone();
     const total = await totalQuery.getCount();
     
-    // Order by postedAt first (migration ensures this is set), then createdAt as fallback
-    // leftJoinAndSelect already loads the category relation
+    // Optimize: Select only needed fields to reduce data transfer
     const jobsEntities = await query
+      .select([
+        "job.id",
+        "job.title",
+        "job.company",
+        "job.location",
+        "job.applyUrl",
+        "job.type",
+        "job.createdAt",
+        "job.postedAt",
+        "job.expiresAt",
+        "job.salaryText",
+        "job.jobType",
+        "job.source",
+        "category.id",
+        "category.name",
+        "category.slug",
+      ])
       .orderBy("job.postedAt", "DESC", "NULLS LAST")
       .addOrderBy("job.createdAt", "DESC")
       .skip(offset)
