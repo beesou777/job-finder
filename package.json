@@ -10,6 +10,7 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "init-admin": "tsx scripts/init-admin.ts",
     "scrape": "tsx scripts/run-scraper.ts",
+    "scrape:merojob": "tsx scripts/run-merojob.ts",
     "migrate-categories": "tsx scripts/migrate-categories.ts",
     "migrate-jobtype": "tsx scripts/migrate-jobtype-and-defaults.ts",
     "seed-categories": "tsx scripts/seed-categories.ts",
