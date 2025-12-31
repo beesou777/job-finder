@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MapPin, Building2, ExternalLink, DollarSign, Calendar, Sparkles, Clock, Briefcase, ArrowRight } from "lucide-react";
+import { addUtmParams } from "@/lib/utils";
 
 interface JobCardProps {
   job: {
@@ -145,7 +146,12 @@ export function JobCard({ job }: JobCardProps) {
         )}
 
         <div className="mt-auto pt-4 border-t border-gray-200">
-          <a href={job.applyUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 text-primary hover:text-primary/90 font-medium text-sm">
+          <a 
+            href={addUtmParams(job.applyUrl, job.source, job.id)} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center gap-1.5 text-primary hover:text-primary/90 font-medium text-sm"
+          >
             Apply Now
             <ArrowRight className="w-4 h-4" />
           </a>
