@@ -560,3 +560,14 @@ Built with:
 
 **Made with ❤️ for Nepal's job seekers**
 
+# Get all job URLs
+GET /api/kamkhoj/data/all
+
+# Get URLs from a specific source
+GET /api/kamkhoj/data/all?source=necojobs
+
+# Get only internship URLs
+GET /api/kamkhoj/data/all?type=internship
+
+# Combine filters
+GET /api/kamkhoj/data/all?source=internsathi&type=internship

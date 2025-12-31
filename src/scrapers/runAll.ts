@@ -15,6 +15,8 @@ import { scrapeJobAxleList } from "./listPages/jobaxle";
 import { scrapeJobAxleDetail } from "./detailPages/jobaxle";
 import { scrapeVritJobsList } from "./listPages/vritjobs";
 import { scrapeVritJobsDetail } from "./detailPages/vritjobs";
+import { scrapeNecojobsList } from "./listPages/necojobs";
+import { scrapeNecojobsDetail } from "./detailPages/necojobs";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -102,6 +104,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     listingUrls: ["https://api.vritjobs.com/api/jobs/?is_public=true&page=1&search=&size=30"], // API endpoint
     maxPages: 10, // Will fetch all pages automatically via API
     maxJobs: 200,
+  },
+  {
+    baseUrl: "https://www.necojobs.com.np",
+    source: "necojobs",
+    listScraper: scrapeNecojobsList,
+    detailScraper: scrapeNecojobsDetail,
+    listingUrls: ["https://www.necojobs.com.np/api/v1/category/category"], // API endpoint for categories
+    maxPages: 1, // Will fetch all categories and jobs automatically via API
+    maxJobs: 500, // Higher limit since we're fetching from multiple categories
   },
   // Note: sajilojob.com and internnepal.com domains not found
   // If you have the correct URLs, add them here
@@ -242,14 +253,28 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
     listUrls = routes.filter((r) => r.type === "list").slice(0, 2).map(r => r.url);
   }
 
-  // Collect detail URLs
+  // Collect detail URLs and pre-fetched jobs
   const detailUrls = new Set<string>();
+  const preFetchedJobs: JobData[] = [];
+
   for (const listUrl of listUrls) {
     const listResult = await config.listScraper(listUrl);
-    listResult.detailUrls.forEach((url) => detailUrls.add(url));
+    
+    // Check if this scraper returned pre-fetched jobs (API-based scrapers like necojobs, internsathi, etc.)
+    if (listResult.preFetchedJobs && listResult.preFetchedJobs.length > 0) {
+      preFetchedJobs.push(...listResult.preFetchedJobs);
+      console.log(`  ✅ Fetched ${listResult.preFetchedJobs.length} jobs directly from list page (total: ${preFetchedJobs.length})`);
+    } else {
+      listResult.detailUrls.forEach((url) => detailUrls.add(url));
+    }
   }
 
-  // Scrape details
+  // If we have pre-fetched jobs, use them (API-based scrapers)
+  if (preFetchedJobs.length > 0) {
+    return preFetchedJobs.slice(0, config.maxJobs || 500);
+  }
+
+  // Otherwise, scrape detail pages (HTML-based scrapers)
   for (const detailUrl of Array.from(detailUrls).slice(0, config.maxJobs || 50)) {
     const jobData = await config.detailScraper(detailUrl);
     if (jobData) {
