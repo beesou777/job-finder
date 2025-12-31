@@ -246,60 +246,7 @@ export default function HomeContent() {
         </div>
       </section>
 
-      {/* Stats Cards */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {loading ? (
-            <>
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-            </>
-          ) : (
-            <>
-              <Card className="bg-white border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-400 transition-all">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1 font-medium">Total Opportunities</p>
-                      <p className="text-4xl font-bold text-[#0A66C2]">{stats.total.toLocaleString()}</p>
-                    </div>
-                    <div className="p-3 bg-gray-50 rounded-lg">
-                      <TrendingUp className="w-8 h-8 text-gray-600" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-400 transition-all">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1 font-medium">Active Jobs</p>
-                      <p className="text-4xl font-bold text-[#0A66C2]">{stats.totalJobs.toLocaleString()}</p>
-                    </div>
-                    <div className="p-3 bg-gray-50 rounded-lg">
-                      <Briefcase className="w-8 h-8 text-gray-600" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white border border-gray-300 shadow-sm hover:shadow-md hover:border-gray-400 transition-all">
-                <CardContent className="pt-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-gray-600 mb-1 font-medium">Internships</p>
-                      <p className="text-4xl font-bold text-[#0A66C2]">{stats.totalInternships.toLocaleString()}</p>
-                    </div>
-                    <div className="p-3 bg-gray-50 rounded-lg">
-                      <Users className="w-8 h-8 text-gray-600" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </>
-          )}
-        </div>
-      </section>
+   
 
       {/* Features Section */}
       <section className="container mx-auto px-4 py-20">

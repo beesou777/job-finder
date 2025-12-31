@@ -4,11 +4,13 @@ import { scrapeJobsNepalList } from "./listPages/jobsnepal";
 import { scrapeKumariJobList } from "./listPages/kumarijob";
 import { scrapeKantipurJobList } from "./listPages/kantipurjob";
 import { scrapeRamroJobList } from "./listPages/ramrojob";
+import { scrapeMeroJobList } from "./listPages/merojob";
 import { scrapeMeroCareerDetail } from "./detailPages/merocareer";
 import { scrapeJobsNepalDetail } from "./detailPages/jobsnepal";
 import { scrapeKumariJobDetail } from "./detailPages/kumarijob";
 import { scrapeKantipurJobDetail } from "./detailPages/kantipurjob";
 import { scrapeRamroJobDetail } from "./detailPages/ramrojob";
+import { scrapeMeroJobDetail } from "./detailPages/merojob";
 import { scrapeInternSathiList } from "./listPages/internsathi";
 import { scrapeInternSathiDetail } from "./detailPages/internsathi";
 import { scrapeJobAxleList } from "./listPages/jobaxle";
@@ -38,6 +40,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     listingUrls: ["https://merocareer.com/jobs"], // Direct listing page
     maxPages: 5,
     maxJobs: 50,
+  },
+  {
+    baseUrl: "https://merojob.com",
+    source: "merojob",
+    listScraper: scrapeMeroJobList,
+    detailScraper: scrapeMeroJobDetail,
+    listingUrls: ["https://api.merojob.com/api/v1/jobs/?page=1&page_size=50"], // API endpoint
+    maxPages: 50, // Will fetch all pages automatically via API (handles 400+ jobs)
+    maxJobs: 500,
   },
   {
     baseUrl: "https://jobsnepal.com",
@@ -73,7 +84,7 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     detailScraper: scrapeRamroJobDetail,
     listingUrls: ["https://www.ramrojob.com/advance_search"], // API endpoint
     maxPages: 10, // Will fetch all pages automatically via API
-    maxJobs: 200,
+    maxJobs: 500,
   },
   {
     baseUrl: "https://internsathi.com",
@@ -94,7 +105,7 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     detailScraper: scrapeJobAxleDetail,
     listingUrls: ["https://jobaxle.com"], // API endpoint is used directly
     maxPages: 10, // Will fetch all pages automatically
-    maxJobs: 200,
+    maxJobs: 500,
   },
   {
     baseUrl: "https://vritjobs.com",
@@ -102,8 +113,8 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     listScraper: scrapeVritJobsList,
     detailScraper: scrapeVritJobsDetail,
     listingUrls: ["https://api.vritjobs.com/api/jobs/?is_public=true&page=1&search=&size=30"], // API endpoint
-    maxPages: 10, // Will fetch all pages automatically via API
-    maxJobs: 200,
+    maxPages: 20, // Will fetch all pages automatically via API
+    maxJobs: 500,
   },
   {
     baseUrl: "https://www.necojobs.com.np",
@@ -242,45 +253,81 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
     throw new Error(`Unknown source: ${source}`);
   }
 
+  console.log(`\n📡 Processing ${config.source}...`);
+
   const jobs: JobData[] = [];
+  const preFetchedJobs: JobData[] = [];
   
   // Get listing URLs
   let listUrls: string[] = [];
   if (config.listingUrls && config.listingUrls.length > 0) {
     listUrls = config.listingUrls;
+    console.log(`  📄 Using provided listing URLs: ${listUrls.length}`);
   } else {
+    console.log(`  🔍 Discovering routes for ${config.baseUrl}...`);
     const routes = await discoverJobRoutes(config.baseUrl);
     listUrls = routes.filter((r) => r.type === "list").slice(0, 2).map(r => r.url);
   }
 
   // Collect detail URLs and pre-fetched jobs
   const detailUrls = new Set<string>();
-  const preFetchedJobs: JobData[] = [];
 
+  // Scrape list pages with pagination support
   for (const listUrl of listUrls) {
-    const listResult = await config.listScraper(listUrl);
+    console.log(`  📄 Scraping list page: ${listUrl}`);
     
-    // Check if this scraper returned pre-fetched jobs (API-based scrapers like necojobs, internsathi, etc.)
-    if (listResult.preFetchedJobs && listResult.preFetchedJobs.length > 0) {
-      preFetchedJobs.push(...listResult.preFetchedJobs);
-      console.log(`  ✅ Fetched ${listResult.preFetchedJobs.length} jobs directly from list page (total: ${preFetchedJobs.length})`);
-    } else {
-      listResult.detailUrls.forEach((url) => detailUrls.add(url));
+    let currentUrl: string | undefined = listUrl;
+    let pageCount = 0;
+
+    while (currentUrl && pageCount < (config.maxPages || 5)) {
+      try {
+        const listResult = await config.listScraper(currentUrl);
+        
+        // Check if this scraper returned pre-fetched jobs (API-based scrapers)
+        if (listResult.preFetchedJobs && listResult.preFetchedJobs.length > 0) {
+          preFetchedJobs.push(...listResult.preFetchedJobs);
+          console.log(`    ✅ Fetched ${listResult.preFetchedJobs.length} jobs directly from list page (total: ${preFetchedJobs.length})`);
+        } else {
+          listResult.detailUrls.forEach((url) => detailUrls.add(url));
+          console.log(`    ✅ Found ${listResult.detailUrls.length} job links (total: ${detailUrls.size})`);
+        }
+
+        if (!listResult.hasMore || !listResult.nextPageUrl) {
+          break;
+        }
+
+        currentUrl = listResult.nextPageUrl;
+        pageCount++;
+      } catch (error: any) {
+        console.error(`    ❌ Error scraping list page: ${error.message}`);
+        break;
+      }
     }
   }
 
-  // If we have pre-fetched jobs, use them (API-based scrapers)
+  // Handle pre-fetched jobs or scrape detail pages
   if (preFetchedJobs.length > 0) {
-    return preFetchedJobs.slice(0, config.maxJobs || 500);
+    console.log(`  ⚡ Using pre-fetched jobs from list page (${preFetchedJobs.length} jobs)`);
+    jobs.push(...preFetchedJobs.slice(0, config.maxJobs || 500));
+  } else if (detailUrls.size > 0) {
+    console.log(`  🔍 Scraping ${detailUrls.size} detail pages...`);
+    const detailUrlsArray = Array.from(detailUrls).slice(0, config.maxJobs || 50);
+
+    for (const detailUrl of detailUrlsArray) {
+      try {
+        const jobData = await config.detailScraper(detailUrl);
+        if (jobData) {
+          jobs.push(jobData);
+        }
+      } catch (error: any) {
+        console.error(`    ❌ Error scraping detail ${detailUrl}: ${error.message}`);
+      }
+    }
+  } else {
+    console.log(`  ⚠️  No job detail URLs found for ${config.source}`);
   }
 
-  // Otherwise, scrape detail pages (HTML-based scrapers)
-  for (const detailUrl of Array.from(detailUrls).slice(0, config.maxJobs || 50)) {
-    const jobData = await config.detailScraper(detailUrl);
-    if (jobData) {
-      jobs.push(jobData);
-    }
-  }
+  console.log(`  ✅ ${config.source}: Scraped ${jobs.length} jobs`);
 
   return jobs;
 }
