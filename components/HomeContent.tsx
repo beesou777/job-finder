@@ -196,7 +196,7 @@ export default function HomeContent() {
             <div className="text-center mb-12">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900 leading-tight">
                 Find Jobs in Nepal
-                <span className="block text-[#0A66C2] mt-2">Latest Opportunities 2024</span>
+                <span className="block text-[#0A66C2] mt-2">Latest Opportunities {new Date().getFullYear()}</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-4 max-w-2xl mx-auto leading-relaxed">
                 Discover 1000+ job opportunities from top Nepali job portals

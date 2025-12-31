@@ -79,9 +79,8 @@ const GRAPHQL_QUERY = `
  */
 function mapToJobData(job: InternSathiJob): JobData {
   // Construct apply URL
-  const applyUrl = job.slug
-    ? `${BASE_URL}/${job.slug}`
-    : `${BASE_URL}/job/${job.jobId}`;
+  const applyUrl = `${BASE_URL}/jobs/${job.slug}`
+;
 
   // Format salary
   let salaryText: string | undefined;

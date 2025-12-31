@@ -1,5 +1,5 @@
 ---
-title: "Career Change in Nepal: Switching Industries Guide 2026"
+title: "Career Change in Nepal: Switching Industries Guide"
 description: "Learn how to successfully change careers in Nepal. Tips, strategies, and steps to transition to a new industry or role."
 date: "2025-12-22"
 category: "Career Advice"

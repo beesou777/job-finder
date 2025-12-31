@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Internships in Nepal | Latest Internship Opportunities 2024",
+  title: "Internships in Nepal | Latest Internship Opportunities",
   description: "Find internships in Nepal. Browse internship opportunities in Kathmandu, Pokhara, and across Nepal. IT internships, marketing internships, and more.",
   keywords: [
     "internships nepal",

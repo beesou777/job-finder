@@ -1,5 +1,5 @@
 ---
-title: "Salary Negotiation in Nepal: Complete Guide 2026"
+title: "Salary Negotiation in Nepal: Complete Guide"
 description: "Learn how to negotiate your salary effectively in Nepal. Tips, strategies, and market insights for getting the compensation you deserve."
 date: "2026-01-16"
 category: "Career Advice"

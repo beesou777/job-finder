@@ -1,5 +1,5 @@
 ---
-title: "Best Job Sites in Nepal: Complete Comparison 2026"
+title: "Best Job Sites in Nepal: Complete Comparison"
 description: "Compare the top job portals in Nepal. Find out which platforms work best for your industry and how to maximize your job search success."
 date: "2026-01-10"
 category: "Job Search"

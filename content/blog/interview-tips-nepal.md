@@ -1,5 +1,5 @@
 ---
-title: "Interview Tips for Nepal: How to Ace Your Job Interview 2026"
+title: "Interview Tips for Nepal: How to Ace Your Job Interview"
 description: "Prepare for success with common interview questions, body language tips, and strategies to make a great first impression in Nepal's job market."
 date: "2026-01-18"
 category: "Career Advice"

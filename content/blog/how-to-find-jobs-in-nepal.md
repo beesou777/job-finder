@@ -1,5 +1,5 @@
 ---
-title: "How to Find Jobs in Nepal: Complete Guide 2026"
+title: "How to Find Jobs in Nepal: Complete Guide"
 description: "Learn the best strategies for finding jobs in Nepal. Discover top job portals, networking tips, and application strategies to land your dream job."
 date: "2026-01-15"
 category: "Job Search"

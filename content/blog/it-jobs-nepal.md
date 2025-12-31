@@ -1,5 +1,5 @@
 ---
-title: "IT Jobs in Nepal: Salary Guide & Opportunities 2026"
+title: "IT Jobs in Nepal: Salary Guide & Opportunities"
 description: "Explore IT job opportunities in Nepal. Learn about salaries, top companies, required skills, and how to land your dream tech job."
 date: "2026-01-12"
 category: "Job Search"

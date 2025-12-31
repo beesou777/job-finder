@@ -1,5 +1,5 @@
 ---
-title: "Remote Jobs in Nepal: Complete Guide 2026"
+title: "Remote Jobs in Nepal: Complete Guide"
 description: "Explore remote work opportunities in Nepal. Learn about remote job platforms, companies hiring remotely, and tips for working from home."
 date: "2026-01-01"
 category: "Remote Work"

@@ -1,5 +1,5 @@
 ---
-title: "Resume Writing Tips for Nepal Job Market 2026"
+title: "Resume Writing Tips for Nepal Job Market"
 description: "Learn how to write a winning resume that gets noticed by employers in Nepal. Tips, templates, and examples for the Nepali job market."
 date: "2026-01-20"
 category: "Career Advice"

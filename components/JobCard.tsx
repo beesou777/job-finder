@@ -146,13 +146,15 @@ export function JobCard({ job }: JobCardProps) {
         )}
 
         <div className="mt-auto pt-4 border-t border-gray-200">
-          <Link 
-            href={`/jobs/${job.id}`}
+          <a 
+            href={addUtmParams(job.applyUrl, job.source, job.id)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-primary hover:text-primary/90 font-medium text-sm"
           >
-            View Details
+            Apply Now
             <ArrowRight className="w-4 h-4" />
-          </Link>
+          </a>
         </div>
       </CardContent>
     </Card>

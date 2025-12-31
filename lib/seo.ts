@@ -46,7 +46,7 @@ export function generateCategoryMetadata(
   categoryName: string,
   total: number
 ): Metadata {
-  const title = `${categoryName} Jobs in Nepal | ${total}+ ${categoryName} Opportunities 2024`;
+  const title = `${categoryName} Jobs in Nepal | ${total}+ ${categoryName} Opportunities ${new Date().getFullYear()}`;
   const description = `Find ${categoryName} jobs in Nepal. Browse ${total}+ ${categoryName} job openings in Kathmandu, Pokhara, and across Nepal. Updated daily. Apply now.`;
 
   return {
@@ -76,7 +76,7 @@ export function generateLocationMetadata(
   city: string,
   total: number
 ): Metadata {
-  const title = `Jobs in ${city}, Nepal | ${total}+ Job Opportunities ${city} 2024`;
+  const title = `Jobs in ${city}, Nepal | ${total}+ Job Opportunities ${city} ${new Date().getFullYear()}`;
   const description = `Find jobs in ${city}, Nepal. Browse ${total}+ job openings in ${city} from top companies. IT jobs, marketing jobs, and more. Updated daily.`;
 
   return {
