@@ -113,12 +113,22 @@ function formatSalary(
  * Map Necojobs API response to JobData
  */
 function mapToJobData(job: NecojobsJob): JobData {
-  // Construct apply URL using category slug format: category/category-slug
-  const applyUrl = job.categorySlug
-    ? `${BASE_URL}/category/${job.categorySlug}`
-    : job.slug
-    ? `${BASE_URL}/job/${job.slug}`
-    : `${BASE_URL}/job/${job._id}`;
+  // Construct apply URL using category slug format: category/category-slug/job-slug
+  // This ensures each job has a unique URL while maintaining the category format
+  let applyUrl: string;
+  if (job.categorySlug && job.slug) {
+    // Use category/categoryslug/job-slug format for uniqueness
+    applyUrl = `${BASE_URL}/category/${job.categorySlug}/${job.slug}`;
+  } else if (job.categorySlug) {
+    // Fallback: use category slug with job ID if slug not available
+    applyUrl = `${BASE_URL}/category/${job.categorySlug}/${job._id}`;
+  } else if (job.slug) {
+    // Fallback: use job slug if category slug not available
+    applyUrl = `${BASE_URL}/job/${job.slug}`;
+  } else {
+    // Last resort: use job ID
+    applyUrl = `${BASE_URL}/job/${job._id}`;
+  }
 
   // Format deadline from jobEndDate
   let deadline: string | undefined;

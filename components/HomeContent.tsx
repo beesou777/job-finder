@@ -195,11 +195,11 @@ export default function HomeContent() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900 leading-tight">
-                Find Your Next
-                <span className="block text-[#0A66C2] mt-2">Career Opportunity</span>
+                Find Jobs in Nepal
+                <span className="block text-[#0A66C2] mt-2">Latest Opportunities 2024</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 mb-4 max-w-2xl mx-auto leading-relaxed">
-                Discover {stats.total.toLocaleString()}+ job opportunities from top Nepali job portals
+                Discover 1000+ job opportunities from top Nepali job portals
               </p>
               <p className="text-base text-gray-500 mb-10">
                 Search across MeroJob, Kantipur Job, JobsNepal, and more - all in one place

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Briefcase, Users, Menu, X } from "lucide-react";
+import { Briefcase, Users, Menu, X, BookOpen } from "lucide-react";
 import { useState } from "react";
 
 export function Navbar() {
@@ -21,6 +21,11 @@ export function Navbar() {
       href: "/internships",
       label: "Internships",
       icon: Users,
+    },
+    {
+      href: "/blog",
+      label: "Blog",
+      icon: BookOpen,
     },
   ];
 

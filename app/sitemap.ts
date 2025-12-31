@@ -71,6 +71,66 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.8,
       })
     })
+
+    // Add location pages
+    const locations = [
+      { name: 'Kathmandu', slug: 'kathmandu' },
+      { name: 'Pokhara', slug: 'pokhara' },
+      { name: 'Butwal', slug: 'butwal' },
+      { name: 'Biratnagar', slug: 'biratnagar' },
+      { name: 'Lalitpur', slug: 'lalitpur' },
+    ]
+
+    locations.forEach((location) => {
+      routes.push({
+        url: `${baseUrl}/jobs/location/${location.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 0.8,
+      })
+    })
+
+    // Add category pages
+    try {
+      const allCategories = await categoryRepository.find()
+      allCategories.forEach((category) => {
+        if (category.slug) {
+          routes.push({
+            url: `${baseUrl}/jobs/category/${category.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 0.8,
+          })
+        }
+      })
+    } catch (error) {
+      console.error('Error adding category pages to sitemap:', error)
+    }
+
+    // Add blog pages
+    routes.push({
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.7,
+    })
+
+    // Add individual blog posts from markdown files
+    try {
+      const { getAllBlogPosts } = await import('@/lib/blog');
+      const blogPosts = getAllBlogPosts();
+      
+      blogPosts.forEach((post) => {
+        routes.push({
+          url: `${baseUrl}/blog/${post.slug}`,
+          lastModified: new Date(post.date),
+          changeFrequency: 'monthly',
+          priority: 0.6,
+        });
+      });
+    } catch (error) {
+      console.error('Error adding blog posts to sitemap:', error);
+    }
   } catch (error) {
     console.error('Error generating sitemap:', error)
   }
