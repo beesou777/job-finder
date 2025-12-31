@@ -132,7 +132,7 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     source: "jobssniper",
     listScraper: scrapeJobSniperList,
     detailScraper: scrapeJobSniperDetail,
-    listingUrls: ["https://www.jobssniper.com/api/search?page=1"], // API endpoint
+    listingUrls: ["https://www.jobssniper.com/api/job-by/fulltime?page=1"], // API endpoint (scraper handles fulltime, parttime, internship internally)
     maxPages: 50, // Will fetch all pages automatically via API
     maxJobs: 500,
   },
