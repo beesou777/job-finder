@@ -11,6 +11,7 @@
     "init-admin": "tsx scripts/init-admin.ts",
     "scrape": "tsx scripts/run-scraper.ts",
     "scrape:necojobs": "tsx scripts/run-necojobs-scraper.ts",
+    "scrape:jobssniper": "tsx scripts/run-jobssniper-scraper.ts",
     "migrate-categories": "tsx scripts/migrate-categories.ts",
     "migrate-jobtype": "tsx scripts/migrate-jobtype-and-defaults.ts",
     "seed-categories": "tsx scripts/seed-categories.ts",

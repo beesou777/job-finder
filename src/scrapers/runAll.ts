@@ -19,6 +19,8 @@ import { scrapeVritJobsList } from "./listPages/vritjobs";
 import { scrapeVritJobsDetail } from "./detailPages/vritjobs";
 import { scrapeNecojobsList } from "./listPages/necojobs";
 import { scrapeNecojobsDetail } from "./detailPages/necojobs";
+import { scrapeJobSniperList } from "./listPages/jobssniper";
+import { scrapeJobSniperDetail } from "./detailPages/jobssniper";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -124,6 +126,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     listingUrls: ["https://www.necojobs.com.np/api/v1/category/category"], // API endpoint for categories
     maxPages: 1, // Will fetch all categories and jobs automatically via API
     maxJobs: 500, // Higher limit since we're fetching from multiple categories
+  },
+  {
+    baseUrl: "https://www.jobssniper.com",
+    source: "jobssniper",
+    listScraper: scrapeJobSniperList,
+    detailScraper: scrapeJobSniperDetail,
+    listingUrls: ["https://www.jobssniper.com/api/search?page=1"], // API endpoint
+    maxPages: 50, // Will fetch all pages automatically via API
+    maxJobs: 500,
   },
   // Note: sajilojob.com and internnepal.com domains not found
   // If you have the correct URLs, add them here

@@ -93,6 +93,7 @@ export async function GET(request: NextRequest) {
     const total = await totalQuery.getCount();
     
     // Optimize: Select only needed fields to reduce data transfer
+    // Add computed column for sorting (internsathi first)
     const jobsEntities = await query
       .select([
         "job.id",
@@ -111,7 +112,9 @@ export async function GET(request: NextRequest) {
         "category.name",
         "category.slug",
       ])
-      .orderBy("job.postedAt", "DESC", "NULLS LAST")
+      .addSelect("CASE WHEN job.source = 'internsathi' THEN 0 ELSE 1 END", "source_priority")
+      .orderBy("source_priority", "ASC")
+      .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
       .addOrderBy("job.createdAt", "DESC")
       .skip(offset)
       .take(limit)
