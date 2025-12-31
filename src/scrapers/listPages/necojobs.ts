@@ -113,8 +113,10 @@ function formatSalary(
  * Map Necojobs API response to JobData
  */
 function mapToJobData(job: NecojobsJob): JobData {
-  // Construct apply URL
-  const applyUrl = job.slug
+  // Construct apply URL using category slug format: category/category-slug
+  const applyUrl = job.categorySlug
+    ? `${BASE_URL}/category/${job.categorySlug}`
+    : job.slug
     ? `${BASE_URL}/job/${job.slug}`
     : `${BASE_URL}/job/${job._id}`;
 
