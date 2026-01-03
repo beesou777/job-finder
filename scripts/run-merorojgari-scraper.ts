@@ -1,9 +1,9 @@
 /**
- * Script to run KumariJob scraper only
- * Run with: npm run scrape:kumarijob or yarn scrape:kumarijob
+ * Script to run Merorojgari scraper only
+ * Run with: npm run scrape:merorojgari or yarn scrape:merorojgari
  * 
- * This script specifically targets kumarijob.com to:
- * - Fetch all jobs from HTML listing pages
+ * This script specifically targets merorojgari.com to:
+ * - Fetch all jobs from RSS feed
  * - Save to database
  */
 
@@ -18,56 +18,33 @@ import { calculateExpirationDate } from "../src/scrapers/core/types";
 // Load environment variables
 config();
 
-async function runKumariJobScraper() {
+async function runMerorojgariScraper() {
   try {
     console.log("🔄 Initializing database connection...");
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
 
-    console.log("🕷️  Starting KumariJob scraper...\n");
-    console.log("📡 This will fetch all jobs from kumarijob.com HTML listings\n");
+    console.log("🕷️  Starting Merorojgari scraper...\n");
+    console.log("📡 This will fetch all jobs from merorojgari.com RSS feed\n");
     
-    const allJobs = await scrapeSource("kumarijob");
+    const allJobs = await scrapeSource("merorojgari");
 
     if (allJobs.length === 0) {
       console.log("⚠️  No jobs found. This might indicate:");
-      console.log("   1. The HTML structure has changed");
+      console.log("   1. The RSS feed structure has changed");
       console.log("   2. There are no active jobs");
       console.log("   3. There's an error in the scraper");
       console.log("\n💡 Check the console logs above for any errors.");
       process.exit(0);
     }
 
-    console.log(`\n✅ Found ${allJobs.length} jobs from KumariJob`);
-    
-    // Check for duplicates within the scraped results
-    const seenUrls = new Set<string>();
-    const duplicateInSession: string[] = [];
-    for (const job of allJobs) {
-      const normalized = job.applyUrl.toLowerCase().replace(/\/$/, '').split('?')[0].split('#')[0];
-      if (seenUrls.has(normalized)) {
-        duplicateInSession.push(job.applyUrl);
-      } else {
-        seenUrls.add(normalized);
-      }
-    }
-    
-    if (duplicateInSession.length > 0) {
-      console.log(`⚠️  Found ${duplicateInSession.length} duplicate jobs within the scraping session (same job appearing on multiple pages)`);
-    }
-    
+    console.log(`\n✅ Found ${allJobs.length} jobs from Merorojgari`);
     console.log("\n💾 Saving jobs to database...");
     
     let saved = 0;
     let duplicates = 0;
     let errors = 0;
     const categoryStats = new Map<string, { name: string; count: number }>();
-    const duplicateReasons = {
-      exactUrl: 0,
-      normalizedUrl: 0,
-      titleSource: 0,
-      sessionDuplicate: 0,
-    };
 
     for (const jobData of allJobs) {
       try {
@@ -88,7 +65,6 @@ async function runKumariJobScraper() {
         let existing = await jobRepository.findOne({
           where: { applyUrl: jobData.applyUrl },
         });
-        let duplicateReason = "";
 
         // If not found, try normalized URL comparison (handles trailing slashes, etc.)
         if (!existing) {
@@ -101,10 +77,7 @@ async function runKumariJobScraper() {
           
           if (allJobsWithSimilarUrl.length > 0) {
             existing = allJobsWithSimilarUrl[0];
-            duplicateReason = "normalized URL";
           }
-        } else {
-          duplicateReason = "exact URL";
         }
 
         // Also check by title + company + source as fallback
@@ -121,29 +94,8 @@ async function runKumariJobScraper() {
             if (!jobData.company || !titleMatch.company || 
                 titleMatch.company.trim().toLowerCase() === (jobData.company || "").trim().toLowerCase()) {
               existing = titleMatch;
-              duplicateReason = "title + source + company";
             }
           }
-        }
-        
-        // Also check if this job URL was already seen in this scraping session (duplicate within same run)
-        // We need to track this differently since we're iterating
-        const jobIndex = allJobs.indexOf(jobData);
-        const seenInThisRun = allJobs.slice(0, jobIndex).some(
-          (j) => {
-            const otherNormalized = normalizeUrl(j.applyUrl);
-            return otherNormalized === normalizedUrl;
-          }
-        );
-        
-        if (seenInThisRun && !existing) {
-          existing = { id: "session-duplicate" } as any; // Mark as duplicate from this session
-          duplicateReason = "duplicate in same scraping session";
-          duplicateReasons.sessionDuplicate++;
-        } else if (existing && duplicateReason) {
-          if (duplicateReason === "exact URL") duplicateReasons.exactUrl++;
-          else if (duplicateReason === "normalized URL") duplicateReasons.normalizedUrl++;
-          else if (duplicateReason === "title + source + company") duplicateReasons.titleSource++;
         }
 
         if (!existing) {
@@ -208,9 +160,8 @@ async function runKumariJobScraper() {
           }
         } else {
           duplicates++;
-          // Log first few duplicates to understand the pattern
-          if (duplicates <= 5 || duplicates % 50 === 0) {
-            console.log(`  ⏭️  Duplicate #${duplicates}: "${jobData.title.substring(0, 40)}..." - Reason: ${duplicateReason || "unknown"}`);
+          if (duplicates % 10 === 0) {
+            console.log(`  ⏭️  Skipped ${duplicates} duplicates so far...`);
           }
         }
       } catch (e: any) {
@@ -223,20 +174,11 @@ async function runKumariJobScraper() {
       }
     }
 
-    console.log("\n✅ KumariJob scraping completed!");
+    console.log("\n✅ Merorojgari scraping completed!");
     console.log(`\n📊 Results:`);
     console.log(`   - Total scraped: ${allJobs.length}`);
-    console.log(`   - Unique URLs in session: ${seenUrls.size}`);
-    console.log(`   - Duplicates within session: ${duplicateInSession.length}`);
     console.log(`   - New jobs saved: ${saved}`);
     console.log(`   - Duplicates skipped: ${duplicates}`);
-    if (duplicates > 0) {
-      console.log(`\n📊 Duplicate Detection Breakdown:`);
-      console.log(`   - Exact URL match: ${duplicateReasons.exactUrl}`);
-      console.log(`   - Normalized URL match: ${duplicateReasons.normalizedUrl}`);
-      console.log(`   - Title + Source + Company match: ${duplicateReasons.titleSource}`);
-      console.log(`   - Duplicate in same session: ${duplicateReasons.sessionDuplicate}`);
-    }
     if (errors > 0) {
       console.log(`   - Errors: ${errors}`);
     }
@@ -263,11 +205,11 @@ async function runKumariJobScraper() {
 
     process.exit(0);
   } catch (error: any) {
-    console.error("❌ KumariJob scraping error:", error.message);
+    console.error("❌ Merorojgari scraping error:", error.message);
     console.error(error.stack);
     process.exit(1);
   }
 }
 
-runKumariJobScraper();
+runMerorojgariScraper();
 

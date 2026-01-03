@@ -27,6 +27,8 @@ import { scrapeWorkHubNepalList } from "./listPages/workhubnepal";
 import { scrapeWorkHubNepalDetail } from "./detailPages/workhubnepal";
 import { scrapeJobsDynamicsList } from "./listPages/jobsdynamics";
 import { scrapeJobsDynamicsDetail } from "./detailPages/jobsdynamics";
+import { scrapeMerorojgariList } from "./listPages/merorojgari";
+import { scrapeMerorojgariDetail } from "./detailPages/merorojgari";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -167,6 +169,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     detailScraper: scrapeJobsDynamicsDetail,
     listingUrls: ["https://jobsdynamics.com/jobs-listing/?ajax_filter=true&job_page=1&per-page=1000&sort-by=recent&posted=all"], // HTML endpoint
     maxPages: 50, // Will fetch all pages automatically
+    maxJobs: 500,
+  },
+  {
+    baseUrl: "https://merorojgari.com",
+    source: "merorojgari",
+    listScraper: scrapeMerorojgariList,
+    detailScraper: scrapeMerorojgariDetail,
+    listingUrls: ["https://merorojgari.com/?feed=job_feed&job_types=fresher%2Cfull-time%2Cinternship%2Cpart-time&paged=1"], // RSS feed
+    maxPages: 50, // Will fetch all pages automatically via RSS
     maxJobs: 500,
   },
   // Note: sajilojob.com and internnepal.com domains not found
