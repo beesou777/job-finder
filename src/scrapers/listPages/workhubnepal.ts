@@ -67,24 +67,25 @@ function cleanHtml(html: string): string {
 }
 
 /**
+ * Convert job title to URL-friendly slug
+ */
+function slugify(title: string): string {
+  return title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/[\s_-]+/g, '-') // Replace spaces, underscores, and multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+}
+
+/**
  * Map WorkHub Nepal API response to JobData
  */
 function mapToJobData(job: WorkHubNepalJob): JobData {
-  // Construct apply URL based on applySite type
-  let applyUrl: string;
-  if (job.applySite === "EMAIL" && job.applySiteEmail) {
-    // For email applications, use the search URL format
-    const searchTitle = encodeURIComponent(job.title);
-    const searchCategory = encodeURIComponent(job.category || "");
-    applyUrl = `${BASE_URL}/?search=${searchTitle}&category=${searchCategory}`;
-  } else if (job.applySite === "LINK" && job.applySiteLink) {
-    applyUrl = job.applySiteLink;
-  } else {
-    // Default: use search URL format
-    const searchTitle = encodeURIComponent(job.title);
-    const searchCategory = encodeURIComponent(job.category || "");
-    applyUrl = `${BASE_URL}/?search=${searchTitle}&category=${searchCategory}`;
-  }
+  // Construct apply URL using job detail page format: /jobs/{title-slug}/{job-id}
+  // Format: https://www.workhubnepal.com/jobs/{title-slug}/{job-id}
+  const titleSlug = slugify(job.title);
+  const applyUrl = `${BASE_URL}/jobs/${encodeURIComponent(`{${job.title}}`)}/${job.id}`;
 
   // Format deadline from expiryDate
   let deadline: string | undefined;
@@ -173,17 +174,19 @@ function mapToJobData(job: WorkHubNepalJob): JobData {
  */
 async function fetchAllJobs(): Promise<JobData[]> {
   const jobs: JobData[] = [];
-  let page = 1;
-  let hasMore = true;
+  let currentPage = 1;
   let totalPages = 1;
 
-  while (hasMore) {
+  // Fetch all pages using do-while loop
+  do {
     try {
       // Construct URL with proper query parameters
       const url = new URL(BASE_URL);
       url.searchParams.set("category", "");
-      url.searchParams.set("page", page.toString());
+      url.searchParams.set("page", currentPage.toString());
       url.searchParams.set("_data", "routes/index");
+      
+      console.log(`[WorkHub Nepal] Fetching page ${currentPage} from: ${url.toString()}`);
       
       const response = await axios.get<WorkHubNepalResponse>(url.toString(), {
         headers: {
@@ -194,48 +197,92 @@ async function fetchAllJobs(): Promise<JobData[]> {
         timeout: 15000,
       });
 
-      if (response.data?.jobsData?.jobs && Array.isArray(response.data.jobsData.jobs)) {
+      if (!response.data?.jobsData) {
+        console.warn(`[WorkHub Nepal] Invalid response structure for page ${currentPage}`);
+        break;
+      }
+
+      // Get totalPages from meta (should be available on every page)
+      if (response.data.jobsData.meta?.totalPages) {
+        totalPages = response.data.jobsData.meta.totalPages;
+        console.log(`[WorkHub Nepal] Total pages from API: ${totalPages}, Total jobs: ${response.data.jobsData.meta.totalJobs || 'N/A'}`);
+      }
+
+      if (response.data.jobsData.jobs && Array.isArray(response.data.jobsData.jobs)) {
         const fetchedJobs = response.data.jobsData.jobs;
-        const mappedJobs = fetchedJobs
-          .filter((job) => job.jobStatus === "OPEN") // Only fetch open jobs
-          .map(mapToJobData);
+        
+        // Log job statuses for debugging
+        const statusCounts = fetchedJobs.reduce((acc: Record<string, number>, job) => {
+          acc[job.jobStatus] = (acc[job.jobStatus] || 0) + 1;
+          return acc;
+        }, {});
+        console.log(
+          `[WorkHub Nepal] Page ${currentPage}/${totalPages}: Job statuses: ${JSON.stringify(statusCounts)}`
+        );
+        
+        // Filter out expired jobs (where expiryDate is in the past)
+        const now = new Date();
+        const validJobs = fetchedJobs.filter((job) => {
+          if (!job.expiryDate) {
+            return true; // Include jobs without expiry date
+          }
+          try {
+            const expiryDate = new Date(job.expiryDate);
+            return expiryDate >= now; // Only include jobs that haven't expired
+          } catch (e) {
+            return true; // Include jobs with invalid expiry dates
+          }
+        });
+        
+        // Log expiration stats
+        const expiredCount = fetchedJobs.length - validJobs.length;
+        if (expiredCount > 0) {
+          console.log(
+            `[WorkHub Nepal] Page ${currentPage}: Filtered out ${expiredCount} expired job(s)`
+          );
+        }
+        
+        // Map all valid (non-expired) jobs
+        const mappedJobs = validJobs.map(mapToJobData);
         jobs.push(...mappedJobs);
 
-        // Update total pages from meta
-        totalPages = response.data.jobsData.meta?.totalPages || 1;
-
         console.log(
-          `[WorkHub Nepal] Fetched page ${page}/${totalPages}, ${mappedJobs.length} jobs (total: ${jobs.length})`
+          `[WorkHub Nepal] Page ${currentPage}/${totalPages}: Fetched ${mappedJobs.length} jobs from ${fetchedJobs.length} total (accumulated: ${jobs.length})`
         );
 
-        // Check if there are more pages
-        if (page < totalPages && fetchedJobs.length > 0) {
-          page++;
-          hasMore = true;
-        } else {
-          hasMore = false;
+        // If no jobs were returned, stop
+        if (fetchedJobs.length === 0) {
+          console.log(`[WorkHub Nepal] No jobs returned on page ${currentPage}. Stopping.`);
+          break;
         }
 
-        // Add small delay between requests
-        if (hasMore) {
+        // Move to next page
+        currentPage++;
+
+        // Add small delay between requests (only if we're continuing)
+        if (currentPage <= totalPages) {
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
       } else {
-        console.warn(`[WorkHub Nepal] No jobs in response for page ${page}`);
-        hasMore = false;
+        console.warn(`[WorkHub Nepal] No jobs array in response for page ${currentPage}`);
+        break;
       }
     } catch (error: any) {
       console.error(
-        `[WorkHub Nepal] Error fetching page ${page}:`,
+        `[WorkHub Nepal] Error fetching page ${currentPage}:`,
         error.message
       );
-      if (error.response?.data) {
-        console.error(`[WorkHub Nepal] Response data:`, error.response.data);
+      if (error.response?.status) {
+        console.error(`[WorkHub Nepal] HTTP Status: ${error.response.status}`);
       }
-      hasMore = false;
+      if (error.response?.data) {
+        console.error(`[WorkHub Nepal] Response data:`, JSON.stringify(error.response.data).substring(0, 200));
+      }
+      break;
     }
-  }
+  } while (currentPage <= totalPages);
 
+  console.log(`[WorkHub Nepal] ✅ Completed fetching all pages. Total jobs collected: ${jobs.length}`);
   return jobs;
 }
 

@@ -14,6 +14,8 @@
     "scrape:jobssniper": "tsx scripts/run-jobssniper-scraper.ts",
     "scrape:jobejee": "tsx scripts/run-jobejee-scraper.ts",
     "scrape:workhubnepal": "tsx scripts/run-workhubnepal-scraper.ts",
+    "scrape:jobsdynamics": "tsx scripts/run-jobsdynamics-scraper.ts",
+    "scrape:kumarijob": "tsx scripts/run-kumarijob-scraper.ts",
     "fix:jobssniper-types": "tsx scripts/fix-jobssniper-types.ts",
     "migrate-categories": "tsx scripts/migrate-categories.ts",
     "migrate-jobtype": "tsx scripts/migrate-jobtype-and-defaults.ts",

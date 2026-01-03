@@ -25,6 +25,8 @@ import { scrapeJobejeeList } from "./listPages/jobejee";
 import { scrapeJobejeeDetail } from "./detailPages/jobejee";
 import { scrapeWorkHubNepalList } from "./listPages/workhubnepal";
 import { scrapeWorkHubNepalDetail } from "./detailPages/workhubnepal";
+import { scrapeJobsDynamicsList } from "./listPages/jobsdynamics";
+import { scrapeJobsDynamicsDetail } from "./detailPages/jobsdynamics";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -66,13 +68,13 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     maxJobs: 50,
   },
   {
-    baseUrl: "https://kumarijob.com",
+    baseUrl: "https://www.kumarijob.com",
     source: "kumarijob",
     listScraper: scrapeKumariJobList,
     detailScraper: scrapeKumariJobDetail,
-    listingUrls: ["https://kumarijob.com/jobs-in-nepal"],
-    maxPages: 5,
-    maxJobs: 50,
+    listingUrls: ["https://www.kumarijob.com/search?page=1"],
+    maxPages: 50, // Will fetch all pages automatically
+    maxJobs: 500,
   },
   {
     baseUrl: "https://kantipurjob.com",
@@ -156,6 +158,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     detailScraper: scrapeWorkHubNepalDetail,
     listingUrls: ["https://www.workhubnepal.com/?category=&page=1&_data=routes%2Findex"], // API endpoint
     maxPages: 1, // Will fetch all pages automatically via API
+    maxJobs: 500,
+  },
+  {
+    baseUrl: "https://jobsdynamics.com",
+    source: "jobsdynamics",
+    listScraper: scrapeJobsDynamicsList,
+    detailScraper: scrapeJobsDynamicsDetail,
+    listingUrls: ["https://jobsdynamics.com/jobs-listing/?ajax_filter=true&job_page=1&per-page=1000&sort-by=recent&posted=all"], // HTML endpoint
+    maxPages: 50, // Will fetch all pages automatically
     maxJobs: 500,
   },
   // Note: sajilojob.com and internnepal.com domains not found
