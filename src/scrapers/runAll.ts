@@ -23,6 +23,8 @@ import { scrapeJobSniperList } from "./listPages/jobssniper";
 import { scrapeJobSniperDetail } from "./detailPages/jobssniper";
 import { scrapeJobejeeList } from "./listPages/jobejee";
 import { scrapeJobejeeDetail } from "./detailPages/jobejee";
+import { scrapeWorkHubNepalList } from "./listPages/workhubnepal";
+import { scrapeWorkHubNepalDetail } from "./detailPages/workhubnepal";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -144,6 +146,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     listScraper: scrapeJobejeeList,
     detailScraper: scrapeJobejeeDetail,
     listingUrls: ["https://api.v1.jobejee.com/v2/jobSearch/new?page=0&size=1000"], // API endpoint
+    maxPages: 1, // Will fetch all pages automatically via API
+    maxJobs: 500,
+  },
+  {
+    baseUrl: "https://www.workhubnepal.com",
+    source: "workhubnepal",
+    listScraper: scrapeWorkHubNepalList,
+    detailScraper: scrapeWorkHubNepalDetail,
+    listingUrls: ["https://www.workhubnepal.com/?category=&page=1&_data=routes%2Findex"], // API endpoint
     maxPages: 1, // Will fetch all pages automatically via API
     maxJobs: 500,
   },
