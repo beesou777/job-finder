@@ -128,19 +128,35 @@ export default function HomeContent() {
   };
 
   // Structured Data for SEO
+  const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://kamkhoj.eventeir.ai";
+  
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "JobKhoj",
     "description": "Nepal's #1 Job Finder - Find jobs and internships across Nepal",
-    "url": typeof window !== "undefined" ? window.location.origin : "https://kamkhoj.eventeir.ai",
+    "url": baseUrl,
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": `${typeof window !== "undefined" ? window.location.origin : "https://kamkhoj.eventeir.ai"}/jobs?search={search_term_string}`
+        "urlTemplate": `${baseUrl}/jobs?search={search_term_string}`
       },
       "query-input": "required name=search_term_string"
+    }
+  };
+
+  // CollectionPage schema for aggregator (SEO only)
+  const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Best Job Aggregator Sites in Nepal - JobKhoj",
+    "description": `Job aggregator sites in Nepal - Browse ${total}+ job listings aggregated from top Nepali job portals`,
+    "url": baseUrl,
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": total,
+      "description": "Job listings aggregated from multiple Nepali job portals"
     }
   };
 
@@ -224,6 +240,10 @@ export default function HomeContent() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+      />
       {jobPostingStructuredData.map((data: any, index: number) => (
         <script
           key={index}
@@ -248,7 +268,7 @@ export default function HomeContent() {
                     Discover 1000+ job opportunities from top Nepali job portals
                   </p>
                   <p className="text-sm text-gray-500">
-                    Search across MeroJob, Kantipur Job, JobsNepal, and more - all in one place
+                    Search across MeroJob, Kantipur Job, JobsNepal, KumariJob, and more - all in one place
                   </p>
                 </div>
                 

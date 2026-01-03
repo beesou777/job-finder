@@ -197,7 +197,7 @@ export function generateOrganizationSchema() {
     name: SITE_NAME,
     url: BASE_URL,
     logo: `${BASE_URL}/favicon.svg`,
-    description: "Nepal's #1 Job Aggregator - Find jobs and internships across Nepal",
+    description: "Best Job Aggregator Sites in Nepal - Find jobs and internships across Nepal from all major portals",
     sameAs: [
       // Add social media URLs when available
       // "https://www.facebook.com/jobkhoj",
@@ -214,7 +214,7 @@ export function generateWebSiteSchema() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
-    description: "Nepal's #1 Job Finder - Find jobs and internships across Nepal",
+    description: "Best Job Aggregator Sites in Nepal - Job aggregator sites in Nepal - Find jobs and internships from all major portals",
     url: BASE_URL,
     potentialAction: {
       "@type": "SearchAction",
@@ -240,6 +240,60 @@ export function generateFAQSchema(faqs: Array<{ question: string; answer: string
       acceptedAnswer: {
         "@type": "Answer",
         text: faq.answer,
+      },
+    })),
+  };
+}
+
+/**
+ * Generate CollectionPage structured data for job aggregator
+ */
+export function generateCollectionPageSchema(totalItems: number) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Best Job Aggregator Sites in Nepal - JobKhoj",
+    description: `Job aggregator sites in Nepal - Browse ${totalItems}+ job listings aggregated from top Nepali job portals including MeroJob, JobsNepal, KumariJob, Kantipur Job, and more.`,
+    url: BASE_URL,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: totalItems,
+      itemListElement: {
+        "@type": "ListItem",
+        position: 1,
+        name: "Job Listings from Multiple Portals",
+        description: "Aggregated job listings from all major Nepali job portals",
+      },
+    },
+    about: {
+      "@type": "Thing",
+      name: "Job Aggregator Sites in Nepal",
+      description: "Platform that collects and displays job listings from multiple Nepali job portals in one unified interface",
+    },
+  };
+}
+
+/**
+ * Generate ItemList structured data for job aggregator homepage
+ */
+export function generateJobAggregatorSchema(jobs: Array<{ id: string; title: string; company?: string | null }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Best Job Aggregator Sites in Nepal - Job Listings",
+    description: "Job listings aggregated from top Nepali job portals",
+    numberOfItems: jobs.length,
+    itemListElement: jobs.map((job, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "JobPosting",
+        identifier: job.id,
+        title: job.title,
+        hiringOrganization: {
+          "@type": "Organization",
+          name: job.company || "Company",
+        },
       },
     })),
   };

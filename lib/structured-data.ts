@@ -9,5 +9,7 @@ export {
   generateOrganizationSchema,
   generateWebSiteSchema,
   generateFAQSchema,
+  generateCollectionPageSchema,
+  generateJobAggregatorSchema,
 } from "./seo";
 

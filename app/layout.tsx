@@ -9,11 +9,13 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "JobKhoj - Find Jobs in Nepal | Latest Job Opportunities & Internships",
+    default: "Best Job Aggregator Sites in Nepal | Job Aggregator Sites in Nepal | JobKhoj",
     template: "%s | JobKhoj - Nepal's #1 Job Aggregator"
   },
-  description: "Find the latest jobs and internships in Nepal. Search across top Nepali job portals - MeroCareer, JobsNepal, KumariJob, InternSathi, JobAxle and more. Your career journey starts here.",
+  description: "Best job aggregator sites in Nepal - Find the latest jobs and internships from top Nepali job portals - MeroCareer, JobsNepal, KumariJob, InternSathi, JobAxle all in one place. Your career journey starts here.",
   keywords: [
+    "best job aggregator sites in nepal",
+    "job aggregator sites in nepal",
     "jobs in nepal",
     "nepal jobs",
     "jobs kathmandu",
@@ -28,7 +30,10 @@ export const metadata: Metadata = {
     "kumarijob",
     "internsathi",
     "jobaxle",
-    "nepal job aggregator"
+    "nepal job aggregator",
+    "job aggregator nepal",
+    "best job sites nepal",
+    "top job aggregator nepal"
   ],
   authors: [{ name: "JobKhoj" }],
   creator: "JobKhoj",
@@ -48,9 +53,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://kamkhoj.eventeir.ai",
-    siteName: "JobKhoj",
-    title: "JobKhoj - Nepal's #1 Job Finder | Jobs & Internships in Nepal",
-    description: "Find the latest jobs and internships in Nepal. Search across top Nepali job portals.",
+    siteName: "JobKhoj - Best Job Aggregator Sites in Nepal",
+    title: "Best Job Aggregator Sites in Nepal | Job Aggregator Sites in Nepal | JobKhoj",
+    description: "Best job aggregator sites in Nepal - Find the latest jobs and internships from top Nepali job portals all in one place.",
     images: [
       {
         url: "https://kamkhoj.eventeir.ai/og-image.png",
@@ -62,8 +67,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "JobKhoj - Nepal's #1 Job Finder",
-    description: "Find the latest jobs and internships in Nepal",
+    title: "Best Job Aggregator Sites in Nepal | JobKhoj",
+    description: "Best job aggregator sites in Nepal - Find the latest jobs and internships from all major portals",
     images: ["https://kamkhoj.eventeir.ai/og-image.png"],
   },
   alternates: {
