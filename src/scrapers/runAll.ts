@@ -21,6 +21,8 @@ import { scrapeNecojobsList } from "./listPages/necojobs";
 import { scrapeNecojobsDetail } from "./detailPages/necojobs";
 import { scrapeJobSniperList } from "./listPages/jobssniper";
 import { scrapeJobSniperDetail } from "./detailPages/jobssniper";
+import { scrapeJobejeeList } from "./listPages/jobejee";
+import { scrapeJobejeeDetail } from "./detailPages/jobejee";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -134,6 +136,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     detailScraper: scrapeJobSniperDetail,
     listingUrls: ["https://www.jobssniper.com/api/job-by/fulltime?page=1"], // API endpoint (scraper handles fulltime, parttime, internship internally)
     maxPages: 50, // Will fetch all pages automatically via API
+    maxJobs: 500,
+  },
+  {
+    baseUrl: "https://www.jobejee.com",
+    source: "jobejee",
+    listScraper: scrapeJobejeeList,
+    detailScraper: scrapeJobejeeDetail,
+    listingUrls: ["https://api.v1.jobejee.com/v2/jobSearch/new?page=0&size=1000"], // API endpoint
+    maxPages: 1, // Will fetch all pages automatically via API
     maxJobs: 500,
   },
   // Note: sajilojob.com and internnepal.com domains not found

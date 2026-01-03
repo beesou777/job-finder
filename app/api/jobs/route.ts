@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
@@ -92,30 +93,23 @@ export async function GET(request: NextRequest) {
     const totalQuery = query.clone();
     const total = await totalQuery.getCount();
     
-    // Optimize: Select only needed fields to reduce data transfer
-    // Add computed column for sorting (internsathi first)
+    // Sort by expiration date if urgency filter is set (soonest first)
+    if (urgency) {
+      query = query
+        .orderBy("job.expiresAt", "ASC", "NULLS LAST")
+        .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
+        .addOrderBy("job.createdAt", "DESC");
+    } else {
+      // Sort by posted date, then by creation date
+      // Simplified sorting to avoid SQL syntax issues with computed columns
+      query = query
+        .orderBy("job.postedAt", "DESC", "NULLS LAST")
+        .addOrderBy("job.createdAt", "DESC");
+    }
+    
+    // Get jobs with pagination
+    // Note: Don't use .select() with array here as it conflicts with addSelect
     const jobsEntities = await query
-      .select([
-        "job.id",
-        "job.title",
-        "job.company",
-        "job.location",
-        "job.applyUrl",
-        "job.type",
-        "job.createdAt",
-        "job.postedAt",
-        "job.expiresAt",
-        "job.salaryText",
-        "job.jobType",
-        "job.source",
-        "category.id",
-        "category.name",
-        "category.slug",
-      ])
-      .addSelect("CASE WHEN job.source = 'internsathi' THEN 0 ELSE 1 END", "source_priority")
-      .orderBy("source_priority", "ASC")
-      .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
-      .addOrderBy("job.createdAt", "DESC")
       .skip(offset)
       .take(limit)
       .getMany();

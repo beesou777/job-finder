@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Briefcase, Users, Menu, X, BookOpen } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 export function Navbar() {
@@ -15,22 +15,19 @@ export function Navbar() {
     {
       href: "/jobs",
       label: "Jobs",
-      icon: Briefcase,
     },
     {
       href: "/internships",
       label: "Internships",
-      icon: Users,
     },
     {
       href: "/blog",
       label: "Blog",
-      icon: BookOpen,
     },
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-gray-300 bg-white">
+    <nav className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -42,26 +39,21 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-2">
             {navLinks.map((link) => {
-              const Icon = link.icon;
               const active = isActive(link.href);
               
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center gap-2 px-4 py-2 font-semibold text-base transition-colors relative ${
+                  className={`px-4 py-2 font-semibold text-base transition-colors rounded-md ${
                     active
-                      ? "text-[#0A66C2]"
-                      : "text-gray-700 hover:text-[#0A66C2]"
+                      ? "text-white bg-[#0A66C2]"
+                      : "text-gray-700 hover:bg-[#0A66C2]/10 hover:text-[#0A66C2]"
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  <span>{link.label}</span>
-                  {active && (
-                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0A66C2]"></span>
-                  )}
+                  {link.label}
                 </Link>
               );
             })}
@@ -83,10 +75,9 @@ export function Navbar() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-3">
+          <div className="md:hidden py-3">
             <div className="flex flex-col gap-1">
               {navLinks.map((link) => {
-                const Icon = link.icon;
                 const active = isActive(link.href);
                 
                 return (
@@ -94,13 +85,12 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`flex items-center gap-3 px-4 py-3 font-semibold text-base transition-colors ${
+                    className={`px-4 py-3 font-semibold text-base transition-colors rounded-md ${
                       active
-                        ? "text-[#0A66C2] bg-blue-50 border-l-4 border-[#0A66C2]"
-                        : "text-gray-700 hover:bg-gray-50"
+                        ? "text-white bg-[#0A66C2]"
+                        : "text-gray-700 hover:bg-[#0A66C2]/10 hover:text-[#0A66C2]"
                     }`}
                   >
-                    <Icon className="w-5 h-5" />
                     {link.label}
                   </Link>
                 );

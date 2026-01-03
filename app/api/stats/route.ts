@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";

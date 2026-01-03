@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { Category } from "@/entities/Category";

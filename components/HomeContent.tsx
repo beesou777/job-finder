@@ -5,58 +5,100 @@ import { JobCard } from "@/components/JobCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Briefcase, TrendingUp, Users, MapPin, Zap, ArrowRight, Sparkles, Star, Clock, FileText, Shield, Info } from "lucide-react";
+import { Search, Briefcase, TrendingUp, Users, MapPin, Zap, ArrowRight, Sparkles, Star, Clock, FileText, Shield, Info, AlertCircle, ChevronDown } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FAQ } from "@/components/FAQ";
+import { Input } from "@/components/ui/input";
 
 export default function HomeContent() {
+  const router = useRouter();
   const [jobs, setJobs] = useState<any[]>([]);
   const [internships, setInternships] = useState<any[]>([]);
+  const [expiringJobs, setExpiringJobs] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [stats, setStats] = useState({ totalJobs: 0, totalInternships: 0, total: 0 });
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [jobType, setJobType] = useState<"job" | "internship">("job");
+  const [expiringFilter, setExpiringFilter] = useState<"today" | "3days" | "7days" | "30days">("7days");
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [expiringFilter]);
+
+  const handleSearch = () => {
+    const basePath = jobType === "job" ? "/jobs" : "/internships";
+    const searchParam = searchQuery.trim() ? `?search=${encodeURIComponent(searchQuery.trim())}` : "";
+    router.push(`${basePath}${searchParam}`);
+  };
 
   const fetchData = async () => {
     try {
       setLoading(true);
       
       console.log("[Client] Fetching data from API...");
+      console.log("[Client] Expiring filter:", expiringFilter);
       
       // Optimized: Fetch all data in parallel with optimized endpoints
-      const [jobsRes, internshipsRes, categoriesRes, statsRes] = await Promise.all([
-        fetch("/api/jobs?limit=6&type=job"),
-        fetch("/api/jobs?limit=6&type=internship"),
-        fetch("/api/categories?popular=true&limit=12"),
-        fetch("/api/stats"),
-      ]);
+      let jobsRes: Response, internshipsRes: Response, expiringRes: Response, categoriesRes: Response, statsRes: Response;
+      
+      try {
+        [jobsRes, internshipsRes, expiringRes, categoriesRes, statsRes] = await Promise.all([
+          fetch("/api/jobs?limit=6&type=job"),
+          fetch("/api/jobs?limit=6&type=internship"),
+          fetch(`/api/jobs?limit=6&urgency=${expiringFilter}`),
+          fetch("/api/categories?popular=true&limit=12"),
+          fetch("/api/stats"),
+        ]);
+      } catch (err: any) {
+        console.error("[Client] Network error fetching data:", err);
+        setLoading(false);
+        return;
+      }
 
       // Process jobs
       if (jobsRes.ok) {
         const jobsData = await jobsRes.json();
+        console.log(`[Client] Jobs API response:`, jobsData);
         setJobs(jobsData.data || []);
         setTotal(jobsData.total || 0);
         console.log(`[Client] Loaded ${jobsData.data?.length || 0} jobs`);
       } else {
-        console.error(`[Client] Failed to fetch jobs: ${jobsRes.status}`);
+        const errorText = await jobsRes.text();
+        console.error(`[Client] Failed to fetch jobs: ${jobsRes.status}`, errorText);
       }
 
       // Process internships
       if (internshipsRes.ok) {
         const internshipsData = await internshipsRes.json();
+        console.log(`[Client] Internships API response:`, internshipsData);
         setInternships(internshipsData.data || []);
         console.log(`[Client] Loaded ${internshipsData.data?.length || 0} internships`);
       } else {
-        console.error(`[Client] Failed to fetch internships: ${internshipsRes.status}`);
+        const errorText = await internshipsRes.text();
+        console.error(`[Client] Failed to fetch internships: ${internshipsRes.status}`, errorText);
+      }
+
+      // Process expiring jobs - sort by expiration date (soonest first)
+      if (expiringRes.ok) {
+        const expiringData = await expiringRes.json();
+        const sortedExpiring = (expiringData.data || []).sort((a: any, b: any) => {
+          const dateA = a.expiresAt ? new Date(a.expiresAt).getTime() : Infinity;
+          const dateB = b.expiresAt ? new Date(b.expiresAt).getTime() : Infinity;
+          return dateA - dateB; // Soonest first
+        });
+        setExpiringJobs(sortedExpiring);
+        console.log(`[Client] Loaded ${sortedExpiring.length} expiring jobs`);
+      } else {
+        console.error(`[Client] Failed to fetch expiring jobs: ${expiringRes.status}`);
       }
 
       // Process stats - use optimized stats endpoint
       if (statsRes.ok) {
         const statsData = await statsRes.json();
+        console.log(`[Client] Stats API response:`, statsData);
         setStats({
           totalJobs: statsData.data?.totalJobs || 0,
           totalInternships: statsData.data?.totalInternships || 0,
@@ -64,7 +106,8 @@ export default function HomeContent() {
         });
         console.log(`[Client] Stats: ${statsData.data?.totalJobs || 0} jobs, ${statsData.data?.totalInternships || 0} internships`);
       } else {
-        console.error(`[Client] Failed to fetch stats: ${statsRes.status}`);
+        const errorText = await statsRes.text();
+        console.error(`[Client] Failed to fetch stats: ${statsRes.status}`, errorText);
         // Fallback to 0 if stats fail
         setStats({ totalJobs: 0, totalInternships: 0, total: 0 });
       }
@@ -189,60 +232,191 @@ export default function HomeContent() {
         />
       ))}
 
-      {/* Hero Section - Professional */}
-      <section className="bg-gradient-to-b from-gray-50 to-white border-b border-gray-200">
-        <div className="container mx-auto px-4 py-16 md:py-24">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900 leading-tight">
-                Find Jobs in Nepal
-                <span className="block text-[#0A66C2] mt-2">Latest Opportunities {new Date().getFullYear()}</span>
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-600 mb-4 max-w-2xl mx-auto leading-relaxed">
-                Discover 1000+ job opportunities from top Nepali job portals
-              </p>
-              <p className="text-base text-gray-500 mb-10">
-                Search across MeroJob, Kantipur Job, JobsNepal, and more - all in one place
-              </p>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link href="/jobs" className="flex-1 sm:flex-none">
-                <Button size="lg" className="w-full sm:w-auto px-8 py-6 text-base bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-md hover:shadow-lg transition-all">
-                  <Briefcase className="mr-2 w-5 h-5" />
-                  Browse Jobs ({stats.totalJobs.toLocaleString()})
-                </Button>
-              </Link>
-              <Link href="/internships" className="flex-1 sm:flex-none">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 py-6 text-base border-2 border-gray-300 hover:border-[#0A66C2] hover:bg-[#0A66C2] hover:text-white font-semibold transition-all">
-                  <Users className="mr-2 w-5 h-5" />
-                  Internships ({stats.totalInternships.toLocaleString()})
-                </Button>
-              </Link>
-            </div>
+      {/* Hero Section - Professional with Two Column Layout */}
+      <section className="bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 py-12 md:py-16">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              {/* Left Side - Search Section */}
+              <div>
+                <div className="mb-6">
+                  <h1 className="text-3xl md:text-4xl font-bold text-gray-900  leading-snug mb-4">
+                    Find Jobs in Nepal
+                    <span className="block text-[#0A66C2] mt-2">Latest Opportunities {new Date().getFullYear()}</span>
+                  </h1>
+                  <p className="text-base md:text-lg text-gray-600 mb-2 leading-relaxed">
+                    Discover 1000+ job opportunities from top Nepali job portals
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Search across MeroJob, Kantipur Job, JobsNepal, and more - all in one place
+                  </p>
+                </div>
+                
+                {/* Search Bar with Select Toggle - Reference Style */}
+                <div className="bg-white rounded-full shadow-lg p-2 mb-6 flex items-center gap-2">
+                  {/* Job Type Select Toggle - Left */}
+                  <div className="relative">
+                    <select
+                      value={jobType}
+                      onChange={(e) => setJobType(e.target.value as "job" | "internship")}
+                      className="appearance-none bg-[#0A66C2]/10 border border-white rounded-full px-4 py-3 pr-8 h-12 text-sm font-medium text-[#0A66C2] focus:outline-none focus:ring-2 focus:ring-[#0A66C2] cursor-pointer min-w-[140px]"
+                    >
+                      <option value="job">All Jobs</option>
+                      <option value="internship">All Internships</option>
+                    </select>
+                    <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-[#0A66C2] w-4 h-4 pointer-events-none" />
+                  </div>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pt-8 border-t border-gray-200">
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-[#0A66C2] mb-1">
-                  {stats.total.toLocaleString()}+
+                  {/* Search Input - Center */}
+                  <div className="flex-1">
+                    <Input
+                      type="text"
+                      placeholder="Enter the title, keywords or phrase"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleSearch();
+                        }
+                      }}
+                      className="h-12 text-sm border-0 focus-visible:ring-0 shadow-none pl-4"
+                    />
+                  </div>
+
+                  {/* Search Button - Right */}
+                  <Button
+                    onClick={handleSearch}
+                    className="bg-[#0A66C2] hover:bg-[#004182] text-white rounded-full w-12 h-12 p-0 flex items-center justify-center shadow-md hover:shadow-lg transition-all"
+                  >
+                    <Search className="w-5 h-5" />
+                  </Button>
                 </div>
-                <div className="text-sm text-gray-600 font-medium">Total Jobs</div>
+
+                {/* Quick Stats */}
+                <div className="grid grid-cols-3 gap-4 pt-4">
+                  <div className="text-center">
+                    <div className="text-xl md:text-2xl font-bold text-[#0A66C2] mb-1">
+                      {stats.total.toLocaleString()}+
+                    </div>
+                    <div className="text-xs text-gray-600 font-medium">Total Jobs</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xl md:text-2xl font-bold text-[#0A66C2] mb-1">
+                      {stats.totalJobs.toLocaleString()}+
+                    </div>
+                    <div className="text-xs text-gray-600 font-medium">Full-Time</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xl md:text-2xl font-bold text-[#0A66C2] mb-1">
+                      {stats.totalInternships.toLocaleString()}+
+                    </div>
+                    <div className="text-xs text-gray-600 font-medium">Internships</div>
+                  </div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-[#0A66C2] mb-1">
-                  {stats.totalJobs.toLocaleString()}+
+
+              {/* Right Side - Image */}
+              <div className="hidden lg:block">
+                <div className="relative">
+                  <img
+                    src="/man-search-hiring-job-online-from-laptop.avif"
+                    alt="Person searching for jobs online"
+                    className="w-full h-auto rounded-lg mix-blend-darken"
+                  />
                 </div>
-                <div className="text-sm text-gray-600 font-medium">Full-Time</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-[#0A66C2] mb-1">
-                  {stats.totalInternships.toLocaleString()}+
-                </div>
-                <div className="text-sm text-gray-600 font-medium">Internships</div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Expiring Soon Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <AlertCircle className="w-6 h-6 text-[#0A66C2]" />
+                <Badge className="bg-[#0A66C2]/10 text-[#0A66C2] border-[#0A66C2]/20 hover:bg-[#0A66C2]/20">
+                  Expiring Soon
+                </Badge>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900  leading-snug mb-3">
+                Jobs Expiring Soon
+              </h2>
+              <p className="text-base text-muted-foreground">
+                Don't miss out! These opportunities are closing soon
+              </p>
+            </div>
+            <Link href={`/jobs?urgency=${expiringFilter}`}>
+              <Button size="lg" className="hidden md:flex bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-md hover:shadow-lg transition-all">
+                View All Expiring
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
+
+          {/* Day-based Filters */}
+          <div className="flex flex-wrap gap-2 mb-6">
+            <button
+              onClick={() => setExpiringFilter("today")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                expiringFilter === "today"
+                  ? "bg-[#0A66C2] text-white shadow-md"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              Today
+            </button>
+            <button
+              onClick={() => setExpiringFilter("3days")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                expiringFilter === "3days"
+                  ? "bg-[#0A66C2] text-white shadow-md"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              3 Days
+            </button>
+            <button
+              onClick={() => setExpiringFilter("7days")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                expiringFilter === "7days"
+                  ? "bg-[#0A66C2] text-white shadow-md"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              7 Days
+            </button>
+            <button
+              onClick={() => setExpiringFilter("30days")}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                expiringFilter === "30days"
+                  ? "bg-[#0A66C2] text-white shadow-md"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              30 Days
+            </button>
+          </div>
+          
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+            </div>
+          ) : expiringJobs.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-lg text-gray-600">No jobs</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {expiringJobs.slice(0, 6).map((job: any) => (
+                <JobCard key={job.id} job={job} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -251,67 +425,67 @@ export default function HomeContent() {
       {/* Features Section */}
       <section className="container mx-auto px-4 py-20">
           <div className="text-center mb-16">
-          <Badge className="bg-primary/10 text-primary border-primary/20">
-            Why Choose JobKhoj
-          </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-            Everything You Need to Land Your Dream Job
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900  leading-snug mb-4">
             Nepal's most comprehensive job search platform - aggregating opportunities from all major portals
-          </p>
+          </h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-300 hover:border-[#0A66C2] bg-white">
+          <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
             <CardContent className="pt-8 pb-8">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-4 bg-gray-50 rounded-lg group-hover:bg-[#0A66C2]/10 transition-colors">
-                  <Search className="w-8 h-8 text-gray-600 group-hover:text-[#0A66C2] transition-colors" />
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                  <Search className="w-8 h-8 text-gray-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Comprehensive Search</h3>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Comprehensive Search</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Search across multiple job portals from one place. Filter by category, 
+                    location, job type, and more to find exactly what you're looking for.
+                  </p>
+                </div>
               </div>
-              <p className="text-gray-600 leading-relaxed">
-                Search across multiple job portals from one place. Filter by category, 
-                location, job type, and more to find exactly what you're looking for.
-              </p>
             </CardContent>
           </Card>
           
-          <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-300 hover:border-[#0A66C2] bg-white">
+          <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
             <CardContent className="pt-8 pb-8">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-4 bg-gray-50 rounded-lg group-hover:bg-[#0A66C2]/10 transition-colors">
-                  <Zap className="w-8 h-8 text-gray-600 group-hover:text-[#0A66C2] transition-colors" />
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                  <Zap className="w-8 h-8 text-gray-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Updated Daily</h3>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Updated Daily</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Our automated system scrapes the latest job postings daily from top 
+                    Nepali job portals, ensuring you never miss an opportunity.
+                  </p>
+                </div>
               </div>
-              <p className="text-gray-600 leading-relaxed">
-                Our automated system scrapes the latest job postings daily from top 
-                Nepali job portals, ensuring you never miss an opportunity.
-              </p>
             </CardContent>
           </Card>
           
-          <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-300 hover:border-[#0A66C2] bg-white">
+          <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
             <CardContent className="pt-8 pb-8">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-4 bg-gray-50 rounded-lg group-hover:bg-[#0A66C2]/10 transition-colors">
-                  <MapPin className="w-8 h-8 text-gray-600 group-hover:text-[#0A66C2] transition-colors" />
+              <div className="flex items-start gap-4 mb-4">
+                <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                  <MapPin className="w-8 h-8 text-gray-600" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900">Nepal-Wide Coverage</h3>
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">Nepal-Wide Coverage</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Find opportunities in Kathmandu, Pokhara, Lalitpur, and cities 
+                    throughout Nepal. Remote and on-site positions available.
+                  </p>
+                </div>
               </div>
-              <p className="text-gray-600 leading-relaxed">
-                Find opportunities in Kathmandu, Pokhara, Lalitpur, and cities 
-                throughout Nepal. Remote and on-site positions available.
-              </p>
             </CardContent>
           </Card>
         </div>
       </section>
 
       {/* Latest Jobs Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-10">
             <div>
@@ -321,7 +495,7 @@ export default function HomeContent() {
                   Fresh Opportunities
                 </Badge>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-3">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900  leading-snug mb-3">
                 Latest Job Opportunities
               </h2>
               <p className="text-xl text-muted-foreground">
@@ -346,18 +520,9 @@ export default function HomeContent() {
             <SkeletonJobCard />
           </div>
         ) : jobs.length === 0 ? (
-          <Card className="border border-dashed border-gray-300">
-            <CardContent className="pt-16 pb-16 text-center">
-              <div className="w-20 h-20 mx-auto mb-6 bg-blue-50 rounded-full flex items-center justify-center">
-                <Briefcase className="w-10 h-10 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">No Jobs Available Yet</h3>
-              <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                We're currently fetching the latest job opportunities from top Nepali job portals. 
-                Please check back soon for new opportunities.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="text-center py-12">
+            <p className="text-lg text-gray-600">No jobs</p>
+          </div>
         ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -381,7 +546,7 @@ export default function HomeContent() {
       </section>
 
       {/* Latest Internships Section */}
-      <section className="bg-white py-20">
+      <section className="bg-gray-50 py-20">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-10">
             <div>
@@ -391,7 +556,7 @@ export default function HomeContent() {
                   Fresh Opportunities
                 </Badge>
               </div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-3">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900  leading-snug mb-3">
                 Latest Internship Opportunities
               </h2>
               <p className="text-xl text-muted-foreground">
@@ -416,18 +581,9 @@ export default function HomeContent() {
             <SkeletonJobCard />
           </div>
         ) : internships.length === 0 ? (
-          <Card className="border border-dashed border-gray-300">
-            <CardContent className="pt-16 pb-16 text-center">
-              <div className="w-20 h-20 mx-auto mb-6 bg-blue-50 rounded-full flex items-center justify-center">
-                <Users className="w-10 h-10 text-blue-600" />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">No Internships Available Yet</h3>
-              <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                We're currently fetching the latest internship opportunities from top Nepali job portals. 
-                Please check back soon for new opportunities.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="text-center py-12">
+            <p className="text-lg text-gray-600">No jobs</p>
+          </div>
         ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -452,18 +608,18 @@ export default function HomeContent() {
 
       {/* About Our Scraping Section */}
       <section className="container mx-auto px-4 py-16">
-        <Card className="bg-blue-50/50 border border-blue-200/50">
+        <Card className="bg-blue-50/50">
           <CardContent className="pt-8 pb-8 px-6 md:px-10">
             <div className="flex items-start gap-4 mb-4">
               <div className="p-3 bg-blue-100 rounded-lg shrink-0">
                 <Info className="w-6 h-6 text-blue-600" />
               </div>
               <div className="flex-1">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">About Our Service</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">About Our Service</h3>
                 <p className="text-gray-700 leading-relaxed mb-3">
                   JobKhoj is a job aggregator that collects job listings from various Nepali job portals to provide you with a comprehensive search experience. We use automated systems to gather publicly available job postings, ensuring you have access to the latest opportunities all in one place.
                 </p>
-                <div className="flex items-start gap-3 mt-4 p-4 bg-white/80 rounded-lg border border-blue-100">
+                <div className="flex items-start gap-3 mt-4 p-4 bg-white/80 rounded-lg">
                   <Shield className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-semibold text-gray-900 mb-1">Ethical & Transparent</p>
@@ -482,7 +638,7 @@ export default function HomeContent() {
       <section className="bg-white py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900  leading-snug mb-4">
               Resources to Help You Succeed
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -491,93 +647,105 @@ export default function HomeContent() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-blue-300 bg-white">
+            <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
               <CardContent className="pt-8 pb-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <FileText className="w-8 h-8 text-blue-600" />
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                    <FileText className="w-8 h-8 text-gray-600" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Resume Tips</h3>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Resume Tips</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      Learn how to create a standout resume that gets noticed by employers. 
+                      Get tips on formatting, keywords, and highlighting your achievements.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
-                  Learn how to create a standout resume that gets noticed by employers. 
-                  Get tips on formatting, keywords, and highlighting your achievements.
-                </p>
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-blue-300 bg-white">
+            <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
               <CardContent className="pt-8 pb-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <Users className="w-8 h-8 text-blue-600" />
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                    <Users className="w-8 h-8 text-gray-600" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Interview Prep</h3>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Interview Prep</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      Prepare for success with common interview questions, body language tips, 
+                      and strategies to make a great first impression.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
-                  Prepare for success with common interview questions, body language tips, 
-                  and strategies to make a great first impression.
-                </p>
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-blue-300 bg-white">
+            <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
               <CardContent className="pt-8 pb-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <TrendingUp className="w-8 h-8 text-blue-600" />
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                    <TrendingUp className="w-8 h-8 text-gray-600" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Career Growth</h3>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Career Growth</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      Discover career paths, salary insights, and growth opportunities 
+                      in Nepal's job market. Plan your professional journey.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
-                  Discover career paths, salary insights, and growth opportunities 
-                  in Nepal's job market. Plan your professional journey.
-                </p>
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-blue-300 bg-white">
+            <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
               <CardContent className="pt-8 pb-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <Clock className="w-8 h-8 text-blue-600" />
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                    <Clock className="w-8 h-8 text-gray-600" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Daily Updates</h3>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Daily Updates</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      New job opportunities are added daily from top Nepali job portals. 
+                      Check back regularly to never miss an opportunity.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
-                  New job opportunities are added daily from top Nepali job portals. 
-                  Check back regularly to never miss an opportunity.
-                </p>
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-blue-300 bg-white">
+            <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
               <CardContent className="pt-8 pb-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <MapPin className="w-8 h-8 text-blue-600" />
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                    <MapPin className="w-8 h-8 text-gray-600" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Location Based</h3>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Location Based</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      Find jobs in Kathmandu, Pokhara, Lalitpur, and cities across Nepal. 
+                      Filter by location to find opportunities near you.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
-                  Find jobs in Kathmandu, Pokhara, Lalitpur, and cities across Nepal. 
-                  Filter by location to find opportunities near you.
-                </p>
               </CardContent>
             </Card>
 
-            <Card className="group hover:shadow-lg transition-all duration-300 border border-gray-200 hover:border-blue-300 bg-white">
+            <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
               <CardContent className="pt-8 pb-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <Sparkles className="w-8 h-8 text-blue-600" />
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="p-4 bg-gray-100 rounded-lg shrink-0">
+                    <Sparkles className="w-8 h-8 text-gray-600" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900">Free Service</h3>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">Free Service</h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      JobKhoj is completely free to use. No sign-up required. 
+                      Browse jobs, apply directly, and start your career journey today.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
-                  JobKhoj is completely free to use. No sign-up required. 
-                  Browse jobs, apply directly, and start your career journey today.
-                </p>
               </CardContent>
             </Card>
           </div>

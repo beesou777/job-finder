@@ -6,7 +6,7 @@ import { JobCard } from "@/components/JobCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search, Loader2, X } from "lucide-react";
+import { Search, Loader2, X, ChevronDown, MapPin } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Pagination } from "@/components/Pagination";
@@ -186,64 +186,147 @@ function JobsPageContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white">
         <div className="container mx-auto px-4 py-8 md:py-10">
-          {/* Header with Title and Description */}
-          <div className="mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-3 text-gray-900">
+          {/* Header with Title */}
+          <div className="mb-6">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-snug">
               {selectedCategoryName
                 ? `${selectedCategoryName} Jobs`
-                : "Jobs in Nepal"}
+                : (
+                  <>
+                    Shape Your Future with <span className="text-[#0A66C2]">JobKhoj</span>
+                  </>
+                )}
             </h1>
-            <p className="text-lg text-gray-600">
-              {selectedCategory 
-                ? `Browse ${total.toLocaleString()} job${total !== 1 ? 's' : ''} in this category`
-                : `Browse ${total.toLocaleString()} job opportunities from top Nepali job portals`}
-            </p>
           </div>
 
           {/* Enhanced Search Bar */}
           <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row gap-3">
-                <form onSubmit={handleSearch} className="relative flex-1">
-                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                  <Input
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                    placeholder="Search jobs by title, company, or category..."
-                    className="pl-12 pr-4 h-12 text-base border-gray-300 focus:border-[#0A66C2] focus:ring-[#0A66C2]"
-                  />
-                </form>
-                <div className="flex gap-2">
-                  <Button 
-                    type="button" 
-                    onClick={() => {
-                      const params = new URLSearchParams(searchParams.toString());
-                      if (searchValue) {
-                        params.set("search", searchValue);
-                      } else {
-                        params.delete("search");
-                      }
-                      params.delete("page");
-                      router.push(`/jobs?${params.toString()}`);
-                    }}
-                    className="h-12 px-6 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-sm"
-                  >
-                    Search
-                  </Button>
-                  <FilterSidebar
-                    categories={categories}
-                    jobTypes={jobTypes}
-                    locations={locations}
-                    selectedCategory={selectedCategory}
-                    selectedJobType={selectedJobType}
-                    selectedLocation={selectedLocation}
-                    selectedUrgency={selectedUrgency}
-                    onCategoryChange={handleCategoryChange}
-                    onJobTypeChange={handleJobTypeChange}
-                    onLocationChange={handleLocationChange}
-                    onUrgencyChange={handleUrgencyChange}
-                  />
+              {/* Desktop: Search with inline filters, Mobile: Search with filter button */}
+              <div className="flex flex-col gap-3">
+                {/* Row 1: Search Input + Location + Search Button */}
+                <div className="flex flex-col md:flex-row gap-3">
+                  <form onSubmit={handleSearch} className="relative flex-1">
+                    <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Input
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
+                      placeholder="Search jobs by title, company, or category..."
+                      className="pl-12 pr-4 h-12 text-base border-gray-300 focus:border-[#0A66C2] focus:ring-[#0A66C2]"
+                    />
+                  </form>
+                  
+                  {/* Location Filter - Desktop only in this row */}
+                  <div className="hidden md:block relative min-w-[160px]">
+                    <select
+                      value={selectedLocation || ""}
+                      onChange={(e) => handleLocationChange(e.target.value || null)}
+                      className="appearance-none bg-white border border-gray-300 rounded-md px-4 py-2 pr-8 h-12 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] focus:border-[#0A66C2] cursor-pointer w-full"
+                    >
+                      <option value="">Location</option>
+                      {locations.map((loc: any) => (
+                        <option key={loc.value} value={loc.value}>
+                          {loc.label}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                  </div>
+
+                  <div className="flex gap-2 w-full md:w-auto">
+                    <Button 
+                      type="button" 
+                      onClick={() => {
+                        const params = new URLSearchParams(searchParams.toString());
+                        if (searchValue) {
+                          params.set("search", searchValue);
+                        } else {
+                          params.delete("search");
+                        }
+                        params.delete("page");
+                        router.push(`/jobs?${params.toString()}`);
+                      }}
+                      className="h-12 px-6 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-sm flex-1 md:flex-none"
+                    >
+                      Search
+                    </Button>
+                    {/* Mobile Filter Button */}
+                    <div className="md:hidden">
+                      <FilterSidebar
+                        categories={categories}
+                        jobTypes={jobTypes}
+                        locations={locations}
+                        selectedCategory={selectedCategory}
+                        selectedJobType={selectedJobType}
+                        selectedLocation={selectedLocation}
+                        selectedUrgency={selectedUrgency}
+                        onCategoryChange={handleCategoryChange}
+                        onJobTypeChange={handleJobTypeChange}
+                        onLocationChange={handleLocationChange}
+                        onUrgencyChange={handleUrgencyChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Row 2: Date Posted, Work Type, Employment Type - Desktop only */}
+                <div className="hidden md:grid grid-cols-3 gap-3">
+                  {/* Date Posted Filter */}
+                  <div className="relative">
+                    <select
+                      value={selectedUrgency || ""}
+                      onChange={(e) => handleUrgencyChange(e.target.value || null)}
+                      className="appearance-none bg-white border border-gray-300 rounded-md px-4 py-2 pr-8 h-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] focus:border-[#0A66C2] cursor-pointer w-full"
+                    >
+                      <option value="">Date posted</option>
+                      <option value="today">Today</option>
+                      <option value="3days">Last 3 days</option>
+                      <option value="7days">Last 7 days</option>
+                      <option value="30days">Last 30 days</option>
+                    </select>
+                    <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                  </div>
+
+                  {/* Work Type Filter (On-site/Hybrid/Remote) */}
+                  <div className="relative">
+                    <select
+                      value={selectedJobType === "remote" ? "remote" : selectedJobType === "hybrid" ? "hybrid" : selectedJobType === "onsite" ? "onsite" : ""}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        handleJobTypeChange(value || null);
+                      }}
+                      className="appearance-none bg-white border border-gray-300 rounded-md px-4 py-2 pr-8 h-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] focus:border-[#0A66C2] cursor-pointer w-full"
+                    >
+                      <option value="">On-site/Hybrid/Remote</option>
+                      <option value="onsite">On-site</option>
+                      <option value="hybrid">Hybrid</option>
+                      <option value="remote">Remote</option>
+                    </select>
+                    <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                  </div>
+
+                  {/* Employment Type Filter */}
+                  <div className="relative">
+                    <select
+                      value={selectedJobType === "full-time" ? "full-time" : selectedJobType === "part-time" ? "part-time" : selectedJobType === "contract" ? "contract" : ""}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (value) {
+                          handleJobTypeChange(value);
+                        } else {
+                          handleJobTypeChange(null);
+                        }
+                      }}
+                      className="appearance-none bg-white border border-gray-300 rounded-md px-4 py-2 pr-8 h-10 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] focus:border-[#0A66C2] cursor-pointer w-full"
+                    >
+                      <option value="">Employment type</option>
+                      <option value="full-time">Full-time</option>
+                      <option value="part-time">Part-time</option>
+                      <option value="contract">Contract</option>
+                    </select>
+                    <ChevronDown className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
+                  </div>
                 </div>
               </div>
 

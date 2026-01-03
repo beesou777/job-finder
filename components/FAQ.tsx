@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronDown, HelpCircle } from "lucide-react";
+import { generateFAQSchema } from "@/lib/seo";
 
 interface FAQItem {
   question: string;
@@ -59,8 +60,15 @@ export function FAQ() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  // Generate FAQ schema for SEO
+  const faqSchema = generateFAQSchema(faqData);
+
   return (
     <section className="bg-gray-50 py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
@@ -87,7 +95,7 @@ export function FAQ() {
               <CardContent className="p-0">
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-6 py-5 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-lg transition-colors"
+                  className="w-full px-6 py-5 text-left flex items-center justify-between focus:outline-none rounded-lg transition-colors"
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
