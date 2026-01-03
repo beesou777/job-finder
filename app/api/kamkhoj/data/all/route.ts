@@ -42,8 +42,7 @@ export async function GET(request: NextRequest) {
     // Execute query and get all jobs
     // Add computed column for sorting (internsathi first)
     const jobsEntities = await query
-      .addSelect("CASE WHEN job.source = 'internsathi' THEN 0 ELSE 1 END", "source_priority")
-      .orderBy("source_priority", "ASC")
+      .where("job.source != :source", { source: "internsathi" })
       .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
       .addOrderBy("job.createdAt", "DESC")
       .getMany();
