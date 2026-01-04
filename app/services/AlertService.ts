@@ -22,7 +22,7 @@ export class AlertService {
         const now = new Date();
         const hour = now.getHours(); // Local server time
 
-        if (hour > 10 && overview.jobsToday === 0) {
+        if (hour > 10 && overview.jobsToday.value === 0) {
             alerts.push({
                 id: "no-jobs-today",
                 type: "critical",
