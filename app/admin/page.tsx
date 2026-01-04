@@ -1,26 +1,43 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Database, Activity, AlertCircle, CheckCircle2 } from "lucide-react";
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
+import { ExecutiveOverview } from "@/components/admin/Views/ExecutiveOverview";
+import { SourcesView } from "@/components/admin/Views/SourcesView";
+import { SeoView } from "@/components/admin/Views/SeoView";
+import { DataQualityView } from "@/components/admin/Views/DataQualityView";
+import { ReportsView } from "@/components/admin/Views/ReportsView";
+import { PredictiveInsights } from "@/components/admin/Views/PredictiveInsights";
+import { SettingsView } from "@/components/admin/Views/SettingsView";
+import { NavigationPage } from "@/components/admin/Views/NavigationPage";
+import { Menu } from "lucide-react";
 
 export default function AdminPage() {
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [activeView, setActiveView] = useState("overview");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  
+  // Data State
   const [isLoading, setIsLoading] = useState(false);
+  const [isScraping, setIsScraping] = useState(false);
   const [scrapeResult, setScrapeResult] = useState<any>(null);
-  const [stats, setStats] = useState<any>(null);
+  const [analyticsData, setAnalyticsData] = useState<any>(null);
+  const [dateRange, setDateRange] = useState("30d");
+  const [dashboardMode, setDashboardMode] = useState<"founder" | "ops">("founder");
 
   useEffect(() => {
     // Check if already authenticated
     const auth = sessionStorage.getItem("admin_auth");
     if (auth === "true") {
       setIsAuthenticated(true);
-      fetchStats();
+      fetchAnalytics(dateRange);
     }
   }, []);
 
@@ -29,26 +46,29 @@ export default function AdminPage() {
     if (password === adminPassword) {
       setIsAuthenticated(true);
       sessionStorage.setItem("admin_auth", "true");
-      fetchStats();
+      fetchAnalytics(dateRange);
     } else {
       alert("Incorrect password");
     }
   };
 
-  const fetchStats = async () => {
+  const fetchAnalytics = async (range: string) => {
+    setIsLoading(true);
     try {
-      const res = await fetch("/api/stats");
+      const res = await fetch(`/api/analytics?range=${range}`);
       const data = await res.json();
       if (data.success) {
-        setStats(data.data);
+        setAnalyticsData(data.data);
       }
     } catch (error) {
-      console.error("Error fetching stats:", error);
+      console.error("Error fetching analytics:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleScrape = async () => {
-    setIsLoading(true);
+    setIsScraping(true);
     setScrapeResult(null);
 
     try {
@@ -65,33 +85,34 @@ export default function AdminPage() {
       setScrapeResult(data);
       
       if (data.success) {
-        await fetchStats();
+        // Refresh analytics after scrape
+        await fetchAnalytics(dateRange);
       }
     } catch (error: any) {
       setScrapeResult({ success: false, error: error.message });
     } finally {
-      setIsLoading(false);
+      setIsScraping(false);
     }
   };
 
   if (!isAuthenticated) {
     return (
-      <div className="container mx-auto px-4 py-16 flex items-center justify-center min-h-screen">
-        <Card className="w-full max-w-md">
+      <div className="container mx-auto px-4 py-16 flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+        <Card className="w-full max-w-md shadow-lg">
           <CardHeader>
-            <CardTitle>Admin Login</CardTitle>
-            <CardDescription>Enter password to access admin dashboard</CardDescription>
+            <CardTitle className="text-2xl text-center">Admin Access</CardTitle>
+            <CardDescription className="text-center">Restricted area for foundation team</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Input
               type="password"
-              placeholder="Password"
+              placeholder="Enter Access Key"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleLogin()}
             />
-            <Button onClick={handleLogin} className="w-full">
-              Login
+            <Button onClick={handleLogin} className="w-full bg-slate-900 text-white hover:bg-slate-800">
+              Enter Dashboard
             </Button>
           </CardContent>
         </Card>
@@ -100,133 +121,117 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-4xl font-bold">Admin Dashboard</h1>
-        <Button
-          variant="outline"
-          onClick={() => {
-            sessionStorage.removeItem("admin_auth");
-            setIsAuthenticated(false);
-          }}
-        >
-          Logout
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Jobs</CardTitle>
-            <Database className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.total || 0}</div>
-            <p className="text-xs text-muted-foreground">Jobs in database</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sources</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{stats?.bySource?.length || 0}</div>
-            <p className="text-xs text-muted-foreground">Active job portals</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Last Run</CardTitle>
-            <Activity className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {scrapeResult?.success ? "Success" : "—"}
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
+      <AdminSidebar 
+        activeView={activeView} 
+        setActiveView={setActiveView} 
+        isCollapsed={isSidebarCollapsed}
+      />
+      
+      <div className="flex-1 flex flex-col min-w-0 transition-all duration-300 h-full">
+        {/* Top Mobile Bar / Collapse Toggle */}
+        <header className="bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-4 flex items-center gap-4 flex-shrink-0">
+            <Button variant="ghost" size="icon" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+                <Menu className="h-5 w-5" />
+            </Button>
+            <div className="md:hidden font-bold">JF Admin</div>
+            
+            {/* Mode Toggle */}
+            <div className="hidden sm:flex items-center ml-4 bg-slate-100 dark:bg-slate-900 rounded-lg p-1">
+                <Button 
+                    variant={dashboardMode === "founder" ? "secondary" : "ghost"} 
+                    size="sm" 
+                    className={`h-7 px-3 text-[10px] font-bold uppercase tracking-wider transition-all ${dashboardMode === "founder" ? "bg-white shadow-sm" : ""}`}
+                    onClick={() => setDashboardMode("founder")}
+                >
+                    Founder Mode
+                </Button>
+                <Button 
+                    variant={dashboardMode === "ops" ? "secondary" : "ghost"} 
+                    size="sm" 
+                    className={`h-7 px-3 text-[10px] font-bold uppercase tracking-wider transition-all ${dashboardMode === "ops" ? "bg-white shadow-sm" : ""}`}
+                    onClick={() => setDashboardMode("ops")}
+                >
+                    Ops Mode
+                </Button>
             </div>
-            <p className="text-xs text-muted-foreground">
-              {scrapeResult?.totalScraped || 0} jobs scraped
-            </p>
-          </CardContent>
-        </Card>
-      </div>
 
-      <Card className="mb-8">
-        <CardHeader>
-          <CardTitle>Job Sources</CardTitle>
-          <CardDescription>Jobs by source portal</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-2">
-            {stats?.bySource?.map((source: any) => (
-              <div
-                key={source.source}
-                className="px-3 py-1 rounded-md bg-secondary text-sm"
-              >
-                {source.source}: {source.count}
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            <div className="ml-auto">
+                 <Button
+                  variant="ghost"
+                  onClick={() => {
+                    sessionStorage.removeItem("admin_auth");
+                    setIsAuthenticated(false);
+                  }}
+                >
+                  Logout
+                </Button>
+            </div>
+        </header>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Scraper Control</CardTitle>
-          <CardDescription>
-            Manually trigger the job scraper to fetch latest jobs from all portals
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Button
-            onClick={handleScrape}
-            disabled={isLoading}
-            size="lg"
-            className="w-full md:w-auto"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Scraping...
-              </>
-            ) : (
-              "Run Scraper Now"
-            )}
-          </Button>
-
-          {scrapeResult && (
-            <div
-              className={`p-4 rounded-md ${
-                scrapeResult.success
-                  ? "bg-green-50 text-green-900 dark:bg-green-900/20 dark:text-green-100"
-                  : "bg-red-50 text-red-900 dark:bg-red-900/20 dark:text-red-100"
-              }`}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                {scrapeResult.success ? (
-                  <CheckCircle2 className="w-5 h-5" />
-                ) : (
-                  <AlertCircle className="w-5 h-5" />
+        <main className="flex-1 p-6 overflow-y-auto">
+            <div className="max-w-[1600px] mx-auto pb-10">
+                {activeView === "overview" && (
+                    <ExecutiveOverview 
+                        analyticsData={analyticsData}
+                        isLoading={isLoading}
+                        dateRange={dateRange}
+                        setDateRange={setDateRange}
+                        fetchAnalytics={fetchAnalytics}
+                        mode={dashboardMode}
+                    />
                 )}
-                <p className="font-medium">
-                  {scrapeResult.success ? "Success" : "Error"}
-                </p>
-              </div>
-              <p className="text-sm">{scrapeResult.message || scrapeResult.error}</p>
-              {scrapeResult.success && (
-                <div className="text-sm mt-2 space-y-1">
-                  <p>Total scraped: {scrapeResult.totalScraped}</p>
-                  <p>New jobs saved: {scrapeResult.saved}</p>
-                  <p>Duplicates skipped: {scrapeResult.duplicates}</p>
-                </div>
-              )}
+                {activeView === "predictive" && (
+                    <PredictiveInsights 
+                        forecast={analyticsData?.forecast}
+                        indices={analyticsData?.indices}
+                    />
+                )}
+                {activeView === "data-quality" && (
+                    <DataQualityView analyticsData={analyticsData} />
+                )}
+                 {activeView === "alerts" && (
+                    <DataQualityView analyticsData={analyticsData} />
+                )}
+                {activeView === "sources" && (
+                    <SourcesView 
+                        analyticsData={analyticsData} 
+                        handleScrape={handleScrape}
+                    />
+                )}
+                {activeView === "navigation" && (
+                    <NavigationPage />
+                )}
+                {activeView === "seo" && (
+                    <SeoView analyticsData={analyticsData} />
+                )}
+
+                {activeView === "reports" && (
+                     <ReportsView />
+                )}
+                {activeView === "settings" && (
+                    <SettingsView 
+                        handleScrape={handleScrape}
+                        isScraping={isScraping}
+                        scrapeResult={scrapeResult}
+                    />
+                )}
+                 {activeView !== "overview" && 
+                  activeView !== "predictive" && 
+                  activeView !== "data-quality" && 
+                  activeView !== "sources" && 
+                  activeView !== "seo" && 
+                  activeView !== "reports" && 
+                  activeView !== "alerts" &&
+                  activeView !== "settings" && (
+                    <div className="p-12 text-center text-muted-foreground">
+                        <h2 className="text-2xl font-bold mb-2">Work In Progress</h2>
+                        <p>Module {activeView} is currently under construction.</p>
+                    </div>
+                )}
             </div>
-          )}
-        </CardContent>
-      </Card>
+        </main>
+      </div>
     </div>
   );
 }
-

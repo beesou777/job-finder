@@ -26,6 +26,13 @@ export function Navbar() {
     },
   ];
 
+  const isJobsPage = pathname?.startsWith("/jobs");
+  const isAdminPage = pathname?.startsWith("/admin");
+
+  if (isAdminPage) {
+    return null;
+  }
+
   return (
     <nav className="sticky top-0 z-50 w-full bg-white shadow-sm">
       <div className="container mx-auto px-4">

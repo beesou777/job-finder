@@ -26,9 +26,11 @@ export class Job {
   applyUrl: string;
 
   @Column({ type: "varchar", nullable: true })
+  @Index()
   company: string;
 
   @Column({ type: "varchar", nullable: true })
+  @Index()
   location: string;
 
   @Column({ type: "varchar", nullable: true, default: "Negotiable" })
@@ -80,6 +82,7 @@ export class Job {
   postedAt: Date;
 
   @CreateDateColumn()
+  @Index()
   createdAt: Date;
 }
 
