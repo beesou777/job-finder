@@ -31,6 +31,8 @@ import { scrapeMerorojgariList } from "./listPages/merorojgari";
 import { scrapeMerorojgariDetail } from "./detailPages/merorojgari";
 import { scrapeVocalPandaList } from "./listPages/vocalpanda";
 import { scrapeVocalPandaDetail } from "./detailPages/vocalpanda";
+import { scrapeInternNepalList } from "./listPages/internepal";
+import { scrapeInternNepalDetail } from "./detailPages/internepal";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -191,8 +193,22 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     maxPages: 50, // Will fetch all pages automatically via API
     maxJobs: 500,
   },
-  // Note: sajilojob.com and internnepal.com domains not found
-  // If you have the correct URLs, add them here
+  {
+    baseUrl: "https://internepal.com.np",
+    source: "internepal",
+    listScraper: scrapeInternNepalList,
+    detailScraper: scrapeInternNepalDetail,
+    listingUrls: [
+      "https://internepal.com.np/vacancy-list?type=internship",
+      "https://internepal.com.np/vacancy-list?keyword=&type=job&company_id=&price_range=",
+      "https://internepal.com.np/vacancy-list?keyword=&type=fresher-job&company_id=&price_range=",
+      "https://internepal.com.np/vacancy-list?keyword=&type=freelance&company_id=&price_range=",
+    ],
+    maxPages: 20, // Will fetch all pages automatically
+    maxJobs: 500,
+  },
+  // Note: sajilojob.com domain not found
+  // If you have the correct URL, add it here
 ];
 
 export interface ScrapeResult {
