@@ -214,13 +214,25 @@ export async function POST(request: NextRequest) {
       console.log(`   ⚠️  No jobs were assigned to categories`);
     }
 
+    // Update company enrichments after scraping
+    let enrichmentUpdateResult = null;
+    try {
+      const { updateEnrichmentsAfterScraping } = await import("@/app/services/JobScrapingEnrichmentService");
+      enrichmentUpdateResult = await updateEnrichmentsAfterScraping();
+      console.log(`✅ Updated ${enrichmentUpdateResult.companiesUpdated} company enrichments`);
+    } catch (enrichmentError: any) {
+      console.error("⚠️ Error updating enrichments (non-fatal):", enrichmentError?.message || enrichmentError);
+      // Don't fail the scraping job if enrichment update fails
+    }
+
     return NextResponse.json({
       success: true,
       totalScraped: allJobs.length,
       saved,
       duplicates,
       categoryStats: Array.from(categoryStats.values()),
-      message: `Scraped ${allJobs.length} jobs. Saved ${saved} new jobs, skipped ${duplicates} duplicates.`,
+      companiesUpdated: enrichmentUpdateResult?.companiesUpdated || 0,
+      message: `Scraped ${allJobs.length} jobs. Saved ${saved} new jobs, skipped ${duplicates} duplicates.${enrichmentUpdateResult ? ` Updated ${enrichmentUpdateResult.companiesUpdated} company enrichments.` : ""}`,
     });
   } catch (error: any) {
     console.error("Scraping error:", error);

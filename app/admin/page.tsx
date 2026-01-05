@@ -15,6 +15,7 @@ import { ReportsView } from "@/components/admin/Views/ReportsView";
 import { PredictiveInsights } from "@/components/admin/Views/PredictiveInsights";
 import { SettingsView } from "@/components/admin/Views/SettingsView";
 import { NavigationPage } from "@/components/admin/Views/NavigationPage";
+import { CompanyEnrichmentView } from "@/components/admin/Views/CompanyEnrichmentView";
 import { Menu } from "lucide-react";
 
 export default function AdminPage() {
@@ -187,6 +188,9 @@ export default function AdminPage() {
                         indices={analyticsData?.indices}
                     />
                 )}
+                {activeView === "companies" && (
+                    <CompanyEnrichmentView />
+                )}
                 {activeView === "data-quality" && (
                     <DataQualityView analyticsData={analyticsData} />
                 )}
@@ -218,12 +222,14 @@ export default function AdminPage() {
                 )}
                  {activeView !== "overview" && 
                   activeView !== "predictive" && 
+                  activeView !== "companies" &&
                   activeView !== "data-quality" && 
                   activeView !== "sources" && 
                   activeView !== "seo" && 
                   activeView !== "reports" && 
                   activeView !== "alerts" &&
-                  activeView !== "settings" && (
+                  activeView !== "settings" &&
+                  activeView !== "navigation" && (
                     <div className="p-12 text-center text-muted-foreground">
                         <h2 className="text-2xl font-bold mb-2">Work In Progress</h2>
                         <p>Module {activeView} is currently under construction.</p>

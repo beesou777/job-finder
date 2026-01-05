@@ -1,0 +1,5144 @@
+{
+    "companies": [
+      {
+        "id": "64c20f144a6f6fb9419c53c9",
+        "name": "Workhub Nepal",
+        "activeJobs": 4,
+        "totalJobs": 7,
+        "website": "https://www.workhubnepal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm2vhf9dj000003jq2nvu4ass.png",
+        "location": "Nepal"
+      },
+      {
+        "id": "64c36306c3869fc295f80165",
+        "name": "Khatapana",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://khatapana.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clkm7t8l6000008jxcg748g8x.png",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "64c3974486c3ca15036124bf",
+        "name": "Itech Office Support",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "http://itechosnepal.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clkmfrvlw000008mb7drj7g6v.png",
+        "location": "Kirtipur, Kathmandu"
+      },
+      {
+        "id": "64c9e28ef5da14554e9ba003",
+        "name": "Angelswing Inc.",
+        "activeJobs": 4,
+        "totalJobs": 12,
+        "website": "https://angelswing.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clkt9jwff000008kz489z70r7.png",
+        "location": "Seoul, South Korea"
+      },
+      {
+        "id": "64cbcc607b0ce7aa58c8a746",
+        "name": "Diksha Gohlyan",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": "USA"
+      },
+      {
+        "id": "64d46b21901795ca6cf620f5",
+        "name": "Jeevee Health Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "https://www.jeevee.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cll4p4l8o000008l14z1b3zx3.jpeg",
+        "location": "Lazimpat, Kathmandu"
+      },
+      {
+        "id": "64d476b7638c7a0a98418e9c",
+        "name": "SALT Fashion Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://saltnp.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cll4q4kf7000008jz5arpa5a5.jpg",
+        "location": "Lazimpat, Kathmandu"
+      },
+      {
+        "id": "64d9fc5a484a3a64a8d06365",
+        "name": "Viveka Services Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://vivekahealth.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrj32kyh000009l84m5mchmf.jpeg",
+        "location": "Siddhivinayak Marg, Sanepa"
+      },
+      {
+        "id": "64e43e60b1738a949eb26cc6",
+        "name": "Responsive Pixel Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://responsive-pixel.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cllltu2at000008jte73i3043.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "64e45db17e6121f36bfd7abc",
+        "name": "Codavatar Tech Pvt. Ltd.",
+        "activeJobs": 11,
+        "totalJobs": 67,
+        "website": "https://codavatar.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clscvc4ko000108kzczpieb17.jpg",
+        "location": "Kalopul, Kathmandu"
+      },
+      {
+        "id": "64e4c30b8fa8301b24d1bccc",
+        "name": "Rimuss",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cllme20g8000008ln9mphcbzm.png",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "64e6dd3ce4462829d17aef78",
+        "name": "human.resource@tegzy.com.au",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.tegzy.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clloo31ed000008moep0s9po2.jpeg",
+        "location": "Lagankhel, Gwarko"
+      },
+      {
+        "id": "64ec1ced00aee1e100454013",
+        "name": "Outcode Software",
+        "activeJobs": 0,
+        "totalJobs": 23,
+        "website": "https://outcodesoftware.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cllvt5ily000108l087ts2wqy.png",
+        "location": "Naxal, Kathmandu"
+      },
+      {
+        "id": "64edb2c44c2fb1fea31c0bbe",
+        "name": "Vurilo",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cllw2qo3v000008mma16ff3fa.jpeg",
+        "location": ""
+      },
+      {
+        "id": "64eebacd54ae4dbb759965e1",
+        "name": "ShotCoder Tech",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://www.shotcoder.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsfnwy8l000008jqd8btdbo3.png",
+        "location": "Old Baneshwor, Kathmandu"
+      },
+      {
+        "id": "64ef38fdbe3caea76a67978e",
+        "name": "BerryBytes",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "http://www.berrybytes.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cllxq7t6k000008jrbc5s0kml.jpg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "64f1ddf2648404c8d3bbd410",
+        "name": "Qniverse",
+        "activeJobs": 1,
+        "totalJobs": 10,
+        "website": "https://qniverse.co.uk/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clm0le8h7000008mr0h8mcd25.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "64f1e0df82df14030cb905fa",
+        "name": "Anbe Tech Solutions",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.anbetechsolutions.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clm0lub2h000008l77u6kap1f.jpeg",
+        "location": "Bagmati, Nepal"
+      },
+      {
+        "id": "64f2baacffd3ddd220ec9ffc",
+        "name": "Info Developers Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 12,
+        "website": "https://infodev.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clm1j1cug000008lb6zjr34mk.jpg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "64f2c142b757875b076c23c7",
+        "name": "Plerion",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://plerion.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clm1k1i65000008mlcukq4nws.jpg",
+        "location": "Remote"
+      },
+      {
+        "id": "64f43145e9889273cf7f344a",
+        "name": "ITsutra",
+        "activeJobs": 1,
+        "totalJobs": 33,
+        "website": "https://itsutra.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clm344roc000008jp69vm0xpo.jpeg",
+        "location": "Bagmati, Nepal"
+      },
+      {
+        "id": "64f57836d9daf96edeecf7da",
+        "name": "Virtuosway",
+        "activeJobs": 0,
+        "totalJobs": 18,
+        "website": "https://virtuosway.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clm5t7l4u000008mj186z21ss.png",
+        "location": ""
+      },
+      {
+        "id": "64f85f29293ed63d66618918",
+        "name": "Mandala Tech",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://mandalatech.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clm7n78ee000008ky0zvaa5vw.png",
+        "location": "Baluwatar, Kathmandu"
+      },
+      {
+        "id": "64fab1521afe5cfb64543eb3",
+        "name": "Treeleaf Technologies Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "64fec0729284ce7150b03d4d",
+        "name": "NCAT System & Solution Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": null,
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clmek506i000008l9dzt91ml5.PNG",
+        "location": null
+      },
+      {
+        "id": "64fed803e96db18ae47dda5c",
+        "name": "Hazesoft Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://hazesoft.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqndi3dj000007k11zvy989v.jpeg",
+        "location": "Shankhamul, Kathmandu "
+      },
+      {
+        "id": "64fffd9a8903d6017ac199c8",
+        "name": "Code Himalaya",
+        "activeJobs": 2,
+        "totalJobs": 29,
+        "website": "https://codehimalaya.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clmfwh88g000008l84pnv5idh.jpg",
+        "location": "Kupondole"
+      },
+      {
+        "id": "65005d0966734d20d150f4b0",
+        "name": "Featherwebs",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://www.featherwebs.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clmgb0vur000008mf3i2j4pvs.png",
+        "location": "Lalitpur, Nepal"
+      },
+      {
+        "id": "6506eb6374ad098b9b52dd98",
+        "name": "Sessami",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.sessami.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clmnety5n000008jwbzix91rk.jpeg",
+        "location": "Remote"
+      },
+      {
+        "id": "650822c20ff3001a83f3fe71",
+        "name": "Curves n'​ Colors",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "http://www.curvesncolors.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clmoqaf2l000108l877scdvjt.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65095f69dd5021ebf6af4097",
+        "name": "Threadcode Technlogies",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "650979717502d4bb9db89141",
+        "name": "Web Experts Nepal Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "https://www.webexpertsnepal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clmq6lbpe000108l47swf70ad.PNG",
+        "location": "satdobato, Lalitpur "
+      },
+      {
+        "id": "650a8666907c4793c9b67aaa",
+        "name": "SCSS Consulting",
+        "activeJobs": 0,
+        "totalJobs": 12,
+        "website": "https://scssconsulting.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls7oi2qu000108la7t7c71dl.jpeg",
+        "location": "Remote"
+      },
+      {
+        "id": "650bd027202ca822f945dee7",
+        "name": "Alpas Technology Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://www.alpas.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clmsprtrf000008jp7a9abjrq.png",
+        "location": "Pulchowk, Lalitpur"
+      },
+      {
+        "id": "650bd64b364235324914b832",
+        "name": "Kotuko Nepal",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "651120ca33bb4f1375106f9b",
+        "name": "Zinob Inc",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://zinobinc.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clmyh5lv4000008l36xznbyca.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6512aef4a325f00daaeba360",
+        "name": "Tekvortex Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 14,
+        "website": "https://tekvortex.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln05ub5p000008mfglwcb49d.png",
+        "location": "Sanepa, Lalitpur"
+      },
+      {
+        "id": "6513a0a3677db584c0b983fb",
+        "name": "Sand Console Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.sandconsole.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln16ofdg000008igfn1ycmaq.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6513a5be677db584c0b983fd",
+        "name": "Ujyalo Ventures",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln17gg4x000108ig1zzl3a5z.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6513fd9325260185560c8eba",
+        "name": "Adex International Pvt. Ltd. ",
+        "activeJobs": 0,
+        "totalJobs": 13,
+        "website": "https://adex.ltd/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqlv6lw9000008l41y7715gb.jpeg",
+        "location": ""
+      },
+      {
+        "id": "65143476d3666833145011c3",
+        "name": "SysQube Technology Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.sysqube.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln1t7jfp000008kx9l2ifsm4.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65151556e4f28ceec10ecb07",
+        "name": "Ramailo Tech",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.ramailo.tech/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln2rhefm000008mug51a7828.jpg",
+        "location": "Kathmandu Tinkune"
+      },
+      {
+        "id": "65153c80abb923349860028d",
+        "name": "AppBox Tech",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "http://www.appboxtech.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr4he7ou000008jw3bpn7pup.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65154e42ed720513bac668dc",
+        "name": "Vertex Special Technologies",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": null,
+        "logo": "",
+        "location": null
+      },
+      {
+        "id": "6515852257a15f1d4850d1e1",
+        "name": "Avanya Technology Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6516671efe79f9fe4dca7f2a",
+        "name": "Hexamatics",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.hexabusiness.com/",
+        "logo": "",
+        "location": "Petaling Jaya, Selangor, Malaysia"
+      },
+      {
+        "id": "651a9451c20bf08a6c5193fd",
+        "name": "Nimble Infosys",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "http://www.nimbleinfosys.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln8pxh4a000008kzdcpq32w2.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "651a9a3d4d7084100f97963d",
+        "name": "Nakshatra Techno Hub",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://www.nth.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln8qtywu000008l90938buul.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "651aa40a3e679dd6fc333ab1",
+        "name": "Logispark Technologies",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://logisparktech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln8sbqs8000008l25tqq135x.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "651aa584a1ae176f67985405",
+        "name": "Makura Creations",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "http://www.makuracreations.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln8sju83000008mr830v0u2k.jpeg",
+        "location": "Lalitpur, Nepal"
+      },
+      {
+        "id": "651bbec7f91d797daa5f27c5",
+        "name": "Digitalin Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://digitalin.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cln9zf3qg000008mfa6f1aiqe.jpg",
+        "location": "Jwagal, Kupondole, Lalitpur, Nepal"
+      },
+      {
+        "id": "651cf7f44566d21b1483e048",
+        "name": "Jagdamba Mobiles",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": null,
+        "logo": "",
+        "location": null
+      },
+      {
+        "id": "651e7eadf9717f3739cf558a",
+        "name": "Yoddhalab Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://www.yoddhalab.com/",
+        "logo": "",
+        "location": "Sifal, Kathmandu"
+      },
+      {
+        "id": "651eac2940b01ffb1f75a683",
+        "name": "Lightweb Group Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwzzvbfm000009ldcyb847kp.lightweb",
+        "location": ""
+      },
+      {
+        "id": "652252285b8efb55785d6035",
+        "name": "Rigorous Web",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.rigorousweb.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clnh3zrsi000007l46lqagogb.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6528f5e7fc9d0538d3f5e5a3",
+        "name": "Novelty Technology",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "http://www.noveltytechnology.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clnoegisv000308mg3kjvfz5o.png",
+        "location": "New Baneshwor, Kathmandu"
+      },
+      {
+        "id": "652df7a6402bcd4e57f68b4b",
+        "name": "Intuji",
+        "activeJobs": 0,
+        "totalJobs": 16,
+        "website": null,
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clntqf4g3000008la57n3hxeb.jpeg",
+        "location": null
+      },
+      {
+        "id": "652e209c18b56ce03a04738e",
+        "name": "Yojana Technologies",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://yojanatech.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clntwnv44000008l485kmhhhd.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6531e4f418a627acaf2bfc95",
+        "name": "Venue Swift",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": null,
+        "logo": "",
+        "location": null
+      },
+      {
+        "id": "653229e94799ae2f427f1857",
+        "name": "Amnil Technologies ",
+        "activeJobs": 0,
+        "totalJobs": 29,
+        "website": "https://www.amniltech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqotbmqn000008l07weh822c.jpeg",
+        "location": "Jhamsikhel, Lalitpur"
+      },
+      {
+        "id": "6540bcb64ec06c35050d4f74",
+        "name": "Novelty Technology",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://noveltytechnology.com/clients/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cloe2scmf000008mf956r8ch8.jpeg",
+        "location": "Bagmati, Nepal"
+      },
+      {
+        "id": "6540c030153756348b6d4074",
+        "name": "Treeleaf Technologies",
+        "activeJobs": 0,
+        "totalJobs": 35,
+        "website": "https://treeleaf.ai/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cloe3iey2000008lddp6b0qni.jpeg",
+        "location": "Bagmati, Nepal"
+      },
+      {
+        "id": "654230c338c0b58a6ef72019",
+        "name": "Young Minds Creation Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "https://www.youngminds.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clofnhrnm000007l3bypcanya.jpg",
+        "location": "Shantinagar, Kathmandu"
+      },
+      {
+        "id": "6543609d4ddf0e7e888de6b6",
+        "name": "Sherpa Adventure Gear Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": "Budhanilkantha, Kathmandu"
+      },
+      {
+        "id": "654361844ddf0e7e888de6b7",
+        "name": "Cubit Incorporated Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://cubit.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvuryy8n000009lae561hbi2.png",
+        "location": "Anamnagar, Kathmandu"
+      },
+      {
+        "id": "6544bc1afd206dd9ff6b28b4",
+        "name": "ITsutra",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://itsutra.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cloiesjdd000008l07h852d6i.jpg",
+        "location": "Kulaswor, Kathmandu"
+      },
+      {
+        "id": "654b069ef1f64899082fdc2c",
+        "name": "Sursa Technology Pvt Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 16,
+        "website": "https://sursatech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clop88ifq000008l30x479iw3.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "654b2f000cffacbdc5e46248",
+        "name": "Ramailo Tech",
+        "activeJobs": 0,
+        "totalJobs": 15,
+        "website": "https://www.ramailo.tech/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clopee2ov000008jr20bjbw0q.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "654c590b40763777cd829cdb",
+        "name": "Nex Digital Studio",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "https://nexdigitalstudio.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clssipa5z000008l6awlzbna8.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "654c5c7d7a3c0b52ba743d21",
+        "name": "Swivt",
+        "activeJobs": 0,
+        "totalJobs": 12,
+        "website": "https://swivt.io/en",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cly2lanj4000009k5elnrh2mt.jpeg",
+        "location": "Worldwide"
+      },
+      {
+        "id": "654cde2e3a5c82100a10bdde",
+        "name": "IT Sutra",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "654db64ee2732e77b428c347",
+        "name": "Sherpa Technologies",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://sherpa-tech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clos51tce000008l3dg0oe9vx.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "654db7d7692a5a45633ddf62",
+        "name": "YAJ Tech Pvt. Ltd. ",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://yajtechnologies.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqxuix70000108l4626f4ukz.jpeg",
+        "location": "Durbarmarg, Kathmandu"
+      },
+      {
+        "id": "65573adb7e941eaa7ea148ee",
+        "name": "A Leading Company",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "",
+        "location": "Jwagal, Kathmandu, Nepal"
+      },
+      {
+        "id": "655d703baf1bd37f4c517728",
+        "name": "Dignep Group Pvt.Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://dignep.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clp96pvml000008jm16vi6zl6.png",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "655d7ddf49ac6c18bcade432",
+        "name": "Pana Software company Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clp98spe7000008l96ujne0rw.jpeg",
+        "location": "Setopul, Kathmandu"
+      },
+      {
+        "id": "655db5d2f802bf540febab0f",
+        "name": "Codewing Solutions",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "http://www.codewing.co",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clp9hcjz3000008ld2yx39knb.png",
+        "location": "Chandol, Bishalnagar"
+      },
+      {
+        "id": "655df66f4e749a36268b9754",
+        "name": "Kathmandu Living Labs",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "http://kathmandulivinglabs.org",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clp9r81gj000008l71e692c18.jpeg",
+        "location": "1474 Lamtangin Marg, Chundevi"
+      },
+      {
+        "id": "655ed7370d734e2ce1ee77f8",
+        "name": "SkillPrompt",
+        "activeJobs": 1,
+        "totalJobs": 8,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpapgip1000008l8cevi9oet.jpeg",
+        "location": "Butwal, Lumbini"
+      },
+      {
+        "id": "65601ab58f3bdd0b81f69386",
+        "name": "Tekkon Technologies Pvt. Ltd.",
+        "activeJobs": 1,
+        "totalJobs": 22,
+        "website": "https://tekkon.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpc3afl8000008lc61oigr80.jpg",
+        "location": ""
+      },
+      {
+        "id": "6560315dee2e13cf64683d37",
+        "name": "BlackBox Technologies",
+        "activeJobs": 1,
+        "totalJobs": 28,
+        "website": "https://www.bboxtech.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpc67c2p000008l49sdo310u.jpeg",
+        "location": "Lalitpur, Nepal"
+      },
+      {
+        "id": "65604cfe00342355b508bc06",
+        "name": "Docsumo",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.docsumo.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/docsumoai_logo.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "6562e56625b3b4914188e661",
+        "name": "Triveni Byapar Company Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://trivenitrade.com/",
+        "logo": "",
+        "location": "Putalisadak, Kathmandu"
+      },
+      {
+        "id": "6562e89b8554465af6e0aa5b",
+        "name": "People in Need",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://nepal.peopleinneed.net/en/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpf44xd8000008jmhvxp2gmd.jpeg",
+        "location": "Nepal"
+      },
+      {
+        "id": "6564a77cec802773f5a3b2fe",
+        "name": "F1Soft International Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://f1soft.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clph0bz9g000008l8fdudcgw2.png",
+        "location": "Lalitpur, Nepal"
+      },
+      {
+        "id": "6565782bc5a022754ddd7130",
+        "name": "Reizvoll Nepal",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clphw2ran000008jv9n1uhbft.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65680002fea6667d60607782",
+        "name": "WoM-Marketing, Inc.",
+        "activeJobs": 1,
+        "totalJobs": 10,
+        "website": "https://wom.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpkmts39000008ju38qhaoga.jpeg",
+        "location": " Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "656805dc91417e2da8a49fb6",
+        "name": "IMS Software Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 14,
+        "website": "http://imssoftware.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpknql43000008l39zh76ukv.jpeg",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "65680effdce18828741a811a",
+        "name": "Prabhavana Information Technologies Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 13,
+        "website": "http://www.prabhavanait.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpkp5ewr000008jne885ba03.jpeg",
+        "location": " Bāgmatī, Kathmandu"
+      },
+      {
+        "id": "6568a5661da153cb6a62286b",
+        "name": "Pocket Pandit Inc.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": "Bagmati,  Nepal"
+      },
+      {
+        "id": "65694f301bf8b2b177931e5a",
+        "name": "Pagoda Labs",
+        "activeJobs": 0,
+        "totalJobs": 26,
+        "website": "https://pagodalabs.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpm1w6u6000008jx0ji4gyug.jpeg",
+        "location": "Kumaripati , Lalitpur"
+      },
+      {
+        "id": "656ae55727db08a2939d4fb7",
+        "name": "Hiddenlayer Network Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.hiddenlayer.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpns49sh000108k1g5jke1qa.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "656d29ec3704bca40aa6583d",
+        "name": "Bhawani Infotech",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://bhawaniinfotech.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpq8iiw0000108lc8xl46x8t.jpeg",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "656d2fb0fceaf78b42aae092",
+        "name": "Kitwosd IT Support Center",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://kitwosd.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpq96j0x000009jqcdh46f89.jpeg",
+        "location": " Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "656d7e49165f146502a0ed5e",
+        "name": "Asterisk Digital",
+        "activeJobs": 4,
+        "totalJobs": 31,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrec5vby000008l5bxxx2336.jpeg",
+        "location": ""
+      },
+      {
+        "id": "656d926cd6e34a8c3631a714",
+        "name": "Ayata Incorporation",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://ayata.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpqo9hig000008kyearaggfd.png",
+        "location": " Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "656e95d353b5fa8e9a1bb946",
+        "name": "EkGhanti Services",
+        "activeJobs": 2,
+        "totalJobs": 13,
+        "website": "http://ekghanti.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clprrt2m4000008ibdjio6bni.jpeg",
+        "location": " Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "656e9edf94e5da81df16fb1e",
+        "name": "Asha & Company",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.asha.inc/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clprt49zm000108ibh0au0hnq.jpeg",
+        "location": " Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "656ffa859ee2bb1b6cee45c2",
+        "name": "Hulas Khadya Udyog Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clptb320q000308l8gdpu5514.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "657003e55ace4b9762a32432",
+        "name": "Orka Socials",
+        "activeJobs": 1,
+        "totalJobs": 4,
+        "website": "https://orkasocials.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clptbkq60000008labhpb6a9c.jpeg",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "657008319ee2bb1b6cee45c5",
+        "name": "Citytech",
+        "activeJobs": 2,
+        "totalJobs": 19,
+        "website": "https://citytech.global/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clptcb99h000508l86ts65rg7.png",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "6570114c78167f4434c7a534",
+        "name": "Khalti Digital Wallet ",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.khalti.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clptf4zyc000008jm6mn3d5mh.jpg",
+        "location": "Bakhundole, Patan, Kathmandu "
+      },
+      {
+        "id": "6572aa16df12832f6dcf1222",
+        "name": "GrowByData",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://growbydata.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpw6y8tn000008ic2rzu8ktg.jpeg",
+        "location": "Lalitpur District, Nepal"
+      },
+      {
+        "id": "6572b21f32891c94d0c92fdb",
+        "name": "Veda Studios",
+        "activeJobs": 0,
+        "totalJobs": 20,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluw9k8u3000008jz95pyb3us.jpeg",
+        "location": "Nikosera, Bhaktapur, Bāgmatī, Nepal"
+      },
+      {
+        "id": "65755140b8e4b321cadd1de2",
+        "name": "Apex Tech",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://apextech.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clpz2gjox000008l3368h4it8.png",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "657689be73f18fe4326e71c1",
+        "name": "Navya Advisors Limited",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://navyaadvisors.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clq0e2wdp000008l5b2420vmx.jpeg",
+        "location": " Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "65783d2924df63336b2c0ba2",
+        "name": "Inflancer Technology Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://inflancer.tech",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clyeerk6e000009la7tkkc63p.png",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "657901e978c9879a238cefba",
+        "name": "Codniv",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://www.codniv.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrj120u6000009l28lb24a58.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65792b33ca8a5d3d4acdba3a",
+        "name": "Yarsa Labs",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.yarsalabs.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clq38refr000008l76grtd90t.jpeg",
+        "location": "Pokhara, Gandak"
+      },
+      {
+        "id": "6579ad8324d5544f52d4cb5a",
+        "name": "White Cloud Nepal",
+        "activeJobs": 0,
+        "totalJobs": 13,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clq3skdcg000008l85itjdigp.jpeg",
+        "location": " Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "657a9d4bed030ae51c5ecbd0",
+        "name": "Pathao Nepal Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 34,
+        "website": "https://pathao.com/np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clq4t63f7000008l6fhix1qdf.jpeg",
+        "location": " Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "657b027d221bb6face6db51d",
+        "name": "ENTRA Tech",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://entratech.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clq58kf75000008l09atg2v05.png",
+        "location": "Worldwide"
+      },
+      {
+        "id": "657b9ffeafddeeb2ec0bd41a",
+        "name": "MedEx",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://medex.co.th/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clq5wkdzq000008l4af9y8ndd.jpeg",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "657d37c2d449d2296cacb0be",
+        "name": "LogicaBeans",
+        "activeJobs": 0,
+        "totalJobs": 12,
+        "website": "https://logicabeans.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clq7moxkw000008lb4aq4ddf5.jpeg",
+        "location": "Lalitpur District, Nepal"
+      },
+      {
+        "id": "657e6d6a11f623c8b810725d",
+        "name": "Hub IT Training and Solutions",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.hubit.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clq8xy8dw000008l664m14ms9.jpeg",
+        "location": "Butwal, Nepal"
+      },
+      {
+        "id": "657f9a4511afe2809745b104",
+        "name": "Edap Technology",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://edap.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqa7qdn4000008iddmxafmcm.jpeg",
+        "location": "Worldwide"
+      },
+      {
+        "id": "657fc346f2e39734d7c954bf",
+        "name": "Nepal Nomad Trekking",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.nepalnomad.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqadzjg5000008l7938o3r2j.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "657fd55103999b3087fbeb69",
+        "name": "GhantaaGhar",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://ghantaaghar.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqagsopg000008jj2s2l6dvl.jpeg",
+        "location": ""
+      },
+      {
+        "id": "65803eae7b1d78e94ad0ad7a",
+        "name": "ThemeGrill",
+        "activeJobs": 1,
+        "totalJobs": 10,
+        "website": "https://themegrill.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqawswh2000008jvb0p55pl2.jpeg",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "658171a8749b6c6812123d7a",
+        "name": "Nimbuzz",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://nimbuzz.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqc7pb3t000008l937iuc12m.jpeg",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "658196763298463b8d10b804",
+        "name": "Compliance Quest",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.compliancequest.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqcd8j8m000008l81czk1twe.jpeg",
+        "location": "Worldwide"
+      },
+      {
+        "id": "65827b15b34cd2b11ada968a",
+        "name": "OnePoint Financial Services",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "https://www.onepointfinserv.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqdc2m04000008l28f4lb6yq.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6582b8d58c1f500cee0cc506",
+        "name": "Logpoint",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://www.logpoint.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqdlthwt000008l2h9z0gzch.png",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6582c23595512f3c70ada636",
+        "name": "YoungInnovations Pvt. Ltd.",
+        "activeJobs": 1,
+        "totalJobs": 15,
+        "website": "https://younginnovations.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrzx0uz1000008ju5t709k5h.png",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "6582e31e8319558997f522e0",
+        "name": "Five Fingers Consulting",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqdrztxr000008l9fbxv227b.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6582e5e08319558997f522e2",
+        "name": "Khaanpin",
+        "activeJobs": 0,
+        "totalJobs": 16,
+        "website": "https://khaanpin.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqer9hd9000009l462kkhcaz.png",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6583be6e25f80b56f1d0d86a",
+        "name": "Veda",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://veda-app.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqephua0000008l7abugaccb.png",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6583d2ba58a0189052d833f8",
+        "name": "First Avocado",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.firstavocado.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqesiywd000209l453j63wz2.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65851f93449b38f554c7ecc3",
+        "name": "Neem Infosys",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://neeminfosys.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqg7c8zo000208l32l52a8wu.png",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6585297b750fcf62bdb6570d",
+        "name": "Varosa Technology",
+        "activeJobs": 1,
+        "totalJobs": 19,
+        "website": "https://varosatech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqgaim7k000008ich9i58ctw.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6586f2a8fe5681a82c5f9fd0",
+        "name": "Tezash Tech Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://tezash.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqi6eol8000008ld9k2n2lc5.png",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65871cf70033e8a616043d30",
+        "name": "Intosoft",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://intosoft.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqid3mck000008jm5zodb5tm.png",
+        "location": "Narephat, Kathmandu"
+      },
+      {
+        "id": "65872175fb154a5c1a5cbd1c",
+        "name": "CoPenned",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://copenned.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqidi2xo000108jm5f49gjw6.jpeg",
+        "location": "Sinchahiti Complex, Lagankhel/Gwarko, Lalitpur"
+      },
+      {
+        "id": "6587bc18ace1b1b42efecd17",
+        "name": "Progressive Labs Pvt. Ltd",
+        "activeJobs": 1,
+        "totalJobs": 16,
+        "website": "https://progressivelabs.tech/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqj131b6000008k04tv53jgy.jpeg",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "6587e1800f9e125eba29d5cd",
+        "name": "echowin",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://echo.win/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqj6sdzd000008l15nbsemid.jpeg",
+        "location": "Worldwide"
+      },
+      {
+        "id": "6589064a9f2da07930e829b0",
+        "name": "OnlineZeal",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.onlinezeal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqkfe0h3000008jf9k3ya4dz.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "658930b53270db1f7965999c",
+        "name": "Midas Technologies Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "http://www.midastechnologies.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqklug9s000007kwfkge47fj.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65893427d75bf0d7c85f7542",
+        "name": "Neosoftware Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.neosoftware.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqkmibp1000008l7fgea8x7m.png",
+        "location": "Neo building, Bhanimandal , Lalitpur"
+      },
+      {
+        "id": "658ba9fe22a9668a99dfcd82",
+        "name": "Gurzu Inc.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://gurzu.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqnagpxz000008jn1qun1she.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "658cf5a0c65ec3d9e24f9d7d",
+        "name": "Port Pro Nepal Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://www.portpro.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqopnyld000208l44nh44zce.jpg",
+        "location": "Ekantakuna,Lalitpur, Nepal"
+      },
+      {
+        "id": "658cfbfe201da84166f59e61",
+        "name": "Kush Fintech Consultants",
+        "activeJobs": 0,
+        "totalJobs": 13,
+        "website": "https://kushfintech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqoq4itt000108l2euved191.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "658d0765201da84166f59e62",
+        "name": "Susankya Global, LLC",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "https://www.susankya.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqorm8ev000008l587nae410.jpeg",
+        "location": "Kupondole, Lalitpur, Nepal"
+      },
+      {
+        "id": "658d096cd59d46b82634cc37",
+        "name": "Code Rush",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://coderush.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqos1v7p000008l1b9go6bma.png",
+        "location": "Bhanimandal, Lalitpur"
+      },
+      {
+        "id": "658d0d43c4cb3e55a3707183",
+        "name": "BitsKraft",
+        "activeJobs": 0,
+        "totalJobs": 18,
+        "website": "https://bitskraft.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqosjluc000108l549756xgc.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "658e5ed0982ae060c1945476",
+        "name": "cellapp",
+        "activeJobs": 0,
+        "totalJobs": 14,
+        "website": "https://cellapp.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqq7y0tk000008jn592h9bca.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "658e73e76f25316d9210bd0a",
+        "name": "Asterdio Inc.",
+        "activeJobs": 1,
+        "totalJobs": 27,
+        "website": "https://asterdio.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqqb8win000007la5k597ue3.png",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "659397e87a987e3ec3f04968",
+        "name": "Onviro Tech P. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 9,
+        "website": "https://www.onvirotech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqvvs0q8000008jq6fgrcku5.jpeg",
+        "location": "Kamal Pokhari Nilgirimarg, Kathmandu 44600"
+      },
+      {
+        "id": "65939b057a987e3ec3f0496a",
+        "name": "UBA Solutions Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://uba-solutions.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqvw8tmv000008juch65azsy.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "6593b77507a103ceca2bac03",
+        "name": "Fintech Solutions",
+        "activeJobs": 0,
+        "totalJobs": 14,
+        "website": "http://www.fintech.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqw5byi5000008l7a84y9u3j.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "659447d64e44743a90954d61",
+        "name": "Axios Softwork Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://axiossoftworks.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqwml0uc000008jpbz8d5fk0.jpeg",
+        "location": "Banepa-1, Kavrepalanchowk, Nepal"
+      },
+      {
+        "id": "6595017d7ce8fe016511d21e",
+        "name": "Mercy Corps",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://nepal.mercycorps.org/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqxf6smf000008l6b7zp2yio.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6595610bb197d01348be24cf",
+        "name": "Pace Code",
+        "activeJobs": 3,
+        "totalJobs": 12,
+        "website": "https://pacecode.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqxtri1v000008l00yw4akno.png",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65956ac1b197d01348be24d1",
+        "name": "Velox Labs",
+        "activeJobs": 5,
+        "totalJobs": 39,
+        "website": "https://velox.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqxuwjdr000108l01eny7akd.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65956d91b197d01348be24d2",
+        "name": "Maitri Services",
+        "activeJobs": 1,
+        "totalJobs": 26,
+        "website": "https://www.maitriservices.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqxvbud1000208l4fkwg7unw.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6595764c25b865722e84a9bc",
+        "name": "wesionaryTEAM",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://en.wesionary.team/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqxwo5hj000308l4c0bj1bix.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6596502dd78bea004c3d7c7a",
+        "name": "Sourcecode Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://sourcecode.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqytvuaz000008lfgvxvg9f4.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65967bbec24312ba0d3b4a79",
+        "name": "Cotiviti Nepal",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://www.cotiviti.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clqz0kibg000008jkd49k65bf.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65979817ec20fab75246d505",
+        "name": "Programiz",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://programiz.pro/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr07v804000008l4hbnhf8jt.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "65979c1f4dd206573f510cbd",
+        "name": "Spiralogics, Inc.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "http://www.spiralogics.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr08i1y5000108l12t4lbfqu.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6597a185b797b10acaf7f328",
+        "name": "SG Innovations",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://sginnovations.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr09dccy000108l45pi27uv6.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6597a77fc094d032f980dfd9",
+        "name": "Masovison Technology Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://masovison.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr0a7wc5000008l8gb645n07.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6597aac2c094d032f980dfda",
+        "name": "ISMT College",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://ismt.edu.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr0ba5tj000009js1ypl557j.png",
+        "location": "Tinkune, Gairigaun, Kathmandu, Nepal"
+      },
+      {
+        "id": "65983c01561979c97701bf49",
+        "name": "Naxa Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 18,
+        "website": "http://www.naxa.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr0zcd0z000008l0hsmq0vlw.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "659ad45f22799ab44826922f",
+        "name": "Slash Plus",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "http://slashplus.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr3q4wny000008jmfl2hf8vx.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "659b89ce9a8bfa566bc7a11a",
+        "name": "JankariTech",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "http://www.jankaritech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr4htb3a000008jvayqchfyj.jpeg",
+        "location": "Pokhara, Kaski"
+      },
+      {
+        "id": "659b8fe60f46cce22045ad0e",
+        "name": "NexSewa",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "http://www.nexsewa.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr4iodsq000108jw12s94ld3.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "659b97260f46cce22045ad0f",
+        "name": "Dryice Solutions Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://dryicesolutions.net/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr4js0pe000008iedsij6oze.jpeg",
+        "location": "Kumaripati, Lalitpur, 03"
+      },
+      {
+        "id": "659ce609f72216bc16ec8937",
+        "name": "Outpace",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://outpaceseo.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr5yue05000008lfewlk0o0p.jpeg",
+        "location": "Oklahoma City, OKLAHOMA"
+      },
+      {
+        "id": "659d76bbb04d03c10682c283",
+        "name": "Hulas Iron Industries",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "http://www.hulasironindustries.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr6kxsmo000008jr5aw31owk.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "659d850cf4a0c59d124802f4",
+        "name": "YantraCore",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://yantracore.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr6n5ri9000108k1ai85124i.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "659e952d1e36be5be820ad7a",
+        "name": "3 Birds",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://3bird.nl/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr7sl16y000108l82c2vbxqt.jpeg",
+        "location": "Worldwide"
+      },
+      {
+        "id": "659ed0bdcac003bdae32b2c7",
+        "name": "Softbenz Infosys",
+        "activeJobs": 1,
+        "totalJobs": 44,
+        "website": "https://softbenz.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr81miic000008lbh090f6r6.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "659f71129fb1768b612a44f1",
+        "name": "Aqore Nepal",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.aqore.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr8qep31000108i6gn106qgc.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "659f775dc4abbd3246920c48",
+        "name": "Digital Pravidhi",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.digitalpravidhi.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr8r16yc000208i63fglfhr9.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "659f8f5208b138af10baad68",
+        "name": "AdBreak Media",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://adbreakmedia.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clr8unwqh000008jr1pfi3ibm.jpeg",
+        "location": "Pokhara, Gandaki"
+      },
+      {
+        "id": "65a228fb287e18352e54b76d",
+        "name": "Spell Innovation",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://spellinnovation.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrbo3xhf000008lgcq0egdwb.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65a22e10287e18352e54b76f",
+        "name": "Swift Technology Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.swifttech.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrboxaap000008l91nlm2cnu.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65a2c5272e08d2f90d917cf7",
+        "name": "Vanilla Tech",
+        "activeJobs": 1,
+        "totalJobs": 14,
+        "website": "https://vanillatech.ai/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrcbypw6000109l3evpeedu3.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65a2cfe85fade336ddcb3516",
+        "name": "Asha & Company",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.asha.inc/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrcdn4hp000208l566542nwi.jpeg",
+        "location": "Teku, Kathmandu, Nepal"
+      },
+      {
+        "id": "65a498f641e265fdfb5dff05",
+        "name": "Genese Solution",
+        "activeJobs": 2,
+        "totalJobs": 30,
+        "website": "https://www.genesesolution.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clreb8iyf000008jp6s0h8yc8.jpeg",
+        "location": "Bakhundole, Lalitpur"
+      },
+      {
+        "id": "65a4a8332fb9d23aaba34efb",
+        "name": "Mangobyte Digital",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.mangobyte.digital/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clredkom4000008gyg6fqhmw0.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65a60ca85932f148979608c7",
+        "name": "XylonTech",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.xylontech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrfvwi4v000008l9h7ur1wqb.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65a60f0e5932f148979608c8",
+        "name": "Mercantile Cloud Consulting",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://mercantilecloud.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrfw96xi000108l9fz2lffd7.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65a618b64c2a007559a47e32",
+        "name": "PMsquare Nepal",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://pmsquare.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrfxu6l2000108lc5l39ht4t.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65a625b625b4908ff4b81a38",
+        "name": "Next Aussie Tech",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "http://www.nextaussietech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrfzp0np000008l3gqm8fywu.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65a6287825b4908ff4b81a39",
+        "name": "Broadway Infosys",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://broadwayinfosys.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrgmvnzy000008lc05wm61ww.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65a62ab085f7aa866e34e7e3",
+        "name": "Quickfox Consulting",
+        "activeJobs": 1,
+        "totalJobs": 7,
+        "website": "https://quickrpa.ai/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrg0hx7w000108jrev16eufm.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65a62cde85f7aa866e34e7e4",
+        "name": "Palm Mind Technology",
+        "activeJobs": 1,
+        "totalJobs": 18,
+        "website": "https://palmmind.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrg0sizx000108l34efka8tj.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65a75e26ab9f3677cdb8656f",
+        "name": "Black Tech.",
+        "activeJobs": 3,
+        "totalJobs": 14,
+        "website": "https://www.blacktech.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrhbok3w000008l57ywud43c.jpeg",
+        "location": "Pokhara, Gandaki"
+      },
+      {
+        "id": "65a765ed6a34712d3886161f",
+        "name": "ScaleBuild.AI",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.scalebuild.ai/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrhcjmim000108l54pzy90j6.jpeg",
+        "location": "Raleigh , NC"
+      },
+      {
+        "id": "65a767af06c2bc7f0695a638",
+        "name": "Smarten Technologies Pvt Ltd",
+        "activeJobs": 1,
+        "totalJobs": 2,
+        "website": "https://smarten.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrhcrm53000008jq22f29uc5.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65a7766ea4d613b97ed4a53b",
+        "name": "Ekbana Solutions Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.ekbana.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrhf8adb000008l362jvcve2.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "65a77e0fa4d613b97ed4a53d",
+        "name": "ITAD",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.itad.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrhg6gcu000008jng79xcq3e.jpeg",
+        "location": "Brighton, East Sussex"
+      },
+      {
+        "id": "65a8ba65a36444509a3944e4",
+        "name": "Islington College Kathmandu",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "http://islington.edu.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrito0xi000008jyaq3h6j9j.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65a8c3779fe1fb0097a589cd",
+        "name": "Paathshala",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://paathshala.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clritvzvj000108jyg42s9vl0.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65a8ebea6634e9e696e644fd",
+        "name": "Dogma Group",
+        "activeJobs": 0,
+        "totalJobs": 13,
+        "website": "https://dogmagroup.co.uk/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrj03aav000008i88bsp7rj4.jpeg",
+        "location": "London, England"
+      },
+      {
+        "id": "65a8f6e117ad5bb7bfe00044",
+        "name": "Codynn",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://codynn.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrj1n26l000008l22tl0d1z5.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65a8fab7b3dd06ffbe28b80f",
+        "name": "Bhoos Games",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://www.bhoos.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrj278yv000008l84h2s4406.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "65aa08f4393ee080055c2e04",
+        "name": "Globally Nepal Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.globalyhub.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrk8w7ic000108lif2fi18nl.png",
+        "location": "Kumaripati, Lalitpur"
+      },
+      {
+        "id": "65aa10ade73421578837a6fc",
+        "name": "SoAni Tech",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "http://soanitech.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrk8k41a000008lidi1f6ca3.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65accadf8c35f106c7da24e7",
+        "name": "Colleges Nepal",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clroipr7z000008l74frthm00.png",
+        "location": ""
+      },
+      {
+        "id": "65ae062eecdcf01d510e1c25",
+        "name": "Task24",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.task24.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clroj47lo000208l7esu3cfea.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "65ae0c49dc55531b00e2bd5f",
+        "name": "OctSpace",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://octspace.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrokj0kv000008juelkva384.jpeg",
+        "location": "Kathmandu, Bāgmatī, Nepal"
+      },
+      {
+        "id": "65ae10fdcf25abbd46211af9",
+        "name": "Dakshya A.I",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://dakshyaai.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrokqmw4000008ksdqtif9f5.jpeg",
+        "location": "Pokhara, Gandaki"
+      },
+      {
+        "id": "65ae1bb890f3f9d345f0192e",
+        "name": "Classic Tech",
+        "activeJobs": 1,
+        "totalJobs": 10,
+        "website": "https://www.classic.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clromcvpj000008ibbzer891m.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65af45ca59bd0c3895b0aded",
+        "name": "DMC Marketing",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://dmcmarketing.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrpvqsis000008jybf47dwmn.jpeg",
+        "location": "Homebush West, Sydney, NSW"
+      },
+      {
+        "id": "65af50a28a9b9ff1249987f4",
+        "name": "DalloTech",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://dallotech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrpxiyrn000009lh3pgi7etj.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "65af53876313622850f645a7",
+        "name": "Teksewa",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://teksewa.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrpxvjs1000008l6246b01ts.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65af5a625035231b4d998ee6",
+        "name": "Softup",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://softup.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrpz89xl000008jpdr8uas0y.jpeg",
+        "location": "Dallas, Texas"
+      },
+      {
+        "id": "65b1ef32808a99db5d2be417",
+        "name": "Arkbo Technologies",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://www.arkbotech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrsrmflt000008l647eg2dau.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65b1f3564b1ea472e1f6ae82",
+        "name": "Versity Tech Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://versitytech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrss9c69000008l44kg8dtic.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65b1f4e44b1ea472e1f6ae83",
+        "name": "Mantra Ideas Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://mantraideas.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrssh630000008lddt5355dg.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "65b49990261778882f18e986",
+        "name": "Virtuosway",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://virtuosway.com/",
+        "logo": "",
+        "location": "Old Baneshwor,Kathmandu"
+      },
+      {
+        "id": "65b5275b8c06fcf84ca092c7",
+        "name": "Hyberlab",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://hyberlab.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrw9gs8h000008l8dkzt3yw3.jpeg",
+        "location": ""
+      },
+      {
+        "id": "65b62bc1f7b0fccfca6e055d",
+        "name": "Nepal Can Move",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "https://www.nepalcanmove.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrxd1bwz000008ju7orbdnbf.jpg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65b7db52181bca8b56930a8f",
+        "name": "Dark Matter Game Production",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://next.darkmattergame.net/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrz6pz31000209lc7jg92bfs.jpeg",
+        "location": "Parsa, Chitwan, Bagmati"
+      },
+      {
+        "id": "65b7e7cb75d5d6086f9056f7",
+        "name": "Fatdog Agency Nepal",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://fatdoglabs.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrz8kuvj000008jy8u7de4kb.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65b88180d94ec8f925655115",
+        "name": "Kalash Services Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://www.kalashservices.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrzw0rp4000008l16frj1040.jpeg",
+        "location": "Lalitpur"
+      },
+      {
+        "id": "65b88475bedc7214a1f689f3",
+        "name": "Avishkaram Technologies",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.avishkaram.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clrzwh395000008l52fz1boe8.jpeg",
+        "location": "Bengaluru, Karnataka"
+      },
+      {
+        "id": "65b8a31aa0514f2f0387e973",
+        "name": "Shatkar Creatives",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls015mni000008jq96w3a7bu.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "65b8cce457332dfc31151991",
+        "name": "AmoebaLabs",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://amoebalabs.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls07hxhg000008jud7ywgf8e.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65b9d25b2fe36d8dcc407711",
+        "name": "Kirti Bits",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://kbits.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls2pzmnt000008l6ep1i8cmz.png",
+        "location": "Kirtipur, Kathmandu"
+      },
+      {
+        "id": "65b9d3d3be6993ac5e13c70e",
+        "name": "Smartworks Technology Partners",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://www.smartworkstechnology.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls1bkoca000108l90vmk3vbk.jpeg",
+        "location": "San Diego, California"
+      },
+      {
+        "id": "65b9e3779b6f3c1dd4655805",
+        "name": "TekGro",
+        "activeJobs": 0,
+        "totalJobs": 9,
+        "website": "https://tekgro.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls1dyi1h000008lcel0dg2e1.jpeg",
+        "location": "Upper Mount Gravatt, Queensland"
+      },
+      {
+        "id": "65bb20c708b36bfe75c87b90",
+        "name": "Prixa",
+        "activeJobs": 0,
+        "totalJobs": 15,
+        "website": "https://prixa.net/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls2qe6p3000008l811b64ea5.jpeg",
+        "location": "Lalitpur District"
+      },
+      {
+        "id": "65bb22989647940922a0b949",
+        "name": "Cubit Incorporated Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.cubit.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls2qod3v000108l630bg25vk.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65bb28dd443bb25c38b33089",
+        "name": "Niural",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.niural.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls2rm6ds000008kzf8ku9tpe.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65bb317de5dc83e4c3a1863b",
+        "name": "Bhoj",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.bhojdeals.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls2swk9w000109l193f78ozn.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65bb38c1098731ec97827f20",
+        "name": "Searchable Design",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "https://www.searchabledesign.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls2tzu0m000008jydgk42qea.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65bc8101828c6be9dfeee5d9",
+        "name": "Kodiary Technologies",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://kodiary.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls482eg7000008l7bw3dgp0p.jpeg",
+        "location": "Lalitpur District"
+      },
+      {
+        "id": "65be4572db25df0f8d3ee46a",
+        "name": "Optimum Futurist",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://optimumfuturist.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls64zknt000008l11p2a2ahc.jpeg",
+        "location": "Claymont, DE"
+      },
+      {
+        "id": "65bf7a585f64735012e25359",
+        "name": "Freshktm",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://freshktm.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls7g3793000008idhnlc6og9.jpeg",
+        "location": "Sipadole, Bhaktapur, Bagmati Province"
+      },
+      {
+        "id": "65bf7c54b9d526657b2b6e37",
+        "name": "Shrig Solutions Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://shrigsolutions.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls7gcl1f000108id75x3d782.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65bfaf6680eb02a2cfa33053",
+        "name": "Mayahold",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://mayahold.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls7o5yym000008jt2ore0j88.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65bfb3f8a2d77515dcc1a799",
+        "name": "Bajra Technologies",
+        "activeJobs": 1,
+        "totalJobs": 13,
+        "website": "https://bajratechnologies.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls7owssx000208la8ocderk2.png",
+        "location": "Charkhal, Dillibazar"
+      },
+      {
+        "id": "65bfb8c079efe19ec9bd2d79",
+        "name": "JYRA Soft Technologies Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://jyrasoft.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls7pkhs5000008l7ds0q0y1s.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65c06dd0cb1feec6b547faae",
+        "name": "Bibhuti Solutions",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://www.bibhutisolutions.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls8h905o000008l63uyn2btm.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65c07a12a0e38a82a5941f0d",
+        "name": "Teslatech Nepal",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://teslatech.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls8j1kai000008ku8mqs2r07.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "65c07c47b3a0d765e75029dc",
+        "name": "The Story Company",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://storycompany.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls8jd0w4000008l98cxp3df4.jpeg",
+        "location": "Lalitpur District"
+      },
+      {
+        "id": "65c07d6e4302be313b8ecc70",
+        "name": "Jaamun",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.jaamun.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls8jj603000009lh1ovu79bc.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65c08065b3a0d765e75029dd",
+        "name": "Cedar Gate Technologies",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "https://www.cedargate.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls8jzkwd000108l9evyic95w.jpeg",
+        "location": "Lalitpur District"
+      },
+      {
+        "id": "65c087e5da7a01f859397bac",
+        "name": "Vistaar Trade",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://vistaartrade.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls8lnqo0000108ieaeyrddxc.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65c1c046ee50c56aa26c43d1",
+        "name": "Ottr Technology",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.ottr.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls9wseyq000008l918q6au9k.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65c1cc96d189c7e38e2f117c",
+        "name": "Aricalot",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://aricalot.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cls9yqaff000008lb4xr1ajft.png",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65c1db40d189c7e38e2f117d",
+        "name": "Digital Network Solution",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://digitalnetwork.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsa0uj6m000008l15th705i0.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65c2f75add355ffe50d03231",
+        "name": "The Digital Magazine",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.onlinenewsofnepal.com/",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "65c30cbb26bbcc24e3a92c8d",
+        "name": "Ambition Guru",
+        "activeJobs": 0,
+        "totalJobs": 16,
+        "website": "https://ambitionguru.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsbbfeud000108jta5ql4qq4.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65c320eda17f9ff5d4c33d5c",
+        "name": "Surgefinity",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsbel12l000008jth4iifpqn.jpeg",
+        "location": "Nepal"
+      },
+      {
+        "id": "65c32c514ce85586cd0f938c",
+        "name": "Locmatic",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://locmatic.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsbgabi4000108jt6ma2ep6g.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65c46fb893da7a3825915aca",
+        "name": "Only Tourism",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.onlytourism.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsctnnqa000108kybwba2nah.jpeg",
+        "location": "Dubai, Dubai"
+      },
+      {
+        "id": "65c4770fcb3c33aedc43e755",
+        "name": "Sandbox Software Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://sandbox.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clscumqdi000008jv8clsb9m8.jpeg",
+        "location": "Pokhara, Gandaki"
+      },
+      {
+        "id": "65c5c1ac44df878fcb9040d7",
+        "name": "LIS Nepal Pvt. Ltd.",
+        "activeJobs": 1,
+        "totalJobs": 8,
+        "website": "https://lisnepal.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clse90ztg000008ibercdfiwx.jpeg",
+        "location": "Kathmandu, Lalitpur"
+      },
+      {
+        "id": "65c9b035ffb3cc6a3f8b6210",
+        "name": "Eduspace Nepal",
+        "activeJobs": 1,
+        "totalJobs": 31,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cly2k5ho8000009mj3q3o43gz.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65c9c16c258b926e49586521",
+        "name": "Wepay Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.wepay.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsil284j000008jy398r2erx.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65caf7c1f562c05cf0f8a924",
+        "name": "Dhuni Software",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "https://www.dhunitech.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clu29ay2o000008l3hx34b1ke.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65cafe97d340c05d904e4c64",
+        "name": "SoftVue Technology",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://softvuetechnology.in/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsjxftlt000008l68p0s0hmn.jpeg",
+        "location": "Pune"
+      },
+      {
+        "id": "65cb00926b3b43f81f7dc0f8",
+        "name": "Nirekha Dot Com Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "http://www.nirekha.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsjxrsy8000008jr51utgdtt.jpeg",
+        "location": "Bhaktapur, Bagmati, Nepal"
+      },
+      {
+        "id": "65cb9d11b61af06fc4bc810e",
+        "name": "IT Training Nepal",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.ittrainingnepal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsklkl0300000ala3xbc90ed.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65cb9e2f63256761331e2f9a",
+        "name": "SMP Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://smp.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsklq1b7000008jz4sid8kte.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65cba5f1b61af06fc4bc8115",
+        "name": "Crest Technologies",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://www.cresttechhub.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clskmxmkp000008l28b7rg27g.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65cd94860646bbd6bb829d70",
+        "name": "Machnet",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.machnetinc.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsmqtdgp000008lb6tn1f0s7.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65cd9f830646bbd6bb829d72",
+        "name": "Basobaas",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://basobaas.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsmryup8000108lb0vju6wqi.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65cdb12a2c700a8881fa7c69",
+        "name": "Edxplor",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsmup2up000008l75c2s3ey2.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65cefa167801c59b2f813c55",
+        "name": "Everestwalk Groups",
+        "activeJobs": 1,
+        "totalJobs": 3,
+        "website": "https://everestwalk.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clso8sqsp000008lcbsuodd8d.jpeg",
+        "location": "Kathmandu , Kathmandu"
+      },
+      {
+        "id": "65cf006ef3077f924d2a44bf",
+        "name": "Code Pros Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://codepros.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clso9ryvn000009kr94xp17yv.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65d2e3d0cf36ef1f69cfec44",
+        "name": "Mero Bus",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsshksnt000108lagjjt7mpm.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65d2e5bfcf36ef1f69cfec46",
+        "name": "Nnine Solution",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://nnine.tech/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsshsb3h000208labfby2jde.jpeg",
+        "location": "Chhabahl, Kathmandu"
+      },
+      {
+        "id": "65d38cfcd9ea30dd9a610746",
+        "name": "SBRC Infosys Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://sbrcinfosys.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clst7b9u0000108ladxeh2d9a.jpeg",
+        "location": "Kuleshor, Kathmandu"
+      },
+      {
+        "id": "65d529710ad63abd9d35ffe2",
+        "name": "Clevero",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://clevero.co",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsuy9oo7000008lbc8q1flcj.png",
+        "location": "Worldwide"
+      },
+      {
+        "id": "65d59418cc8782150bfd2e6f",
+        "name": "Light and Shade Creative Studio",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://lnsstudio.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsvehhhx000008l6au0tewlt.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "65d596fca8e4db9e6f188ce7",
+        "name": "TechAxis",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://www.techaxis.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsvetakf000108l67pkfdnu5.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65d5f915a7b684667b05d1df",
+        "name": "Bizbazar",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://bizbazar.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsvtrz66000008l43tcea5dw.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65d6d3d32deee5b5eca5dd80",
+        "name": "CloudFactory",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.cloudfactory.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clswr3siw000008jv45f9a1fa.jpeg",
+        "location": "US / UK / Nepal / Kenya"
+      },
+      {
+        "id": "65d6d898622e7adeaf127b88",
+        "name": "Intopros Technologies",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://intopros.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clswrujr6000008jmhdm9686y.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65d6e9760dc3c6e4886d2f56",
+        "name": "Insight Workshop",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://insightworkshop.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clswugu36000008kz48exemzw.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "65d6fbcdad547c3cd0694f10",
+        "name": "Feature Studios Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://featurestudios.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clswx6z3m000108kz6zwhe57g.jpeg",
+        "location": "3F, Nanicha House, Kupandole-1, Laitpur"
+      },
+      {
+        "id": "65d76d826d760cb2dfb670bc",
+        "name": "BlackIT Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsxem2od000108l8c34ue5mf.png",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "65d823a8308e60ca55a1fc64",
+        "name": "Diagonal Technologies Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "http://diagonaltechnologies.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clsy6b04r000008iifwpz3e5n.jpeg",
+        "location": "Lalitpur District"
+      },
+      {
+        "id": "65d8b60d0442bc6f17091e90",
+        "name": "REVIBE",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.instagram.com/revibenepal/",
+        "logo": "",
+        "location": "Balaju, Kathmandu, Bagmati, NPL"
+      },
+      {
+        "id": "65da3644a3e6792d0383e5b6",
+        "name": "IT Relevant",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://itrelevant.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt0f6gcr000008ihgnmyh1vd.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65da37c46a5a13f206025022",
+        "name": "Organizational Development & Innovation (ODI) Nepal",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt0fjb68000008l74dzngjw4.jpeg",
+        "location": "Bhaktapur, Bagmati, Nepal"
+      },
+      {
+        "id": "65db07468b1db7c7da5a578f",
+        "name": "Innovate Nepal Group",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt1bacxs000008ibb4w6dd2n.png",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65db772ad34beac5a89fa570",
+        "name": "Whetstone Associates Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.whetstoneassociates.net/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt1s6s55000108jp71f9ajzh.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65db7ae7488738c474126261",
+        "name": "Innovate Tech",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://innovatetech.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt1snxic000208jp1v4r9w2n.jpeg",
+        "location": "Baluwatar, Kathmandu, Bagmati"
+      },
+      {
+        "id": "65dc25c9bfcbfe65c4c7c541",
+        "name": "Dynamic Technosoft",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.dynamic.net.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt2iq0e1000008l6bgmu8j6j.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65dc27807d65477fec40befc",
+        "name": "Orgware Construct Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "http://orgwareconstruct.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt2j1d7x000008jq05ha2eo5.jpeg",
+        "location": "Lalitpur District"
+      },
+      {
+        "id": "65dc3783383330aeccb29487",
+        "name": "Jagdamba Mobiles Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.shankergroup.com/",
+        "logo": "",
+        "location": "Naxal, Kathmandu"
+      },
+      {
+        "id": "65dc585e9b61efb111b55c0a",
+        "name": "Sherpa Technologies",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "65dc5e3c0fa1f560e745f24f",
+        "name": "Jagdamba Motors Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "",
+        "logo": "",
+        "location": "Naxal, Kathmandu"
+      },
+      {
+        "id": "65dd7996e555634e05d378ef",
+        "name": "Microcode Technologies",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://microcode.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt3yhyqi000008jm3dwl85j7.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65de0fd61ca5729497c65c79",
+        "name": "DLytica - Data Analytics and AI",
+        "activeJobs": 4,
+        "totalJobs": 35,
+        "website": "https://www.dlytica.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt4lehba000008ia04uh87ou.jpeg",
+        "location": "Toronto, Ontario"
+      },
+      {
+        "id": "65de2ae057788e64cd9651c9",
+        "name": "TechnoFex Nepal",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://technofex.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt4pih1m000008ji6zjr68ea.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65dec04f7dfab941365b0d74",
+        "name": "CloudTech",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://cloudtechservice.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt5c9xft000008jz3was2vdx.jpeg",
+        "location": "Lewis Center, OH"
+      },
+      {
+        "id": "65dec8910d997d8d4382f19a",
+        "name": "Sona Consolidate",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://sonaconsolidate.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt5djejl000008l3f21z1pw4.jpeg",
+        "location": "Basundhara, Maharajgunj 03, Kathmandu"
+      },
+      {
+        "id": "65df5a81b64c182587141adb",
+        "name": "GritFeat Solutions",
+        "activeJobs": 0,
+        "totalJobs": 9,
+        "website": "https://gritfeat.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt5ztoah000008l23vcv2d7x.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65df8f753ba95ac7648efb01",
+        "name": "Dlytica Nepal Private Limited",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.dlytica.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt68a0ti000107l93nen4vi1.png",
+        "location": " P87G+F99 Shree Nandi Ratri Secondary School, Bhagawati Marga, Kathmandu 44600, Nepal"
+      },
+      {
+        "id": "65e0c6e9a604305fc5e24969",
+        "name": "Firefly IT Solutions Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://thefireflytech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt7jfblx000008jweohh7y5p.jpeg",
+        "location": "Pokhara, Gandaki"
+      },
+      {
+        "id": "65e16bc11239009d3e408dd4",
+        "name": "EZER COMMERCE",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.ezercommerce.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clt88hf7c000008jpcyl5bl28.jpeg",
+        "location": "New Orleans, LA"
+      },
+      {
+        "id": "65e4993b1b373cf8538b57a7",
+        "name": "WP Creative",
+        "activeJobs": 1,
+        "totalJobs": 16,
+        "website": "https://www.wpcreative.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltzdi8j3000008iccisfexjj.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e4a1dc1b373cf8538b57a9",
+        "name": "12iD",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.12id.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltbptaoh000208l9493ra5fl.jpeg",
+        "location": "Stockholm, Stockholm County"
+      },
+      {
+        "id": "65e4a39238523eb3b1f71ab5",
+        "name": "Sterling Wells Nepal",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://sterlingwells.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltbq14vz000008l22dmd684i.jpeg",
+        "location": "Tinkune, Kathmandu"
+      },
+      {
+        "id": "65e4a9ac3e583777aec21019",
+        "name": "Alaya",
+        "activeJobs": 0,
+        "totalJobs": 9,
+        "website": "https://www.alaya.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltbr0ruw000108jtf7nfcv60.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e4abb37c8a49ec762d5ecb",
+        "name": "TechKraft Inc.",
+        "activeJobs": 0,
+        "totalJobs": 23,
+        "website": "https://techkraftinc.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltbr8qly000008jzcpek9alp.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "65e572a51939238c800c5fff",
+        "name": "AROAN NEPAL",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://aroannepal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltclm49w000108l3b61te0za.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e5d39807e230378c6645bd",
+        "name": "Kathmandu Organics",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.kathmanduorganics.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltd0clol000008lb191w9nd1.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e5d7fab06e4d4c633bb939",
+        "name": "SUMAT Associates",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltd11gey000008jr5jyd3hg0.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e710f8508b76a03ec89aa0",
+        "name": "A5 IT",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://a5it.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltecrwgy000008jo1pak5uz5.jpeg",
+        "location": "Crystal Lake, Illinois"
+      },
+      {
+        "id": "65e713670a1cc6ac5b02edd4",
+        "name": "Danphe Innovations",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "https://danpheinnovations.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clted4nsa000008l65x34fkp4.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e7fc0cf4abc8ca5513ab3a",
+        "name": "Codeology Tech Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://thecodeology.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltfcleqc000008l561kbh2dj.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e8061ca2a8a8680d662e81",
+        "name": "Frost Digital Ventures",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.frostdigi.ai/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltfe3op6000008l4hgyo5i88.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e893968e44913a6c42e49f",
+        "name": "Giftmandu",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://www.giftmandu.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltfzndhh000008l6dojyhdh3.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "65e89837e6e399455fa898f9",
+        "name": "Krizmatic Digital Solution",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://krizmatic.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltg0crrz000008l1d20ffv1d.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "65e89c6c86953015a93e4ac5",
+        "name": "Coredreams Innovations Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "http://www.coredreamsltd.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltg106k1000008l25lx79dnv.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "65e8a04f87338efa228b7dc6",
+        "name": "E - Signature Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 16,
+        "website": "https://www.esignature.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltg1mrqj000008jpe51ici98.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65e95d5a3e0a5a1b1ac2d67f",
+        "name": "Seshra Innovation",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://seshra.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltguf40v000008l24sfm1wju.jpeg",
+        "location": "Bhaktapur, Bagmati"
+      },
+      {
+        "id": "65e98d09cbefd5b787ad327c",
+        "name": "Inficare Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://www.inficare.com.my/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clth1od9y000008l89eq51t1p.jpeg",
+        "location": "Kuala Lumpur"
+      },
+      {
+        "id": "65edba95882c3e3b693e8b4e",
+        "name": "Search Education",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltlkpvxh000008l71qam2n2k.jpeg",
+        "location": "Sydney, New South Wales"
+      },
+      {
+        "id": "65ee8ecc05f9a5edf04a4432",
+        "name": "Probits",
+        "activeJobs": 0,
+        "totalJobs": 14,
+        "website": "https://www.probits.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltmhdenh000008jmbxaf6aqf.jpeg",
+        "location": "Sydney, New South Wales"
+      },
+      {
+        "id": "65ee9362d869bb13b632f14d",
+        "name": "MyPay",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://mypay.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltmhqrh5000008l3ealq5l9e.jpeg",
+        "location": "Bhaktapur, Nepal"
+      },
+      {
+        "id": "65ee938500327b0582257222",
+        "name": "Khalti Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://blog.khalti.com/careers/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltmhuegj000108l0d6ther66.jpg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65efec0a56d7f498eccb3385",
+        "name": "Jump KTM",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://jumpktm.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltnybg4j000108jyal6r4syi.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65f136912b47b84d9aad4f06",
+        "name": "brand LogiQ",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://brandlogiq.net/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltpcnwx6000009l6hcbm8ifz.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "65f287509b908cb04c0e5dba",
+        "name": "Bitflux Technologies",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://bitflux.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltqrywcg000009l76o10d38x.jpeg",
+        "location": "Bharatpur, Bagmati"
+      },
+      {
+        "id": "65f337c52ad0da8205b3bce2",
+        "name": "Nectar Digit",
+        "activeJobs": 0,
+        "totalJobs": 9,
+        "website": "https://www.nectardigit.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltriv9u6000008l9c2h04xkp.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65f3d11ae670074a6e92c4fa",
+        "name": "Codavatar",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clscvc4ko000108kzczpieb17.jpg",
+        "location": ""
+      },
+      {
+        "id": "65f40b77a1f3c617c12104b0",
+        "name": "SY Bazzar",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.sybazzar.com/",
+        "logo": "",
+        "location": "kathmandu, Nepal"
+      },
+      {
+        "id": "65f5d299dc6e72f3471bc5cc",
+        "name": "The Blissful Mind",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltuci4tl000008jr66au275o.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65f7dfb5eeba68e9ddd0f3cc",
+        "name": "Wiseyak Inc.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.wiseyak.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltwkjli2000008l427ekhgk8.jpeg",
+        "location": "Bhatbhateni, Kathmandu"
+      },
+      {
+        "id": "65f7e33aef966a990789fca4",
+        "name": "ThinkMove",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://www.thinkmovesolutions.com/services",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltwl2d89000108l45k5j3h6v.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65f83199fd71f64a8f169745",
+        "name": "Inflancer Technology",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://inflancer.net/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clugi37wh000008jjc2ej9ewo.png",
+        "location": "Gwarko, Lalitpur"
+      },
+      {
+        "id": "65f862e8d5a4cf8f85150725",
+        "name": "Avaya Machine",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://avayamachine.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltx4ivcl000009jx2ebiduev.jpeg",
+        "location": "Lalitpur District"
+      },
+      {
+        "id": "65f864dbd5a4cf8f85150727",
+        "name": "Kantipur Infotech",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://kantipurinfotech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltx4tv0i000008jr7jiyfdv2.jpeg",
+        "location": "New Baneshor, Kathmandu"
+      },
+      {
+        "id": "65f9be569badcd0f00678702",
+        "name": "Parijat Infotech",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.parijat.asia/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltylhakb000009l4cafq5rp9.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65fb059f3eefc1e5fee97118",
+        "name": "YetiStudio",
+        "activeJobs": 4,
+        "totalJobs": 6,
+        "website": "https://yetistudio.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cltzzfdiu000008lc61y3ax3k.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "65fbd9e156375f16f58b97fd",
+        "name": "TechnoMax Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "http://www.technomax.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clu0vq8rn000008l6gnk4brii.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "65fc034ad0b786de2f539677",
+        "name": "Khaanpin Foods and Tours Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "http://khaanpin.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clu14qj00000008l72bz8f3yu.png",
+        "location": ""
+      },
+      {
+        "id": "65ffd22dc727751fcf4d1d12",
+        "name": "Smtech Technology",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.smtechme.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clu56m0h4000008i43vstcxsj.jpeg",
+        "location": "Subhidhanagar Tinkune, Kathmandu, Nepal"
+      },
+      {
+        "id": "65ffd3e4c727751fcf4d1d14",
+        "name": "GAMING CENTER",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.gaming.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clu56vnmp000008k3cx1peqdy.jpeg",
+        "location": "Nepal"
+      },
+      {
+        "id": "65ffd4af1d040726ada3e9a2",
+        "name": "UpTechSys",
+        "activeJobs": 1,
+        "totalJobs": 1,
+        "website": "https://uptechsys.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clu56zj2g000008lch97ufy9f.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "660044a18580bcde208d7cea",
+        "name": "Ticketsanjal",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://ticketsanjal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clu5o1max000008jr5cbc5iyd.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6604520556c1434a9d8e93f1",
+        "name": "Cloco Nepal Inc. Pvt. Ltd.",
+        "activeJobs": 1,
+        "totalJobs": 12,
+        "website": "https://cloco.co.jp/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clua2637w000008l1ashnh65l.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "6605025b213091d52b19f2a9",
+        "name": "Dynamic Tech Solution ",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://dynamic-techsolution.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluat2iyn000008jrcb67891a.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6605c052934a285f345577b3",
+        "name": "Gyan Byte Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.gbpvt.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clubmdzf6000308l29wgl6t91.jpg",
+        "location": "Charkhal Dillibazar, Kathmandu - 29, Nepal"
+      },
+      {
+        "id": "660992de81eed45d6cb62277",
+        "name": "Sarvanam Software Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.sarvanam.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clufr5ug1000009jv6n1wdyrr.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "660ac42f0abaea22e8d558f3",
+        "name": "YOHO App",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://yohopartner.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluh1owzc000008lc6gs238k9.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "660b97f7c878def55f7aa706",
+        "name": "VolgAI",
+        "activeJobs": 0,
+        "totalJobs": 8,
+        "website": "https://volgai.com.au",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluhxze09000008l0b43ldidn.jpeg",
+        "location": "Clayton, Victoria"
+      },
+      {
+        "id": "660c578f59fda6c0fb9f3737",
+        "name": "AayuLogic Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 22,
+        "website": "https://aayulogic.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluir5qta000008jrbzn74dnm.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "660e0f5313e3d3cd0c1d5c67",
+        "name": "Probits Pty Ltd",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.probits.com.au/",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "660e165faa1396f431332f0c",
+        "name": "srijan bastola",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clukngj8y000008jx83ugdt0f.png",
+        "location": "Chitwan"
+      },
+      {
+        "id": "660e449d4854aa84d28fd1e2",
+        "name": "Asha & Company Private Limited",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.asha.inc",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clumjwxpz000008l5c02491l8.png",
+        "location": "Teku"
+      },
+      {
+        "id": "660f96470108fcb3ddac7ed0",
+        "name": "YouTech Nepal",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://youtechnepal.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clum9wof7000008jvd8xkhwjh.png",
+        "location": "Kausaltar, Madhyapur Thimi, Nepal"
+      },
+      {
+        "id": "6611870357baeb262d923531",
+        "name": "Tech Jar Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 9,
+        "website": "https://techjar.com.np/",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "66118ae360dc2abd251d1952",
+        "name": "Geek Tech Solutions Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.thegtspl.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluoe3jrg000008icfufbh4ui.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "6613831563ef1be92c6e83be",
+        "name": "Eratech Nepal",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://eratechnepal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluqixj3m000008le280m5ik0.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "6618ccfa173c01dbbe311134",
+        "name": "AITC International",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "https://aitc.ai/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluw9bj9c000008l7ejctar3y.jpeg",
+        "location": "Bhaktapur, Bagmati, Nepal"
+      },
+      {
+        "id": "6618e05f6149ef239e1cade7",
+        "name": "ITsutra",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.itsutra.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cluwcey5t000008l92amzbeqc.jpg",
+        "location": "kathmandu, nepal"
+      },
+      {
+        "id": "661fa2188ce182aed5ac3e2e",
+        "name": "Nepal Nomad Trekking",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.nepalnomad.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clw8ws0uj000009la1s2n6w0d.jpg",
+        "location": "Bhagwati Marg-26, Thamel"
+      },
+      {
+        "id": "662248e5c34b9fb06b7cf683",
+        "name": "Awakened Devs",
+        "activeJobs": 1,
+        "totalJobs": 5,
+        "website": "https://awakeneddevs.netlify.app/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwaqxdai000009l5c2ymfz3d.png",
+        "location": "koteshwor"
+      },
+      {
+        "id": "66288a26d021f89346688e69",
+        "name": "Bottle Payment Systems Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "https://bottle.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvdbf5f1000009l0a79qd1oj.jpeg",
+        "location": "Lalitpur"
+      },
+      {
+        "id": "662a2886f073df85f1823490",
+        "name": "Bookmundi ApS",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://www.bookmundi.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvf2l4eq000009lcbb059llm.jpeg",
+        "location": "Kathmandu, Bagmati, Nepal"
+      },
+      {
+        "id": "662b8d28fe6a51e9771c52c1",
+        "name": "SabKura Pvt.Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://sabkura.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvgkzpe4000009l2ahy93khp.png",
+        "location": "New Baneswor,Kathmandu,Nepal"
+      },
+      {
+        "id": "66331e446a6a9c7838e34695",
+        "name": "Apex Tech",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://apextech.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvos6hmx000009l1amjpd5bn.jpeg",
+        "location": "Kathmandu, Province 3"
+      },
+      {
+        "id": "6633374bc6708e2658beaca4",
+        "name": "Remote Pro Business Solutions",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "http://remotepro.biz",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvowh00j000109jr4ae7av2x.jpg",
+        "location": "Pulchowk, Lalitpur"
+      },
+      {
+        "id": "663670f2850df11a55087ce0",
+        "name": "Inspiring Lab",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://inspiringlab.ai/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvsdt14s000009jx8d0x4atp.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66371ba34bed0b8a2a9516dc",
+        "name": "Deba Jyoti Group",
+        "activeJobs": 0,
+        "totalJobs": 9,
+        "website": "https://debajyotigroup.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvt3tvmc000009mceliz0vbv.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "663ca8f3f45d008a2918fa94",
+        "name": "YantraCore Tech",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://yantracore.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clvz4j3sc000109l745rrcfpf.png",
+        "location": ""
+      },
+      {
+        "id": "66419ac8c270f3c897c503f4",
+        "name": "Impact Hub Kathmandu",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://kathmandu.impacthub.net/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clw4hhw40000009l848fkhnhl.jpeg",
+        "location": "Lalitpur District"
+      },
+      {
+        "id": "66443e38a7965a4393a3dd64",
+        "name": "Prithak Creation",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://www.prithakcreation.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clw7ccx91000009jsbzsr7o6o.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "664700f7df3343cbe9fa5b2d",
+        "name": "Yuwasoft",
+        "activeJobs": 0,
+        "totalJobs": 20,
+        "website": "https://yuwasoft.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwac6pei000009ky8s7ee2fh.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6648b2fec04f8135587b5e16",
+        "name": "Numeric Mind",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "664afbd5dc4c79e9b7143365",
+        "name": "Divya Gyan College",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.divyagyan.edu.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwencsyc000009mea6cqeusl.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "664b10e52b7cc42554835781",
+        "name": "Softified",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.softified.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clweqkfpi00000bkzgjd74llm.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "664b1fc39df93851a227c55a",
+        "name": "Berrybytes",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.berrybytes.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clweszerf00000alb4r7i1jpg.png",
+        "location": "Lalitpur"
+      },
+      {
+        "id": "664b29c649ea8123ad679b5e",
+        "name": "Nex Digital Studio Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://nexdigitalstudio.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clweuf7jb000009jt4af6hgtf.png",
+        "location": "Dillibazar, Kathmandu"
+      },
+      {
+        "id": "664d81d2b688f13b4f57c63d",
+        "name": "Hexa Business",
+        "activeJobs": 0,
+        "totalJobs": 18,
+        "website": "https://www.hexabusiness.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwhdvaa5000009mk4wf5dn7k.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "6650b4ae4e58ceb6bd011f50",
+        "name": "Dhoon",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwkunivr000109l7hp8n91fw.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6650b69d4e58ceb6bd011f52",
+        "name": "Render Booking",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://renderbooking.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwkv54kr000109k3hh0y2m63.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "66541592f81a79f38fd3db8b",
+        "name": "Lumbini Ceramics Limited",
+        "activeJobs": 1,
+        "totalJobs": 5,
+        "website": "https://www.linkedin.com/company/lumbini-ceramics-limited/mycompany/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwoisqkl00010dkzceoed5ij.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6656d71212b74e2122e7397b",
+        "name": "Owl Digital",
+        "activeJobs": 0,
+        "totalJobs": 10,
+        "website": "https://owldigital.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwrhysdx000009ma3xrh0015.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "665762f884d648545caea530",
+        "name": "Luzon Technologies",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "665c07f7f295d5097565bd47",
+        "name": "Stealth Mode",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "665c9328983e95a14776f832",
+        "name": "Verix Tech",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "665d7702b6d779917479244f",
+        "name": "Softified",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://softified.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwyolbac000009mm4a7kf5w7.png",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "665d84a4da438d2316674317",
+        "name": "Info Care",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://infocarenepal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwyr13nf00000al1ejaybecn.jpg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "665e9a541c290e69f2695ac1",
+        "name": "ComplianceQuest Nepal Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.compliancequest.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clwzwuxp3000009jt767jgk7i.png",
+        "location": "Lalitpur"
+      },
+      {
+        "id": "6662ea8f27d6140118ac548c",
+        "name": "Ambition Guru Nepal Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "66632ec6e1cc5517eea47361",
+        "name": "Gham Power",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://ghampower.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clx4vjynq000009l471c5h7fz.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66675d8301e00b57227e9a1e",
+        "name": "Nepal Creative Ventures",
+        "activeJobs": 0,
+        "totalJobs": 31,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm73pbha3000003l5h8bec8mn.jpeg",
+        "location": ""
+      },
+      {
+        "id": "6673097d0206a09cc119d52f",
+        "name": "Unlimited Remit",
+        "activeJobs": 1,
+        "totalJobs": 2,
+        "website": "http://unlimitedremit.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clxm27xhu000009jv2uycc84a.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66755871c0ad71cff39cee41",
+        "name": "Falcon Digital Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clxok8p0q000009lahfs7ekn8.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "667563403e856786624ab86e",
+        "name": "Gochali Tours & Travels Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.gochalitravels.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clxom089i000109l6ftng1w5i.png",
+        "location": ""
+      },
+      {
+        "id": "66792095d8fffdbce37ee5d9",
+        "name": "Genesis Web Technology",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.genesiswtech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clxsnsn7b00000al76i9ce301.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66795b1c5fd3a2650dba5c44",
+        "name": "Xenxcel",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://xenxcel.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clxswpor1000109l51vtpej6s.png",
+        "location": ""
+      },
+      {
+        "id": "66796a0630b18738dcff326f",
+        "name": "Coderush",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "66796ae34d55804eb6290134",
+        "name": "Networking Foundations: Networking Basics",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "667af6011410a90097ab20d9",
+        "name": "OmnicomMediaGroup Nepal",
+        "activeJobs": 0,
+        "totalJobs": 7,
+        "website": "https://www.omnicommediagroup.com.np/",
+        "logo": "",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "667bd4de4aac1d5b7d1d6e33",
+        "name": "ConvergeStack",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.convergestack.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clxvmrjut000209mgejiu3umf.png",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "667d6fbe49b85957cadeb63d",
+        "name": "WizHire",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clxxc5567000009k4hr6k9eav.jpg",
+        "location": ""
+      },
+      {
+        "id": "667d981f8cb42b3b81f56e73",
+        "name": "Golden Ratio Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://goldenratio.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clxxia70n000109l42o9o1lny.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6685162d79cb4573be168d65",
+        "name": "Flowrage Technology",
+        "activeJobs": 1,
+        "totalJobs": 11,
+        "website": "https://flowrage.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cly5mfvxr000009la0dlnhr2n.jpeg",
+        "location": ""
+      },
+      {
+        "id": "6685f082302522313a56b952",
+        "name": "Lawpath Pty Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://lawpath.com.au",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cly6jqqii000009kzet5q2y3o.png",
+        "location": "Sydney, Australia"
+      },
+      {
+        "id": "668b726f4f2c2968a6f99ac3",
+        "name": "Iconsoft Technologies Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://iconsofttechnologies.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clycjfz2x000109k21y2j7c8o.png",
+        "location": ""
+      },
+      {
+        "id": "668c04ff098ab2574f5b3978",
+        "name": "Webtech",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "668d6602486fc12dbd6fef1e",
+        "name": "First Source Technology",
+        "activeJobs": 0,
+        "totalJobs": 11,
+        "website": "https://firstsource-tech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm2am624d000003la90mgbgu4.png",
+        "location": "Basundhara, Kathmandu"
+      },
+      {
+        "id": "6690c6087599d3b0cb41bcd4",
+        "name": "Gripas Marketing ",
+        "activeJobs": 1,
+        "totalJobs": 23,
+        "website": "https://gripasmarketing.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clyiagim5000009m9d5edcmwl.jpg",
+        "location": ""
+      },
+      {
+        "id": "6694ca775ca2c44f69bdfa91",
+        "name": "Study Square",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.studysquare.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clymn7lg9000009mfb7gdff77.jpeg",
+        "location": ""
+      },
+      {
+        "id": "6696f78cb08902fd287e475f",
+        "name": "Geek Tech Solutions Pvt Ltd",
+        "activeJobs": 20,
+        "totalJobs": 22,
+        "website": "http://www.thegtspl.com",
+        "logo": "",
+        "location": "Balkumari, Lalitpur, Nepal "
+      },
+      {
+        "id": "66976fcdddee47f8b735057e",
+        "name": "Nepal International Health Services",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://nihs.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clypihfip000009kz3m9e3klu.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6698bead177f6efd7c2e8a10",
+        "name": "Scodus Innovations",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://scodus.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clyqxgwvr000009jvhj469a8e.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6698bf673f5136a37acc6820",
+        "name": "Karobar",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.karobarapp.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clyqxowsf000009jseyluhe6d.jpeg",
+        "location": "Jawalakhel, Lalitpur"
+      },
+      {
+        "id": "6698f2e4c97e4a0e5a48afab",
+        "name": "EB Pearls",
+        "activeJobs": 4,
+        "totalJobs": 5,
+        "website": "https://ebpearls.com.au/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzut5m8p000009lc7q57aqoh.png",
+        "location": "Kupondole, Lalitpur"
+      },
+      {
+        "id": "669a3228ac6e7112bea472e9",
+        "name": "Wizonbiz Digital",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://wizonbiz.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clysi2prs000009l3a4eh7cgu.jpeg",
+        "location": ""
+      },
+      {
+        "id": "66a0a5711a60bae61147e088",
+        "name": "Alaya",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://www.alaya.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clyzhs5vl000109jt9a966z3c.png",
+        "location": "Lalitpur"
+      },
+      {
+        "id": "66a1db05bc64f3dea2028096",
+        "name": "Asterdio Incorporated",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://asterdio.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clz0tef21000009leg2s7ew94.png",
+        "location": "Sankhamul, Lalitpur"
+      },
+      {
+        "id": "66a1f881dacd892a15906799",
+        "name": "Stable Cluster Pvt Ltd",
+        "activeJobs": 6,
+        "totalJobs": 10,
+        "website": "https://www.stablecluster.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmbrrn9l7000004lbflgw0uf0.jpg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "66a221a3d716f7fdd616bc44",
+        "name": "ITsutra Inc",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://www.itsutra.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clz142kt8000009l36acg1lbp.png",
+        "location": "Irving, Dallas Texas"
+      },
+      {
+        "id": "66a28bde8f2710a74b1a84d6",
+        "name": "Maven Consulting Group",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "http://www.mymavenedu.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clz1jwofk000009jn2lty728q.jpeg",
+        "location": ""
+      },
+      {
+        "id": "66a71d355d820ee18852229c",
+        "name": "Data Construct Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://dataconstruct.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzjdpkvc000009ic9sprdmkw.jpeg",
+        "location": "Nepal"
+      },
+      {
+        "id": "66a73682c991391e4795db55",
+        "name": "Samman Publishing House",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://sammanpublishinghouse.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clz6m3ec6000109lacjyr6qz5.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66a742adb86897ca223c197a",
+        "name": "Muktinath Itech company",
+        "activeJobs": 0,
+        "totalJobs": 9,
+        "website": "https://muktinathitech.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clz6nuhnl000009lf6p1y2et5.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "66a746a7b329de3eec74aed4",
+        "name": "Vertical 360 Ads",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://vertical360ads.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clz6oftfl000009l8ejzf5xfy.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66a8b0602614285b8074c08d",
+        "name": "Pebble Technology",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clz87y7xf000309la37ye5ds4.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66ab77c8bca000f9d21441ba",
+        "name": "Scodus Innovations Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://scodus.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzb82mbm000009l210ih1xa5.png",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "66acdb1edc9adbf02e8dcb4e",
+        "name": "Rose Resort",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzcqdldf000209k06qbzb6yo.jpg",
+        "location": "Palpa, Tansen."
+      },
+      {
+        "id": "66b0efc55a98f120e52d4c05",
+        "name": "Beesoul LLC",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://beesoul.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzh5gcs5000009l17saibfiu.jpeg",
+        "location": ""
+      },
+      {
+        "id": "66b0f1c25a98f120e52d4c08",
+        "name": "ABSE Tech Inc.",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://absetech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzh5p7hg000009mb0af9bnnb.jpeg",
+        "location": ""
+      },
+      {
+        "id": "66b5aebaa3d24f419b44f935",
+        "name": "Bravos International",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.linkedin.com/company/bravos-international/?originalSubdomain=np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzmegjnw000009jl764qd1zu.jpeg",
+        "location": "Jawalakhel"
+      },
+      {
+        "id": "66b625185ac0220394f5a0c9",
+        "name": "Madan Bhandari Memorial College",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "66b82c0f020be0ae157830b2",
+        "name": "Logica Beans",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "66b8c8cdb7afd5fed445e55f",
+        "name": "Freelance",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": "Freelance"
+      },
+      {
+        "id": "66bb2bb116e02d5696b453bb",
+        "name": "Ramailo Tech",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "66be29fbdef3e7d0abbdf8da",
+        "name": "Marching Ants Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://marchingants.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzvhi87n000009jn67385m16.jpeg",
+        "location": "Jwagal, Lalitpur, Nepal"
+      },
+      {
+        "id": "66be2ac3ec3c89cd54b84b65",
+        "name": "RPA Nepal",
+        "activeJobs": 0,
+        "totalJobs": 12,
+        "website": "https://www.rpanp.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzvhnjl4000109jndto4dozk.jpeg",
+        "location": "Kupondole, Lalitpur"
+      },
+      {
+        "id": "66be2d22ec3c89cd54b84b68",
+        "name": "Gurukul CA",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://gurukulca.edu.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzvhzuay000009jq114598ni.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66bef727c93bfd330f72de4a",
+        "name": "NepOps",
+        "activeJobs": 0,
+        "totalJobs": 6,
+        "website": "https://nepops.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzwd0w2q000109mghdlz0jsp.jpeg",
+        "location": "Lagankhel, Lalitpur, Nepal"
+      },
+      {
+        "id": "66bf420e1236ea33cca9e816",
+        "name": "The Maker Crew",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzwojg2x000009jq68eh5jnw.png",
+        "location": ""
+      },
+      {
+        "id": "66bf56d432852b2627f94b3d",
+        "name": "Mero Padhai",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://meropadhai.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzwrdrbj000009lk6zpd8ouz.jpeg",
+        "location": "Parshyang-5, Pokhara"
+      },
+      {
+        "id": "66bf59b332852b2627f94b3e",
+        "name": "Zekyaa",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://zekyaa.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzwrsrqn000009jk2o2e06zk.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66bf5b816c2f77796d3d4629",
+        "name": "Protozoa Host",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://protozoahost.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/clzws5wtp000109jkgc0iflid.jpeg",
+        "location": "Anamnagar, Kathmandu"
+      },
+      {
+        "id": "66c8620d5d3f34c5ceb2b0d7",
+        "name": "Intopros Technologies Private Limited",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm06kkras000003jnef7rfwu7.png",
+        "location": ""
+      },
+      {
+        "id": "66ced3b81855c9131bb95ba7",
+        "name": "Seven Multi Trading Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.foreveryng.com/",
+        "logo": null,
+        "location": "Dhobighat"
+      },
+      {
+        "id": "66cef269b5107ca18ff53477",
+        "name": "Diyalo Technologies Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://diyalotech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0docu6d000003jv5rzp4ryo.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66cef783903d402eef03dc9a",
+        "name": "BaAma Consultant Service Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "https://baamaconsultant.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0dp50zt000003l71sg8b8ui.jpeg",
+        "location": "Lalitpur"
+      },
+      {
+        "id": "66d44166576be4d797ba9bb3",
+        "name": "KNEK Counselling and Education",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "66d6cb680bae93be1236643e",
+        "name": "Cyber Infrastrucutre pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.cisin.com/ ",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0m6ocs2000103ldbuf077g7.png",
+        "location": "indore india"
+      },
+      {
+        "id": "66d81ec6aea27f285ea4d9db",
+        "name": "Beesoul LLC",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://beesoul.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0nmezhp000003js95d68gte.png",
+        "location": "KoteshworKathmandu"
+      },
+      {
+        "id": "66db0667d8eec11293b3fe97",
+        "name": "FleetPanda - Petroleum Logistics Software",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.fleetpanda.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0qrm7ig000003l9b6hch8kd.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66db07aadea611f36e351671",
+        "name": "Tyro Soft Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://tyrosoft.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0qrtgug000103l9g3oedtrb.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66de79f7f90b9b4e10685346",
+        "name": "Breeze Adventure Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.breezeadventure.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0uic4wo000003k21i24hjvk.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66e0047ec91b8b9b4ff4af04",
+        "name": "CMS Nepal Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 12,
+        "website": "https://www.cmsnpl.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0w6soib000103jw42vkgitp.jpg",
+        "location": "Snehabhawan,Bishalnagar, Kathmandu"
+      },
+      {
+        "id": "66e1321a8ab541713a981a8b",
+        "name": "Hajurbuwa.com",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.hajurbuwa.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0xgeu7b000003jq0ooahn3i.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66e19babe1b56a3ab99bace2",
+        "name": "Nuptse Technology ",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "66e2841fb1b3f3c8cc8f6f7b",
+        "name": "ISEND GLOBAL (Formerly known as IPAY)",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://isendglobal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm0yvx1v6000003jmbhw2f5rz.jpeg",
+        "location": ""
+      },
+      {
+        "id": "66e4e85ae3e1a7e40f737677",
+        "name": "NepLeaf",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.nepleaf.com",
+        "logo": null,
+        "location": "Kathmandu Valley"
+      },
+      {
+        "id": "66e909edce651ad8cfb83d4b",
+        "name": "Kishancare Technosoft Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://kishancare.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm15ygahy000003kwggfo2orr.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66e9e49bef8b53f39b18672e",
+        "name": "DevDash Solution",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://devdashllc.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm16vqzpj000003l023ou3gy9.png",
+        "location": ""
+      },
+      {
+        "id": "66ea8df96292d349d6749c51",
+        "name": "Mantra Digitals",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": null,
+        "location": "Ekantakuna, Lalitpur"
+      },
+      {
+        "id": "66ea97480bdde71b5fab2ad5",
+        "name": "MantraDigital",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": "Ekantakuna,Lalitpur,Nepal"
+      },
+      {
+        "id": "66ed3c353c70dc2a72c87b91",
+        "name": "Chotkari, Inc.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://chotkari.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm1ai9vz7000103l47k611274.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66f4fd34bb0555b67c756f8b",
+        "name": "Max Media Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://maxmedia.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm1iwoutd000003jo30ij35sk.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "66fce0384c0c0e140ab8dd4d",
+        "name": "Crimson Tech",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://crimsontech.io/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm1rgezpz000003m7fv0fclpc.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "66ff80bdb74dc7cfcd4187e8",
+        "name": "25 Hours",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.25hours.live/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm1uaxsor000003l98rtj7do7.jpeg",
+        "location": "Lalitpur, Bagmati"
+      },
+      {
+        "id": "66ffc187d744a20ecf7ca3ea",
+        "name": "Click and Press Pvt.Ltd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://clickandpress.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm1uksf57000003mm793z6vn1.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "670167e069ef1f0aebd6c044",
+        "name": "PEACE FOR PEOPLE",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.peace4people.org/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm1wd65yt000003k02zj0a6mq.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "6703867e80a13ba355939c04",
+        "name": "Jimmal Group",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm1ynwj94000003l69sb47jbg.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6703888e89402dbe313ba97a",
+        "name": "Milo Logic Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://milologic.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm1yo7a8i000003l0fkvr4j3j.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6706187eb15d04ad99c2e72d",
+        "name": "Next Coach",
+        "activeJobs": 1,
+        "totalJobs": 9,
+        "website": "https://nextcoach.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm21p5hmi000003mu0qo9abax.jpeg",
+        "location": "Birgunj"
+      },
+      {
+        "id": "6711fd0b48f33d50d9db3ed4",
+        "name": "UG Cakes",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.ugcakes.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm2ec7smd000003ib8d8veomg.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6714b39cab29026b4a24d83a",
+        "name": "SparkTales",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "671763f8967550d4d3e0523b",
+        "name": "IMS Group",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "http://www.ims-np.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm2k743zg000103l8djei9yns.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6718df4e55404492302cb23b",
+        "name": "Metro Market Pvt. Ltd",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "67289ff6876866ac42dd97dd",
+        "name": "The Luxe Inn Boutique Hotel",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "672ad593a58284cfff1184a0",
+        "name": " MAATOUK CONSTRUCTIONS PTY LTD",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": " "
+      },
+      {
+        "id": "672b5ab760e975ffd1ff3913",
+        "name": "Zapp Services Pvt. Ltd. (Tootle)",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.tootle.com.np/",
+        "logo": null,
+        "location": "Yala Sadak, Lalitpur"
+      },
+      {
+        "id": "672b7522801fe26ff9dcd71c",
+        "name": "Smartworks Technology Partners (DIGU)",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "672d0a4db5429bf65b0c4ac4",
+        "name": "Neomatrix ",
+        "activeJobs": 2,
+        "totalJobs": 16,
+        "website": "https://neomatrix.live/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm37o14g1000003ihc66kbqz1.jpeg",
+        "location": ""
+      },
+      {
+        "id": "672f66adb2e6bb14056b574b",
+        "name": "Eos Web Solution",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "6731b8eb775bc6cec8de590f",
+        "name": "YHH IT Solutions",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": "Damside, Pokhara"
+      },
+      {
+        "id": "6732de34394ae56de32c3023",
+        "name": "Yes Helping Hands IT Solutions",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://yhhits.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm3dz6x78000003l13u3t27m6.jpeg",
+        "location": "Pokhara, Gandaki"
+      },
+      {
+        "id": "6736ec399dd2a446e952cd87",
+        "name": "PetMama Nepal",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm3idoeud000103lcdczhgf4d.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "67396da6e476ed9f9595b199",
+        "name": "Chalau Technologies Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://chalau.com/",
+        "logo": null,
+        "location": "Old Baneshwor, Kathmandu"
+      },
+      {
+        "id": "673af58097ca27b90844e4b5",
+        "name": "Nirvana",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": "Lalitpur"
+      },
+      {
+        "id": "673eb756ada8c19ebfb91702",
+        "name": "Meekha Tech",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm3qtfoej000003mb29oe4plj.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "673eb82df074516eef20022f",
+        "name": "Third Eye Adventure Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://www.thirdeyeadventure.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm3qtn75u000203mbe5qx4l1p.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "673eea664b584bfa7213c3f9",
+        "name": "Yantra Solution",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://yantra.com.np/",
+        "logo": null,
+        "location": "Lalitpur, Nepal"
+      },
+      {
+        "id": "6746e16878b174926d2e68e6",
+        "name": "Nepit Solutions",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": null,
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "674be7a0336b0a2f5c61077a",
+        "name": "Palm Mind Technology",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://palmmind.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm454hket000103jk1v5i1jah.png",
+        "location": ""
+      },
+      {
+        "id": "6753ffaa65773187c8656f21",
+        "name": "PrioritySoft",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm4dw8jkt000003ia3pjthuef.png",
+        "location": "Serbia"
+      },
+      {
+        "id": "6757e29376a6a7151db4ca04",
+        "name": "Spark Car",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://sparkcar.org/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm4i3hvgb000009mhc66ifrhq.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "67591f54ac145a9e15c7b272",
+        "name": "Danson Solutions Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://dansonsolutions.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm4jg30z4000103magjzw3yal.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "675c09248c66220a9eedf63a",
+        "name": "Softwarica College of IT and E-commerce",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "http://softwarica.edu.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm4mlfnq6000103l8f66pchzn.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "675e6f636f7c6972f05eb73a",
+        "name": "Vrit Technologies",
+        "activeJobs": 2,
+        "totalJobs": 11,
+        "website": "https://vrittechnologies.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm4p75y1s000003ms11uc82hl.jpeg",
+        "location": ""
+      },
+      {
+        "id": "6765371d6d7c714de94dfa92",
+        "name": "Nepaya Solutions",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://nepaya.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm4wjujj8000203mq0utvgw1p.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "67653a40828d1a8b5e11a0c5",
+        "name": "DTRG Network",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://dtrg.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm4wk25a6000303m80h014bkj.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "676e31ee1983787538739017",
+        "name": "Padshala Incorporation Pvt. Ltd",
+        "activeJobs": 1,
+        "totalJobs": 2,
+        "website": "https://padshalaa.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm569z1io000103l5ex2u5tw3.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "67738896056c5c6b1239a2a8",
+        "name": "See Car Nepal",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://seecarz.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm5c29jvn000103jlal7o1djf.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "6779311075ae6b359829e555",
+        "name": "Holy Vision Secondary School",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.holyvision.edu.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm5i76ucj000003js6aor2hhj.jpg",
+        "location": "Tahachal Marg, Tahachal, Kathmandu-13, Nepal"
+      },
+      {
+        "id": "677aa61e88bc6072d42846d4",
+        "name": "Insight Technology Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm5kjrply000003l5bvg4bkb9.png",
+        "location": "Jawalakhel, Lalitpur"
+      },
+      {
+        "id": "677b66ac43f65fdd0692128c",
+        "name": "Ecstatic Minds",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://ecstaticminds.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm5kl8tfk000103jtgmiycj0v.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "677e120e1167ff2c6c358dc7",
+        "name": "Exponent Marketing Nepal",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.exponent.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm5nj0no5000003lcen430vhy.jpg",
+        "location": "Dhobighat, Lalitpur "
+      },
+      {
+        "id": "67811a73ea16700cbe921782",
+        "name": "Traveality Nepal ",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://traveality.com/",
+        "logo": null,
+        "location": "Dhobighat, Lalitpur "
+      },
+      {
+        "id": "6784b6d5320bc986e2a15eee",
+        "name": "Des Vu Technologies",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://desvutech.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm5uor2eg000203l70tp7c75u.jpeg",
+        "location": "Pokhara, Gandaki"
+      },
+      {
+        "id": "67877f9f6521d2f4a4e7e929",
+        "name": "Kritya Hub",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.krityahub.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm5xp9fwa000003joho8w9lo4.jpeg",
+        "location": "Kathmandu, Bagmati"
+      },
+      {
+        "id": "678fc8b88840c7340a6abe2c",
+        "name": "Time Charge N Go!",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "6792784fc71e3ddded5f736d",
+        "name": "Digiprashar",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://digiprashar.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm69ljgvu000103l45bgk42gd.jpg",
+        "location": "Talchowk, Pokhara"
+      },
+      {
+        "id": "679323d61cbb3a08439ed967",
+        "name": "Aayo Rides Nepal",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm6abhr1t000103l7e2wfcjon.jpeg",
+        "location": "Birgunj, Madhesh Province"
+      },
+      {
+        "id": "679355e9ce486ec566d21c3a",
+        "name": "Ektukra",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://ektukra.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm6ajcac6000003l20uwn70it.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67963c07786613f4dcb79734",
+        "name": "NauloPasal ",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://naulopasal.com",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "67973716bce181a4e326f162",
+        "name": "Labim Mall",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": null,
+        "location": "Pulchowk, Lalitpur"
+      },
+      {
+        "id": "679b208c45cdf3fb46eefbfe",
+        "name": "Healthy Home NP",
+        "activeJobs": 1,
+        "totalJobs": 1,
+        "website": "https://healthyhome.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm6izl817000003jzb09x5che.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67a1de10fca1a2422a0e5c9c",
+        "name": "Foxraid Entertainment",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://foxraid.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm6qa532f000103l79qcdgx4e.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67a28002263f098fad063cc5",
+        "name": "Chalau Technologies Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://chalau.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm6qz9aiw000103l57q1g01vh.png",
+        "location": "Old Baneshwor, Kathmandu"
+      },
+      {
+        "id": "67a44088e033e11ff368682f",
+        "name": "Digital Sahayatri",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://digitalsahayatri.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm6sv6z0v000103jv9r7fd96p.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67a9847e9d5685fb2d2d2cbc",
+        "name": "D:20 Labs",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://d20labs.work/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm6yknx67000103k341zf7fuh.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67aaeb606d18f190410f1f23",
+        "name": "Bamboo Bazar",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://thebamboobazar.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm703ljpd000503l2gc9s9z64.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67ac49c55dac073d55b23013",
+        "name": "Elite Tech Digital",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://elitetechdigital.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm71ktuua000003jyhrjq41jy.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67aed97b2751abe23a88bddc",
+        "name": "Kathmandu Technical School",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://ktsnepal.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm74cocps000103ju22md8s4x.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67b1d04c63a6eb9a7020b2fe",
+        "name": "Biraj",
+        "activeJobs": 0,
+        "totalJobs": 13,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "67b2da144dba1d57b44f28a9",
+        "name": "Dzine Folio",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "http://www.dzinefolio.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm78ovx3i000103jl1ncv0kv1.jpeg",
+        "location": "Lalitpur"
+      },
+      {
+        "id": "67b6c2121ad1099596498b9e",
+        "name": "CodeDuo",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://codeduolabs.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm7cximgu000003l4e7jebed5.png",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67bbf8d3cb8f23b0ddc69b79",
+        "name": "Pedal Group",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.pedaladvertising.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm7ikozxr000103ji50mqe3hw.jpeg",
+        "location": "Kathmandu"
+      },
+      {
+        "id": "67bff349eb786a2ceb0ab460",
+        "name": "CreatiVerse Digital",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm7mwyknx000003lb4zk527pz.jpeg",
+        "location": "Lalitpur"
+      },
+      {
+        "id": "67c17e49ece21fed22cf3f1b",
+        "name": "Skillspot INC",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://skillspot.ai/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm7okeztb000103l28fstd5sf.jpeg",
+        "location": "USA, CA"
+      },
+      {
+        "id": "67c931b4e6eb92bdaabeaf19",
+        "name": "Colleges Nepal",
+        "activeJobs": 0,
+        "totalJobs": 13,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm7x2gkog000003le7gxehoa5.png",
+        "location": "Putalisadak,Kathmandu"
+      },
+      {
+        "id": "67d12807d8e50ce320b53e71",
+        "name": "Cuisine Kathmandu",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "",
+        "logo": null,
+        "location": "Bhimsen Marga, Naya Tarkari Bazaar Tol, Banepa Municipality Ward-06"
+      },
+      {
+        "id": "67d6fd142ad7c17f1f3f74b2",
+        "name": "Design Lab Solutions ",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.designlabnepal.com",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "67d7999e89ae9582cbe3d78b",
+        "name": "Commerce Road",
+        "activeJobs": 1,
+        "totalJobs": 1,
+        "website": "https://www.commerceroad.finance/",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "67da7b888aaabe04184b0fa6",
+        "name": "RestroX ",
+        "activeJobs": 1,
+        "totalJobs": 1,
+        "website": "https://www.restrox.co/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm8fryp1z000003jxb19e1ja9.png",
+        "location": "Kathmandu,Nepal"
+      },
+      {
+        "id": "67dbe64c96f88b88de64c77e",
+        "name": "VastuPlan",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm8lbflxi000003l2hued9ajb.png",
+        "location": ""
+      },
+      {
+        "id": "67ec734828b02e0048fe0e11",
+        "name": "Kitwosd",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://kitwosd.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm8z4i2sn000003jo3lvu0fj2.png",
+        "location": "Gwarko"
+      },
+      {
+        "id": "67ee2515c27fcc4fb2e441c4",
+        "name": "CareBoarding Technology Platform",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://careboarding.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm90ye29a000003jxcbyg6sm0.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "67ee26dd43b63e1676e4d59a",
+        "name": "Blissful Baskets",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://www.instagram.com/giftsbysagoon_nepal/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm90yn3ow000103l72yxo2h9n.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "67ef66ec66d964b0234ab7ba",
+        "name": "KTM Rush Pvt.Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://www.ktmrush.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm92bhd8w000203l8abf13dt8.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "67f3a604f1ddc439a24af9ea",
+        "name": "dwork IT Solutions",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://dworklabs.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm96x903o000103lg95sk05dj.jpeg",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": "67f4b3966f26dad142fcd792",
+        "name": "Novelty Technology LLC",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://www.noveltytechnology.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm982gai9000003ifcxom7zey.jpg",
+        "location": "Everest Marga, New Baneshwor"
+      },
+      {
+        "id": "6808881b85c050c3e3b19feb",
+        "name": "YCO Solutions Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 4,
+        "website": "https://yco.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm9tk72zk000103kv4bpk7971.png",
+        "location": "Panipokhari, Lazimpat, Kathmandu"
+      },
+      {
+        "id": "680b5c60f23ce6e9c0882a08",
+        "name": "Webit Agency",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cm9wmd4qn000003lka7y734d8.jfif",
+        "location": "Hattiban, Lalitpur"
+      },
+      {
+        "id": "6819a557caef2b464e2ae7f2",
+        "name": "Visa For Success",
+        "activeJobs": 0,
+        "totalJobs": 5,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmac4aqq7000004kydkfl7zjy.png",
+        "location": "Level-1,Coffee Lounge , Durbarmargh,Kathamandu."
+      },
+      {
+        "id": "681c74e4c653031ced92aab9",
+        "name": "A1 IT Innovation",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://a1itinnovation.com.np",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmaf5fnek000004i99hhscmt3.png",
+        "location": ""
+      },
+      {
+        "id": "6826e299ab41dfd269e2c6f4",
+        "name": "Riva Nepal",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://rivanepal.com/",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "683590dbb369f6c40908de3e",
+        "name": "DevMind Solutions",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": null,
+        "location": ""
+      },
+      {
+        "id": "6836d21ed6a21fedcbbdcde9",
+        "name": "Lahera Furniture",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmb7q5jta000104k099sue4n7.png",
+        "location": "Chhitijnagar, Kathmandu 44600 Near DovanPull Shankhmul, Kathmandu, Nepal"
+      },
+      {
+        "id": "6836e6a2e8ff9e06a7d8be98",
+        "name": "Ultrabyte International Pvt. Ltd.",
+        "activeJobs": 1,
+        "totalJobs": 5,
+        "website": "https://www.ultrabyteit.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmb7tgccs000004la63vt0ng7.jpg",
+        "location": "Maitidevi"
+      },
+      {
+        "id": "68441ffe6856a62df0057bfd",
+        "name": "Clara",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "",
+        "logo": null,
+        "location": "Israel"
+      },
+      {
+        "id": "68538ebda6f1eeaf92bd88bc",
+        "name": "iSend Global ",
+        "activeJobs": 4,
+        "totalJobs": 11,
+        "website": "https://isendglobal.com/about",
+        "logo": null,
+        "location": "Gairidhara, Kathmandu, Nepal "
+      },
+      {
+        "id": "6854f33a748c1d2497aed13a",
+        "name": "Vaidya Holdings Pvt Ltd",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmc4e0i0m000004ky17y2hv51.png",
+        "location": "Kathmandu, Chitwan"
+      },
+      {
+        "id": "685520a594a2dc4cd7655e67",
+        "name": "Marias Infotech Services",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://mariasinfotech.co.in/",
+        "logo": null,
+        "location": "Bangalore"
+      },
+      {
+        "id": "686b9e017555e7dba06131fb",
+        "name": "IET Technology Pvt Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmcsy6mtq000104jxebt4ayze.jpg",
+        "location": ""
+      },
+      {
+        "id": "68797f324cc9a7d981c5a58d",
+        "name": "Railar Solutions",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmd80b5f6000104jv0cq69rhr.png",
+        "location": "Sanepa, Lalitpur"
+      },
+      {
+        "id": "688c4a69132c213686bf3e8a",
+        "name": "UserX",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "689ea1dbe24d2d0d1d2b4ded",
+        "name": "DevDash Labs",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://devdashlab.scom",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmecakorr000004l207q459c0.png",
+        "location": ""
+      },
+      {
+        "id": "68a08a5b97de741044f353d4",
+        "name": "Sanjay Poudel",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmeeb8wjj000204lhchax7o4j.jpg",
+        "location": ""
+      },
+      {
+        "id": "68a2e1a9cba87486b3ab0a94",
+        "name": "zsc",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "68a2fbba6d92b2ce71d73920",
+        "name": "Manjil Budhathoki",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "68a443a3257592f992958f21",
+        "name": "notyet",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "68b0a48bfc11d3a7493a3768",
+        "name": "Books Mandala",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "https://booksmandala.com/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmevre9f8000004l5fwyng3p2.png",
+        "location": "Baluwatar, kathmandu"
+      },
+      {
+        "id": "68bef62b9aff61fc12867e82",
+        "name": "Exxon Mobil Oil and Gas",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "https://www.exxonmobil.com",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmfba3392000104jx6by9g9z6.jpg",
+        "location": "USA"
+      },
+      {
+        "id": "68c3c6c73d81f778c446b9b6",
+        "name": "Ora Technologies",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "https://oratechnologies.io",
+        "logo": "",
+        "location": "Pulchowk, Lalitpur"
+      },
+      {
+        "id": "68cd1da29f4e5e127de4b980",
+        "name": "Source Code",
+        "activeJobs": 0,
+        "totalJobs": 1,
+        "website": "https://sourcecode.com.np/",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmfqmrl90000004kyf2bh9fhb.jpg",
+        "location": "Ranibari, Lazimpat"
+      },
+      {
+        "id": "68e9139ad922564a05517ff6",
+        "name": "kushal",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "68efdfc15ebfab8aaf5430d8",
+        "name": "Karkhana Pvt. Ltd.",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "68f2305a369e5708ce8f676e",
+        "name": "The Wok Station ",
+        "activeJobs": 0,
+        "totalJobs": 2,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmguve61y000004jr9anw6g4l.jpg",
+        "location": "Kopundole lalitpur "
+      },
+      {
+        "id": "6904cc38f8fdaf07c43babd1",
+        "name": "Sohan ",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "691413ccfda0d2bf66c52222",
+        "name": "Aariyana Tech Solution",
+        "activeJobs": 0,
+        "totalJobs": 3,
+        "website": "",
+        "logo": "https://workhub-nepal-assets.s3.ap-south-1.amazonaws.com/cmhvjdnlv000004l87fqk9k1s.jpeg",
+        "location": "Srijananagar, Bhaktapur"
+      },
+      {
+        "id": "6915994e2bab7811a2ca06f5",
+        "name": "Sujit Barnawal",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "6916c13b201a547b6d42d03a",
+        "name": "na",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "692687407a755411c747ad1c",
+        "name": "The Geodes Oil and Gas Plc",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "693159cfe0b6049c12c19a1a",
+        "name": "Hello",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "693541984855f10418385e02",
+        "name": "trashcom",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "69392665b4c967e6af7ed3ef",
+        "name": "Molina and Sanders Traders",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      },
+      {
+        "id": "6946cae376b6a8ea9f46cd73",
+        "name": "None",
+        "activeJobs": 0,
+        "totalJobs": 0,
+        "website": "",
+        "logo": "",
+        "location": ""
+      }
+    ],
+    "totalCompanies": 571
+  }

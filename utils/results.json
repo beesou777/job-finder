@@ -1,0 +1,2000 @@
+{
+  "totalCompanies": 210,
+  "active": 87,
+  "noCareerPage": 87,
+  "unknown": 36,
+  "results": [
+    {
+      "name": "The Projects All",
+      "website": "https://theprojectsall.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/the-projects-all",
+      "phoneNumber": "+9779805007945",
+      "careerPageUrl": "https://theprojectsall.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Gurkha Technology",
+      "website": "https://www.gurkhatech.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/gurkha-technology",
+      "phoneNumber": "+9779851189233",
+      "careerPageUrl": "https://www.gurkhatech.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "vacancy",
+        "open positions",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "NepQube",
+      "website": "https://DrishyamKhabar.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/nepqube",
+      "phoneNumber": "+9779829161701",
+      "email": "sajanpoudel012@gmail.com",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Amoeba Labs",
+      "website": "https://amoebalabs.co/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/amoeba-labs",
+      "phoneNumber": "+9779862271516",
+      "email": "business@amoebalabs.co",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Get a Quote",
+      "website": "https://lonetreenepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/lone-tree-marketing#contact",
+      "careerPageUrl": "https://lonetreenepal.com/about-social-media-agency-in-nepal/digital-marketing-jobs-in-nepal/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "YetiStudio | Award-Winning Software Development Agency.",
+      "website": "https://yetistudio.co",
+      "techbehemothsUrl": "https://techbehemoths.com/company/yetistudio",
+      "phoneNumber": "+9779808271089",
+      "email": "hello@yetistudio.co",
+      "careerPageUrl": "https://yetistudio.co/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "vacancy",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Futurex Tech",
+      "website": "https://futurextech.framer.website/?utm_source=Tech-Behemoths&utm_medium=Profile&utm_campaign=viewprofile&utm_content=/company/futurex-tech",
+      "techbehemothsUrl": "https://techbehemoths.com/company/futurex-tech",
+      "phoneNumber": "+9779765423464",
+      "email": "hello.futurextech@gmail.com",
+      "careerPageUrl": "https://futurextech.framer.website/?utm_source=Tech-Behemoths&utm_medium=Profile&utm_campaign=viewprofile&utm_content=/company/futurex-tech/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "AITC International",
+      "website": "https://cloudfront.net",
+      "techbehemothsUrl": "https://techbehemoths.com/company/aitc-international",
+      "phoneNumber": "+97715900970",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Imagio Creations Pvt. Ltd",
+      "website": "https://imagiocreations.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/imagio-creations",
+      "phoneNumber": "+9779801977306",
+      "email": "info@imagiocreations.com",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Webtech Nepal Pvt. Ltd.",
+      "website": "https://webtechnepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/webtech-nepal",
+      "phoneNumber": "+97714541620",
+      "careerPageUrl": "https://webtechnepal.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Startups Realm Technology",
+      "website": "https://www.startupsrealm.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/startups-realm-technology-pvt-ltd",
+      "phoneNumber": "+9779808531812",
+      "email": "info@startupsrealm.com",
+      "careerPageUrl": "https://www.startupsrealm.com/team-building-and-hiring",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "career"
+      ]
+    },
+    {
+      "name": "Wildminds - Creative Design Agency",
+      "website": "https://www.jadeinfra.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/wildminds-creative-design-agency",
+      "phoneNumber": "+9779802356013",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Griffity Studios",
+      "website": "https://www.griffitystudios.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/griffity-studios",
+      "phoneNumber": "+9779861292675",
+      "careerPageUrl": "https://www.griffitystudios.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Codeed Incorporated",
+      "website": "https://codeedinc.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/codeed-inc",
+      "phoneNumber": "+9779863355600",
+      "careerPageUrl": "https://codeedinc.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Abstract Infosys",
+      "website": "https://abstractinfosys.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/abstract-infosys",
+      "phoneNumber": "+9779801194963",
+      "careerPageUrl": "https://abstractinfosys.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Crest Digital Studios",
+      "website": "https://crestdigitals.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/crest-digital-studios",
+      "phoneNumber": "+9779705784229",
+      "careerPageUrl": "https://crestdigitals.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "ShotCoder Tech",
+      "website": "https://shotcoder.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/shotcoder-tech",
+      "phoneNumber": "+97715912023",
+      "careerPageUrl": "https://www.shotcoder.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "open positions",
+        "career"
+      ]
+    },
+    {
+      "name": "Ultrabyte International Pvt Ltd",
+      "website": "https://ultrabyteit.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/ultrabyte",
+      "phoneNumber": "+9779851353896",
+      "email": "care@ultrabyteit.com",
+      "careerPageUrl": "https://www.ultrabyteit.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Aakar Creative Hub",
+      "website": "https://aakarcreativehub.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/aakar-creative-hub",
+      "phoneNumber": "+9779821118048",
+      "careerPageUrl": "https://aakarcreativehub.com/course/front-end-development/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career"
+      ]
+    },
+    {
+      "name": "Hunchha Digital Pvt. Ltd",
+      "website": "https://hunchhadigital.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/hunchha-digital-pvt-ltd",
+      "phoneNumber": "+9779824386694",
+      "email": "hello@hunchhadigital.com",
+      "careerPageUrl": "https://intermusk.hunchhadigital.com",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "BIN- BPO In Nepal",
+      "website": "https://bpoinnepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/bin-bpo-in-nepal",
+      "phoneNumber": "+9779806009411",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Infinite IT Solutions Nepal Pvt. Ltd.",
+      "website": "https://infiniteitsolutionsnepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/infinite-it-solutions-nepal-pvt-ltd",
+      "phoneNumber": "+9779842143628",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "E - Signature Pvt. Ltd.",
+      "website": "https://www.esignature.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/e-signature-pvt-ltd",
+      "phoneNumber": "+9779851195578",
+      "careerPageUrl": "https://esignature.com.np/career/australia-uk-nepal-canada-america",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "open positions",
+        "career",
+        "join our team",
+        "apply now",
+        "send your cv"
+      ]
+    },
+    {
+      "name": "Featherwebs",
+      "website": "https://www.featherwebs.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/featherwebs",
+      "phoneNumber": "+9779802356013",
+      "careerPageUrl": "https://www.featherwebs.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "job opening",
+        "career"
+      ]
+    },
+    {
+      "name": "Chaitanya Design",
+      "website": "https://chaitanyadesign.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/chaitanya-design",
+      "phoneNumber": "+9779805419763",
+      "careerPageUrl": "https://chaitanyadesign.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "open positions",
+        "career",
+        "join our team",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Web Studio Nepal",
+      "website": "https://webstudionepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/web-studio-nepal",
+      "phoneNumber": "+9779802346665",
+      "careerPageUrl": "https://webstudionepal.com/career.php",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "job opening",
+        "career",
+        "send your cv"
+      ]
+    },
+    {
+      "name": "Get In Touch",
+      "website": "https://hoostly.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/hoostly#contact",
+      "phoneNumber": "+97741543210",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "SobizTrend Pvt. LTD.",
+      "website": "https://sobiztrend.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/sobiztrend-pvt-ltd",
+      "phoneNumber": "+97714983900",
+      "careerPageUrl": "https://sobiztrend.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Alpas Technology - Specialize",
+      "website": "https://alpas.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/alpas-technology-specialize",
+      "phoneNumber": "+9779851151336",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Readytowork, Inc",
+      "website": "https://cloudfront.net",
+      "techbehemothsUrl": "https://techbehemoths.com/company/readytowork-inc",
+      "phoneNumber": "+9779843806689",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Neo Software Pvt. Ltd.",
+      "website": "https://neosoftware.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/neo-software-pvt-ltd",
+      "phoneNumber": "+9779801200100",
+      "careerPageUrl": "https://neosoftware.com.np/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Nexalaris Tech Pvt. Ltd.",
+      "website": "https://nexalaris.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/nexalaris-tech-pvt-ltd",
+      "phoneNumber": "+9779814846711",
+      "email": "contact@nexalaris.com",
+      "careerPageUrl": "https://nexalaris.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "open positions",
+        "career",
+        "join our team",
+        "apply now",
+        "we're hiring"
+      ]
+    },
+    {
+      "name": "Digital Consulting Ventures",
+      "website": "https://digitalconsultingventures.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/digital-consulting-ventures",
+      "phoneNumber": "+61413908220",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Growfore Solution",
+      "website": "https://growfore.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/growfore-solution",
+      "phoneNumber": "+9779856085151",
+      "careerPageUrl": "https://growfore.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Nepali Influencer",
+      "website": "https://nepaliinfluencer.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/nepali-influencer",
+      "phoneNumber": "+9779806009411",
+      "careerPageUrl": "https://nepaliinfluencer.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Pagoda Labs Pvt Ltd",
+      "website": "https://pagodalabs.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/pagoda-lab-pvt-ltd",
+      "phoneNumber": "+9779801195017",
+      "careerPageUrl": "https://pagodalabs.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Softgriha Solutions Pvt. Ltd.",
+      "website": "https://www.softgriha.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/softgriha-solutions-pvt-ltd",
+      "phoneNumber": "+9779851168422",
+      "careerPageUrl": "https://www.softgriha.com/198-2/",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Cyberlink Pvt. Ltd.",
+      "website": "https://cyberlink.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/cyberlink-pvt-ltd",
+      "phoneNumber": "+9779851348038",
+      "careerPageUrl": "https://cyberlink.com.np/cl/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Cloudlaya",
+      "website": "https://www.cloudlaya.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/cloudlaya",
+      "phoneNumber": "+15104884946",
+      "careerPageUrl": "https://career.cloudlaya.com",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "job opening",
+        "career"
+      ]
+    },
+    {
+      "name": "Vrit Technologies",
+      "website": "https://vrittechnologies.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/vrit-technologies",
+      "phoneNumber": "+9779861601174",
+      "careerPageUrl": "https://vrittechnologies.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "vacancy",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Plex Bit Infosystems",
+      "website": "https://pbinfosystems.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/plex-bit-infosystems",
+      "phoneNumber": "+31639460331",
+      "careerPageUrl": "https://pbinfosystems.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "open positions",
+        "job opening",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "MPG Solution Pvt. Ltd",
+      "website": "https://mpgsolution.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/mpg-solution-pvt-ltd",
+      "phoneNumber": "+9779856000601",
+      "careerPageUrl": "https://mpgsolution.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "IT GURKHA",
+      "website": "https://itgurkha.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/it-gurkha",
+      "phoneNumber": "+9779709203566",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Awecode",
+      "website": "https://awecode.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/awecode",
+      "phoneNumber": "+9779851227795",
+      "careerPageUrl": "https://awecode.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "vacancy",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Byte Code Developers",
+      "website": "https://bytecodedevelopers.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/byte-code-developers",
+      "phoneNumber": "+9779851119296",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Oncursor Technology Pvt. Ltd",
+      "website": "https://oncursor.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/oncursor-technology-pvt-ltd",
+      "phoneNumber": "+61482388572",
+      "careerPageUrl": "https://oncursor.com/join-our-team",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "join our team"
+      ]
+    },
+    {
+      "name": "Genesis Web Technology",
+      "website": "https://www.genesiswtech.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/genesis-web-technology",
+      "phoneNumber": "+9779851127307",
+      "careerPageUrl": "https://www.genesiswtech.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Wolfmatrix",
+      "website": "https://wolfmatrix.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/wolfmatrix",
+      "phoneNumber": "+9779767471231",
+      "careerPageUrl": "https://wolfmatrix.com/hire-remote-software-engineer/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply"
+      ]
+    },
+    {
+      "name": "Cloco Nepal Inc.",
+      "website": "https://cloco.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/cloco-nepal-inc",
+      "phoneNumber": "+9779761693518",
+      "careerPageUrl": "https://cloco.com.np/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "vacancy",
+        "career"
+      ]
+    },
+    {
+      "name": "Code Verse Nepal",
+      "website": "https://www.codeverse.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/code-verse-nepal",
+      "phoneNumber": "+9779815980798",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Amogh Soft",
+      "website": "https://amoghsoft.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/amogh-soft",
+      "phoneNumber": "+9779863870646",
+      "careerPageUrl": "https://amoghsoft.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "job opening",
+        "career",
+        "we're hiring"
+      ]
+    },
+    {
+      "name": "Contact",
+      "website": "https://xaviertemplates.eu.org",
+      "techbehemothsUrl": "https://techbehemoths.com/company/xaviertemplates-pvt-ltd#contact",
+      "phoneNumber": "+9779862997356",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Saraswoti Media Pvt. Ltd.",
+      "website": "https://www.saraswotimedia.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/saraswoti-media-pvt-ltd",
+      "phoneNumber": "+9779767657875",
+      "careerPageUrl": "https://www.saraswotimedia.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Jyra Soft Technologies",
+      "website": "https://jyrasoft.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/jyra-soft-technologies",
+      "phoneNumber": "+9779848914876",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Tonic Byte Pvt. Ltd",
+      "website": "https://www.tonicbyte.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/tonic-byte-pvt-ltd",
+      "phoneNumber": "+9779849951111",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Gripas Marketing",
+      "website": "https://gripasmarketing.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/gripas-marketing",
+      "phoneNumber": "+9779802346555",
+      "careerPageUrl": "https://gripasmarketing.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "job opening",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Curves n' Colors",
+      "website": "https://curvesncolors.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/curves-n-colors",
+      "phoneNumber": "+9779801042405",
+      "careerPageUrl": "https://curvesncolors.com/join-the-team",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "job opening",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Kantipur Management | BPO and HR Outsourcing Company in Nepal",
+      "website": "https://kantipurmanagement.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/kantipur-management-bpo-and-hr-outsourcing-company-in-nepal",
+      "phoneNumber": "+97715530599",
+      "careerPageUrl": "https://kantipurmanagement.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "career",
+        "join our team",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Providhy ERP",
+      "website": "https://providhy.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/providhy-erp",
+      "phoneNumber": "+9779709088599",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Social Wave Agency",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/social-wave-agency",
+      "phoneNumber": "+9779806176667",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Webpal",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/webpal",
+      "phoneNumber": "+9779801096633",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Thanka Digital Pvt. Ltd.",
+      "website": "https://www.thankadigital.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/thanka-digital-pvt-ltd",
+      "phoneNumber": "+9779824167236",
+      "careerPageUrl": "https://www.thankadigital.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "join our team",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Aivine Tech Private Limited",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/aivine-tech-private-limited",
+      "phoneNumber": "+9779707265871",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Sathi Solutions",
+      "website": "https://sathisolutions.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/sathi-solutions",
+      "phoneNumber": "+9779865199995",
+      "careerPageUrl": "https://sathisolutions.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "career"
+      ]
+    },
+    {
+      "name": "Gurzu Inc",
+      "website": "https://gurzu.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/gurzu-inc",
+      "phoneNumber": "+9779801190674",
+      "careerPageUrl": "https://smarthirepro.com/company/gurzu-inc/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Bross Solutions Pvt. Ltd",
+      "website": "https://brossolutions.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/bross-solutions-pvt-ltd",
+      "phoneNumber": "+9779809025085",
+      "email": "contact@brossolutions.com.np",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Yuwasoft Technologies",
+      "website": "https://yuwasoft.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/yuwasoft-technologies",
+      "phoneNumber": "+9779741681548",
+      "careerPageUrl": "https://yuwasoft.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Orangic Smart Technology",
+      "website": "https://orangicsmarttechnology.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/orangic-smart-technology",
+      "phoneNumber": "+9779824890248",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "WebX Nepal Pvt. Ltd.",
+      "website": "https://webxnep.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/webx-nepal-pvt-ltd",
+      "phoneNumber": "+9779749761111",
+      "email": "info@webxnepal.com",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Grow It",
+      "website": "https://growitagency.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/grow-it",
+      "phoneNumber": "+9779847288308",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Variant Consulting Group Pvt. ltd.",
+      "website": "https://www.variantconsult.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/variant-consulting-group-pvt-ltd",
+      "phoneNumber": "+9779851156716",
+      "careerPageUrl": "https://www.variantconsult.com.np/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Falcha Tech Pvt. Ltd.",
+      "website": "https://www.falchatech.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/falcha-tech-pvt-ltd",
+      "phoneNumber": "+9779828846039",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Pigeon Web Solutions",
+      "website": "https://pigeonwebsolutions.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/pigeon-web-solutions",
+      "phoneNumber": "+9779708043170",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "eLance Digital Media",
+      "website": "https://elancedigitalmedia.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/elance-digital-media",
+      "phoneNumber": "+9779843210144",
+      "careerPageUrl": "https://elancedigitalmedia.com/join",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "clickbenz creatives",
+      "website": "https://www.clickbenz.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/clickbenz-creatives",
+      "phoneNumber": "+9779802263776",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Logispark Technologies Pvt. Ltd.",
+      "website": "https://logisparktech.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/logispark-technologies-pvt-ltd",
+      "phoneNumber": "+97715919540",
+      "careerPageUrl": "https://logisparktech.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Clock b Business Technology",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/clock-b-business-technology",
+      "phoneNumber": "+97714526267",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "NEWTONS DESIGN",
+      "website": "https://newtonsdesign.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/newtons-design",
+      "phoneNumber": "+9779813076797",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Simriktrix",
+      "website": "https://simriktrix.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/simriktrix",
+      "phoneNumber": "+9779763494975",
+      "careerPageUrl": "https://simriktrix.com/work-with-us",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Logicurv Technologies Pvt. Ltd.",
+      "website": "https://www.basiyo.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/logicurv-technologies-pvt-ltd",
+      "phoneNumber": "+9779846280844",
+      "careerPageUrl": "https://affiliate.basiyo.com",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Digital Techno Wiz",
+      "website": "https://digitaltechnowiz.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/digital-techno-wiz",
+      "phoneNumber": "+9779846725002",
+      "careerPageUrl": "https://digitaltechnowiz.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "open positions",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Mega Web Link",
+      "website": "https://megaweblink.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/mega-web-link",
+      "phoneNumber": "+97714560545",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Artivtech",
+      "website": "https://artivtech.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/artivtech",
+      "phoneNumber": "+9779764493070",
+      "careerPageUrl": "https://artivtech.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Managed IT and Digital Marketing - Elscript Technology",
+      "website": "https://www.elscript.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/elscript-technology-pvt-ltd",
+      "phoneNumber": "+9779818439664",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Rewa Soft",
+      "website": "https://rewasoft.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/rewa-soft",
+      "phoneNumber": "+9779801124021",
+      "careerPageUrl": "https://rewasoft.com.np/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "NebulaLeap Technology",
+      "website": "https://www.nebulaleap.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/nebulaleap-technology",
+      "phoneNumber": "+9779768448066",
+      "careerPageUrl": "https://candle-orchestra-af7.notion.site/Nebulaleap-Job-Board-74f036e688b044c889758629a9b9016e",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "BigADCo",
+      "website": "https://bigadcompany.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/bigadco",
+      "phoneNumber": "+9779802700772",
+      "careerPageUrl": "https://bigadcompany.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Impact Tech Hub",
+      "website": "https://ith.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/impact-tech-hub",
+      "phoneNumber": "+9779766470746",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Saral Apps Pvt. Ltd.",
+      "website": "https://www.saralapps.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/saral-apps-pvt-ltd",
+      "phoneNumber": "+9779864987764",
+      "careerPageUrl": "https://www.saralapps.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Inflancer",
+      "website": "https://inflancer.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/inflancer",
+      "phoneNumber": "+9779705970503",
+      "careerPageUrl": "http://career.inflancer.com/",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "EK RA SUNYA INC",
+      "website": "https://ekrasunya.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/ek-ra-sunya-inc",
+      "phoneNumber": "+9779818197166",
+      "careerPageUrl": "https://ekrasunya.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "open positions",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Matin Softech",
+      "website": "https://matinsoftech.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/matin-softech",
+      "phoneNumber": "+9779800971310",
+      "careerPageUrl": "https://matinsoftech.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "job opening",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "CMS Nepal Pvt. Ltd.",
+      "website": "https://www.cmsnpl.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/cms-nepal-pvt-ltd",
+      "phoneNumber": "+9779802079981",
+      "careerPageUrl": "https://cmsnpl.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "career",
+        "send your cv",
+        "we're hiring"
+      ]
+    },
+    {
+      "name": "Tech Nirvana Pvt. Ltd.",
+      "website": "https://www.technirvana.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/tech-nirvana-pvt-ltd",
+      "phoneNumber": "+9779869028924",
+      "careerPageUrl": "https://www.technirvana.com.np/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "vacancy",
+        "career",
+        "join our team",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Eminence Ways",
+      "website": "https://eminenceways.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/eminence-ways",
+      "phoneNumber": "+97714569328",
+      "careerPageUrl": "https://eminenceways.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Upasthiti",
+      "website": "https://www.upasthiti.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/upasthiti",
+      "phoneNumber": "+9779843279716",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Omega Incorporations",
+      "website": "https://omegaincorporations.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/omega-incorporations",
+      "phoneNumber": "+9779801037556",
+      "careerPageUrl": "https://omegaincorporations.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Plutonic Tech Pvt. Ltd.",
+      "website": "https://plutonictech.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/plutonic-tech-pvt-ltd",
+      "phoneNumber": "+97714101818",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Tech Trendo",
+      "website": "https://techtrendo.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/tech-trendo-multipurpose-company-private-limited",
+      "phoneNumber": "+9779815602535",
+      "careerPageUrl": "https://techtrendo.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Dreams Media and Marketing",
+      "website": "https://www.hoardingboardnepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/dreams-media-and-marketing",
+      "phoneNumber": "+9779840066285",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Plus Point Solution Pvt.Ltd.",
+      "website": "https://pluspointsolution.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/plus-point-solution-pvt-ltd",
+      "phoneNumber": "+9779801848769",
+      "careerPageUrl": "https://pluspointsolution.com/#",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career"
+      ]
+    },
+    {
+      "name": "Made by Anuj",
+      "website": "https://madebyanuj.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/made-by-anuj",
+      "phoneNumber": "+9779801068084",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Sajal Dhungana Digital",
+      "website": "https://dhunganasajal.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/sajal-dhungana-digital",
+      "phoneNumber": "+9779849364867",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Syvar Technology",
+      "website": "https://www.syvar.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/syvar-technology",
+      "phoneNumber": "+9779840575736",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Tantrik Tech Solutions Pvt. Ltd.",
+      "website": "https://tantriktech.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/tantrik-tech-solutions-pvt-ltd",
+      "phoneNumber": "+9779801358290",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Sanju Yadav",
+      "website": "https://sanjuyadav.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/sanju-yadav",
+      "phoneNumber": "+9779847347372",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Entiersoft",
+      "website": "https://entiersoft.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/entiersoft",
+      "phoneNumber": "+919628592417",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Information Technology Concerns Pvt. Ltd.",
+      "website": "https://itconcerns.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/information-technology-concerns-pvt-ltd",
+      "phoneNumber": "+97714571161",
+      "careerPageUrl": "https://itconcerns.com.np/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Avenir Tech Private Limited",
+      "website": "https://avenirtech.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/avenir-tech-private-limited",
+      "phoneNumber": "+9779865518362",
+      "careerPageUrl": "https://avenirtech.com.np/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "send your cv"
+      ]
+    },
+    {
+      "name": "Janaki Soft",
+      "website": "https://www.janakisoft.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/janaki-soft",
+      "phoneNumber": "+9779827869509",
+      "careerPageUrl": "https://janakisoft.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Dome Infosys",
+      "website": "https://domeinfosys.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/dome-infosys",
+      "phoneNumber": "+9779851173669",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Neoteric Nepal",
+      "website": "https://neoteric.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/neoteric-nepal",
+      "phoneNumber": "+9779801200120",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "D-Tech Office System Pvt Ltd",
+      "website": "https://d-tech.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/d-tech-office-system-pvt-ltd",
+      "phoneNumber": "+9779808765206",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Aman mishra",
+      "website": "https://amanmishra.com.np/seo-expert-in-nepal/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/aman-mishra",
+      "phoneNumber": "+9779765417792",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "DIGU",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/digu",
+      "phoneNumber": "+9779820550022",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Queen's Digital Agency",
+      "website": "https://queensdigitalagency.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/queen-s-digital-agency",
+      "phoneNumber": "+9779746476794",
+      "careerPageUrl": "https://queensdigitalagency.com/?page_id=987736",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Suryani International Pvt. Ltd.",
+      "website": "https://suryaniinternational.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/suryani-international-pvt-ltd",
+      "phoneNumber": "+9779709085038",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Vertex Web Surf",
+      "website": "https://www.vertexwebsurf.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/vertex-web-surf",
+      "careerPageUrl": "https://www.vertexwebsurf.com.np/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "career"
+      ]
+    },
+    {
+      "name": "Internet Market Today",
+      "website": "https://www.internetmarkettoday.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/internet-market-today",
+      "phoneNumber": "+97741530348",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "BYAAK Digital",
+      "website": "https://cloudfront.net",
+      "techbehemothsUrl": "https://techbehemoths.com/company/byaak-digital",
+      "phoneNumber": "+9779811236793",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Lone Tree Marketing",
+      "website": "https://lonetreenepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/lone-tree-marketing",
+      "careerPageUrl": "https://lonetreenepal.com/about-social-media-agency-in-nepal/digital-marketing-jobs-in-nepal/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Proxy Infotech Solutions Pvt. Ltd.",
+      "website": "https://proxyinfotech.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/proxy-infotech-solutions-pvt-ltd",
+      "phoneNumber": "+97714105100",
+      "careerPageUrl": "https://www.proxyinfotech.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Agile Solutions Pvt. Ltd",
+      "website": "https://agile.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/agile-solutions-pvt-ltd",
+      "phoneNumber": "+9779802363455",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Meronetwork Pvt. Ltd.",
+      "website": "https://www.meronetwork.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/meronetwork-pvt-ltd",
+      "phoneNumber": "+97714426702",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "K Karki",
+      "website": "https://www.kkarki.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/nepalwide-web",
+      "phoneNumber": "+9779865469281",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Trashset Technology",
+      "website": "https://trashsettechnology.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/trashset-technology",
+      "phoneNumber": "+9779818212131",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Axion Partners - Law Firm In Nepal",
+      "website": "https://lawaxion.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/axion-partners-law-firm-in-nepal",
+      "phoneNumber": "+9779709090127",
+      "careerPageUrl": "https://lawaxion.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "career"
+      ]
+    },
+    {
+      "name": "Anup Joshi",
+      "website": "https://joshianup.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/anup-joshi",
+      "phoneNumber": "+9779842386522",
+      "careerPageUrl": "https://www.youtube.com/@jo_academy",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Digital Yuba Pvt. Ltd.",
+      "website": "https://digitalyuba.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/digital-yuba-pvt-ltd",
+      "phoneNumber": "+9779868975850",
+      "careerPageUrl": "https://digitalyuba.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Corvo Inc.",
+      "website": "https://corvo.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/corvo-inc",
+      "phoneNumber": "+9779803186115",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Code for Core Innovation Pvt. Ltd.",
+      "website": "https://www.codeforcore.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/code-for-core-innovation-pvt-ltd",
+      "phoneNumber": "+9779851173141",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "PixelHeart",
+      "website": "https://www.pixelheart.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/pixelheart",
+      "phoneNumber": "+9779849866129",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Onesphere Law Associates",
+      "website": "https://onespherelaw.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/onesphere-law-associates",
+      "phoneNumber": "+9779820999688",
+      "careerPageUrl": "https://onespherelaw.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply"
+      ]
+    },
+    {
+      "name": "Y SEO Agency",
+      "website": "https://yseoagency.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/y-seo-agency",
+      "phoneNumber": "+9779860425699",
+      "careerPageUrl": "https://yseoagency.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "join our team",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Flowrage - SEO Angency in Nepal",
+      "website": "https://flowrage.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/flowrage-seo-angency-in-nepal",
+      "phoneNumber": "+9779708052941",
+      "careerPageUrl": "https://flowrage.com/about/",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Web3twenty",
+      "website": "https://web3twenty.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/web3twenty",
+      "phoneNumber": "+97336204083",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Codeware Lab Pvt. Ltd.",
+      "website": "https://codewarelab.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/codeware-lab-pvt-ltd",
+      "phoneNumber": "+9779802034393",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Green Tick Nepal Pvt Ltd",
+      "website": "https://gtn.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/green-tick-nepal-pvt-ltd",
+      "phoneNumber": "+97714620741",
+      "careerPageUrl": "https://gtn.com.np/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career"
+      ]
+    },
+    {
+      "name": "Nepal Digital Systems Pvt. Ltd.",
+      "website": "https://nepaldigisys.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/nepal-digital-systems-pvt-ltd",
+      "phoneNumber": "+97715911134",
+      "careerPageUrl": "https://nepaldigisys.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Right Path Career Counselling Pvt.Ltd",
+      "website": "https://rightpath.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/right-path-career-counselling-pvt-ltd",
+      "phoneNumber": "+97714517418",
+      "careerPageUrl": "https://www.rightpath.com.np/faculty-details/law",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Talentsathi",
+      "website": "https://talentsathi.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/talentsathi",
+      "phoneNumber": "+9779802346002",
+      "careerPageUrl": "https://sathijob.com/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "vacancy",
+        "career"
+      ]
+    },
+    {
+      "name": "Chaitanya Design Pvt. Ltd.",
+      "website": "http://www.chaitanyacorp.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/chaitanya-design-pvt-ltd",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Ottr Technology",
+      "website": "https://www.ottr.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/ottr-technology-pvt-ltd",
+      "phoneNumber": "+9779801956406",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Key Innovation Software Solution",
+      "website": "https://keyinnovation.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/key-innovation-software-solution",
+      "phoneNumber": "+9779860627659",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Cubit Incorporated",
+      "website": "https://www.cubit.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/cubit-incorporated",
+      "phoneNumber": "+9779851350834",
+      "careerPageUrl": "https://www.cubit.com.np/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Solution Gate Pvt. Ltd.",
+      "website": "https://solutiongate.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/solution-gate-pvt-ltd",
+      "phoneNumber": "+9779862004936",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "IT Service Nepal",
+      "website": "https://itservicenepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/it-service-nepal",
+      "phoneNumber": "+9779764463362",
+      "careerPageUrl": "https://itservicenepal.com/vacancy",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "vacancy"
+      ]
+    },
+    {
+      "name": "CreaBiz Studio",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/creabiz-studio",
+      "phoneNumber": "+9779814498248",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Crazy Media Design",
+      "website": "https://www.crazymediadesign.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/web-design-services",
+      "phoneNumber": "+19292561880",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Delta Tech",
+      "website": "http://www.deltatechnepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/delta-tech",
+      "phoneNumber": "+9779804067116",
+      "careerPageUrl": "https://careers.rkgolchha.com/",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Palm Mind Technology",
+      "website": "https://palmmind.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/palm-mind-technology",
+      "phoneNumber": "+9779851201865",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "CozyThemes - Premium WordPress Themes",
+      "website": "https://cozythemes.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/cozythemes-premium-wordpress-themes",
+      "phoneNumber": "+9779849027453",
+      "careerPageUrl": "https://cozythemes.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply"
+      ]
+    },
+    {
+      "name": "Global Recruit Experts",
+      "website": "https://www.globalrecruitexperts.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/global-recruit-experts",
+      "phoneNumber": "+9779802375170",
+      "careerPageUrl": "https://www.globalrecruitexperts.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Cloud Himalaya Pvt. Ltd.",
+      "website": "https://cloudhimalaya.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/cloud-himalaya-pvt-ltd",
+      "phoneNumber": "+9779801249898",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Skybase Innovations",
+      "website": "https://www.skybase.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/skybase-innovations",
+      "phoneNumber": "+9779845533797",
+      "careerPageUrl": "https://www.skybase.com.np/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "open positions",
+        "career"
+      ]
+    },
+    {
+      "name": "Global Studio",
+      "website": "https://globalstudio.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/global-studio",
+      "phoneNumber": "+9779828012457",
+      "careerPageUrl": "https://globalstudio.com.np/portfolio/Indexnp",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "school managements",
+      "website": "https://schoolmanagements.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/school-managements",
+      "phoneNumber": "+9779802346665",
+      "careerPageUrl": "https://schoolmanagements.com/#",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Saral Books",
+      "website": "https://saralbooks.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/saral-books",
+      "phoneNumber": "+9779745714401",
+      "careerPageUrl": "https://saralbooks.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Agency Booster Pro",
+      "website": "https://agencyboosterpro.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/agency-booster-pro",
+      "phoneNumber": "+9779840172982",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Genese Solution",
+      "website": "https://www.genesesolution.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/genese-solution",
+      "phoneNumber": "+442039620923",
+      "careerPageUrl": "https://www.genesesolution.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "open positions",
+        "job opening",
+        "career",
+        "join our team",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Delta Creation Pvt. Ltd.",
+      "website": "https://deltacreation.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/delta-creation-pvt-ltd",
+      "phoneNumber": "+9779828890069",
+      "careerPageUrl": "https://deltacreation.com.np/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "vacancy",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Clove I.T. Pvt. Ltd.",
+      "website": "https://cloveit.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/clove-i-t-pvt-ltd",
+      "phoneNumber": "+9779844653202",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "NextPaila",
+      "website": "https://nextpaila.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/next-paila",
+      "phoneNumber": "+9779763688006",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "WooBrand",
+      "website": "https://www.woobrand.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/woobrand",
+      "phoneNumber": "+9779803174652",
+      "careerPageUrl": "https://www.woobrand.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Nirvan Studio",
+      "website": "https://nirvanstudio.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/nirvan-studio",
+      "phoneNumber": "+9779851085859",
+      "careerPageUrl": "https://nirvanstudio.com/career/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Quintpros Technology Solutions Pvt. Ltd.",
+      "website": "https://quintpros.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/quintpros-technology-solutions-pvt-ltd",
+      "phoneNumber": "+9779825429948",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "EOR Nepal",
+      "website": "https://eornepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/eor-nepal",
+      "phoneNumber": "+9779860082795",
+      "careerPageUrl": "https://eornepal.com/remote-hiring-service",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring"
+      ]
+    },
+    {
+      "name": "JO Marketing Pvt. Ltd",
+      "website": "https://jomarketing.net/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/jo-marketing-pvt-ltd",
+      "phoneNumber": "+9779842386522",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "SA IT Solution and Trade Concern",
+      "website": "https://sait.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/sa-it-solution-and-trade-concern",
+      "phoneNumber": "+9779801067391",
+      "careerPageUrl": "https://sait.com.np/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "SEOwithBipin",
+      "website": "https://seowithbipin.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/seowithbipin",
+      "phoneNumber": "+9779860485402",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "System Nepal",
+      "website": "https://systemnepal.net",
+      "techbehemothsUrl": "https://techbehemoths.com/company/system-nepal",
+      "phoneNumber": "+9779817859647",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Softbenz Infosys Pvt. Ltd.",
+      "website": "https://softbenz.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/softbenz-infosys-pvt-ltd",
+      "phoneNumber": "+9779851223631",
+      "careerPageUrl": "https://softbenz.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Onlinezeal Pvt.Ltd.",
+      "website": "https://onlinezeal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/onlinezeal-pvt-ltd",
+      "phoneNumber": "+97715199609",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "HumanX Global | BPO & IT Outsourcing Company",
+      "website": "https://humanxglobal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/humanx-global-bpo-and-it-outsourcing-company",
+      "phoneNumber": "+61420891838",
+      "careerPageUrl": "https://humanxglobal.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Makura Creation Pvt.Ltd",
+      "website": "https://makuracreations.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/makura-creation-pvt-ltd",
+      "phoneNumber": "+9779841969727",
+      "careerPageUrl": "https://makuracreations.com/vacancy/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "open positions",
+        "career"
+      ]
+    },
+    {
+      "name": "GP Digital",
+      "website": "https://girjeshpandey.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/gp-digital",
+      "phoneNumber": "+9779847302253",
+      "careerPageUrl": "https://girjeshpandey.com.np/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Asha & Company Private Limited",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/asha-company-private-limited",
+      "phoneNumber": "+9779802326624",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Programiz",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/programiz",
+      "phoneNumber": "+9779801028963",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "InDesgin Media Pvt Ltd",
+      "website": "https://indesignmedia.net",
+      "techbehemothsUrl": "https://techbehemoths.com/company/indesgin-media-pvt-ltd",
+      "phoneNumber": "+9779852039588",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Webwiz Nepal",
+      "website": "https://webwiznepal.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/webwiz-nepal",
+      "phoneNumber": "+9779845888905",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Cloud Tech Solutions Pvt. Ltd.",
+      "website": "https://cloudtech.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/cloud-tech-solutions-pvt-ltd",
+      "phoneNumber": "+9779801147617",
+      "careerPageUrl": "https://cloudtech.com.np/career.php",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "Plexler",
+      "website": "https://www.plexler.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/plexler",
+      "phoneNumber": "+9779867062429",
+      "careerPageUrl": "https://www.plexler.com/services/lms-for-consultancy-in-nepal",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career"
+      ]
+    },
+    {
+      "name": "The Next Coders",
+      "website": "https://thenextcoders.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/the-next-coders",
+      "phoneNumber": "+9779849624226",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Digipal Solution",
+      "website": "https://digipalsolution.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/digipal-solution",
+      "phoneNumber": "+97715912819",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Nagmani International",
+      "website": "https://nagmani.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/nagmani-international",
+      "phoneNumber": "+97715347855",
+      "careerPageUrl": "https://nagmani.com.np/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career"
+      ]
+    },
+    {
+      "name": "Quickfox",
+      "website": "https://www.quickfoxtechnologies.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/best-software-company-in-nepal-and-usa",
+      "phoneNumber": "+9779841706870",
+      "careerPageUrl": "https://www.quickfoxtechnologies.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Digitalin Pvt.Ltd",
+      "website": "https://digitalin.com.np/index.html",
+      "techbehemothsUrl": "https://techbehemoths.com/company/digitalin-pvt-ltd",
+      "phoneNumber": "+97715970174",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Frontline Consult Pvt. Ltd.",
+      "website": "https://frontline.com.np/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/frontline-consult-pvt-ltd",
+      "phoneNumber": "+97715707271",
+      "careerPageUrl": "https://froxjob.com/",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Global Link Technology",
+      "website": "https://globallinknepal.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/global-link-technology",
+      "phoneNumber": "+9779851002916",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Intosoft",
+      "website": "https://intosoft.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/intosoft-2",
+      "phoneNumber": "+9779805675804",
+      "careerPageUrl": "https://intosoft.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "SiyZo Solutions",
+      "website": "https://siyzo.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/siyzo-solutions",
+      "phoneNumber": "+9779841304234",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Sop Nepal | SOP Writing Service in Nepal",
+      "website": "https://sopnepal.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/sop-nepal-sop-writing-service-in-nepal",
+      "phoneNumber": "+97757520602",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Xaviertemplates Pvt Ltd",
+      "website": "https://xaviertemplates.eu.org",
+      "techbehemothsUrl": "https://techbehemoths.com/company/xaviertemplates-pvt-ltd",
+      "phoneNumber": "+9779862997356",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Radiant Digital Hub",
+      "website": "https://radiantdigitalhub.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/radiant-digital-hub",
+      "phoneNumber": "+9779841516494",
+      "careerPageUrl": "https://radiantdigitalhub.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Janaki Technology Pvt Ltd.",
+      "website": "https://sparrowsms.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/janaki-technology-pvt-ltd",
+      "phoneNumber": "+9779802005007",
+      "careerPageUrl": "https://sparrowsms.com/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Waft Technology Pvt. Ltd. (WaftTech)",
+      "website": "https://www.wafttech.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/waft-technology-pvt-ltd-wafttech",
+      "phoneNumber": "+9779801865566",
+      "careerPageUrl": "https://www.wafttech.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Technology Sewa Pvt. Ltd.",
+      "website": "https://technologysewa.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/technology-sewa-pvt-ltd",
+      "phoneNumber": "+9779846868921",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Communicate Technologies Pvt. Ltd.",
+      "website": "https://www.communicate.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/communicate-technologies-pvt-ltd",
+      "phoneNumber": "+97715350907",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Yes Helping Hands IT  solutions",
+      "website": "https://yhhits.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/yes-helping-hands-it-solutions",
+      "phoneNumber": "+9779846150836",
+      "careerPageUrl": "https://yhhits.com/careers",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "open positions",
+        "career",
+        "join our team"
+      ]
+    },
+    {
+      "name": "SoftNEP Pvt. Ltd.",
+      "website": "https://softnep.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/softnep",
+      "phoneNumber": "+97714115934",
+      "careerPageUrl": "https://www.softnep.com/career",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Bitsbeat IT solution",
+      "website": "https://www.bitsbeat.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/bitsbeat-it-solution",
+      "phoneNumber": "+9779801884453",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Ajeets Manageent and Manpower Consultancy",
+      "website": "https://ajeets.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/ajeets-manageent-and-manpower-consultancy",
+      "phoneNumber": "+919090095993",
+      "careerPageUrl": "https://ajeets.com/jobs",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "hiring",
+        "apply",
+        "job opening",
+        "career",
+        "apply now",
+        "send your cv"
+      ]
+    },
+    {
+      "name": "Instakart",
+      "website": "https://instakart.com.np",
+      "techbehemothsUrl": "https://techbehemoths.com/company/instakart",
+      "phoneNumber": "+9779817830125",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Adex International",
+      "website": "",
+      "techbehemothsUrl": "https://techbehemoths.com/company/adex-international",
+      "phoneNumber": "+447414579579",
+      "status": "UNKNOWN"
+    },
+    {
+      "name": "Azency",
+      "website": "https://azency.com/",
+      "techbehemothsUrl": "https://techbehemoths.com/company/azency",
+      "phoneNumber": "+9779818110388",
+      "careerPageUrl": "https://codeyard.app/jobs/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "vacancy",
+        "open positions",
+        "career",
+        "apply now"
+      ]
+    },
+    {
+      "name": "Code Pixelz Media",
+      "website": "https://codepixelzmedia.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/code-pixelz-media",
+      "phoneNumber": "+9779841705571",
+      "careerPageUrl": "https://codepixelzmedia.com/careers",
+      "status": "NO_CAREER_PAGE"
+    },
+    {
+      "name": "Anoma Technologies Pvt Ltd",
+      "website": "https://anomatechnologies.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/anoma-technologies-pvt-ltd",
+      "phoneNumber": "+9779619201126",
+      "careerPageUrl": "https://anomatechnologies.com/index.php/careers/",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "career"
+      ]
+    },
+    {
+      "name": "Web House Nepal",
+      "website": "https://webhousenepal.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/web-house-nepal-pvt-ltd",
+      "phoneNumber": "+97714794680",
+      "careerPageUrl": "https://webhousenepal.com/blogs/registration-of-np-domain",
+      "status": "ACTIVE",
+      "keywordMatches": [
+        "apply",
+        "career"
+      ]
+    },
+    {
+      "name": "Hoostly",
+      "website": "https://hoostly.com",
+      "techbehemothsUrl": "https://techbehemoths.com/company/hoostly",
+      "phoneNumber": "+97741543210",
+      "status": "UNKNOWN"
+    }
+  ]
+}

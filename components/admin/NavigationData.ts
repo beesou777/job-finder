@@ -7,7 +7,8 @@ import {
     Settings,
     Bell,
     CheckSquare,
-    FileText
+    FileText,
+    Building2
 } from "lucide-react";
 
 export const ADMIN_NAV_ITEMS = [
@@ -22,6 +23,12 @@ export const ADMIN_NAV_ITEMS = [
         label: "Predictive Insights",
         icon: BrainCircuit,
         description: "AI-driven market forecasting and indices."
+    },
+    {
+        id: "companies",
+        label: "Company Enrichment",
+        icon: Building2,
+        description: "Hiring intent intelligence and sales outreach."
     },
     {
         id: "sources",

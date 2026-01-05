@@ -1,0 +1,3121 @@
+{
+    "count": 282,
+    "companies": [
+      {
+        "id": 370,
+        "company_name": "CG Group",
+        "types": [
+          "Trading"
+        ],
+        "mobile_number": "977970000000",
+        "email": "Shuvashreekc61@gmail.com",
+        "website": "https://www.chaudharygroup.com/",
+        "location": "Kathmandu"
+      },
+      {
+        "id": 369,
+        "company_name": "Kunyo Gears",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779802348962",
+        "email": "admin@kunyogears.com",
+        "website": "https://gears.kunyo.co/",
+        "location": "Putalisadak,Kathmandu"
+      },
+      {
+        "id": 364,
+        "company_name": "Sanskriti Advertising",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "9779851124944",
+        "email": "saskriti.advertising@gmail.com",
+        "website": null,
+        "location": "Baneshwor,Kathmandu"
+      },
+      {
+        "id": 353,
+        "company_name": "Anytime Hygiene",
+        "types": [
+          "Trading"
+        ],
+        "mobile_number": "9779849189633",
+        "email": "krishna.poudel@anytimehygiene.com",
+        "website": "https://www.facebook.com/Anytimehygiene/",
+        "location": "Budhanilkantha"
+      },
+      {
+        "id": 76,
+        "company_name": "Vrit Jobs",
+        "types": [
+          "Recruitment"
+        ],
+        "mobile_number": "9779766386583",
+        "email": "hr@vritjobs.com",
+        "website": "www.vritjobs.com",
+        "location": "Sankhamul, Kathmandu"
+      },
+      {
+        "id": 41,
+        "company_name": "Reputed IT Company",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779709083870",
+        "email": "training@vritjobs.com",
+        "website": "www.vritjobs.com",
+        "location": "Sankhamul, Kathmandu"
+      },
+      {
+        "id": 38,
+        "company_name": "Rasbita International Group",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "9779849488404",
+        "email": "rasbitatravel@gmail.com",
+        "website": "https://www.facebook.com/RasbitaTravelAndTour/",
+        "location": "Gaushala, kathmandu"
+      },
+      {
+        "id": 37,
+        "company_name": "Nepa Rudraksha",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "9779863832800",
+        "email": "aayush.nepa@gmail.com",
+        "website": "https://nepalirudraksha.com/",
+        "location": "Gaushala, kathmandu"
+      },
+      {
+        "id": 34,
+        "company_name": "Mokshya Protocol",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779818270061",
+        "email": "nischal@mokshya.io",
+        "website": "https://mokshya.io/",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": 28,
+        "company_name": "MAW Petro Products Pvt Ltd",
+        "types": [
+          "Conglomerate"
+        ],
+        "mobile_number": "9779801905356",
+        "email": "shobha.pokharel@mawnepal.com",
+        "website": "https://mawnepal.com/",
+        "location": "Kathmandu,Nepal"
+      },
+      {
+        "id": 21,
+        "company_name": "Sajilo Sewa",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779810105557",
+        "email": "pratigya.sajilosewa@gmail.com",
+        "website": "https://www.sajilosewa.com/",
+        "location": "Lalitpur, Patan"
+      },
+      {
+        "id": 20,
+        "company_name": "SysQube Technology Pvt Ltd",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779845548460",
+        "email": "hr@sysqube.com.np",
+        "website": "https://www.sysqube.com/",
+        "location": "Sankhamul, Kathmandu"
+      },
+      {
+        "id": 19,
+        "company_name": "Tekkon Technologies",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779803466217",
+        "email": "usha.shrish@tekkon.com.np",
+        "website": "https://tekkon.com.np/",
+        "location": "Baluwatar, Kathmandu"
+      },
+      {
+        "id": 14,
+        "company_name": "Midas Technologies",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "97797714002736",
+        "email": "bd@midastechnologies.com.np",
+        "website": "https://www.midastechnologies.com.np/",
+        "location": "bd@midastechnologies.com.np"
+      },
+      {
+        "id": 10,
+        "company_name": "Time Charge N Go",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "9779766386583",
+        "email": "anush.lamsal@timechargengo.com",
+        "website": "https://timechargengo.com/",
+        "location": "Kathmandu"
+      },
+      {
+        "id": 7,
+        "company_name": "Vrit Technologies",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779868730956",
+        "email": "hr@vrittechnologies.com",
+        "website": "https://vrittechnologies.com/",
+        "location": "Shankhamul, Kathmandu"
+      },
+      {
+        "id": 4,
+        "company_name": "PaaSPay",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779844295833",
+        "email": "Gopal.pokhrel@ipayremit.com",
+        "website": "https://paaspay.io/",
+        "location": "Gairidhara-2, Kathmandu"
+      },
+      {
+        "id": 503,
+        "company_name": "Ariel Wilson",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "447476445264",
+        "email": "yipila7019@cameltok.com",
+        "website": "https://www.dissertationproposal.co.uk/",
+        "location": "Highpoint village, Navigation Building, Station Approach, London UB3 4FF, United Kingdom"
+      },
+      {
+        "id": 502,
+        "company_name": "Custom Patches UK",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "447577339825",
+        "email": "sales@custompatches.uk",
+        "website": "https://custompatches.uk/pvc-patches/",
+        "location": "10 Downing Street, LONDON SW1A 2AA, UNITED KINGDOM."
+      },
+      {
+        "id": 501,
+        "company_name": "Fursuit Crafts",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "117373101180",
+        "email": "fursuitcrafts@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 500,
+        "company_name": "muthusawamy",
+        "types": [
+          "Public",
+          "Information Technology"
+        ],
+        "mobile_number": "12025550169",
+        "email": "muthusawamy29@gmail.com",
+        "website": "https://watchmult34.com/",
+        "location": "New York"
+      },
+      {
+        "id": 499,
+        "company_name": "Shreeyam Rinal",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779846691255",
+        "email": "rimalshreeyam630@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 498,
+        "company_name": "Kay Rose Golden",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "17202027983",
+        "email": "kayrosegolden@gmail.com",
+        "website": "https://krosegolden.org",
+        "location": "23850 Texas Longhorn Trail, Calhan, CO 80808"
+      },
+      {
+        "id": 497,
+        "company_name": "Kapilraj kc",
+        "types": [
+          "Trading"
+        ],
+        "mobile_number": "9779704167805",
+        "email": "kapilrajkc10@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 496,
+        "company_name": "atietr",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "098398989",
+        "email": "tsv95981@nowni.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 495,
+        "company_name": "Ship A1 Auto Transport",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "14107184031",
+        "email": "absinternational22144@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 494,
+        "company_name": "ukaalo .com",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "9779862407961",
+        "email": "krishgiri567@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 493,
+        "company_name": "Ace Book Publishers",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "12127846769",
+        "email": "bicone5879@mekuron.com",
+        "website": "https://acebookpublishers.com/",
+        "location": "100 Church Street 8th floor, Manhattan, New York, NY 10007"
+      },
+      {
+        "id": 492,
+        "company_name": "Hire Web Creators LLC",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "114063160181",
+        "email": "cubicscode187@gmail.com",
+        "website": "https://hirewebcreators.com/",
+        "location": "1001 S Main St #500, Kalispell, MT 59901, United States"
+      },
+      {
+        "id": 491,
+        "company_name": "Richard Vargus",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "18458209547",
+        "email": "richvargus1@gmail.com",
+        "website": "https://livefortheblue.com/",
+        "location": "105 Balsam Drive, New Windsor, NY 12553"
+      },
+      {
+        "id": 490,
+        "company_name": "Varosa Technology",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779841309240",
+        "email": "career@varosatech.com",
+        "website": "https://varosatech.com/",
+        "location": "Anamnagar, Kathmandu, Nepal"
+      },
+      {
+        "id": 489,
+        "company_name": "Edwise Foundation",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "9779843817765",
+        "email": "info@edwisefoundation.com",
+        "website": "https://edwisefoundation.com/",
+        "location": "Subhashree Complex 6th & 7th floor New Plaza, Kathmandu, Nepal"
+      },
+      {
+        "id": 488,
+        "company_name": "HHBMTHC",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9779802323194",
+        "email": "hhbmthc@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 487,
+        "company_name": "cosmo nepal travel and tour",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "9779863195562",
+        "email": "prithakrajkc@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 486,
+        "company_name": "LINKSMITHLINKSMITH",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "6834556349",
+        "email": "king3ds5tsp@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "Libero esse similique."
+      },
+      {
+        "id": 485,
+        "company_name": "Destruction of Democracy",
+        "types": [
+          "Private",
+          "Education Consultancy"
+        ],
+        "mobile_number": "17703140480",
+        "email": "williamhowardlloyd@gmail.com",
+        "website": "https://williamhowardlloyd.com/",
+        "location": "141 Mansfield Street, State College PA 16801"
+      },
+      {
+        "id": 484,
+        "company_name": "TV JACKET",
+        "types": [
+          "Public",
+          "E-commerce",
+          "Manufacturing"
+        ],
+        "mobile_number": "18722649321",
+        "email": "finnzidanny@gmail.com",
+        "website": "https://www.tvjackets.com/",
+        "location": "930 fairway Dr, Bensenville IL. 60106"
+      },
+      {
+        "id": 483,
+        "company_name": "Birendra  Singh Dhami",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779841355789",
+        "email": "dhamib610@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 482,
+        "company_name": "Last Minute Assignments",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "447482794466",
+        "email": "johnjulia118@gmail.com",
+        "website": "https://lastminuteassignments.co.uk",
+        "location": "51 George St, GL6 0AG, Nailsworth"
+      },
+      {
+        "id": 481,
+        "company_name": "Last Minute Assignments",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "447482794466",
+        "email": "carmelabrower@gmail.com",
+        "website": "https://lastminuteassignments.co.uk/",
+        "location": "51 George St, GL6 0AG, Nailsworth"
+      },
+      {
+        "id": 480,
+        "company_name": "Aerosoft Global",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "13455160355",
+        "email": "philbrooks257@gmail.com",
+        "website": "https://aerosoft.ky/",
+        "location": "38 seafarers way George Town"
+      },
+      {
+        "id": 479,
+        "company_name": "Mario Phillip",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "1789505990",
+        "email": "timhorton7860@gmail.com",
+        "website": "https://mariophillip.com/",
+        "location": "Massapequa, New York, USA"
+      },
+      {
+        "id": 478,
+        "company_name": "Muhammad Irfan Sultan",
+        "types": [
+          "Design Studio"
+        ],
+        "mobile_number": "923417818785",
+        "email": "irfansultanxwave@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 477,
+        "company_name": "Devloops Software Nepal",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779849088160",
+        "email": "info@devloopssoftware.com",
+        "website": "https://devloopssoftware.com/",
+        "location": "Ekantakuna Road, Lalitpur, Nepal"
+      },
+      {
+        "id": 476,
+        "company_name": "visionary publishers",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "15162060919",
+        "email": "info@visionarypublishers.com",
+        "website": "https://visionarypublishers.com/",
+        "location": "276 5th Ave Rm 704 New York NY 10001"
+      },
+      {
+        "id": 475,
+        "company_name": "JC Economics Tuition",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "6581749548",
+        "email": "jceconomicstuitionsg4@gmail.com",
+        "website": "https://jceconomicstuition.sg/",
+        "location": "Bukit Timah Shopping Centre 170 Upper Bukit Timah Road #B2-01 Singapore 588179"
+      },
+      {
+        "id": 474,
+        "company_name": "Prerana chalaune",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779742943124",
+        "email": "chalauneprena@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 473,
+        "company_name": "Ashim karki",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9779861248853",
+        "email": "ashimkarki550@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 472,
+        "company_name": "engineering assignment help",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "4401603766137",
+        "email": "styenjohn006@gmail.com",
+        "website": "https://engineeringassignmenthelper.co.uk/",
+        "location": "21-23 Nelson St , Norwich , Norfolk , NR2 4DW"
+      },
+      {
+        "id": 471,
+        "company_name": "Taxaccolega Chartered Accountants",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "4402081270728",
+        "email": "ataxaccolega@gmail.com",
+        "website": "https://www.taxaccolega.co.uk/",
+        "location": "Taxaccolega Chartered Accountants, 187a London Road, Croydon, Surrey CR0 2RJ"
+      },
+      {
+        "id": 470,
+        "company_name": "I You Print",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "4402080881200",
+        "email": "iyouprintt@gmail.com",
+        "website": "https://iyouprint.co.uk/",
+        "location": "187a London Rd"
+      },
+      {
+        "id": 469,
+        "company_name": "741 Lawton St., McLean, VA 22101",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "15712417288",
+        "email": "katherinetidman2@gmail.com",
+        "website": "https://neuronovanetwork.com/",
+        "location": "741 Lawton St., McLean, VA 22101"
+      },
+      {
+        "id": 468,
+        "company_name": "LV outlet",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "1510514043",
+        "email": "brentforte205@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 467,
+        "company_name": "Local Seo Company In Bhopal",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "91989832697944",
+        "email": "mangaldip.digitalpiloto@gmail.com",
+        "website": "https://www.digitalpiloto.com",
+        "location": "Bhopal"
+      },
+      {
+        "id": 466,
+        "company_name": "Ecom Buzz",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "919051256832",
+        "email": "inecombuzz@gmail.com",
+        "website": "https://ecombuzz.in/",
+        "location": "P 707 lake town block A, Kolkata, 700089 West Bengal, India"
+      },
+      {
+        "id": 465,
+        "company_name": "Palm Mind Technology",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779851403041",
+        "email": "hr@palmmind.com",
+        "website": "https://palmmind.com/",
+        "location": "Bakhundol Marg , Pulchowk, Lalitpur"
+      },
+      {
+        "id": 464,
+        "company_name": "MAW Group",
+        "types": [
+          "Conglomerate"
+        ],
+        "mobile_number": "9779801905506",
+        "email": "mhpl@mawnepal.com",
+        "website": "https://www.mawhirepurchase.com/",
+        "location": "Teku Road, Tripureshwor, Kathmandu, Nepal"
+      },
+      {
+        "id": 463,
+        "company_name": "Australian Concept",
+        "types": [
+          "Hospitality"
+        ],
+        "mobile_number": "923041112229",
+        "email": "loposok523@idwager.com",
+        "website": "https://acimc.org",
+        "location": "116 Babar Block, New Garden Town, Lahore, 54400, Punjab, Pakistan"
+      },
+      {
+        "id": 462,
+        "company_name": "THERUNTZSEEDS",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "3225050884",
+        "email": "spearsabby6@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "58317 Medhurst Cape"
+      },
+      {
+        "id": 461,
+        "company_name": "DURBANPOISONSEEDS",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "0096062671",
+        "email": "cathynewman45@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "1657 Ondricka Unions"
+      },
+      {
+        "id": 460,
+        "company_name": "THEBIGBUDSEEDS",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "7934361743",
+        "email": "dukefuentes28@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "20799 Lehner Via"
+      },
+      {
+        "id": 459,
+        "company_name": "DissertationProposal",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "447476445264",
+        "email": "me.arielwilson@gmail.com",
+        "website": "https://www.dissertationproposal.co.uk/",
+        "location": "71 Cherry Court SOUTHAMPTON SO53 5PD UK"
+      },
+      {
+        "id": 458,
+        "company_name": "New Jersey Indoor Outdoor Maintenance LLC",
+        "types": [
+          "Public",
+          "Home Services"
+        ],
+        "mobile_number": "17325830378",
+        "email": "hshakeelnawaz111@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 457,
+        "company_name": "THEOGKUSHSEEDS",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9453992459",
+        "email": "antoniojackson3924@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "5020 Nyasia Walk"
+      },
+      {
+        "id": 456,
+        "company_name": "petermolina",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "17703776852",
+        "email": "petermolina1962@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 455,
+        "company_name": "US Hazmat Storage",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "18552816681",
+        "email": "atechdani@gmail.com",
+        "website": "https://ushazmatstorage.com",
+        "location": "355 Industrial Park Dr. Boone, NC"
+      },
+      {
+        "id": 454,
+        "company_name": "THEGELATOSEEDS",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "3236408029",
+        "email": "arisijam12@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "1867 Bayer View"
+      },
+      {
+        "id": 453,
+        "company_name": "Parwaz",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "923008453657",
+        "email": "myparwaz3@gmail.com",
+        "website": "https://myparwaz.com/",
+        "location": "104 Shadman 1, Lahore, Punjab 54000, Pakistan"
+      },
+      {
+        "id": 450,
+        "company_name": "Psychologist",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "611300366614",
+        "email": "jimayer281@etramay.com",
+        "website": "https://thepsychologyhub.com.au/",
+        "location": "5/25 Discovery Drive North Lakes QLD 4509"
+      },
+      {
+        "id": 449,
+        "company_name": "Natural Spirits Nepal",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "9779847688830",
+        "email": "hr@naturalspiritsnepal.com.np",
+        "website": "https://share.google/xeQOTD42Uprv8TX7g",
+        "location": "Handigaun-05, Kathmandu"
+      },
+      {
+        "id": 448,
+        "company_name": "Erasoft Solution",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779851052404",
+        "email": "okhadka@gmail.com",
+        "website": "erasoft.com.np",
+        "location": "Subhidhanagar,Koteshwor,Kathmandu-32,Nepal"
+      },
+      {
+        "id": 447,
+        "company_name": "Aleunsur Auto Relief",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "9743114118",
+        "email": "aleunsurautorelief@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 446,
+        "company_name": "Cedar Gate Technologies",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "977015010060",
+        "email": "nepalhr@cedargate.com",
+        "website": "https://www.cedargate.com/",
+        "location": "Patan, Lalitpur"
+      },
+      {
+        "id": 440,
+        "company_name": "https://genesis-mfg.ae/",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "971569633433",
+        "email": "genesis.mfg95@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 438,
+        "company_name": "Axion Partners Pvt Ltd",
+        "types": [
+          "Law Firm"
+        ],
+        "mobile_number": "9779709090127",
+        "email": "info@lawaxion.com",
+        "website": "https://lawaxion.com/",
+        "location": "1st Floor, World Trade Center, Kathmandu"
+      },
+      {
+        "id": 435,
+        "company_name": "P3 Healthcare Solutions",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "18445573227",
+        "email": "p3healthcaresolutions@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 434,
+        "company_name": "Bnody",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "966556972886",
+        "email": "smdmt412@gmail.com",
+        "website": "https://bnody.com/",
+        "location": "Prince Miteb Bin Abdulaziz, Ar Rabwah, Riyadh"
+      },
+      {
+        "id": 433,
+        "company_name": "Tesla Properties",
+        "types": [
+          "Real estate"
+        ],
+        "mobile_number": "977502779265",
+        "email": "teslaproperties624@gmail.com",
+        "website": "https://teslaproperties.ae/",
+        "location": "I Rise Tower - 21E 01 - 02 Hessa St - Barsha Heights - Dubai UAE"
+      },
+      {
+        "id": 432,
+        "company_name": "Dial Service Centre",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "916358585858",
+        "email": "dialservicecentre8@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 431,
+        "company_name": "Auz Rental Cars",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "610406059448",
+        "email": "auzrentalcars01@gmail.com",
+        "website": "https://www.auzrentalcars.com/",
+        "location": "26 Ben Loman Circuit, Craigieburn VIC"
+      },
+      {
+        "id": 430,
+        "company_name": "Five Star Tourism | Umrah Taxi Services",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "966966551014516",
+        "email": "fivestartourism17@gmail.com",
+        "website": "https://fivestartourism.online/",
+        "location": "6722 Near, Al Hedaya، 3995, Makkah 24242, Al Azizyah, Al Hawiyah, Saudi Arabia"
+      },
+      {
+        "id": 429,
+        "company_name": "matthewdavis",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "118553444872",
+        "email": "matthewdavis4116@gmail.com",
+        "website": "https://www.truedigitizing.com/",
+        "location": "Chicago, IL"
+      },
+      {
+        "id": 428,
+        "company_name": "smmpanelbd",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "8801813343640",
+        "email": "smmpanelbd4@gmail.com",
+        "website": "https://smmpanelbd.com/",
+        "location": "শপ নং : ৩২/৩৩, হনিমুন টাওয়ার , চট্টগ্রাম,  বাংলাদেশ"
+      },
+      {
+        "id": 427,
+        "company_name": "Online Class Help",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "17167081869",
+        "email": "leoarcher001@gmail.com",
+        "website": "https://scholarlyhelp.com/blog/asa-style-paper/",
+        "location": "USA"
+      },
+      {
+        "id": 426,
+        "company_name": "All Exam Help",
+        "types": [
+          "Public",
+          "Education Consultancy"
+        ],
+        "mobile_number": "14086640987",
+        "email": "lisamaren2005@gmail.com",
+        "website": "https://allexamhelp.com",
+        "location": "45 Broad St. New York, NY 10005, USA"
+      },
+      {
+        "id": 425,
+        "company_name": "vidyalive",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "919289114393",
+        "email": "vidyalive212@gmail.com",
+        "website": "https://www.vidyalive.com/",
+        "location": "A-33, Sector 2, Noida, Uttar Pardesh"
+      },
+      {
+        "id": 424,
+        "company_name": "Flutter Flutter App Development Company",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "44223926620",
+        "email": "realjameswilliam58@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 423,
+        "company_name": "Brew Avenue Coffee",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "14807478280",
+        "email": "brewavenuecoffee1@gmail.com",
+        "website": "https://www.brewavenuecoffee.com/",
+        "location": "Phoenix, Arizona, USA"
+      },
+      {
+        "id": 422,
+        "company_name": "THE BARBER'S CAFE",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "92138896964",
+        "email": "thebarberscafe11@gmail.com",
+        "website": "https://thebarberscafe.com/",
+        "location": "Shop # 2, Friends Tower, Block 10, Saeed Ahmed Shaheed Road, Gulistan-e-Johar, Karachi, Pakistan"
+      },
+      {
+        "id": 421,
+        "company_name": "Apex Web Studios",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "16269950398",
+        "email": "info@apexwebstudios.net",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 420,
+        "company_name": "Mallilo and Grossman",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "18665936274",
+        "email": "malliloandgrossman8@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 419,
+        "company_name": "smmgenn",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "113232243566",
+        "email": "smmgen@getnada.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 418,
+        "company_name": "SMMGen",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "113232243566",
+        "email": "smmgen65@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 417,
+        "company_name": "Digitizing Buddy",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "117188732364",
+        "email": "info@digitizingbuddy.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 416,
+        "company_name": "ExploreMore Vacations",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "919999600477",
+        "email": "exploremorevacations2018@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 415,
+        "company_name": "The Publishing Genie",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "18555240134",
+        "email": "mias.charlottes@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 414,
+        "company_name": "FH Constructions",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "19298882971",
+        "email": "fhconstructions6@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 413,
+        "company_name": "Sadaf Interior Design",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "971971585556603",
+        "email": "eavm98k5oz@ibolinva.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 412,
+        "company_name": "akroofing3d",
+        "types": [
+          "Real estate"
+        ],
+        "mobile_number": "16464920756",
+        "email": "akroofingd534@gmail.com",
+        "website": "https://akroofing3d.com/",
+        "location": "666 Hemlock St, Brooklyn, NY 11208, United States"
+      },
+      {
+        "id": 411,
+        "company_name": "BD Online Quran Classes",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "8801749060715",
+        "email": "bdonlinequranclasses654@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 410,
+        "company_name": "Infinity Pool Services Pte Ltd",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "6583019006",
+        "email": "infinitypool667@gmail.com",
+        "website": "https://www.infinitypool.com.sg/",
+        "location": "11D St Michael's Rd,Singapore 327958"
+      },
+      {
+        "id": 409,
+        "company_name": "Eazy Research",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "16035925149",
+        "email": "christinejohn999@gmail.com",
+        "website": "https://eazyresearch.com/",
+        "location": "73 Av/Bell Bl, Queens"
+      },
+      {
+        "id": 408,
+        "company_name": "Dial Service Centre",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "916358585858",
+        "email": "dialserviceoffpage01@gmail.com",
+        "website": "https://dialservicecentre.com/",
+        "location": "Office No B, Royal Enclave Bldg, 303, Parsi Pancha"
+      },
+      {
+        "id": 407,
+        "company_name": "Custom Patches Uk",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "123456789",
+        "email": "ekmain9@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 406,
+        "company_name": "Aira Spa and Wellness AirDrie",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "14039802662",
+        "email": "airaspaairdrie111@gmail.com",
+        "website": "https://airaspa.ca/",
+        "location": "107 1 St NW, Airdrie, AB T4B 0R3, Canada"
+      },
+      {
+        "id": 405,
+        "company_name": "NATUREGRAN",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "923148160794",
+        "email": "naturegransmc@gmail.com",
+        "website": "https://naturegran.com/",
+        "location": "B-98 Mehran Town , Sector 6-F KIA Korangi, Karachi"
+      },
+      {
+        "id": 393,
+        "company_name": "Nepal Niwas Pvt Ltd",
+        "types": [
+          "Real estate"
+        ],
+        "mobile_number": "9779860168661",
+        "email": "hr@therootlevel.com",
+        "website": "https://www.nepalniwas.com/",
+        "location": "Budhanilkantha-08, Golfutar Chowk, Kathmandu, Nepal"
+      },
+      {
+        "id": 391,
+        "company_name": "LGH Consulting Inc",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "17148089170",
+        "email": "claraolson551@gmail.com",
+        "website": "https://lghconsultinginc.com/homeowners-association/",
+        "location": "585 S State College Blvd"
+      },
+      {
+        "id": 390,
+        "company_name": "When The Siren Stops",
+        "types": [
+          "Public",
+          "Private"
+        ],
+        "mobile_number": "15174949121",
+        "email": "johnyirku098@gmail.com",
+        "website": "https://whenthesirenstops.com/",
+        "location": "8507 29 Mile Rd Albion, Mi 49224"
+      },
+      {
+        "id": 389,
+        "company_name": "Online Course Helpers",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "13236843012",
+        "email": "guanaco50886@aminating.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 388,
+        "company_name": "SPINORSHUTUPUS",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "3279047289",
+        "email": "klipsnaes@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "33716 Oceane Radial"
+      },
+      {
+        "id": 387,
+        "company_name": "Dissertation Helper Germany",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "441515289103",
+        "email": "info@dissertationhelper.de",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 386,
+        "company_name": "Horizon contractors group",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "14694948388",
+        "email": "Horizoncontractorsgroupllc@gmail.com",
+        "website": "https://horizoncgroup.com/services/",
+        "location": "4570 westgrove Dr Addison tx 75001"
+      },
+      {
+        "id": 385,
+        "company_name": "TOPOZICEV",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9087875182",
+        "email": "armeniadiscord832@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "88629 Thiel Viaduct"
+      },
+      {
+        "id": 384,
+        "company_name": "Story Book Publishers",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "19177195073",
+        "email": "info@storybookpublishers.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 383,
+        "company_name": "Aira Spa and Wellness AirDrie",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "14039802662",
+        "email": "airaspaairdrie11@rediffmail.com",
+        "website": "https://www.anna-spa.ca",
+        "location": "107 1 St NW, Airdrie, AB T4B 0R3, Canada"
+      },
+      {
+        "id": 382,
+        "company_name": "The Online Class Help",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "113236843013",
+        "email": "snow.john6578@gmail.com",
+        "website": "https://theonlineclasshelp.com/marketing-class-help",
+        "location": "1875 E Palmer-Wasilla Hwy"
+      },
+      {
+        "id": 381,
+        "company_name": "msihealthsolutions",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "15166561111",
+        "email": "fenor33798@ishense.com",
+        "website": "https://msihealthsolutions.com/",
+        "location": "100 Tec Street Unit F Hicksville, NY 11801"
+      },
+      {
+        "id": 380,
+        "company_name": "Pvc Patches",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "19704808155",
+        "email": "fixosa2949@ekuali.com",
+        "website": "https://pvcpatches.us/",
+        "location": "4382 Larwin Ave, , Cypress, CA, United States, California"
+      },
+      {
+        "id": 379,
+        "company_name": "Chenille patches",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "19704808155",
+        "email": "hetoxok197@kwifa.com",
+        "website": "https://chenillepatches.us/",
+        "location": "United States"
+      },
+      {
+        "id": 378,
+        "company_name": "Grand Master Jacket",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "14699266572",
+        "email": "frankleo0323@gmail.com",
+        "website": "https://grandmasterjacket.com/product/american-bruiser-womens-crop-jacket/",
+        "location": "Texas United States"
+      },
+      {
+        "id": 377,
+        "company_name": "fvbdfh",
+        "types": [
+          "Public",
+          "Restaurant & Cafe",
+          "non-profit"
+        ],
+        "mobile_number": "9779841925554",
+        "email": "nepal9841921783@gmail.com",
+        "website": "https://as.me",
+        "location": "asd"
+      },
+      {
+        "id": 376,
+        "company_name": "Vera Vachetta",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "4242248578",
+        "email": "batipog129@noidem.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 375,
+        "company_name": "Prabhu Helicopter Ltd",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "9779803536238",
+        "email": "info@prabhuhelicopter.com",
+        "website": null,
+        "location": "Kamaladi-28, Kathmandu, Nepal, Ward-7 Pokhara Airport, Pokhara, Kaski, Nepal"
+      },
+      {
+        "id": 374,
+        "company_name": "NAPASEEDS",
+        "types": [
+          "non-profit"
+        ],
+        "mobile_number": "8903959427",
+        "email": "rfvjk31@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "977 Roma Estate"
+      },
+      {
+        "id": 373,
+        "company_name": "Khola Pakistan",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "447414848196",
+        "email": "linkbuilderbyv@gmail.com",
+        "website": "https://www.khola.pk/",
+        "location": "Plot # F 93 Sindh Industrial Trading Estate karachi Pakistan"
+      },
+      {
+        "id": 372,
+        "company_name": "New Celebrity Jackets",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "17868698396",
+        "email": "emmahart0011@gmail.com",
+        "website": "https://newcelebrityjackets.com/",
+        "location": "840 Broadway, NY , United States"
+      },
+      {
+        "id": 371,
+        "company_name": "seo",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "97744457567",
+        "email": "essentials5544@gmail.com",
+        "website": "https://essentialshoodiegermany.com",
+        "location": "lahore435"
+      },
+      {
+        "id": 368,
+        "company_name": "Dhoj Bahadur Rokaya",
+        "types": [
+          "Information Technology",
+          "Design Studio",
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "9779868604663",
+        "email": "bahadurdhoj1@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 367,
+        "company_name": "Cybervibers",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "13466062834",
+        "email": "cybervibers25@gmail.com",
+        "website": "https://cybervibers.com/",
+        "location": "8802 Star Gaze CT. Richmond, TX 77407"
+      },
+      {
+        "id": 366,
+        "company_name": "Oh My Geez",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "447414848196",
+        "email": "mathoney936@gmail.com",
+        "website": "http://jacketsplay.com/",
+        "location": "California"
+      },
+      {
+        "id": 365,
+        "company_name": "Hamro Academy",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "977980000000",
+        "email": "Sabin.hamroacademy@gmail.com",
+        "website": "https://www.hamroacademy.com/",
+        "location": "Sankhamul,Kathmandu"
+      },
+      {
+        "id": 363,
+        "company_name": "marriage media in dhaka",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "8801711168277",
+        "email": "sm.workszone@gmail.com",
+        "website": "https://www.settlemarriage.com/",
+        "location": "Bangladesh"
+      },
+      {
+        "id": 362,
+        "company_name": "POKEREYE",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "8505111423",
+        "email": "armeniadiscord12@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "3236 Conrad Tunnel"
+      },
+      {
+        "id": 361,
+        "company_name": "Best Economics Tuition",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "6584751289",
+        "email": "besteconomicstuitionsg@outlook.com",
+        "website": "https://besteconomicstuition.com.sg/",
+        "location": "Bukit Timah Shopping Centre"
+      },
+      {
+        "id": 360,
+        "company_name": "In Home Care",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "448081606988",
+        "email": "jackbenny168@gmail.com",
+        "website": "https://www.in-homecare.co.uk/",
+        "location": "1 Havant Road, Horndean, Hampshire, PO8 0DB"
+      },
+      {
+        "id": 359,
+        "company_name": "Village Vets – Village Veterinary Services",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "4401516012787",
+        "email": "hello@villagevip.vet",
+        "website": "https://villagevip.vet/",
+        "location": "1 Chapel Lane, Formby, L37 4DL"
+      },
+      {
+        "id": 358,
+        "company_name": "VISHYAT TECHNOLOGIES",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "919354616193",
+        "email": "navjotkaurart@gmail.com",
+        "website": "http://www.vishyat.com/website-designing-services-in-gurgaon/",
+        "location": "Palam Vihar, Gurgaon, 122017"
+      },
+      {
+        "id": 357,
+        "company_name": "Earn Scape",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "12435970044",
+        "email": "earnscape6@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 356,
+        "company_name": "Am kumar Magar",
+        "types": [
+          "Information Technology",
+          "Hospitality"
+        ],
+        "mobile_number": "9779819576416",
+        "email": "amadmgr405@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 355,
+        "company_name": "Economics Tuition",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "97774123658",
+        "email": "economicstuitionsg@outlook.com",
+        "website": "https://economicstuition.sg",
+        "location": "Bukit Timah Shopping Centre"
+      },
+      {
+        "id": 354,
+        "company_name": "Digital marketing",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9775586917",
+        "email": "tekkhatri904@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 352,
+        "company_name": "Louis Vuitton Clearence outlet",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "15136563558",
+        "email": "eimie8341@gmail.com",
+        "website": "https://lvclearance.com/",
+        "location": "4775 Silverdale Rd North Olmsted, OH 44070, USA"
+      },
+      {
+        "id": 351,
+        "company_name": "BC Generators",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "12505546661",
+        "email": "bcgenerator162@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 350,
+        "company_name": "bp-mobille-rv-inspection-service",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "14439124025",
+        "email": "bpmobileservices.seo@gmail.com",
+        "website": "https://bpmobilervinspections.com/",
+        "location": "1300 Hanover Road, Gettysburg, PA 17325, United States"
+      },
+      {
+        "id": 349,
+        "company_name": "AIFARMBOTS",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "8751171188",
+        "email": "selmerh3@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "284 Maegan Hill"
+      },
+      {
+        "id": 348,
+        "company_name": "Annexorien Technology",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "919718372220",
+        "email": "annexorientechnology@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 347,
+        "company_name": "JJ Liquidations",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "162769540",
+        "email": "jjliquidations7@gmail.com",
+        "website": "https://jjliquidations.com/",
+        "location": "500 Terry Francine Street, San Francisco, CA 94158"
+      },
+      {
+        "id": 346,
+        "company_name": "Prime Leather US",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "14242248578",
+        "email": "vevow88804@mvpmedix.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 345,
+        "company_name": "Spruce Box",
+        "types": [
+          "ISP"
+        ],
+        "mobile_number": "15035308205",
+        "email": "joelookwood@gmail.com",
+        "website": "https://sprucebox.com/",
+        "location": "12530 SW Hall Blvd, Tigard, OR 97223"
+      },
+      {
+        "id": 344,
+        "company_name": "KEEPITSPIN",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "9473868090",
+        "email": "mrtom2t8@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "10328 Hyatt Path"
+      },
+      {
+        "id": 343,
+        "company_name": "NEED4SEEDS",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "8731457938",
+        "email": "lavmard56@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "353 Ziemann Green"
+      },
+      {
+        "id": 342,
+        "company_name": "jjtransformers",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "13462769540",
+        "email": "jjtransformers0@gmail.com",
+        "website": "https://www.jjtransformers.co/",
+        "location": "500 Terry Francine Street, San Francisco, CA 94158"
+      },
+      {
+        "id": 341,
+        "company_name": "Pellepelle Jackets",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "14132135672",
+        "email": "info@pellepellejackets.co",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 340,
+        "company_name": "Ranked Designs",
+        "types": [
+          "Design Studio"
+        ],
+        "mobile_number": "923215571774",
+        "email": "info@rankeddsigns.com",
+        "website": "https://rankeddesigns.com/",
+        "location": "F4, Abul Hassan isphahani Road, Block 4, Commissioner Society, Karachi"
+      },
+      {
+        "id": 339,
+        "company_name": "Tops and Bottoms USA",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "17734823900",
+        "email": "mariakristen205@gmail.com",
+        "website": "https://www.topsandbottomsusa.com/collections/sprayground/",
+        "location": "3960 W. Madison St. Chicago IL 60624"
+      },
+      {
+        "id": 338,
+        "company_name": "Krishna shah",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "9779806353210",
+        "email": "krishnashaha627@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 337,
+        "company_name": "Teckcod",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "18573250963",
+        "email": "benstokes420bc@gmail.com",
+        "website": "https://teckcod.com/",
+        "location": "4940 Independence Ave, Pocatello, Idaho,83201"
+      },
+      {
+        "id": 336,
+        "company_name": "example book",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "13070239755",
+        "email": "semma3372@gmail.com",
+        "website": "example.com",
+        "location": "810"
+      },
+      {
+        "id": 335,
+        "company_name": "Craeon Co",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "6584751478",
+        "email": "craeonco@gmail.com",
+        "website": "https://www.craeon.co/",
+        "location": "craeonco@gmail.com"
+      },
+      {
+        "id": 334,
+        "company_name": "Kaacib Company",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "9203041110203",
+        "email": "ashhadansari580@gmail.com",
+        "website": "https://kaacib.com/",
+        "location": "Office # 705, Caesar's Tower, Shahrah-e-Faisal Rd, Karachi Cantonment Fowler Lines, Karachi, Karachi City, Sindh, Karachi, Pakistan"
+      },
+      {
+        "id": 333,
+        "company_name": "martinnext",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "15774545714",
+        "email": "higginse014@gmail.com",
+        "website": "https://www.mamafransbbq.com",
+        "location": "united state"
+      },
+      {
+        "id": 332,
+        "company_name": "gucci replica",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "11510514043",
+        "email": "fakelv82@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 331,
+        "company_name": "jdesigno",
+        "types": [
+          "Design Studio"
+        ],
+        "mobile_number": "971585903890",
+        "email": "ks6159509@gmail.com",
+        "website": "https://jdesigno.com/",
+        "location": "One By Omniyat Building, 1803, Business Bay"
+      },
+      {
+        "id": 330,
+        "company_name": "codesuite",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "1234567890",
+        "email": "smithjohnjj106@gmail.com",
+        "website": "https://codesuite.org/services/application-re-engineering-services/",
+        "location": "United State"
+      },
+      {
+        "id": 329,
+        "company_name": "The Rheostat",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "919896092926",
+        "email": "therheostat11@gmail.com",
+        "website": "https://www.therheostat.com/",
+        "location": "P.O. Box No. 42, Osaw Complex, Jagadhri Road, Ambala Cantt-133001 HR (INDIA)"
+      },
+      {
+        "id": 328,
+        "company_name": "Assignment Bro UK",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "44770090059",
+        "email": "evierose553@gmail.com",
+        "website": "https://assignmentbro.co.uk/blog/",
+        "location": "1 Poultry London, England EC2R 8EJ"
+      },
+      {
+        "id": 327,
+        "company_name": "fake gucci bag",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "11510514043",
+        "email": "eva223667@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 326,
+        "company_name": "Nourish and Care Foundation",
+        "types": [
+          "non-profit"
+        ],
+        "mobile_number": "977123456789",
+        "email": "iramjhan46@gmail.com",
+        "website": "https://nourishandcarefoundation.com",
+        "location": "India"
+      },
+      {
+        "id": 325,
+        "company_name": "Hitman Digital Marketing Agency",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "918527341388",
+        "email": "rathoresangeeta103@gmail.com",
+        "website": "https://hitmandigital.in",
+        "location": "India, New Delhi"
+      },
+      {
+        "id": 324,
+        "company_name": "Madonna Homes",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "9118008337890",
+        "email": "madonnahomes11@outlook.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 323,
+        "company_name": "Hatstore",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "12262259909",
+        "email": "williamjojo902@gmail.com",
+        "website": "google.com",
+        "location": "Street 13 Pape Avenue, toronto, Canada"
+      },
+      {
+        "id": 322,
+        "company_name": "https://ukessaywritingservice.co.uk/",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "447520644421",
+        "email": "ladyqueen0612@gmail.com",
+        "website": "https://ukessaywritingservice.co.uk/",
+        "location": "71-75 Shelton Street Covent Garden, London, UK"
+      },
+      {
+        "id": 321,
+        "company_name": "JC Econs Tuition",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "6584751456",
+        "email": "jceconstuition.com@gmail.com",
+        "website": "https://www.jceconstuition.com/",
+        "location": "Bukit Timah Shopping Centre 170 Upper Bukit Timah Road #B2-01 Singapore 588179"
+      },
+      {
+        "id": 320,
+        "company_name": "Skill Shikshaya",
+        "types": [
+          "Training"
+        ],
+        "mobile_number": "9779868730959",
+        "email": "training@skillshikshya.com",
+        "website": "https://skillshikshya.com/",
+        "location": "Sankhamul, Kathmandu, Nepal"
+      },
+      {
+        "id": 319,
+        "company_name": "Premium Research Expert",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "447520665129",
+        "email": "premiumresearchexpert1@gmail.com",
+        "website": "https://premiumresearchexpert.co.uk/",
+        "location": "LONDON EC1Y 8SY UNITED KINGDOM"
+      },
+      {
+        "id": 318,
+        "company_name": "Kaizen Business Consultants",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9779840126292",
+        "email": "caprabhav@gmail.com",
+        "website": "https://www.linkedin.com/company/kaizen-businessconsultants/",
+        "location": "Kathmandu"
+      },
+      {
+        "id": 317,
+        "company_name": "Dynamic Technosoft",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779851163652",
+        "email": "pritisha.giri@dynamic.net.np",
+        "website": "https://dynamic.net.np/",
+        "location": "Shankhamul, Kathmandu"
+      },
+      {
+        "id": 316,
+        "company_name": "Ace My Assignment",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "442033322218",
+        "email": "santann.fernandes@gmail.com",
+        "website": "https://acemyassignment.co.uk/",
+        "location": "Shelton Street Covent Garden, London, UK"
+      },
+      {
+        "id": 315,
+        "company_name": "Queens Digital",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "9779746476794",
+        "email": "digitalintern.queens@gmail.com",
+        "website": "https://queensdigitalagency.com/",
+        "location": "Shantinagar"
+      },
+      {
+        "id": 314,
+        "company_name": "Ayush Gurung",
+        "types": [
+          "Information Technology",
+          "ISP"
+        ],
+        "mobile_number": "9779766885181",
+        "email": "yushgurung22@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 313,
+        "company_name": "Affordable Assignments",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "447465750135",
+        "email": "armstrongharriet884@gmail.com",
+        "website": "https://affordableassignments.co.uk/do-my-assignment",
+        "location": "128 City Rd, London"
+      },
+      {
+        "id": 312,
+        "company_name": "Heena Creation",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "917428667882",
+        "email": "heenacreation.com@gmail.com",
+        "website": "www.heenacreation.co.in",
+        "location": "G-1306, rajnagar residency, rajnagar extension, Ghaziabad 201017"
+      },
+      {
+        "id": 311,
+        "company_name": "fictionontheedge",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "14437637940",
+        "email": "fictionnontheedge@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 310,
+        "company_name": "Thesourdieselseeds",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "5751802566",
+        "email": "discordarmenia90@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "9928 Frederik Rapid"
+      },
+      {
+        "id": 309,
+        "company_name": "Resume Services Canada",
+        "types": [
+          "Trading"
+        ],
+        "mobile_number": "13433040254",
+        "email": "albertkohimm@gmail.com",
+        "website": "https://resumeservicescanada.com/",
+        "location": "381 Kent St, Ottawa, ON K2P 2A8"
+      },
+      {
+        "id": 308,
+        "company_name": "Hitman Digital",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "918527341388",
+        "email": "sahilgulia095@gmail.com",
+        "website": "https://hitmandigital.in",
+        "location": "India"
+      },
+      {
+        "id": 307,
+        "company_name": "Eminence Ways",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779802316478",
+        "email": "hr@eminenceways.com",
+        "website": "https://eminenceways.com/",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": 306,
+        "company_name": "Thebluedreamseeds",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9113193185",
+        "email": "brdunj65@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "448 O'Keefe Plaza"
+      },
+      {
+        "id": 305,
+        "company_name": "Assignment Help Pakistan",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "9203313999517",
+        "email": "yaminakulmi@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 304,
+        "company_name": "Defenders Gurgaon",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "917217890558",
+        "email": "defendersgurgaon11@gmail.com",
+        "website": "https://thedefenders.co.in/",
+        "location": "103B ,First Floor , AVA Court, Near Park Hospital, Sector -47, Gurugram, Haryana"
+      },
+      {
+        "id": 303,
+        "company_name": "Dr Workshop",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "9779803210090",
+        "email": "aikyamsgroup@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 302,
+        "company_name": "Narsi Vihar City",
+        "types": [
+          "Real estate"
+        ],
+        "mobile_number": "919991888956",
+        "email": "citynarsivihar@gmail.com",
+        "website": "https://www.narsivihar.com/mathura-price-guide-for-200-gaj-plots-latest-rates-and-investment-ideas-2025/",
+        "location": "Mathura, Uttar Pradesh, India"
+      },
+      {
+        "id": 301,
+        "company_name": "White Ribbon",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "6584752069",
+        "email": "whiteribbonsg@gmail.com",
+        "website": "http://whiteribbon.sg/",
+        "location": "52 Blair Road, Singapore 169377"
+      },
+      {
+        "id": 300,
+        "company_name": "Innoenhance",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "1",
+        "email": "innoenhance01@gmail.com",
+        "website": "https://innoenhance.com/",
+        "location": "Midland Business Hub, 2 Dominick St, Mullingar, Co. Westmeath, N91 KD21"
+      },
+      {
+        "id": 299,
+        "company_name": "Rajdarbar Spaces Hisar",
+        "types": [
+          "Real estate"
+        ],
+        "mobile_number": "919991888752",
+        "email": "hisarrajdarbarspaces@gmail.com",
+        "website": "https://www.rajdarbarspaceshisar.com/deciding-between-100-gaj-and-200-gaj-properties-in-hisar-which-should-you-pick/",
+        "location": "Sector 24, 7 KM Stone, Hisar-Delhi Bypass Rd"
+      },
+      {
+        "id": 298,
+        "company_name": "Curate9",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "1",
+        "email": "curate00@gmail.com",
+        "website": "https://curate9.com/",
+        "location": "3509 N Belt Line Rd, Irving, TX 75062, USA, Irving, TX, United States, Texas"
+      },
+      {
+        "id": 297,
+        "company_name": "Maven Psychiatry",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "18326616350",
+        "email": "psychiatrymaven@gmail.com",
+        "website": "https://mavenpsychiatry.com/",
+        "location": "12930 Dairy Ashford Rd , Sugarland TX 77478"
+      },
+      {
+        "id": 296,
+        "company_name": "Rajdarbar Spaces Karnal",
+        "types": [
+          "Real estate"
+        ],
+        "mobile_number": "919991888463",
+        "email": "rajdarbarspaceskarnal@gmail.com",
+        "website": "https://www.rajdarbarspaceskarnal.com/budget-friendly-first-time-buyer-options-for-house-for-sale-in-karnal-haryana/",
+        "location": "Sec- 35 Karnal"
+      },
+      {
+        "id": 295,
+        "company_name": "Firewood NI",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "35307938801732",
+        "email": "firewoodni07@gmail.com",
+        "website": "https://firewoodni.com/",
+        "location": "Glasgort Road, Aghadowey,Coleraine BT514AF"
+      },
+      {
+        "id": 294,
+        "company_name": "Avancera Solution",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "19842958063",
+        "email": "avancerasolution28@gmail.com",
+        "website": "https://avancerasolution.com/",
+        "location": "3509 N Belt Line Rd, Irving, TX 75062, USA"
+      },
+      {
+        "id": 293,
+        "company_name": "Mindnasium",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "15162161073",
+        "email": "mindnasium15@gmail.com",
+        "website": "https://mindnasium.com/",
+        "location": "939 Hempstead Turnpike, Franklin Square, NY 11010, United States"
+      },
+      {
+        "id": 292,
+        "company_name": "Santosh Pigment",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "919599568529",
+        "email": "pigmentsantosh@gmail.com",
+        "website": "https://santoshpigment.com/leadalloys.html",
+        "location": "HE-05-06-07 Gopalpura Industrial Area, Sikandrabad, Bulandshahr, Uttar Pradesh, 203205"
+      },
+      {
+        "id": 291,
+        "company_name": "Triple Promise",
+        "types": [
+          "Training"
+        ],
+        "mobile_number": "17186351597",
+        "email": "triplepromise1@gmail.com",
+        "website": "https://triplepromise.com/",
+        "location": "155 Bay Ridge Avenue Brooklyn , NY 11220"
+      },
+      {
+        "id": 290,
+        "company_name": "Bishwokhabar Media",
+        "types": [
+          "Advertisement"
+        ],
+        "mobile_number": "9779851050614",
+        "email": "bishwokhabar2010@gmail.com",
+        "website": "https://bishwokhabar.com/",
+        "location": "Anamnagar, Kathmandu"
+      },
+      {
+        "id": 289,
+        "company_name": "rachelmidev",
+        "types": [
+          "Home Services"
+        ],
+        "mobile_number": "13322720602",
+        "email": "justincarrillo592@gmail.com",
+        "website": "https://dictanote.co/n/1084156/",
+        "location": "4HGR+X2X, Calle 26, La Habana, Cuba"
+      },
+      {
+        "id": 282,
+        "company_name": "Nippon Medical Center",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9779766451331",
+        "email": "support@nippon-medical.com",
+        "website": "https://nippon-medical.com/",
+        "location": "Machhapokhari"
+      },
+      {
+        "id": 281,
+        "company_name": "Dolpo Security Lab",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9779823936343",
+        "email": "hr@dolposecuritylab.com",
+        "website": "https://dolposecuritylab.com/",
+        "location": "Buddhanagar, Kathmandu"
+      },
+      {
+        "id": 280,
+        "company_name": "Connect Devs",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "1616327782",
+        "email": "walkermatthew168@gmail.com",
+        "website": "https://www.connectdevs.com/",
+        "location": "123 Tech Avenue,San Francisco, CA 94107"
+      },
+      {
+        "id": 279,
+        "company_name": "Online Exam Helper",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "14052360272",
+        "email": "glennphilips2164@gmail.com",
+        "website": "https://onlineexamhelper.co.uk/",
+        "location": "5105 Ballard Ave NW , Seattle , Washington ,98107"
+      },
+      {
+        "id": 278,
+        "company_name": "iSoftware Lab",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "917999432794",
+        "email": "talent@isoftwarelab.studio",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 276,
+        "company_name": "johntera",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "13467381001",
+        "email": "johntera821@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 275,
+        "company_name": "Bella Williams",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "117076948197",
+        "email": "natsiingram@gmail.com",
+        "website": "https://thebellawilliams.com/",
+        "location": "1827 Arbor Ave Santa Rosa CA. 95404"
+      },
+      {
+        "id": 274,
+        "company_name": "Vladimir Ingerman",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "18325205710",
+        "email": "vladimiringerman1@gmail.com",
+        "website": "https://ingermanlife.com/",
+        "location": "Sugar Land, TX"
+      },
+      {
+        "id": 273,
+        "company_name": "1stclasscomputerservices",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "444401483511551",
+        "email": "1stclasscomputerltd@gmail.com",
+        "website": "https://1stclasscomputerservices.co.uk/",
+        "location": "Mulberry Cottage, Goose Rye Road, Worplesdon, Guildford, United Kingdom  GU3 3RJ"
+      },
+      {
+        "id": 272,
+        "company_name": "American Class Doers",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "14563217890",
+        "email": "loganpierce.st@gmail.com",
+        "website": "https://americanclassdoers.com/online-exam-help",
+        "location": "Ashland VA 23005 Virginia, United States"
+      },
+      {
+        "id": 271,
+        "company_name": "Writers SA",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "923362157865",
+        "email": "juliaa.writer@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 270,
+        "company_name": "Ascent InfoSec",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "12018550833",
+        "email": "ascentinfomanagedservices@gmail.com",
+        "website": "https://www.ascentinfosec.com/services/risk-compliance/",
+        "location": "United States"
+      },
+      {
+        "id": 269,
+        "company_name": "Prime Security Services Limited",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "441217777756",
+        "email": "primejames377@gmail.com",
+        "website": "https://primess.co.uk/",
+        "location": "Kings Court 17 School Road Hall Green Birmingham, B28 8JG"
+      },
+      {
+        "id": 268,
+        "company_name": "Resume Faster",
+        "types": [
+          "Recruitment"
+        ],
+        "mobile_number": "14079979903",
+        "email": "michaelherron154@gmail.com",
+        "website": "https://resumefaster.com/",
+        "location": "Dallas"
+      },
+      {
+        "id": 267,
+        "company_name": "Tekrevol Company",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "118003629239",
+        "email": "markwood6043@gmail.com",
+        "website": "https://www.tekrevol.com/mobile-app-development-company-dubai",
+        "location": "Jewellery & Gemplex 2 - Level No 4 - 1901 First Al Khail St - Jumeirah Lake Towers - Dubai - United Arab Emirates"
+      },
+      {
+        "id": 266,
+        "company_name": "Wizz Cars Guildford",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "4401483505505",
+        "email": "wizzcarsguildford@gmail.com",
+        "website": "https://wizzcars.co.uk/",
+        "location": "96 High St, Guildford, Surrey GU1 3HEUnited Kingdom"
+      },
+      {
+        "id": 265,
+        "company_name": "Cognitive Therapy And Behavioural Specialist",
+        "types": [
+          "Hospitality"
+        ],
+        "mobile_number": "447944310811",
+        "email": "cognitivetherapycbt@hotmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 264,
+        "company_name": "Digital Marketing Agency",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "18003629239",
+        "email": "charm12033@gmail.com",
+        "website": "https://www.tekrevol.com/digital-marketing-agency",
+        "location": "4201 Main St Suite # 200-122, Houston, TX 77002"
+      },
+      {
+        "id": 263,
+        "company_name": "GP Tuition",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "6584751102",
+        "email": "gptuitioncomsg1@gmail.com",
+        "website": "https://www.gptuition.com.sg/",
+        "location": "Bukit Timah Shopping Centre #B1-42"
+      },
+      {
+        "id": 262,
+        "company_name": "Viking Republic",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "14563217890",
+        "email": "smithryann510@gmail.com",
+        "website": "https://vikingrepublic.com/product-category/family-passport-holder/",
+        "location": "Ashland VA 23005 Virginia, United States"
+      },
+      {
+        "id": 261,
+        "company_name": "FinAcc Solution",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9779841182759",
+        "email": "sudan2019@gmail.com",
+        "website": "https://www.facebook.com/finacc.solution?rdid=eVpjeeC5TzCdjaep&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16MKLozAYM%2F#",
+        "location": "New Baneshwor"
+      },
+      {
+        "id": 260,
+        "company_name": "United State",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "19714870165",
+        "email": "lucif7410@gmail.com",
+        "website": "https://novaprosigns.com/",
+        "location": "10168 NE SISKIYOU ST, OR (Oregon)"
+      },
+      {
+        "id": 259,
+        "company_name": "Dreamland Bedz",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "447445304145",
+        "email": "webteam@dreamlandbedz.co.uk",
+        "website": "https://dreamlandbedz.co.uk/",
+        "location": "499 Bradford Road, Batley, WF17 8LL"
+      },
+      {
+        "id": 258,
+        "company_name": "Luluat Al Noor",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "971506770000",
+        "email": "clairecalvert73@gmail.com",
+        "website": "https://luluatalnoor.com/",
+        "location": "P.O Box 82977, Ras al Khaima, Bar Dubai, Ajman UAE"
+      },
+      {
+        "id": 257,
+        "company_name": "Stitch Patches",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "19704808155",
+        "email": "jamesoliver0341@gmail.com",
+        "website": "https://veravachetta.com/",
+        "location": "117 South Lexington Street Ste 100 Harrisonville, MO 64701"
+      },
+      {
+        "id": 256,
+        "company_name": "Prime Leather Nz",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "6492424549",
+        "email": "gpt58786@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 255,
+        "company_name": "Professional CV Ireland",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "35315314056",
+        "email": "emmamichael912@gmail.com",
+        "website": "https://www.professionalcv.ie/",
+        "location": "Wellmount Village Office, Dublin Rd,  Athlone, Co. Westmeath, N37 PD82, Ireland"
+      },
+      {
+        "id": 254,
+        "company_name": "Green Orange LLC",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "13862608278",
+        "email": "scarlettlily336@gmail.com",
+        "website": "https://greenorangellc.com/",
+        "location": "13 BOULDER ST BASIN, MT 59631"
+      },
+      {
+        "id": 253,
+        "company_name": "Rajdarbar Spaces Agra",
+        "types": [
+          "Real estate"
+        ],
+        "mobile_number": "919991888626",
+        "email": "agrarajdarbarspaces@gmail.com",
+        "website": "https://www.rajdarbarspacesagra.com/",
+        "location": "Rajdarbar Spaces Shastripuram, Agra, Uttar Pradesh 283105"
+      },
+      {
+        "id": 252,
+        "company_name": "the film jackets",
+        "types": [
+          "non-profit"
+        ],
+        "mobile_number": "977989868585",
+        "email": "tomerobert942@gmail.com",
+        "website": "https://thefilmjacket.com/",
+        "location": "stb4657gjnbjh"
+      },
+      {
+        "id": 251,
+        "company_name": "Pay Someone To",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "07843724392",
+        "email": "rickyb.liitles70@gmail.com",
+        "website": "https://paysomeoneto.com/",
+        "location": "83 Fraserburgh Rd"
+      },
+      {
+        "id": 250,
+        "company_name": "Thejackhererseeds",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "0614951765",
+        "email": "loritaellisonu1997@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "538 Annette Meadow"
+      },
+      {
+        "id": 249,
+        "company_name": "Northernlightsseeds",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "2727966973",
+        "email": "wallskrista37@gmail.com",
+        "website": "https://www.vritjobs.com",
+        "location": "6408 Isabelle Via"
+      },
+      {
+        "id": 248,
+        "company_name": "hairy animal",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "4402081913034",
+        "email": "umme.hadiashaikh@gmail.com",
+        "website": "https://www.hairyanimal.co.uk",
+        "location": "UNIT 206 Bizspace Business Centre, 4-6 Wadsworth Road, Greenford, UB6 7JJ"
+      },
+      {
+        "id": 247,
+        "company_name": "yogeshseoking67",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "917351412332",
+        "email": "yogeshseoking67@gmail.com",
+        "website": "https://yogeshseoking.com/",
+        "location": "opp. saraswati vihar, chandarpur road, saharanpur"
+      },
+      {
+        "id": 246,
+        "company_name": "Nascseeds",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "8326573387",
+        "email": "onutuchiva@gmail.com",
+        "website": "https://www.vritjobs.com",
+        "location": "7743 Kenton Hollow"
+      },
+      {
+        "id": 245,
+        "company_name": "My Assignment Services Qatar",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "971527118036",
+        "email": "info@myassignmentservices.qa",
+        "website": "https://www.f6s.com/salman-al-saud",
+        "location": "Al Wakalat St 28, Salwa Ind Area Doha Qatar"
+      },
+      {
+        "id": 244,
+        "company_name": "Budsnseeds",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "0337452694",
+        "email": "ebanoshisterio@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "12652 Leffler Ridges"
+      },
+      {
+        "id": 243,
+        "company_name": "The Dissertation Help",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "4408458621286",
+        "email": "johnpeterjohn6002@gmail.com",
+        "website": "https://thedissertationhelp.com/",
+        "location": "16 Rutland Square, 16 Rutland Square"
+      },
+      {
+        "id": 242,
+        "company_name": "Assignment Help UK",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "447386235014",
+        "email": "dennyhowlett5@gmail.com",
+        "website": "https://assignmenthelpuk.co.uk/cim-assignment-help",
+        "location": "Birmingham, United Kingdom"
+      },
+      {
+        "id": 241,
+        "company_name": "Spinorshutup",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "5359170957",
+        "email": "sasahasusulim@gmail.com",
+        "website": "https://www.vritjobs.com",
+        "location": "3627 Mante Camp"
+      },
+      {
+        "id": 240,
+        "company_name": "Dharma Adventures",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "9779801084733",
+        "email": "info@dharmadmc.com",
+        "website": "https://dharmaadventures.com/",
+        "location": "Tangal Marg, Naxal, Kathmandu"
+      },
+      {
+        "id": 239,
+        "company_name": "Mobile App Development Company in Toronto",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "18884914088",
+        "email": "charlee12033@gmail.com",
+        "website": "https://www.tekrevol.com/ca/app-development-toronto",
+        "location": "Yonge & St. Clair, 2 St Clair Ave W 18th Fl, Toronto, ON M4V 1L5, Canada"
+      },
+      {
+        "id": 238,
+        "company_name": "Whitewidowseeds",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "97765475122",
+        "email": "gamovodas@gmail.com",
+        "website": "https://vritjobs.com",
+        "location": "253 Brekke Port"
+      },
+      {
+        "id": 237,
+        "company_name": "Journalist Finder By Get Featured",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "919764888850",
+        "email": "journalistfinder@getfeatured.org",
+        "website": "https://media.getfeatured.org/",
+        "location": "525 Miltown Road, North Brunswick, New Jersey- 08902"
+      },
+      {
+        "id": 236,
+        "company_name": "Hire Exam Ace",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "14099953265",
+        "email": "heyinar363@exitings.com",
+        "website": "https://hireexamace.com/do-my-online-exam",
+        "location": "6650 Prutzman Rd, Beaumont, TX 77706 United State"
+      },
+      {
+        "id": 235,
+        "company_name": "Mens Dress Shirt",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "923116732689",
+        "email": "zulqurnainaslam99@gmail.com",
+        "website": "https://tailormade-shirts.com/shop/business-shirts/pin-collar-dress-shirt/",
+        "location": "USA: HEAD OFFICE 4525 Chamberlain Dr Des Moines,IA,50312,USA"
+      },
+      {
+        "id": 234,
+        "company_name": "B2B Hospitality",
+        "types": [
+          "Hospitality"
+        ],
+        "mobile_number": "9779802373878",
+        "email": "b2bhospitalityhr@gmail.com",
+        "website": "https://www.b2bhospitality.com.np/",
+        "location": "Nursery road, Lazimpat/  Jhamsikhel, Lalitpur"
+      },
+      {
+        "id": 233,
+        "company_name": "Tales 2 B Told",
+        "types": [
+          "E-commerce"
+        ],
+        "mobile_number": "14197339593",
+        "email": "chuckknueve@gmail.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 232,
+        "company_name": "Nova Doors",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "9779802301402",
+        "email": "rubeenaprajapati@gmail.com",
+        "website": "https://www.facebook.com/p/Nova-Doors-Pvt-Ltd-61557374035429/",
+        "location": "Jadibuti, Kathmandu"
+      },
+      {
+        "id": 231,
+        "company_name": "Assignment World",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "61480020208",
+        "email": "lucymartin1416@gmail.com",
+        "website": "https://www.assignment.world/",
+        "location": "Sydney, Australia"
+      },
+      {
+        "id": 230,
+        "company_name": "TBD",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779842586688",
+        "email": "recruit@sharklasers.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 229,
+        "company_name": "Konnect Solutions Pvt Ltd",
+        "types": [
+          "ISP"
+        ],
+        "mobile_number": "9779801064423",
+        "email": "sabin.shrestha@konnectsolution.com.np",
+        "website": "www.konnectsolution.com.np",
+        "location": "dhobighat, lalitpur"
+      },
+      {
+        "id": 215,
+        "company_name": "DigitalIn",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "9779851011762",
+        "email": "connect@digitalin.com.np",
+        "website": "http://www.digitalin.com.np/",
+        "location": "Pattipa Marg Uttar Baghdol, Lalitpur, Nepal"
+      },
+      {
+        "id": 211,
+        "company_name": "Atulya Steels",
+        "types": [
+          "Manufacturing"
+        ],
+        "mobile_number": "9779802097276",
+        "email": "atulyasteels@gmail.com",
+        "website": "www.atulyasteels.com",
+        "location": "kathmandu"
+      },
+      {
+        "id": 210,
+        "company_name": "Sharon Williams",
+        "types": [
+          "Digital Marketing Agency"
+        ],
+        "mobile_number": "13178846959",
+        "email": "sharonwilliams9224@gmail.com",
+        "website": "http://www.sharonwilliams.net/",
+        "location": "Indianapolis, Indiana"
+      },
+      {
+        "id": 205,
+        "company_name": "RV Group",
+        "types": [
+          "Real estate"
+        ],
+        "mobile_number": "9779709083870",
+        "email": "hr@rvgroupnepal.com",
+        "website": "https://www.rvgroupnepal.com/",
+        "location": "Bhagwati Marg, Naxal, Kathmandu"
+      },
+      {
+        "id": 198,
+        "company_name": "GLM Consultancy",
+        "types": [
+          "Tours and Travels"
+        ],
+        "mobile_number": "97144202497",
+        "email": "brainwatson969@gmail.com",
+        "website": "https://glm-consultancy.com/",
+        "location": "404 Fortune tower, cluster C, Jumeirah Lake Towers"
+      },
+      {
+        "id": 187,
+        "company_name": "Tech Kraft",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779709083877",
+        "email": "techkraft@vritjobs.com",
+        "website": "https://techkraftinc.com/",
+        "location": "Kathmandu"
+      },
+      {
+        "id": 186,
+        "company_name": "sumX",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779815385241",
+        "email": "prabin.thapa@karkiconsulting.com",
+        "website": "https://sumx.ai/",
+        "location": "Kathmandu"
+      },
+      {
+        "id": 183,
+        "company_name": "Coading Mountain",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "977015916093",
+        "email": "coadingmountain@vritjobs.com",
+        "website": "https://www.codingmountain.com/",
+        "location": "Lalitpur"
+      },
+      {
+        "id": 182,
+        "company_name": "Makura Creations",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779841969727",
+        "email": "makuracreations@vritjobs.com",
+        "website": "https://makuracreations.com/",
+        "location": "Pulchowk, Lalitpur"
+      },
+      {
+        "id": 174,
+        "company_name": "Al Nafi International College",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "97716476800258",
+        "email": "zeeshan.basheer@alnafi.com",
+        "website": "https://alnafi.com/",
+        "location": "167-169 Great Portland Street 5th Floor London W1W 5PF"
+      },
+      {
+        "id": 173,
+        "company_name": "Colleges Nepal",
+        "types": [
+          "Training",
+          "Education Consultancy"
+        ],
+        "mobile_number": "9779818503133",
+        "email": "palistha.prabidhi@gmail.com",
+        "website": "https://www.collegesnepal.com/",
+        "location": "Putalisadak,Kathmandu"
+      },
+      {
+        "id": 139,
+        "company_name": "Kalyan Jewellers",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "8592902277",
+        "email": "kalyanjewellersseo@gmail.com",
+        "website": "https://www.kalyanjewellers.net/Metals/Gold/Earrings.php",
+        "location": "Thrissur,kerala"
+      },
+      {
+        "id": 95,
+        "company_name": "Mccarty Sparks Inc",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "16678195874",
+        "email": "fepovov@mailinator.com",
+        "website": "https://www.lotupivaba.co.uk",
+        "location": "Et molestiae autem m"
+      },
+      {
+        "id": 92,
+        "company_name": "Rutledge and Miranda Traders",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "11024824799",
+        "email": "rejosofe@mailinator.com",
+        "website": "https://www.codedynaqizezef.com",
+        "location": "Et velit irure corr"
+      },
+      {
+        "id": 91,
+        "company_name": "Branch Austin Trading",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "16327775597",
+        "email": "wodat@mailinator.com",
+        "website": "https://www.seqyxuqyhyg.me",
+        "location": "Et deleniti excepteu"
+      },
+      {
+        "id": 90,
+        "company_name": "Bennett Murray Trading",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "19772494766",
+        "email": "kaxod@mailinator.com",
+        "website": "https://www.kixag.ca",
+        "location": "Et aut ut sequi labo"
+      },
+      {
+        "id": 86,
+        "company_name": "Black Box Technologies",
+        "types": [
+          "Information Technology"
+        ],
+        "mobile_number": "9779841464089",
+        "email": "manish@bboxtech.com.np",
+        "website": "https://www.linkedin.com/company/blackbox-technology/",
+        "location": "lailitpur"
+      },
+      {
+        "id": 84,
+        "company_name": "Allen Jarvis Co",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "15222543912",
+        "email": "pywadykaw@mailinator.com",
+        "website": "https://www.wycetobycular.co.uk",
+        "location": "Eius sed culpa assu"
+      },
+      {
+        "id": 83,
+        "company_name": "Schmidt and Hobbs Trading",
+        "types": [
+          "Public"
+        ],
+        "mobile_number": "12618753593",
+        "email": "mariwageb@mailinator.com",
+        "website": "https://www.tewijinaky.co.uk",
+        "location": "Voluptates ea conseq"
+      },
+      {
+        "id": 75,
+        "company_name": "Hotel Beauty",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "9779765226389",
+        "email": "prawesh@vrittechnologies.com",
+        "website": null,
+        "location": null
+      },
+      {
+        "id": 33,
+        "company_name": "AE Global Consultancy",
+        "types": [
+          "Education Consultancy"
+        ],
+        "mobile_number": "61403692297",
+        "email": "k.lamichhane@aeglobal.net",
+        "website": "https://www.aenepal.net/",
+        "location": "Kathmandu, Nepal"
+      },
+      {
+        "id": 30,
+        "company_name": "Masta Kala Crafts",
+        "types": [
+          "Private"
+        ],
+        "mobile_number": "9779820115240",
+        "email": "mastakala.hr@gmail.com",
+        "website": "https://mastakala.com/",
+        "location": "Chamati, Kathmandu"
+      },
+      {
+        "id": 8,
+        "company_name": "H. Two O. Lounge Bar Pvt. Ltd",
+        "types": [
+          "Restaurant & Cafe"
+        ],
+        "mobile_number": "9779860261928",
+        "email": "Hrh20cafe@gmail.com",
+        "website": "https://vritjobs.com/",
+        "location": "Thamel, Kathmandu"
+      }
+    ]
+  }

@@ -1,0 +1,283 @@
+{
+  "companies": [
+    {
+      "company_name": "Plan International",
+      "category": [
+        26
+      ],
+      "mobile_number": "",
+      "email": "planinternational40@ramrojob.com",
+      "websitelink": null,
+      "location": "-"
+    },
+    {
+      "company_name": "PATHAO Nepal Pvt. Ltd.",
+      "category": [
+        57
+      ],
+      "mobile_number": "9860506941",
+      "email": "merina.tandukar@pathao.com",
+      "websitelink": null,
+      "location": null
+    },
+    {
+      "company_name": "Verisk Nepal",
+      "category": [
+        10
+      ],
+      "mobile_number": "4425600",
+      "email": "hr-verisknepal@verisk.com",
+      "websitelink": "http://www.verisknepal.com.np",
+      "location": "Hattisar, Kathmandu, Nepal"
+    },
+    {
+      "company_name": "Vianet Communications",
+      "category": [
+        60
+      ],
+      "mobile_number": "9801046410",
+      "email": "kapilrawal29@gmail.com",
+      "websitelink": "http://www.vianet.com.np",
+      "location": "Chabahil,ktm"
+    },
+    {
+      "company_name": "Securities Board of Nepal",
+      "category": [
+        17
+      ],
+      "mobile_number": "",
+      "email": "securitiesboardofnepal36@ramrojob.com",
+      "websitelink": "http://www.sebon.gov.np/",
+      "location": "Jawalakhel, Lalitpur, Nepal  PO Box: 9031"
+    },
+    {
+      "company_name": "CDS and Clearing Ltd",
+      "category": [
+        57
+      ],
+      "mobile_number": null,
+      "email": "cdsandclearingltd27@ramrojob.com",
+      "websitelink": "http://www.cdscnp.com/",
+      "location": "Share Markets Commercial Complex Putalisadak, Kathmandu, Nepal"
+    },
+    {
+      "company_name": "Nepal Electricity Authority (NEA)",
+      "category": [
+        17
+      ],
+      "mobile_number": null,
+      "email": "nepalelectricityauthoritynea49@ramrojob.com",
+      "websitelink": "http://www.nea.org.np/",
+      "location": "Central Office, Durbarmarg Kathmandu Nepal Post Box No. 10020"
+    },
+    {
+      "company_name": "Kathmandu Medical College Public Limited",
+      "category": [
+        12
+      ],
+      "mobile_number": null,
+      "email": null,
+      "websitelink": "https://www.kmc.edu.np/",
+      "location": null
+    },
+    {
+      "company_name": "United Mission to Nepal",
+      "category": [
+        26
+      ],
+      "mobile_number": "",
+      "email": "unitedmissiontonepal45@ramrojob.com",
+      "websitelink": "http://www.umn.org.np/",
+      "location": "PO Box 126 Kathmandu, Nepal"
+    },
+    {
+      "company_name": "Save the Children",
+      "category": [
+        26
+      ],
+      "mobile_number": null,
+      "email": "savethechildren49@ramrojob.com",
+      "websitelink": null,
+      "location": "-"
+    },
+    {
+      "company_name": "Jagdamba Hire Purchase Ltd.",
+      "category": [
+        67
+      ],
+      "mobile_number": "9802333036",
+      "email": "vacancy@jagdambacredit.com",
+      "websitelink": null,
+      "location": null
+    },
+    {
+      "company_name": "PHASE Nepal",
+      "category": [
+        26
+      ],
+      "mobile_number": "",
+      "email": "phasenepal20@ramrojob.com",
+      "websitelink": "http://phasenepal.org/",
+      "location": "PHASE Nepal Dadhikot-9, Bhaktapur, Nepal  Postal: Post Box No. 12888,  Kathmandu, Nepal"
+    },
+    {
+      "company_name": "World Food Programme",
+      "category": [
+        26
+      ],
+      "mobile_number": "",
+      "email": "worldfoodprogramme29@ramrojob.com",
+      "websitelink": "http://www.wfp.org",
+      "location": "Kathmandu"
+    },
+    {
+      "company_name": "Nepal Digital Payments Company Ltd. (NDPC)",
+      "category": [
+        57
+      ],
+      "mobile_number": "014117100",
+      "email": "press@ndpc.com.np",
+      "websitelink": "https://ndpc.com.np/",
+      "location": null
+    },
+    {
+      "company_name": "Raj Trading Concern",
+      "category": [
+        49
+      ],
+      "mobile_number": "01-4493132",
+      "email": "rajtradingktm@gmail.com",
+      "websitelink": "http://www.rajtrading.com.np",
+      "location": "Mitra Park, Chabahil, Kathmandu, Nepal."
+    },
+    {
+      "company_name": "FHI 360",
+      "category": [
+        26
+      ],
+      "mobile_number": null,
+      "email": "fhi36038@ramrojob.com",
+      "websitelink": null,
+      "location": "Kathmandu"
+    },
+    {
+      "company_name": "Helvetas",
+      "category": [],
+      "mobile_number": "9841248534",
+      "email": "smritiparajuli660@gmail.com",
+      "websitelink": null,
+      "location": null
+    },
+    {
+      "company_name": "Narayani Development Bank Limited",
+      "category": [
+        3
+      ],
+      "mobile_number": "97756560608",
+      "email": "Info@ndbl.com.np",
+      "websitelink": "https://ndbl.com.np/",
+      "location": "Bharatpur"
+    },
+    {
+      "company_name": "UN Women",
+      "category": [
+        26
+      ],
+      "mobile_number": null,
+      "email": "unwomen43@ramrojob.com",
+      "websitelink": "http://un.org.np/unwomen",
+      "location": "Nepal"
+    },
+    {
+      "company_name": "Nepal Agricultural Research Council (NARC)",
+      "category": [
+        17
+      ],
+      "mobile_number": "",
+      "email": "nepalagriculturalresearchcouncilnarc31@ramrojob.com",
+      "websitelink": "http://narc.gov.np/",
+      "location": "Kathmandu"
+    },
+    {
+      "company_name": "National Cooperative Bank Limited",
+      "category": [
+        3
+      ],
+      "mobile_number": "",
+      "email": "nationalcooperativebanklimited30@ramrojob.com",
+      "websitelink": "http://coopbank.com.np/",
+      "location": "Head Office, Kupandol, Lalitpur"
+    },
+    {
+      "company_name": "Public Service Commission",
+      "category": [
+        17
+      ],
+      "mobile_number": "",
+      "email": "publicservicecommission48@ramrojob.com",
+      "websitelink": "http://psc.gov.np/",
+      "location": "Anamnagar Kathmandu"
+    },
+    {
+      "company_name": "Nepal Engineering Council",
+      "category": [
+        58
+      ],
+      "mobile_number": "014520655",
+      "email": "info@nec.gov.np",
+      "websitelink": "https://nec.gov.np/",
+      "location": null
+    },
+    {
+      "company_name": "Nepal Police",
+      "category": [
+        17
+      ],
+      "mobile_number": null,
+      "email": "nepalpolice21@ramrojob.com",
+      "websitelink": "http://nepalpolice.gov.np/",
+      "location": "Nepal"
+    },
+    {
+      "company_name": "Nepal Army",
+      "category": [
+        17
+      ],
+      "mobile_number": null,
+      "email": "nepalarmy21@ramrojob.com",
+      "websitelink": "http://www.nepalarmy.mil.np",
+      "location": "Nepal"
+    },
+    {
+      "company_name": "Nirdhan Utthan Laghubitta Bittiya Sanstha Limited",
+      "category": [
+        3
+      ],
+      "mobile_number": "9858423071",
+      "email": "joshidhurbaraj@nirdhan.com",
+      "websitelink": null,
+      "location": null
+    },
+    {
+      "company_name": "ICIMOD",
+      "category": [
+        26
+      ],
+      "mobile_number": "",
+      "email": "icimod23@ramrojob.com",
+      "websitelink": "http://www.icimod.org/",
+      "location": "Kathmandu"
+    },
+    {
+      "company_name": "Easy Car Removal",
+      "category": [
+        2
+      ],
+      "mobile_number": "0423843020",
+      "email": "easycarremoval123@gmail.com",
+      "websitelink": null,
+      "location": null
+    }
+  ],
+  "totalCompanies": 28
+}
