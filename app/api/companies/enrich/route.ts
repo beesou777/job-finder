@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { batchEnrichCompanies, enrichCompany, ExternalCompanyData } from "@/app/services/CompanyEnrichmentService";
+import { batchEnrichCompanies, enrichCompany } from "@/app/services/CompanyEnrichmentService";
+import { ExternalCompanyData } from "@/app/services/CompanyMatchingService";
 import { ExternalSource } from "@/entities/CompanyEnrichment";
 
 export const dynamic = "force-dynamic";

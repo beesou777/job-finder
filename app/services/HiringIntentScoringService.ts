@@ -167,7 +167,10 @@ export async function updateIntentScore(
   if (!enrichment.company) {
     const { CanonicalCompany } = await import("@/entities/CanonicalCompany");
     const companyRepository = dataSource.getRepository(CanonicalCompany);
-    enrichment.company = await companyRepository.findOne({ where: { id: enrichment.companyId } });
+    const company = await companyRepository.findOne({ where: { id: enrichment.companyId } });
+    if (company) {
+      enrichment.company = company;
+    }
   }
   
   if (!enrichment.company) {

@@ -7,8 +7,9 @@
  */
 
 import { getDataSource } from "@/lib/db";
-import { CompanyEnrichment } from "@/entities/CompanyEnrichment";
+import { CompanyEnrichment, HiringIntentLevel } from "@/entities/CompanyEnrichment";
 import { updateIntentScore } from "./HiringIntentScoringService";
+import { In } from "typeorm";
 
 export interface CareerPageCheckResult {
   enrichmentId: string;
@@ -149,21 +150,16 @@ export async function monitorHighIntentCareerPages(): Promise<{
   const enrichments = await enrichmentRepository.find({
     where: {
       hasCareerPage: true,
-      intentLevel: "HIGH" || "VERY_HIGH", // TypeORM IN operator
+      intentLevel: In([HiringIntentLevel.HIGH, HiringIntentLevel.VERY_HIGH]),
     },
     relations: ["company"],
   });
-  
-  // Filter manually since TypeORM enum comparison can be tricky
-  const highIntentEnrichments = enrichments.filter(
-    (e) => e.intentLevel === "HIGH" || e.intentLevel === "VERY_HIGH"
-  );
   
   const results: CareerPageCheckResult[] = [];
   let withChanges = 0;
   let errors = 0;
   
-  for (const enrichment of highIntentEnrichments) {
+  for (const enrichment of enrichments) {
     try {
       const result = await checkCareerPage(enrichment);
       results.push(result);

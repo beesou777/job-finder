@@ -71,6 +71,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/string-similarity": "^4.0.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
     "tailwindcss-animate": "^1.0.7",

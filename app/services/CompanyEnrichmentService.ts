@@ -65,7 +65,7 @@ export async function enrichCompany(
       trustScore: 1.0, // Default trust score
       isNewLead: matchResult.shouldCreateNew,
       lastVerifiedAt: new Date(),
-    });
+    } as any) as unknown as CompanyEnrichment;
     
     enrichment = await enrichmentRepository.save(enrichment);
   }

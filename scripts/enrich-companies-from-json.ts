@@ -11,7 +11,8 @@
 import { config } from "dotenv";
 import { readFileSync } from "fs";
 import { join } from "path";
-import { batchEnrichCompanies, ExternalCompanyData } from "../app/services/CompanyEnrichmentService";
+import { batchEnrichCompanies } from "../app/services/CompanyEnrichmentService";
+import { ExternalCompanyData } from "../app/services/CompanyMatchingService";
 import { ExternalSource } from "../entities/CompanyEnrichment";
 
 config();
