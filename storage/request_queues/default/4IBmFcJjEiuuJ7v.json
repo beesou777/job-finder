@@ -1,0 +1,9 @@
+{
+	"id": "4IBmFcJjEiuuJ7v",
+	"json": "{\"id\":\"4IBmFcJjEiuuJ7v\",\"url\":\"https://www.linkedin.com/jobs/search?keywords=Software%20Engineer&location=Nepal&f_TPR=r604800\",\"uniqueKey\":\"https://www.linkedin.com/jobs/search?f_TPR=r604800&keywords=Software+Engineer&location=Nepal\",\"method\":\"GET\",\"noRetry\":false,\"retryCount\":0,\"errorMessages\":[],\"headers\":{},\"userData\":{\"label\":\"SEARCH\"}}",
+	"method": "GET",
+	"orderNo": 1767589657182,
+	"retryCount": 0,
+	"uniqueKey": "https://www.linkedin.com/jobs/search?f_TPR=r604800&keywords=Software+Engineer&location=Nepal",
+	"url": "https://www.linkedin.com/jobs/search?keywords=Software%20Engineer&location=Nepal&f_TPR=r604800"
+}
