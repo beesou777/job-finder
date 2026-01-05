@@ -10,7 +10,15 @@ export class HiringIntentScoreHistory {
   @Index()
   enrichmentId: string;
 
-  @ManyToOne("CompanyEnrichment", "scoreHistory", { onDelete: "CASCADE" })
+  @ManyToOne(
+    () => {
+      // Dynamic import to avoid circular dependency
+      const { CompanyEnrichment } = require("./CompanyEnrichment");
+      return CompanyEnrichment;
+    },
+    (enrichment: any) => enrichment.scoreHistory,
+    { onDelete: "CASCADE" }
+  )
   @JoinColumn({ name: "enrichmentId" })
   enrichment: any;
 

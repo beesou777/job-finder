@@ -119,8 +119,16 @@ export class CompanyEnrichment {
   @Index()
   isPitchTarget: boolean; // Flagged for sales outreach
 
-  // History tracking (using forward reference to avoid circular dependency)
-  @OneToMany("HiringIntentScoreHistory", "enrichment", { cascade: true })
+  // History tracking (using lazy function to avoid circular dependency)
+  @OneToMany(
+    () => {
+      // Dynamic import to avoid circular dependency
+      const { HiringIntentScoreHistory } = require("./HiringIntentScoreHistory");
+      return HiringIntentScoreHistory;
+    },
+    (history: any) => history.enrichment,
+    { cascade: true }
+  )
   scoreHistory: any[];
 
   @CreateDateColumn()
