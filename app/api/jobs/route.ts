@@ -108,14 +108,13 @@ export async function GET(request: NextRequest) {
     }
     
     // Get jobs with pagination
-    // Note: Don't use .select() with array here as it conflicts with addSelect
     const jobsEntities = await query
       .skip(offset)
       .take(limit)
       .getMany();
     
     // Map entities to the expected format
-    const jobs = jobsEntities.map((job) => ({
+    let jobs = jobsEntities.map((job) => ({
       id: job.id,
       title: job.title,
       company: job.company,

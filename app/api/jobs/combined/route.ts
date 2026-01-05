@@ -90,13 +90,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Execute jobs query and count in parallel
-    // Add computed column for sorting (internsathi first)
     const [totalQuery, jobsEntities] = await Promise.all([
       jobsQuery.clone().getCount(),
       jobsQuery
-        .addSelect("CASE WHEN job.source = 'internsathi' THEN 0 ELSE 1 END", "source_priority")
-        .orderBy("source_priority", "ASC")
-        .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
+        .orderBy("job.postedAt", "DESC", "NULLS LAST")
         .addOrderBy("job.createdAt", "DESC")
         .skip(offset)
         .take(limit)
@@ -104,7 +101,7 @@ export async function GET(request: NextRequest) {
     ]);
 
     const total = totalQuery;
-    const jobs = jobsEntities.map((job) => ({
+    let jobs = jobsEntities.map((job) => ({
       id: job.id,
       title: job.title,
       company: job.company,
@@ -123,6 +120,29 @@ export async function GET(request: NextRequest) {
         slug: job.category.slug,
       } : null,
     }));
+    
+    // Sort: InternSathi first, then by postedAt, then by createdAt
+    jobs.sort((a, b) => {
+      const aIsInternsathi = a.source === "internsathi" ? 0 : 1;
+      const bIsInternsathi = b.source === "internsathi" ? 0 : 1;
+      
+      // First sort by source (internsathi first)
+      if (aIsInternsathi !== bIsInternsathi) {
+        return aIsInternsathi - bIsInternsathi;
+      }
+      
+      // Then by postedAt (newest first)
+      const aPostedAt = a.postedAt ? new Date(a.postedAt).getTime() : 0;
+      const bPostedAt = b.postedAt ? new Date(b.postedAt).getTime() : 0;
+      if (bPostedAt !== aPostedAt) {
+        return bPostedAt - aPostedAt;
+      }
+      
+      // Finally by createdAt (newest first)
+      const aCreatedAt = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const bCreatedAt = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return bCreatedAt - aCreatedAt;
+    });
 
     // Fetch categories and filters in parallel only if needed
     const [categories, filters] = await Promise.all([

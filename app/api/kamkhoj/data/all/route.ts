@@ -40,15 +40,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Execute query and get all jobs
-    // Add computed column for sorting (internsathi first)
     const jobsEntities = await query
-      .where("job.source != :source", { source: "internsathi" })
-      .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
+      .orderBy("job.postedAt", "DESC", "NULLS LAST")
       .addOrderBy("job.createdAt", "DESC")
       .getMany();
 
     // Map entities to the expected format
-    const jobs = jobsEntities.map((job) => ({
+    let jobs = jobsEntities.map((job) => ({
       id: job.id,
       title: job.title,
       company: job.company,
@@ -67,6 +65,29 @@ export async function GET(request: NextRequest) {
         slug: job.category.slug,
       } : null,
     }));
+    
+    // Sort: InternSathi first, then by postedAt, then by createdAt
+    jobs.sort((a, b) => {
+      const aIsInternsathi = a.source === "internsathi" ? 0 : 1;
+      const bIsInternsathi = b.source === "internsathi" ? 0 : 1;
+      
+      // First sort by source (internsathi first)
+      if (aIsInternsathi !== bIsInternsathi) {
+        return aIsInternsathi - bIsInternsathi;
+      }
+      
+      // Then by postedAt (newest first)
+      const aPostedAt = a.postedAt ? new Date(a.postedAt).getTime() : 0;
+      const bPostedAt = b.postedAt ? new Date(b.postedAt).getTime() : 0;
+      if (bPostedAt !== aPostedAt) {
+        return bPostedAt - aPostedAt;
+      }
+      
+      // Finally by createdAt (newest first)
+      const aCreatedAt = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const bCreatedAt = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return bCreatedAt - aCreatedAt;
+    });
 
     return NextResponse.json({
       success: true,
