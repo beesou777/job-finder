@@ -17,6 +17,7 @@
     "scrape:jobsdynamics": "tsx scripts/run-jobsdynamics-scraper.ts",
     "scrape:kumarijob": "tsx scripts/run-kumarijob-scraper.ts",
     "scrape:merorojgari": "tsx scripts/run-merorojgari-scraper.ts",
+    "scrape:vocalpanda": "tsx scripts/run-vocalpanda-scraper.ts",
     "fix:jobssniper-types": "tsx scripts/fix-jobssniper-types.ts",
     "migrate-categories": "tsx scripts/migrate-categories.ts",
     "migrate-jobtype": "tsx scripts/migrate-jobtype-and-defaults.ts",

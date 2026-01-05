@@ -29,6 +29,8 @@ import { scrapeJobsDynamicsList } from "./listPages/jobsdynamics";
 import { scrapeJobsDynamicsDetail } from "./detailPages/jobsdynamics";
 import { scrapeMerorojgariList } from "./listPages/merorojgari";
 import { scrapeMerorojgariDetail } from "./detailPages/merorojgari";
+import { scrapeVocalPandaList } from "./listPages/vocalpanda";
+import { scrapeVocalPandaDetail } from "./detailPages/vocalpanda";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -178,6 +180,15 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     detailScraper: scrapeMerorojgariDetail,
     listingUrls: ["https://merorojgari.com/?feed=job_feed&job_types=fresher%2Cfull-time%2Cinternship%2Cpart-time&paged=1"], // RSS feed
     maxPages: 50, // Will fetch all pages automatically via RSS
+    maxJobs: 500,
+  },
+  {
+    baseUrl: "https://vocalpanda.com",
+    source: "vocalpanda",
+    listScraper: scrapeVocalPandaList,
+    detailScraper: scrapeVocalPandaDetail,
+    listingUrls: ["https://vocalpanda.com"], // API endpoint is used directly
+    maxPages: 50, // Will fetch all pages automatically via API
     maxJobs: 500,
   },
   // Note: sajilojob.com and internnepal.com domains not found
