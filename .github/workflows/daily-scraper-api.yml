@@ -9,19 +9,22 @@ jobs:
   run-scraper:
     runs-on: ubuntu-latest
     steps:
-      - name: Call scraper endpoint
-        run: |
-          echo "⚡ Hitting the scraper endpoint..."
-          STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
-            -X POST "https://kamkhoj.eventeir.ai/api/scrape/run")
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-          echo "📡 Status Code: $STATUS"
-          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 300 ]; then
-            echo "✅ Scraper ran successfully!"
-          else
-            echo "❌ Something flopped. Status: $STATUS"
-            exit 1
-          fi
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run scraper
+        run: yarn scrape
+        env:
+          NODE_ENV: production
 
       - name: Create issue if failed
         if: failure()
