@@ -1,5 +1,4 @@
 import { AnalyticsOverview } from "@/components/admin/AnalyticsOverview";
-import { InsightsDecisionPanel } from "@/components/admin/InsightsDecisionPanel";
 import { JobGrowthChart } from "@/components/admin/Charts/JobGrowthChart";
 import { SourceDistributionChart } from "@/components/admin/Charts/SourceDistributionChart";
 import { CategoryChart } from "@/components/admin/Charts/CategoryChart";
@@ -66,10 +65,6 @@ export function ExecutiveOverview({
       </div>
 
       <AnalyticsOverview data={analyticsData?.overview} isLoading={isLoading} />
-
-      <div className="pt-2 pb-6">
-        <InsightsDecisionPanel />
-      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <JobGrowthChart data={analyticsData?.growthTrends} />

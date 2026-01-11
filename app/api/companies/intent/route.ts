@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
     const hasContact = searchParams.get("hasContact") === "true";
     const isPitchTarget = searchParams.get("isPitchTarget") === "true";
     const hasCareerPage = searchParams.get("hasCareerPage") === "true";
+    const search = searchParams.get("search") || null; // Company name search
     const limit = parseInt(searchParams.get("limit") || "50");
     const offset = parseInt(searchParams.get("offset") || "0");
     const sortBy = searchParams.get("sortBy") || "intentScore"; // intentScore, jobsLast7Days, jobsLast30Days
@@ -53,6 +54,10 @@ export async function GET(request: NextRequest) {
     
     if (hasCareerPage) {
       query = query.andWhere("enrichment.hasCareerPage = :hasCareerPage", { hasCareerPage: true });
+    }
+    
+    if (search) {
+      query = query.andWhere("company.name ILIKE :search", { search: `%${search}%` });
     }
     
     // Sort

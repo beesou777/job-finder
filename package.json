@@ -19,6 +19,7 @@
     "scrape:merorojgari": "tsx scripts/run-merorojgari-scraper.ts",
     "scrape:vocalpanda": "tsx scripts/run-vocalpanda-scraper.ts",
     "scrape:internepal": "tsx scripts/run-internepal-scraper.ts",
+    "scrape:froxjob": "tsx scripts/run-froxjob-scraper.ts",
     "fix:jobssniper-types": "tsx scripts/fix-jobssniper-types.ts",
     "migrate-categories": "tsx scripts/migrate-categories.ts",
     "migrate-jobtype": "tsx scripts/migrate-jobtype-and-defaults.ts",

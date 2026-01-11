@@ -17,23 +17,6 @@ export function SourcesView({ analyticsData, handleScrape }: SourcesViewProps) {
 
   return (
     <div className="space-y-6">
-       {/* Error/Edge Case Alerts */}
-       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Alert variant="destructive" className="bg-red-50 text-red-900 border-red-100">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle className="text-xs font-bold">Pipeline Degradation</AlertTitle>
-                <AlertDescription className="text-[10px]">
-                    Source 'Jobejee' experienced 15% partial failure in last 24h. Manual review recommended.
-                </AlertDescription>
-            </Alert>
-            <Alert className="bg-amber-50 text-amber-900 border-amber-100">
-                <RefreshCw className="h-4 w-4 text-amber-600" />
-                <AlertTitle className="text-xs font-bold">Data Incomplete</AlertTitle>
-                <AlertDescription className="text-[10px]">
-                    Scraper 'MeroJob' reported 200 items, but only 140 were successfully mapped.
-                </AlertDescription>
-            </Alert>
-       </div>
 
        <div>
         <div className="flex items-center justify-between">

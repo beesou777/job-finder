@@ -41,6 +41,7 @@ export function CompanyEnrichmentView() {
     minScore: "",
     hasContact: false,
     isPitchTarget: false,
+    search: "", // Company name search
   });
   const [leaderboardType, setLeaderboardType] = useState<"intent" | "jobs7d" | "jobs30d" | "contacts">("intent");
 
@@ -57,6 +58,7 @@ export function CompanyEnrichmentView() {
       if (filter.minScore) params.append("minScore", filter.minScore);
       if (filter.hasContact) params.append("hasContact", "true");
       if (filter.isPitchTarget) params.append("isPitchTarget", "true");
+      if (filter.search) params.append("search", filter.search);
       params.append("limit", "50");
       params.append("sortBy", "intentScore");
       params.append("sortOrder", "DESC");
@@ -96,14 +98,15 @@ export function CompanyEnrichmentView() {
     }
   };
 
-  const handleExport = async (type: string) => {
+  const handleExport = async (type: string, format: "csv" | "json" = "csv") => {
     try {
-      const res = await fetch(`/api/companies/export?type=${type}`);
+      const res = await fetch(`/api/companies/export?type=${type}&format=${format}`);
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `companies-${type}-${new Date().toISOString().split("T")[0]}.csv`;
+      const extension = format === "json" ? "json" : "csv";
+      a.download = `companies-${type}-${new Date().toISOString().split("T")[0]}.${extension}`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -148,6 +151,14 @@ export function CompanyEnrichmentView() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={() => handleExport("contacts", "json")}
+            className="gap-2"
+          >
+            <Download className="h-4 w-4" />
+            Export JSON
+          </Button>
           <Button
             variant="outline"
             onClick={() => handleExport("high-intent")}
@@ -228,7 +239,20 @@ export function CompanyEnrichmentView() {
           <CardTitle>Filters</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="md:col-span-2">
+              <label className="text-sm font-medium mb-2 block">Search Company Name</label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search by company name..."
+                  value={filter.search}
+                  onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+                  className="pl-10"
+                />
+              </div>
+            </div>
             <div>
               <label className="text-sm font-medium mb-2 block">Intent Level</label>
               <select
@@ -252,7 +276,7 @@ export function CompanyEnrichmentView() {
                 onChange={(e) => setFilter({ ...filter, minScore: e.target.value })}
               />
             </div>
-            <div className="flex items-end">
+            <div className="flex flex-col gap-2 justify-end">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -261,8 +285,6 @@ export function CompanyEnrichmentView() {
                 />
                 <span className="text-sm font-medium">Has Contact Info</span>
               </label>
-            </div>
-            <div className="flex items-end">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -324,17 +346,46 @@ export function CompanyEnrichmentView() {
                           <span className="font-medium">Domain:</span>
                           <span className="text-muted-foreground">{company.domain || "N/A"}</span>
                         </div>
-                        {company.email && (
-                          <div className="flex items-center gap-2 text-sm">
-                            <Mail className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-muted-foreground">{company.email}</span>
-                          </div>
-                        )}
                         {company.phoneNumber && (
                           <div className="flex items-center gap-2 text-sm">
-                            <Phone className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-muted-foreground">{company.phoneNumber}</span>
+                            <Phone className="h-4 w-4 text-blue-600" />
+                            <span className="text-muted-foreground font-medium">{company.phoneNumber}</span>
                           </div>
+                        )}
+                        {company.email && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <Mail className="h-4 w-4 text-blue-600" />
+                            <a 
+                              href={`mailto:${company.email}`}
+                              className="text-blue-600 hover:underline font-medium"
+                            >
+                              {company.email}
+                            </a>
+                          </div>
+                        )}
+                        {company.website && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <ExternalLink className="h-4 w-4 text-blue-600" />
+                            <a
+                              href={company.website.startsWith("http") ? company.website : `https://${company.website}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline font-medium"
+                            >
+                              {company.website}
+                            </a>
+                          </div>
+                        )}
+                        {company.hasCareerPage && company.careerPageUrl && (
+                          <a
+                            href={company.careerPageUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-sm text-blue-600 hover:underline"
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                            Career Page
+                          </a>
                         )}
                       </div>
                       
@@ -351,17 +402,6 @@ export function CompanyEnrichmentView() {
                           <span className="font-medium">Categories:</span>
                           <span className="text-muted-foreground">{company.uniqueJobCategories}</span>
                         </div>
-                        {company.hasCareerPage && company.careerPageUrl && (
-                          <a
-                            href={company.careerPageUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm text-blue-600 hover:underline"
-                          >
-                            <ExternalLink className="h-4 w-4" />
-                            Career Page
-                          </a>
-                        )}
                       </div>
                     </div>
                   </div>

@@ -33,6 +33,8 @@ import { scrapeVocalPandaList } from "./listPages/vocalpanda";
 import { scrapeVocalPandaDetail } from "./detailPages/vocalpanda";
 import { scrapeInternNepalList } from "./listPages/internepal";
 import { scrapeInternNepalDetail } from "./detailPages/internepal";
+import { scrapeFroxjobList } from "./listPages/froxjob";
+import { scrapeFroxjobDetail } from "./detailPages/froxjob";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -205,6 +207,17 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
       "https://internepal.com.np/vacancy-list?keyword=&type=freelance&company_id=&price_range=",
     ],
     maxPages: 20, // Will fetch all pages automatically
+    maxJobs: 500,
+  },
+  {
+    baseUrl: "https://froxjob.com",
+    source: "froxjob",
+    listScraper: scrapeFroxjobList,
+    detailScraper: scrapeFroxjobDetail,
+    listingUrls: [
+      "https://froxjob.com/search/result?keywords=&cityzone=&page=1",
+    ],
+    maxPages: 50, // Will fetch all pages automatically
     maxJobs: 500,
   },
   // Note: sajilojob.com domain not found

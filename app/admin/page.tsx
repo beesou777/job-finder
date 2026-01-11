@@ -182,12 +182,6 @@ export default function AdminPage() {
                         mode={dashboardMode}
                     />
                 )}
-                {activeView === "predictive" && (
-                    <PredictiveInsights 
-                        forecast={analyticsData?.forecast}
-                        indices={analyticsData?.indices}
-                    />
-                )}
                 {activeView === "companies" && (
                     <CompanyEnrichmentView />
                 )}
