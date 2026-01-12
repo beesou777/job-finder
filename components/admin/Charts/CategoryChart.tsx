@@ -23,7 +23,7 @@ export function CategoryChart({ data }: CategoryChartProps) {
   }
 
   return (
-    <Card className="col-span-2">
+    <Card>
       <CardHeader>
         <CardTitle>Jobs by Category</CardTitle>
         <CardDescription>market demand by sector</CardDescription>

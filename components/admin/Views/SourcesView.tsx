@@ -60,9 +60,6 @@ export function SourcesView({ analyticsData, handleScrape }: SourcesViewProps) {
                      <div className={`h-3 w-3 rounded-full ${isScraping ? "bg-yellow-500 animate-pulse" : "bg-green-500"}`} />
                      <span className="font-bold">{isScraping ? "Processing" : "Operational"}</span>
                 </div>
-                 <div className="text-[10px] text-muted-foreground mt-2 font-medium">
-                    Last sync successful: 4m ago
-                </div>
             </CardContent>
         </Card>
 

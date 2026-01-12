@@ -37,29 +37,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const jobRepository = dataSource.getRepository(Job)
     const categoryRepository = dataSource.getRepository(Category)
 
-    // Add active jobs
-    const activeJobs = await jobRepository.find({
-      where: {
-        expiresAt: null as any, // Will be filtered in query
-      },
-      take: 1000, // Limit to avoid too large sitemap
-      order: {
-        createdAt: 'DESC',
-      },
-    })
-
-    // Filter expired jobs
-    const now = new Date()
-    const validJobs = activeJobs.filter(job => !job.expiresAt || job.expiresAt > now)
-
-    validJobs.forEach((job) => {
-      routes.push({
-        url: `${baseUrl}/jobs/${job.id}`,
-        lastModified: job.createdAt,
-        changeFrequency: 'weekly',
-        priority: 0.7,
-      })
-    })
+    // Note: We exclude individual job detail URLs from the sitemap because:
+    // 1. They are redirect-only pages (302 redirect to external applyUrl)
+    // 2. Redirect-only URLs in sitemaps can hurt SEO and look like link farming
+    // 3. Our value is in listing pages, not individual redirect pages
+    // 4. The actual job content lives on external sites
+    
+    // If you want to include job detail pages in the future, create actual content pages
+    // that display job information before redirecting, rather than instant redirects
 
     // Add categories
     const categories = await categoryRepository.find()

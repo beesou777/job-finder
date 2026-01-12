@@ -164,7 +164,7 @@ export async function GET(request: NextRequest) {
 
     // Add caching headers
     if (!search && !categoryId) {
-      response.headers.set("Cache-Control", "public, s-maxage=30, stale-while-revalidate=60");
+      // response.headers.set("Cache-Control", "public, s-maxage=30, stale-while-revalidate=60");
     }
 
     return response;
