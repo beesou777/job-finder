@@ -9,6 +9,7 @@ import { CanonicalLocation } from "@/entities/CanonicalLocation";
 import { CanonicalCompany } from "@/entities/CanonicalCompany";
 import { CompanyEnrichment } from "@/entities/CompanyEnrichment";
 import { HiringIntentScoreHistory } from "@/entities/HiringIntentScoreHistory";
+import { LinkedInJob } from "@/entities/LinkedInJob";
 
 let appDataSource: DataSource | null = null;
 let initializationPromise: Promise<DataSource> | null = null;
@@ -22,7 +23,8 @@ const ALL_ENTITIES = [
   CanonicalLocation,
   CanonicalCompany,
   CompanyEnrichment,
-  HiringIntentScoreHistory
+  HiringIntentScoreHistory,
+  LinkedInJob
 ];
 
 function createDataSource(): DataSource {

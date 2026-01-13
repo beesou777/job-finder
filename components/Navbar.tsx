@@ -25,6 +25,10 @@ export function Navbar() {
       label: "Remote",
     },
     {
+      href: "/linkedin-jobs",
+      label: "LinkedIn",
+    },
+    {
       href: "/blog",
       label: "Blog",
     },
