@@ -21,6 +21,10 @@ export function Navbar() {
       label: "Internships",
     },
     {
+      href: "/remote-jobs",
+      label: "Remote",
+    },
+    {
       href: "/blog",
       label: "Blog",
     },
@@ -54,10 +58,10 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2 font-semibold text-base transition-colors rounded-md ${
+                  className={`px-4 py-2 font-semibold text-base transition-colors relative ${
                     active
-                      ? "text-white bg-[#0A66C2]"
-                      : "text-gray-700 hover:bg-[#0A66C2]/10 hover:text-[#0A66C2]"
+                      ? "text-[#0A66C2] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#0A66C2]"
+                      : "text-gray-700 hover:text-[#0A66C2]"
                   }`}
                 >
                   {link.label}
@@ -92,10 +96,10 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-4 py-3 font-semibold text-base transition-colors rounded-md ${
+                    className={`px-4 py-3 font-semibold text-base transition-colors relative ${
                       active
-                        ? "text-white bg-[#0A66C2]"
-                        : "text-gray-700 hover:bg-[#0A66C2]/10 hover:text-[#0A66C2]"
+                        ? "text-[#0A66C2] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#0A66C2]"
+                        : "text-gray-700 hover:text-[#0A66C2]"
                     }`}
                   >
                     {link.label}
