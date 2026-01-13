@@ -62,10 +62,10 @@ export const metadata: Metadata = {
       "Best job aggregator sites in Nepal - Find the latest jobs and internships from top Nepali job portals all in one place.",
     images: [
       {
-        url: "https://www.kamkhoj.com//og-image.png",
+        url: "https://www.kamkhoj.com/kamkhoj.png",
         width: 1200,
         height: 630,
-        alt: "kamkhoj - Nepal's Job Finder",
+        alt: "kamkhoj - Nepal's Job Finder - Find Jobs in Nepal",
       },
     ],
   },
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     title: "Best Job Aggregator Sites in Nepal | kamkhoj",
     description:
       "Best job aggregator sites in Nepal - Find the latest jobs and internships from all major portals",
-    images: ["https://www.kamkhoj.com//og-image.png"],
+    images: ["https://www.kamkhoj.com/kamkhoj.png"],
   },
   alternates: {
     canonical: "https://www.kamkhoj.com/",
