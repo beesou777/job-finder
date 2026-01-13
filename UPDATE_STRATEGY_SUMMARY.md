@@ -91,13 +91,6 @@ When enrichment runs, it updates:
 
 ## Manual Update (If Needed)
 
-You can also manually trigger updates:
-
-```bash
-# Via API
-PUT /api/companies/intent
-# (recalculates all scores)
-```
 
 Or use the service directly:
 ```typescript

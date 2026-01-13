@@ -17,7 +17,7 @@ export function JobGrowthChart({ data }: GrowthChartProps) {
   }));
 
   return (
-    <Card className="col-span-4">
+    <Card>
       <CardHeader>
         <CardTitle>Job Growth Over Time</CardTitle>
         <CardDescription>Daily job postings for the selected period</CardDescription>

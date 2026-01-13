@@ -77,6 +77,41 @@ export class AnalyticsService {
         });
         const completenessScore = totalJobs > 0 ? (completeJobs / totalJobs) * 100 : 0;
 
+        // 5. High Urgency - Jobs expiring within 3 days
+        const threeDaysFromNow = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000);
+        const highUrgencyJobs = await jobRepo
+            .createQueryBuilder("job")
+            .where("job.expiresAt IS NOT NULL")
+            .andWhere("job.expiresAt > :now", { now })
+            .andWhere("job.expiresAt <= :threeDaysFromNow", { threeDaysFromNow })
+            .getCount();
+
+        // 6. Fast-Close - Jobs posted in last 7 days and expiring within 7 days (quick turnaround)
+        const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+        const fastCloseJobs = await jobRepo
+            .createQueryBuilder("job")
+            .where("job.createdAt > :last7DaysStart", { last7DaysStart })
+            .andWhere("job.expiresAt IS NOT NULL")
+            .andWhere("job.expiresAt > :now", { now })
+            .andWhere("job.expiresAt <= :sevenDaysFromNow", { sevenDaysFromNow })
+            .getCount();
+
+        // 7. Strong Matches - Count unique companies that have jobs
+        // This will be enriched with JSON data later, but we count companies with active jobs
+        const companiesWithJobs = await jobRepo.createQueryBuilder("job")
+            .select("COUNT(DISTINCT job.company)", "count")
+            .where("job.company IS NOT NULL")
+            .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+            .getRawOne();
+        
+        const strongMatches = parseInt(companiesWithJobs?.count || "0");
+
+        // Get "New This Week" - jobs posted in the current week
+        const weekStart = startOfWeek(now, { weekStartsOn: 0 }); // Sunday
+        const newThisWeek = await jobRepo.count({
+            where: { createdAt: MoreThan(weekStart) }
+        });
+
         return {
             jobsToday: { value: jobsToday, delta: Number(calcDelta(jobsToday, jobsYesterday).toFixed(2)) },
             jobsLast7Days: { value: jobsLast7Days, delta: Number(calcDelta(jobsLast7Days, jobsPrev7Days).toFixed(2)) },
@@ -85,7 +120,13 @@ export class AnalyticsService {
             expiredJobs,
             totalJobs,
             remotePercentage: Number(remotePercentage.toFixed(2)),
-            completenessScore: Number(completenessScore.toFixed(2))
+            completenessScore: Number(completenessScore.toFixed(2)),
+            // New metrics
+            totalOpenJobs: activeJobs,
+            newThisWeek,
+            highUrgency: highUrgencyJobs,
+            fastClose: fastCloseJobs,
+            strongMatches // Will need to be populated from enriched companies
         };
     }
 

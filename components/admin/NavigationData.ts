@@ -19,12 +19,6 @@ export const ADMIN_NAV_ITEMS = [
         description: "High-level platform health and growth metrics."
     },
     {
-        id: "predictive",
-        label: "Predictive Insights",
-        icon: BrainCircuit,
-        description: "AI-driven market forecasting and indices."
-    },
-    {
         id: "companies",
         label: "Company Enrichment",
         icon: Building2,

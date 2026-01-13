@@ -42,7 +42,40 @@ export function calculateExpirationDate(deadline?: string, createdAt?: Date): Da
  */
 function parseDeadline(deadline: string): Date | null {
   try {
-    // Try common formats
+    // Try parsing "X days left" or "X day left" patterns first
+    const daysLeftMatch = deadline.match(/(\d+)\s*(?:day|days)?\s*left/i);
+    if (daysLeftMatch) {
+      const days = parseInt(daysLeftMatch[1]);
+      if (!isNaN(days)) {
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + days);
+        return expirationDate;
+      }
+    }
+    
+    // Try "X days from now" pattern
+    const daysFromNowMatch = deadline.match(/(\d+)\s*(?:day|days)\s+from\s+now/i);
+    if (daysFromNowMatch) {
+      const days = parseInt(daysFromNowMatch[1]);
+      if (!isNaN(days)) {
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + days);
+        return expirationDate;
+      }
+    }
+    
+    // Try date format with "days from now" (e.g., "30-January-2026 (19 days from now)")
+    const dateWithDaysMatch = deadline.match(/(\d{1,2}[-/]\w+[-/]\d{4})\s*\((\d+)\s*(?:day|days)\s*from\s*now\)/i);
+    if (dateWithDaysMatch) {
+      const days = parseInt(dateWithDaysMatch[2]);
+      if (!isNaN(days)) {
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + days);
+        return expirationDate;
+      }
+    }
+    
+    // Try common date formats
     const date = new Date(deadline);
     if (!isNaN(date.getTime())) {
       return date;

@@ -42,8 +42,10 @@ export async function GET(request: NextRequest) {
     
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get("type") || "high-intent"; // high-intent, contacts, pitch-targets, all
+    const format = searchParams.get("format") || "csv"; // csv or json
     const minLevel = searchParams.get("minLevel") as HiringIntentLevel | null;
     const minScore = searchParams.get("minScore") ? parseInt(searchParams.get("minScore")!) : null;
+    const search = searchParams.get("search") || null; // Company name search
     
     let query = enrichmentRepository
       .createQueryBuilder("enrichment")
@@ -87,7 +89,37 @@ export async function GET(request: NextRequest) {
       query = query.andWhere("enrichment.intentScore >= :minScore", { minScore });
     }
     
+    if (search) {
+      query = query.andWhere("company.name ILIKE :search", { search: `%${search}%` });
+    }
+    
     const enrichments = await query.getMany();
+    
+    // If JSON format is requested, return companies with email, phone, and website
+    if (format === "json") {
+      // Filter to only companies that have at least email, phone, or website
+      const jsonData = enrichments
+        .filter((e) => e.email || e.phoneNumber || e.website)
+        .map((e) => ({
+          company_name: e.company.name,
+          mobile_number: e.phoneNumber || "",
+          email: e.email || "",
+          websitelink: e.website || null,
+          location: null, // Can be added if location data is available
+        }));
+
+      const jsonResponse = {
+        companies: jsonData,
+      };
+
+      return new NextResponse(JSON.stringify(jsonResponse, null, 2), {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Content-Disposition": `attachment; filename="companies-${type}-${new Date().toISOString().split("T")[0]}.json"`,
+        },
+      });
+    }
     
     // Format data for CSV
     const csvData = enrichments.map((e) => ({

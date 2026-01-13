@@ -47,9 +47,6 @@ export function SettingsView({ handleScrape, isScraping, scrapeResult }: Setting
                     </>
                 )}
               </Button>
-              <div className="text-sm text-muted-foreground">
-                Last run: <span className="font-mono font-bold">Today, 10:45 AM</span> (Auto-scheduler active)
-              </div>
             </div>
 
             {scrapeResult && (
@@ -59,20 +56,6 @@ export function SettingsView({ handleScrape, isScraping, scrapeResult }: Setting
               </div>
             )}
           </CardContent>
-        </Card>
-
-        {/* Placeholder for other settings */}
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Database className="h-5 w-5 text-slate-500" />
-                    Database Maintenance
-                </CardTitle>
-                <CardDescription>Optimize tables and manage archives.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Button variant="outline" disabled>Prune Expired Jobs</Button>
-            </CardContent>
         </Card>
       </div>
     </div>

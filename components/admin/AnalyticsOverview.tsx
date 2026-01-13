@@ -15,6 +15,11 @@ interface OverviewProps {
     wowGrowth?: number;
     remotePercentage: number;
     completenessScore: number;
+    totalOpenJobs?: number;
+    newThisWeek?: number;
+    highUrgency?: number;
+    fastClose?: number;
+    strongMatches?: number;
   } | null;
   isLoading?: boolean;
 }
@@ -41,38 +46,63 @@ export function AnalyticsOverview({ data, isLoading }: OverviewProps) {
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       <Card className="relative overflow-hidden group">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Total Active Context</CardTitle>
+          <CardTitle className="text-sm font-medium">Total Open Jobs</CardTitle>
           <Database className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{data.activeJobs}</div>
+          <div className="text-2xl font-bold">{data.totalOpenJobs ?? data.activeJobs}</div>
           <p className="text-xs text-muted-foreground mt-1">
-            {data.totalJobs} total jobs tracked across platforms
+            Active jobs currently available
           </p>
-          <div className="mt-4 pt-4 border-t flex items-center justify-between">
-            <div className="text-[10px] uppercase font-bold text-slate-400 tracking-tight">Data Integrity</div>
-            <div className="text-xs font-bold text-primary">{data.completenessScore}%</div>
-          </div>
         </CardContent>
       </Card>
 
       <Card className="relative group">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Weekly Velocity</CardTitle>
+          <CardTitle className="text-sm font-medium">New This Week</CardTitle>
           <DeltaBadge value={data.jobsLast7Days.delta} />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{data.jobsLast7Days.value}</div>
+          <div className="text-2xl font-bold">{data.newThisWeek ?? data.jobsLast7Days.value}</div>
           <p className="text-xs text-muted-foreground mt-1">
-            New listings in last 7 days
+            Jobs posted this week
           </p>
-          <div className="mt-4 pt-4 border-t flex items-center justify-between">
-            <div className="text-[10px] uppercase font-bold text-slate-400 tracking-tight">MoM Trend</div>
-            <DeltaBadge value={data.jobsLast30Days.delta} />
-          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">High Urgency</CardTitle>
+          <Activity className="h-4 w-4 text-red-500" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-red-600">{data.highUrgency ?? 0}</div>
+          <p className="text-xs text-muted-foreground mt-1">Jobs expiring within 3 days</p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">Strong Matches</CardTitle>
+          <Database className="h-4 w-4 text-green-600" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-green-600">{data.strongMatches ?? 0}</div>
+          <p className="text-xs text-muted-foreground mt-1">Companies with verified data</p>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">Fast-Close</CardTitle>
+          <Activity className="h-4 w-4 text-orange-500" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-orange-600">{data.fastClose ?? 0}</div>
+          <p className="text-xs text-muted-foreground mt-1">Quick turnaround opportunities</p>
         </CardContent>
       </Card>
 
@@ -90,20 +120,6 @@ export function AnalyticsOverview({ data, isLoading }: OverviewProps) {
           </div>
         </CardContent>
       </Card>
-
-      <Card>
-         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Market Percentile</CardTitle>
-          <Activity className="h-4 w-4 text-primary" />
-        </CardHeader>
-        <CardContent>
-          <div className="text-2xl font-bold">Top 12%</div>
-          <p className="text-xs text-muted-foreground mt-1">Historical volume rank this week</p>
-          <div className="mt-4 bg-slate-100 h-1 rounded-full overflow-hidden">
-             <div className="bg-primary h-full w-[88%]" />
-          </div>
-        </CardContent>
-       </Card>
     </div>
   );
 }

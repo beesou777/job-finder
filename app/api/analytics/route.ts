@@ -26,7 +26,7 @@ export async function GET(request: Request) {
             intentScores
         ] = await Promise.all([
             AnalyticsService.getExecutiveOverview(),
-            AnalyticsService.getGrowthTrends(range === "7d" ? 7 : 30),
+            AnalyticsService.getGrowthTrends(range === "7d" ? 7 : range === "90d" ? 90 : 30),
             AnalyticsService.getSourceStats(),
             AnalyticsService.getCategoryStats(),
             AnalyticsService.getJobTypeStats(),
@@ -39,10 +39,35 @@ export async function GET(request: Request) {
             AnalyticsService.getCompanyIntentScores()
         ]);
 
+        // Get strong matches count from enriched companies
+        let strongMatchesCount = 0;
+        try {
+            const enrichedResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/companies/enriched-from-jobs`, {
+                cache: 'no-store',
+            });
+            if (enrichedResponse.ok) {
+                const enrichedData = await enrichedResponse.json();
+                if (enrichedData.success && enrichedData.data) {
+                    // Count companies with 90%+ match confidence
+                    strongMatchesCount = enrichedData.data.filter((c: any) => 
+                        c.matchConfidence && c.matchConfidence >= 90
+                    ).length;
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching strong matches:", error);
+        }
+
+        // Update overview with strong matches count
+        const overviewWithStrongMatches = {
+            ...overview,
+            strongMatches: strongMatchesCount
+        };
+
         return NextResponse.json({
             success: true,
             data: {
-                overview,
+                overview: overviewWithStrongMatches,
                 growthTrends,
                 sourceStats,
                 categoryStats,
@@ -54,6 +79,12 @@ export async function GET(request: Request) {
                 forecast,
                 indices,
                 intentScores
+            }
+        }, {
+            headers: {
+                'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0',
             }
         });
     } catch (error: any) {

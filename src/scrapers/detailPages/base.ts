@@ -68,6 +68,12 @@ export async function scrapeDetailPage(
 
     // Find apply URL - try multiple methods
     let applyUrl = findAttr(selectors.applyUrl, "href");
+    
+    // Check if it's just a fragment (starts with #) or upload-cv link - if so, ignore it
+    if (applyUrl && (applyUrl.startsWith("#") || applyUrl.includes("/upload-cv/") || applyUrl.includes("upload-cv"))) {
+      applyUrl = ""; // Treat fragment-only URLs and upload-cv links as no URL found
+    }
+    
     if (!applyUrl) {
       // Fallback: look for common apply button patterns
       const applySelectors = [
@@ -82,14 +88,22 @@ export async function scrapeDetailPage(
       for (const sel of applySelectors) {
         const link = $(sel).first().attr("href");
         if (link) {
+          // Skip fragment-only URLs (anchors like #applySection)
+          if (link.startsWith("#")) {
+            continue;
+          }
+          // Skip upload-cv links (these are application forms, not job detail pages)
+          if (link.includes("/upload-cv/") || link.includes("upload-cv")) {
+            continue;
+          }
           applyUrl = link.startsWith("http") ? link : `${getBaseUrl(url)}${link}`;
           break;
         }
       }
     }
 
-    // If still no apply URL, use the detail page URL
-    if (!applyUrl) {
+    // If still no apply URL, or if it's just a fragment, use the detail page URL
+    if (!applyUrl || applyUrl.startsWith("#")) {
       applyUrl = url;
     } else if (!applyUrl.startsWith("http")) {
       applyUrl = `${getBaseUrl(url)}${applyUrl}`;

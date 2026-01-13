@@ -1,5 +1,4 @@
 import { AnalyticsOverview } from "@/components/admin/AnalyticsOverview";
-import { InsightsDecisionPanel } from "@/components/admin/InsightsDecisionPanel";
 import { JobGrowthChart } from "@/components/admin/Charts/JobGrowthChart";
 import { SourceDistributionChart } from "@/components/admin/Charts/SourceDistributionChart";
 import { CategoryChart } from "@/components/admin/Charts/CategoryChart";
@@ -67,42 +66,43 @@ export function ExecutiveOverview({
 
       <AnalyticsOverview data={analyticsData?.overview} isLoading={isLoading} />
 
-      <div className="pt-2 pb-6">
-        <InsightsDecisionPanel />
-      </div>
-
+      {/* Job Growth and Category Charts Side by Side */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <JobGrowthChart data={analyticsData?.growthTrends} />
-        {mode === "ops" && <SourceDistributionChart data={analyticsData?.sourceStats} />}
+        <CategoryChart data={analyticsData?.categoryStats} />
       </div>
 
+      {/* Additional Charts Section */}
+      {mode === "ops" && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <SourceDistributionChart data={analyticsData?.sourceStats} />
+        </div>
+      )}
+
+      {/* Market Indices */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-         <div className="lg:col-span-2">
-            <CategoryChart data={analyticsData?.categoryStats} />
-         </div>
-         
-         <Card>
-            <CardHeader>
-                <CardTitle>Market Indices</CardTitle>
-            </CardHeader>
-            <CardContent>
-                {/* Simplified Indices View */}
-                {analyticsData?.indices ? (
-                     <div className="space-y-4">
-                        <div className="flex justify-between items-center border-b pb-2">
-                            <span className="text-sm font-medium">Nepal Hiring Index</span>
-                            <span className="font-bold text-green-600">{analyticsData.indices.nhi.value}</span>
-                        </div>
-                        <div className="flex justify-between items-center border-b pb-2">
-                            <span className="text-sm font-medium">Remote Readiness</span>
-                            <span className="font-bold text-blue-600">{analyticsData.indices.remoteReadiness.value}</span>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="h-20 animate-pulse bg-gray-100 rounded"></div>
-                )}
-            </CardContent>
-         </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Market Indices</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* Simplified Indices View */}
+            {analyticsData?.indices ? (
+              <div className="space-y-4">
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm font-medium">Nepal Hiring Index</span>
+                  <span className="font-bold text-green-600">{analyticsData.indices.nhi.value}</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-sm font-medium">Remote Readiness</span>
+                  <span className="font-bold text-blue-600">{analyticsData.indices.remoteReadiness.value}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="h-20 animate-pulse bg-gray-100 rounded"></div>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

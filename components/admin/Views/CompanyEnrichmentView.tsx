@@ -8,28 +8,32 @@ import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Building2, Mail, Phone, ExternalLink, Download, Search, Target, Zap } from "lucide-react";
 
 interface CompanyEnrichment {
-  id: string;
-  companyId: string;
+  id?: string;
+  companyId?: string;
   companyName: string;
-  domain: string;
-  email: string;
-  phoneNumber: string;
-  website: string;
-  careerPageUrl: string;
-  intentScore: number;
-  intentLevel: "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
+  domain?: string;
+  email?: string;
+  phoneNumber?: string;
+  website?: string;
+  careerPageUrl?: string;
+  intentScore?: number;
+  intentLevel?: "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
   jobsLast7Days: number;
   jobsLast30Days: number;
-  uniqueJobCategories: number;
-  hasCareerPage: boolean;
-  keywordMatches: string[];
-  externalStatus: string;
-  matchConfidence: string;
-  isPitchTarget: boolean;
-  isNewLead: boolean;
-  salesNotes: string;
-  lastVerifiedAt: string;
-  updatedAt: string;
+  jobsCount?: number;
+  uniqueJobCategories?: number;
+  hasCareerPage?: boolean;
+  keywordMatches?: string[];
+  externalStatus?: string;
+  matchConfidence?: number | string;
+  matchedFrom?: string;
+  isPitchTarget?: boolean;
+  isNewLead?: boolean;
+  salesNotes?: string;
+  lastVerifiedAt?: string;
+  updatedAt?: string;
+  latestJobTitle?: string;
+  latestJobUrl?: string;
 }
 
 export function CompanyEnrichmentView() {
@@ -41,6 +45,7 @@ export function CompanyEnrichmentView() {
     minScore: "",
     hasContact: false,
     isPitchTarget: false,
+    search: "", // Company name search
   });
   const [leaderboardType, setLeaderboardType] = useState<"intent" | "jobs7d" | "jobs30d" | "contacts">("intent");
 
@@ -52,20 +57,48 @@ export function CompanyEnrichmentView() {
     setIsLoading(true);
     setError(null);
     try {
-      const params = new URLSearchParams();
-      if (filter.level) params.append("level", filter.level);
-      if (filter.minScore) params.append("minScore", filter.minScore);
-      if (filter.hasContact) params.append("hasContact", "true");
-      if (filter.isPitchTarget) params.append("isPitchTarget", "true");
-      params.append("limit", "50");
-      params.append("sortBy", "intentScore");
-      params.append("sortOrder", "DESC");
-
-      const res = await fetch(`/api/companies/intent?${params.toString()}`);
+      // Use the new endpoint that matches jobs with JSON data
+      // Add cache-busting timestamp and no-cache headers
+      const timestamp = new Date().getTime();
+      const res = await fetch(`/api/companies/enriched-from-jobs?t=${timestamp}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+        },
+      });
       const data = await res.json();
-      
+      console.log(data);
       if (data.success) {
-        setCompanies(data.data);
+        let filteredData = data.data;
+
+        // Apply filters
+        if (filter.search) {
+          filteredData = filteredData.filter((c: CompanyEnrichment) =>
+            c.companyName.toLowerCase().includes(filter.search.toLowerCase())
+          );
+        }
+
+        if (filter.hasContact) {
+          filteredData = filteredData.filter(
+            (c: CompanyEnrichment) => c.email || c.phoneNumber
+          );
+        }
+
+        if (filter.minScore) {
+          const minScoreNum = parseInt(filter.minScore);
+          filteredData = filteredData.filter(
+            (c: CompanyEnrichment) => (c.intentScore || 0) >= minScoreNum
+          );
+        }
+
+        if (filter.isPitchTarget) {
+          filteredData = filteredData.filter(
+            (c: CompanyEnrichment) => c.isPitchTarget === true
+          );
+        }
+
+        setCompanies(filteredData);
       } else {
         setError(data.error || "Failed to fetch companies");
       }
@@ -78,13 +111,42 @@ export function CompanyEnrichmentView() {
 
   const fetchLeaderboard = async (type: "intent" | "jobs7d" | "jobs30d" | "contacts") => {
     setIsLoading(true);
-    setError(null);
+    setError(null); 
     try {
-      const res = await fetch(`/api/companies/leaderboard?type=${type}&limit=50`);
+      // Add cache-busting timestamp and no-cache headers
+      const timestamp = new Date().getTime();
+      const res = await fetch(`/api/companies/enriched-from-jobs?t=${timestamp}`, {
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+        },
+      });
       const data = await res.json();
       
       if (data.success) {
-        setCompanies(data.data);
+        let sortedData = [...data.data];
+        
+        // Sort based on leaderboard type
+        switch (type) {
+          case "jobs7d":
+            sortedData.sort((a, b) => b.jobsLast7Days - a.jobsLast7Days);
+            break;
+          case "jobs30d":
+            sortedData.sort((a, b) => b.jobsLast30Days - a.jobsLast30Days);
+            break;
+          case "contacts":
+            sortedData = sortedData.filter((c) => c.email || c.phoneNumber);
+            sortedData.sort((a, b) => (b.jobsCount || 0) - (a.jobsCount || 0));
+            break;
+          case "intent":
+          default:
+            // Sort by total jobs count as proxy for intent
+            sortedData.sort((a, b) => (b.jobsCount || 0) - (a.jobsCount || 0));
+            break;
+        }
+        
+        setCompanies(sortedData.slice(0, 50));
         setLeaderboardType(type);
       } else {
         setError(data.error || "Failed to fetch leaderboard");
@@ -96,14 +158,15 @@ export function CompanyEnrichmentView() {
     }
   };
 
-  const handleExport = async (type: string) => {
+  const handleExport = async (type: string, format: "csv" | "json" = "csv") => {
     try {
-      const res = await fetch(`/api/companies/export?type=${type}`);
+      const res = await fetch(`/api/companies/export?type=${type}&format=${format}`);
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `companies-${type}-${new Date().toISOString().split("T")[0]}.csv`;
+      const extension = format === "json" ? "json" : "csv";
+      a.download = `companies-${type}-${new Date().toISOString().split("T")[0]}.${extension}`;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -130,11 +193,11 @@ export function CompanyEnrichmentView() {
 
   const stats = {
     total: companies.length,
-    highIntent: companies.filter((c) => c.intentLevel === "HIGH" || c.intentLevel === "VERY_HIGH").length,
+    highIntent: companies.filter((c) => (c.jobsCount || 0) >= 3).length, // 3+ jobs considered high intent
     withContacts: companies.filter((c) => c.email || c.phoneNumber).length,
     pitchTargets: companies.filter((c) => c.isPitchTarget).length,
     avgScore: companies.length > 0
-      ? Math.round(companies.reduce((sum, c) => sum + c.intentScore, 0) / companies.length)
+      ? Math.round(companies.reduce((sum, c) => sum + (c.jobsCount || 0), 0) / companies.length)
       : 0,
   };
 
@@ -148,6 +211,14 @@ export function CompanyEnrichmentView() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={() => handleExport("contacts", "json")}
+            className="gap-2"
+          >
+            <Download className="h-4 w-4" />
+            Export JSON
+          </Button>
           <Button
             variant="outline"
             onClick={() => handleExport("high-intent")}
@@ -228,7 +299,20 @@ export function CompanyEnrichmentView() {
           <CardTitle>Filters</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="md:col-span-2">
+              <label className="text-sm font-medium mb-2 block">Search Company Name</label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search by company name..."
+                  value={filter.search}
+                  onChange={(e) => setFilter({ ...filter, search: e.target.value })}
+                  className="pl-10"
+                />
+              </div>
+            </div>
             <div>
               <label className="text-sm font-medium mb-2 block">Intent Level</label>
               <select
@@ -252,7 +336,7 @@ export function CompanyEnrichmentView() {
                 onChange={(e) => setFilter({ ...filter, minScore: e.target.value })}
               />
             </div>
-            <div className="flex items-end">
+            <div className="flex flex-col gap-2 justify-end">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -261,8 +345,6 @@ export function CompanyEnrichmentView() {
                 />
                 <span className="text-sm font-medium">Has Contact Info</span>
               </label>
-            </div>
-            <div className="flex items-end">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="checkbox"
@@ -299,17 +381,27 @@ export function CompanyEnrichmentView() {
       ) : (
         <div className="space-y-4">
           {companies.map((company) => (
-            <Card key={company.id} className="hover:shadow-lg transition-shadow">
+            <Card key={company.companyName || company.id || Math.random()} className="hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex items-center gap-3 mb-2 flex-wrap">
                       <Building2 className="h-5 w-5 text-muted-foreground" />
                       <h3 className="text-xl font-bold">{company.companyName}</h3>
-                      <Badge className={getIntentLevelColor(company.intentLevel)}>
-                        {company.intentLevel.replace("_", " ")}
-                      </Badge>
-                      <Badge variant="outline">Score: {company.intentScore}</Badge>
+                      {company.matchConfidence && (
+                        <Badge variant="outline" className="bg-green-100 text-green-700">
+                          Match: {company.matchConfidence}%
+                        </Badge>
+                      )}
+                      {company.matchedFrom && (
+                        <Badge variant="outline" className="bg-blue-100 text-blue-700">
+                          From: {company.matchedFrom}
+                        </Badge>
+                      )}
+                      <Badge variant="outline">Jobs: {company.jobsCount || 0}</Badge>
+                      {company.intentScore && (
+                        <Badge variant="outline">Score: {company.intentScore}</Badge>
+                      )}
                       {company.isPitchTarget && (
                         <Badge variant="default" className="bg-blue-600">
                           <Target className="h-3 w-3 mr-1" />
@@ -320,21 +412,69 @@ export function CompanyEnrichmentView() {
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                       <div className="space-y-2">
-                        <div className="flex items-center gap-2 text-sm">
-                          <span className="font-medium">Domain:</span>
-                          <span className="text-muted-foreground">{company.domain || "N/A"}</span>
-                        </div>
-                        {company.email && (
+                        {company.domain && (
                           <div className="flex items-center gap-2 text-sm">
-                            <Mail className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-muted-foreground">{company.email}</span>
+                            <span className="font-medium">Domain:</span>
+                            <span className="text-muted-foreground">{company.domain}</span>
+                          </div>
+                        )}
+                        {company.latestJobTitle && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <span className="font-medium">Latest Job:</span>
+                            {company.latestJobUrl ? (
+                              <a
+                                href={company.latestJobUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 hover:underline"
+                              >
+                                {company.latestJobTitle}
+                              </a>
+                            ) : (
+                              <span className="text-muted-foreground">{company.latestJobTitle}</span>
+                            )}
                           </div>
                         )}
                         {company.phoneNumber && (
                           <div className="flex items-center gap-2 text-sm">
-                            <Phone className="h-4 w-4 text-muted-foreground" />
-                            <span className="text-muted-foreground">{company.phoneNumber}</span>
+                            <Phone className="h-4 w-4 text-blue-600" />
+                            <span className="text-muted-foreground font-medium">{company.phoneNumber}</span>
                           </div>
+                        )}
+                        {company.email && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <Mail className="h-4 w-4 text-blue-600" />
+                            <a 
+                              href={`mailto:${company.email}`}
+                              className="text-blue-600 hover:underline font-medium"
+                            >
+                              {company.email}
+                            </a>
+                          </div>
+                        )}
+                        {company.website && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <ExternalLink className="h-4 w-4 text-blue-600" />
+                            <a
+                              href={company.website.startsWith("http") ? company.website : `https://${company.website}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline font-medium"
+                            >
+                              {company.website}
+                            </a>
+                          </div>
+                        )}
+                        {company.hasCareerPage && company.careerPageUrl && (
+                          <a
+                            href={company.careerPageUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-sm text-blue-600 hover:underline"
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                            Career Page
+                          </a>
                         )}
                       </div>
                       
@@ -347,20 +487,11 @@ export function CompanyEnrichmentView() {
                           <span className="font-medium">Jobs (30d):</span>
                           <span className="text-muted-foreground">{company.jobsLast30Days}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm">
-                          <span className="font-medium">Categories:</span>
-                          <span className="text-muted-foreground">{company.uniqueJobCategories}</span>
-                        </div>
-                        {company.hasCareerPage && company.careerPageUrl && (
-                          <a
-                            href={company.careerPageUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-sm text-blue-600 hover:underline"
-                          >
-                            <ExternalLink className="h-4 w-4" />
-                            Career Page
-                          </a>
+                        {company.uniqueJobCategories && (
+                          <div className="flex items-center gap-2 text-sm">
+                            <span className="font-medium">Categories:</span>
+                            <span className="text-muted-foreground">{company.uniqueJobCategories}</span>
+                          </div>
                         )}
                       </div>
                     </div>
