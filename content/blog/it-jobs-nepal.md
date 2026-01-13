@@ -78,7 +78,7 @@ Nepal's IT sector is growing rapidly, offering exciting opportunities for tech p
 ## How to Find IT Jobs
 
 ### Job Portals
-- Use JobKhoj to search across all portals
+- Use kamkhoj to search across all portals
 - Filter by "IT" or "Software" category
 - Set up job alerts
 
@@ -106,5 +106,5 @@ Many IT companies in Nepal offer:
 
 ## Conclusion
 
-Nepal's IT sector offers excellent opportunities for growth. Keep learning, build your portfolio, and [search for IT jobs](/jobs) on JobKhoj to find your next opportunity.
+Nepal's IT sector offers excellent opportunities for growth. Keep learning, build your portfolio, and [search for IT jobs](/jobs) on kamkhoj to find your next opportunity.
 

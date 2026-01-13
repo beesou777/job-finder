@@ -191,7 +191,7 @@ function InternshipsPageContent() {
                 ? `${selectedCategoryName} Internships`
                 : (
                   <>
-                    Shape Your Future with <span className="text-[#0A66C2]">JobKhoj</span>
+                    Shape Your Future with <span className="text-[#0A66C2]">kamkhoj</span>
                   </>
                 )}
             </h1>

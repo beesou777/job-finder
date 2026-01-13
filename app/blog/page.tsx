@@ -6,8 +6,9 @@ import { Calendar, ArrowRight } from "lucide-react";
 import { getAllBlogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Career Blog | Job Search Tips & Guides | JobKhoj",
-  description: "Career advice, job search tips, and guides for finding jobs in Nepal. Learn how to write resumes, ace interviews, and grow your career.",
+  title: "Career Blog | Job Search Tips & Guides | kamkhoj",
+  description:
+    "Career advice, job search tips, and guides for finding jobs in Nepal. Learn how to write resumes, ace interviews, and grow your career.",
   keywords: [
     "career advice nepal",
     "job search tips nepal",
@@ -17,12 +18,12 @@ export const metadata: Metadata = {
     "jobs nepal blog",
   ],
   openGraph: {
-    title: "Career Blog | JobKhoj",
+    title: "Career Blog | kamkhoj",
     description: "Career advice and job search tips for Nepal",
-    url: "https://kamkhoj.eventeir.ai/blog",
+    url: "https://www.kamkhoj.com//blog",
   },
   alternates: {
-    canonical: "https://kamkhoj.eventeir.ai/blog",
+    canonical: "https://www.kamkhoj.com//blog",
   },
 };
 
@@ -65,7 +66,13 @@ export default function BlogPage() {
                   <div className="flex items-center justify-between text-sm text-gray-500">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
-                      <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                      <span>
+                        {new Date(post.date).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </span>
                     </div>
                     <span>{post.readTime}</span>
                   </div>
@@ -97,4 +104,3 @@ export default function BlogPage() {
     </div>
   );
 }
-

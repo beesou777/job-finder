@@ -22,7 +22,7 @@ Part-time jobs are perfect for students, those looking for extra income, or peop
 
 ## Where to Find Part-Time Jobs
 
-Use JobKhoj to search for part-time positions. Filter by job type and look for keywords like "part-time", "flexible hours", or "weekend only".
+Use kamkhoj to search for part-time positions. Filter by job type and look for keywords like "part-time", "flexible hours", or "weekend only".
 
 ## Tips for Part-Time Job Seekers
 
@@ -33,5 +33,5 @@ Use JobKhoj to search for part-time positions. Filter by job type and look for k
 
 ## Conclusion
 
-Part-time jobs offer flexibility and additional income. [Search for part-time opportunities](/jobs) on JobKhoj.
+Part-time jobs offer flexibility and additional income. [Search for part-time opportunities](/jobs) on kamkhoj.
 

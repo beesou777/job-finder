@@ -11,9 +11,9 @@ slug: "best-job-sites-nepal"
 
 With so many job portals in Nepal, it can be overwhelming to know where to start. This guide compares the top job sites and helps you choose the best platform for your job search.
 
-## JobKhoj - The Aggregator Advantage
+## kamkhoj - The Aggregator Advantage
 
-JobKhoj stands out as one of the **best job aggregator sites in Nepal**, collecting listings from multiple portals. This means:
+kamkhoj stands out as one of the **best job aggregator sites in Nepal**, collecting listings from multiple portals. This means:
 
 - Search all major portals in one place
 - Save time by avoiding duplicate applications
@@ -50,12 +50,12 @@ JobKhoj stands out as one of the **best job aggregator sites in Nepal**, collect
 
 ## Tips for Using Job Portals
 
-- Use an aggregator like JobKhoj to save time
+- Use an aggregator like kamkhoj to save time
 - Set up job alerts on multiple platforms
 - Check portals daily for new listings
 - Customize your search with filters
 
 ## Conclusion
 
-While individual portals have their strengths, using a job aggregator like JobKhoj gives you the best of all worlds. Start your search at [JobKhoj](/jobs) to access jobs from all major portals in one place.
+While individual portals have their strengths, using a job aggregator like kamkhoj gives you the best of all worlds. Start your search at [kamkhoj](/jobs) to access jobs from all major portals in one place.
 

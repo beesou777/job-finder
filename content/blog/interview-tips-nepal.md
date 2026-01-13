@@ -81,5 +81,5 @@ Some companies use group discussions to assess communication skills.
 
 ## Conclusion
 
-Preparation is key to interview success. Research, practice, and be yourself. [Find job opportunities](/jobs) on JobKhoj and start preparing for your next interview.
+Preparation is key to interview success. Research, practice, and be yourself. [Find job opportunities](/jobs) on kamkhoj and start preparing for your next interview.
 

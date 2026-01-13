@@ -4,8 +4,8 @@ import { Job } from '@/entities/Job'
 import { Category } from '@/entities/Category'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_API || 'https://kamkhoj.eventeir.ai'
-  
+  const baseUrl = process.env.NEXT_PUBLIC_API || 'https://www.kamkhoj.com/'
+
   const routes: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -32,7 +32,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (!process.env.DATABASE_URL) {
       return routes
     }
-    
+
     const dataSource = await getDataSource()
     const jobRepository = dataSource.getRepository(Job)
     const categoryRepository = dataSource.getRepository(Category)
@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // 2. Redirect-only URLs in sitemaps can hurt SEO and look like link farming
     // 3. Our value is in listing pages, not individual redirect pages
     // 4. The actual job content lives on external sites
-    
+
     // If you want to include job detail pages in the future, create actual content pages
     // that display job information before redirecting, rather than instant redirects
 
@@ -104,7 +104,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     try {
       const { getAllBlogPosts } = await import('@/lib/blog');
       const blogPosts = getAllBlogPosts();
-      
+
       blogPosts.forEach((post) => {
         routes.push({
           url: `${baseUrl}/blog/${post.slug}`,

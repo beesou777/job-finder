@@ -5,7 +5,23 @@ import { JobCard } from "@/components/JobCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Search, Briefcase, TrendingUp, Users, MapPin, Zap, ArrowRight, Sparkles, Star, Clock, FileText, Shield, Info, AlertCircle, ChevronDown } from "lucide-react";
+import {
+  Search,
+  Briefcase,
+  TrendingUp,
+  Users,
+  MapPin,
+  Zap,
+  ArrowRight,
+  Sparkles,
+  Star,
+  Clock,
+  FileText,
+  Shield,
+  Info,
+  AlertCircle,
+  ChevronDown,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FAQ } from "@/components/FAQ";
@@ -17,12 +33,18 @@ export default function HomeContent() {
   const [internships, setInternships] = useState<any[]>([]);
   const [expiringJobs, setExpiringJobs] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
-  const [stats, setStats] = useState({ totalJobs: 0, totalInternships: 0, total: 0 });
+  const [stats, setStats] = useState({
+    totalJobs: 0,
+    totalInternships: 0,
+    total: 0,
+  });
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [jobType, setJobType] = useState<"job" | "internship">("job");
-  const [expiringFilter, setExpiringFilter] = useState<"today" | "3days" | "7days" | "30days">("7days");
+  const [expiringFilter, setExpiringFilter] = useState<
+    "today" | "3days" | "7days" | "30days"
+  >("7days");
 
   useEffect(() => {
     fetchData();
@@ -30,28 +52,35 @@ export default function HomeContent() {
 
   const handleSearch = () => {
     const basePath = jobType === "job" ? "/jobs" : "/internships";
-    const searchParam = searchQuery.trim() ? `?search=${encodeURIComponent(searchQuery.trim())}` : "";
+    const searchParam = searchQuery.trim()
+      ? `?search=${encodeURIComponent(searchQuery.trim())}`
+      : "";
     router.push(`${basePath}${searchParam}`);
   };
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      
+
       console.log("[Client] Fetching data from API...");
       console.log("[Client] Expiring filter:", expiringFilter);
-      
+
       // Optimized: Fetch all data in parallel with optimized endpoints
-      let jobsRes: Response, internshipsRes: Response, expiringRes: Response, categoriesRes: Response, statsRes: Response;
-      
+      let jobsRes: Response,
+        internshipsRes: Response,
+        expiringRes: Response,
+        categoriesRes: Response,
+        statsRes: Response;
+
       try {
-        [jobsRes, internshipsRes, expiringRes, categoriesRes, statsRes] = await Promise.all([
-          fetch("/api/jobs?limit=6&type=job"),
-          fetch("/api/jobs?limit=6&type=internship"),
-          fetch(`/api/jobs?limit=6&urgency=${expiringFilter}`),
-          fetch("/api/categories?popular=true&limit=12"),
-          fetch("/api/stats"),
-        ]);
+        [jobsRes, internshipsRes, expiringRes, categoriesRes, statsRes] =
+          await Promise.all([
+            fetch("/api/jobs?limit=6&type=job"),
+            fetch("/api/jobs?limit=6&type=internship"),
+            fetch(`/api/jobs?limit=6&urgency=${expiringFilter}`),
+            fetch("/api/categories?popular=true&limit=12"),
+            fetch("/api/stats"),
+          ]);
       } catch (err: any) {
         console.error("[Client] Network error fetching data:", err);
         setLoading(false);
@@ -67,7 +96,10 @@ export default function HomeContent() {
         console.log(`[Client] Loaded ${jobsData.data?.length || 0} jobs`);
       } else {
         const errorText = await jobsRes.text();
-        console.error(`[Client] Failed to fetch jobs: ${jobsRes.status}`, errorText);
+        console.error(
+          `[Client] Failed to fetch jobs: ${jobsRes.status}`,
+          errorText
+        );
       }
 
       // Process internships
@@ -75,24 +107,37 @@ export default function HomeContent() {
         const internshipsData = await internshipsRes.json();
         console.log(`[Client] Internships API response:`, internshipsData);
         setInternships(internshipsData.data || []);
-        console.log(`[Client] Loaded ${internshipsData.data?.length || 0} internships`);
+        console.log(
+          `[Client] Loaded ${internshipsData.data?.length || 0} internships`
+        );
       } else {
         const errorText = await internshipsRes.text();
-        console.error(`[Client] Failed to fetch internships: ${internshipsRes.status}`, errorText);
+        console.error(
+          `[Client] Failed to fetch internships: ${internshipsRes.status}`,
+          errorText
+        );
       }
 
       // Process expiring jobs - sort by expiration date (soonest first)
       if (expiringRes.ok) {
         const expiringData = await expiringRes.json();
-        const sortedExpiring = (expiringData.data || []).sort((a: any, b: any) => {
-          const dateA = a.expiresAt ? new Date(a.expiresAt).getTime() : Infinity;
-          const dateB = b.expiresAt ? new Date(b.expiresAt).getTime() : Infinity;
-          return dateA - dateB; // Soonest first
-        });
+        const sortedExpiring = (expiringData.data || []).sort(
+          (a: any, b: any) => {
+            const dateA = a.expiresAt
+              ? new Date(a.expiresAt).getTime()
+              : Infinity;
+            const dateB = b.expiresAt
+              ? new Date(b.expiresAt).getTime()
+              : Infinity;
+            return dateA - dateB; // Soonest first
+          }
+        );
         setExpiringJobs(sortedExpiring);
         console.log(`[Client] Loaded ${sortedExpiring.length} expiring jobs`);
       } else {
-        console.error(`[Client] Failed to fetch expiring jobs: ${expiringRes.status}`);
+        console.error(
+          `[Client] Failed to fetch expiring jobs: ${expiringRes.status}`
+        );
       }
 
       // Process stats - use optimized stats endpoint
@@ -104,10 +149,17 @@ export default function HomeContent() {
           totalInternships: statsData.data?.totalInternships || 0,
           total: statsData.data?.total || 0,
         });
-        console.log(`[Client] Stats: ${statsData.data?.totalJobs || 0} jobs, ${statsData.data?.totalInternships || 0} internships`);
+        console.log(
+          `[Client] Stats: ${statsData.data?.totalJobs || 0} jobs, ${
+            statsData.data?.totalInternships || 0
+          } internships`
+        );
       } else {
         const errorText = await statsRes.text();
-        console.error(`[Client] Failed to fetch stats: ${statsRes.status}`, errorText);
+        console.error(
+          `[Client] Failed to fetch stats: ${statsRes.status}`,
+          errorText
+        );
         // Fallback to 0 if stats fail
         setStats({ totalJobs: 0, totalInternships: 0, total: 0 });
       }
@@ -116,9 +168,13 @@ export default function HomeContent() {
       if (categoriesRes.ok) {
         const categoriesData = await categoriesRes.json();
         setCategories(categoriesData.data || []);
-        console.log(`[Client] Loaded ${categoriesData.data?.length || 0} categories`);
+        console.log(
+          `[Client] Loaded ${categoriesData.data?.length || 0} categories`
+        );
       } else {
-        console.error(`[Client] Failed to fetch categories: ${categoriesRes.status}`);
+        console.error(
+          `[Client] Failed to fetch categories: ${categoriesRes.status}`
+        );
       }
     } catch (error: any) {
       console.error("[Client] Error fetching data:", error?.message || error);
@@ -128,72 +184,80 @@ export default function HomeContent() {
   };
 
   // Structured Data for SEO
-  const baseUrl = typeof window !== "undefined" ? window.location.origin : "https://kamkhoj.eventeir.ai";
-  
+  const baseUrl =
+    typeof window !== "undefined"
+      ? window.location.origin
+      : "https://www.kamkhoj.com/";
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "JobKhoj",
-    "description": "Nepal's #1 Job Finder - Find jobs and internships across Nepal",
-    "url": baseUrl,
-    "potentialAction": {
+    name: "kamkhoj",
+    description:
+      "Nepal's #1 Job Finder - Find jobs and internships across Nepal",
+    url: baseUrl,
+    potentialAction: {
       "@type": "SearchAction",
-      "target": {
+      target: {
         "@type": "EntryPoint",
-        "urlTemplate": `${baseUrl}/jobs?search={search_term_string}`
+        urlTemplate: `${baseUrl}/jobs?search={search_term_string}`,
       },
-      "query-input": "required name=search_term_string"
-    }
+      "query-input": "required name=search_term_string",
+    },
   };
 
   // CollectionPage schema for aggregator (SEO only)
   const collectionPageSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "Best Job Aggregator Sites in Nepal - JobKhoj",
-    "description": `Job aggregator sites in Nepal - Browse ${total}+ job listings aggregated from top Nepali job portals`,
-    "url": baseUrl,
-    "mainEntity": {
+    name: "Best Job Aggregator Sites in Nepal - kamkhoj",
+    description: `Job aggregator sites in Nepal - Browse ${total}+ job listings aggregated from top Nepali job portals`,
+    url: baseUrl,
+    mainEntity: {
       "@type": "ItemList",
-      "numberOfItems": total,
-      "description": "Job listings aggregated from multiple Nepali job portals"
-    }
+      numberOfItems: total,
+      description: "Job listings aggregated from multiple Nepali job portals",
+    },
   };
 
   const jobPostingStructuredData = jobs.slice(0, 10).map((job: any) => ({
     "@context": "https://schema.org",
     "@type": "JobPosting",
-    "title": job.title,
-    "description": job.description || job.title,
-    "identifier": {
+    title: job.title,
+    description: job.description || job.title,
+    identifier: {
       "@type": "PropertyValue",
-      "name": "JobKhoj",
-      "value": job.id
+      name: "kamkhoj",
+      value: job.id,
     },
-    "datePosted": job.createdAt,
-    "validThrough": job.expiresAt || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-    "employmentType": job.type === "internship" ? "INTERN" : "FULL_TIME",
-    "hiringOrganization": {
+    datePosted: job.createdAt,
+    validThrough:
+      job.expiresAt ||
+      new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    employmentType: job.type === "internship" ? "INTERN" : "FULL_TIME",
+    hiringOrganization: {
       "@type": "Organization",
-      "name": job.company || "Company"
+      name: job.company || "Company",
     },
-    "jobLocation": {
+    jobLocation: {
       "@type": "Place",
-      "address": {
+      address: {
         "@type": "PostalAddress",
-        "addressLocality": job.location || "Nepal",
-        "addressCountry": "NP"
-      }
+        addressLocality: job.location || "Nepal",
+        addressCountry: "NP",
+      },
     },
-    "baseSalary": job.salaryText ? {
-      "@type": "MonetaryAmount",
-      "currency": "NPR",
-      "value": {
-        "@type": "QuantitativeValue",
-        "value": job.salaryText
-      }
-    } : undefined,
-    "url": job.applyUrl
+    baseSalary: job.salaryText
+      ? {
+          "@type": "MonetaryAmount",
+          currency: "NPR",
+          value: {
+            "@type": "QuantitativeValue",
+            value: job.salaryText,
+          },
+        }
+      : undefined,
+    url: job.applyUrl,
   }));
 
   // Skeleton components
@@ -233,7 +297,6 @@ export default function HomeContent() {
     </Card>
   );
 
-
   return (
     <div className="min-h-screen">
       <script
@@ -242,7 +305,9 @@ export default function HomeContent() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(collectionPageSchema),
+        }}
       />
       {jobPostingStructuredData.map((data: any, index: number) => (
         <script
@@ -262,23 +327,28 @@ export default function HomeContent() {
                 <div className="mb-6">
                   <h1 className="text-3xl md:text-4xl font-bold text-gray-900  leading-snug mb-4">
                     Find Jobs in Nepal
-                    <span className="block text-[#0A66C2] mt-2">Latest Opportunities {new Date().getFullYear()}</span>
+                    <span className="block text-[#0A66C2] mt-2">
+                      Latest Opportunities {new Date().getFullYear()}
+                    </span>
                   </h1>
                   <p className="text-base md:text-lg text-gray-600 mb-2 leading-relaxed">
                     Discover 1000+ job opportunities from top Nepali job portals
                   </p>
                   <p className="text-sm text-gray-500">
-                    Search across MeroJob, Kantipur Job, JobsNepal, KumariJob, and more - all in one place
+                    Search across MeroJob, Kantipur Job, JobsNepal, KumariJob,
+                    and more - all in one place
                   </p>
                 </div>
-                
+
                 {/* Search Bar with Select Toggle - Reference Style */}
                 <div className="bg-white rounded-full shadow-lg p-2 mb-6 flex items-center gap-2">
                   {/* Job Type Select Toggle - Left */}
                   <div className="relative">
                     <select
                       value={jobType}
-                      onChange={(e) => setJobType(e.target.value as "job" | "internship")}
+                      onChange={(e) =>
+                        setJobType(e.target.value as "job" | "internship")
+                      }
                       className="appearance-none bg-[#0A66C2]/10 border border-white rounded-full px-4 py-3 pr-8 h-12 text-sm font-medium text-[#0A66C2] focus:outline-none focus:ring-2 focus:ring-[#0A66C2] cursor-pointer min-w-[140px]"
                     >
                       <option value="job">All Jobs</option>
@@ -318,19 +388,25 @@ export default function HomeContent() {
                     <div className="text-xl md:text-2xl font-bold text-[#0A66C2] mb-1">
                       {stats.total.toLocaleString()}+
                     </div>
-                    <div className="text-xs text-gray-600 font-medium">Total Jobs</div>
+                    <div className="text-xs text-gray-600 font-medium">
+                      Total Jobs
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-xl md:text-2xl font-bold text-[#0A66C2] mb-1">
                       {stats.totalJobs.toLocaleString()}+
                     </div>
-                    <div className="text-xs text-gray-600 font-medium">Full-Time</div>
+                    <div className="text-xs text-gray-600 font-medium">
+                      Full-Time
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-xl md:text-2xl font-bold text-[#0A66C2] mb-1">
                       {stats.totalInternships.toLocaleString()}+
                     </div>
-                    <div className="text-xs text-gray-600 font-medium">Internships</div>
+                    <div className="text-xs text-gray-600 font-medium">
+                      Internships
+                    </div>
                   </div>
                 </div>
               </div>
@@ -369,7 +445,10 @@ export default function HomeContent() {
               </p>
             </div>
             <Link href={`/jobs?urgency=${expiringFilter}`}>
-              <Button size="lg" className="hidden md:flex bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-md hover:shadow-lg transition-all">
+              <Button
+                size="lg"
+                className="hidden md:flex bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-md hover:shadow-lg transition-all"
+              >
                 View All Expiring
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
@@ -419,7 +498,7 @@ export default function HomeContent() {
               30 Days
             </button>
           </div>
-          
+
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <SkeletonJobCard />
@@ -440,16 +519,15 @@ export default function HomeContent() {
         </div>
       </section>
 
-   
-
       {/* Features Section */}
       <section className="container mx-auto px-4 py-20">
-          <div className="text-center mb-16">
+        <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900  leading-snug mb-4">
-            Nepal's most comprehensive job search platform - aggregating opportunities from all major portals
+            Nepal's most comprehensive job search platform - aggregating
+            opportunities from all major portals
           </h2>
         </div>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
             <CardContent className="pt-8 pb-8">
@@ -458,16 +536,19 @@ export default function HomeContent() {
                   <Search className="w-8 h-8 text-gray-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Comprehensive Search</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    Comprehensive Search
+                  </h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Search across multiple job portals from one place. Filter by category, 
-                    location, job type, and more to find exactly what you're looking for.
+                    Search across multiple job portals from one place. Filter by
+                    category, location, job type, and more to find exactly what
+                    you're looking for.
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
             <CardContent className="pt-8 pb-8">
               <div className="flex items-start gap-4 mb-4">
@@ -475,16 +556,19 @@ export default function HomeContent() {
                   <Zap className="w-8 h-8 text-gray-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Updated Daily</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    Updated Daily
+                  </h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Our automated system scrapes the latest job postings daily from top 
-                    Nepali job portals, ensuring you never miss an opportunity.
+                    Our automated system scrapes the latest job postings daily
+                    from top Nepali job portals, ensuring you never miss an
+                    opportunity.
                   </p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          
+
           <Card className="group hover:shadow-lg transition-all duration-300 bg-white rounded-lg shadow-sm">
             <CardContent className="pt-8 pb-8">
               <div className="flex items-start gap-4 mb-4">
@@ -492,10 +576,13 @@ export default function HomeContent() {
                   <MapPin className="w-8 h-8 text-gray-600" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">Nepal-Wide Coverage</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    Nepal-Wide Coverage
+                  </h3>
                   <p className="text-sm text-gray-600 leading-relaxed">
-                    Find opportunities in Kathmandu, Pokhara, Lalitpur, and cities 
-                    throughout Nepal. Remote and on-site positions available.
+                    Find opportunities in Kathmandu, Pokhara, Lalitpur, and
+                    cities throughout Nepal. Remote and on-site positions
+                    available.
                   </p>
                 </div>
               </div>
@@ -519,31 +606,35 @@ export default function HomeContent() {
                 Latest Job Opportunities
               </h2>
               <p className="text-xl text-muted-foreground">
-                Discover the most recent job postings from top companies in Nepal
+                Discover the most recent job postings from top companies in
+                Nepal
               </p>
             </div>
             <Link href="/jobs">
-              <Button size="lg" className="hidden md:flex bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-md hover:shadow-lg transition-all">
+              <Button
+                size="lg"
+                className="hidden md:flex bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-md hover:shadow-lg transition-all"
+              >
                 View All Jobs
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
           </div>
-          
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-          </div>
-        ) : jobs.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-600">No jobs</p>
-          </div>
-        ) : (
+
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+            </div>
+          ) : jobs.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-lg text-gray-600">No jobs</p>
+            </div>
+          ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {jobs.slice(0, 6).map((job: any) => (
@@ -553,7 +644,11 @@ export default function HomeContent() {
               {jobs.length > 6 && (
                 <div className="text-center mt-10">
                   <Link href="/jobs">
-                    <Button size="lg" variant="outline" className="border border-gray-300 px-8 py-6 text-lg hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border border-gray-300 px-8 py-6 text-lg hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors"
+                    >
                       View All {total} Jobs
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </Button>
@@ -580,7 +675,8 @@ export default function HomeContent() {
                 Latest Internship Opportunities
               </h2>
               <p className="text-xl text-muted-foreground">
-                Discover the most recent internship postings from top companies in Nepal
+                Discover the most recent internship postings from top companies
+                in Nepal
               </p>
             </div>
             <Link href="/internships">
@@ -590,21 +686,21 @@ export default function HomeContent() {
               </Button>
             </Link>
           </div>
-          
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-            <SkeletonJobCard />
-          </div>
-        ) : internships.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-lg text-gray-600">No jobs</p>
-          </div>
-        ) : (
+
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+              <SkeletonJobCard />
+            </div>
+          ) : internships.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-lg text-gray-600">No jobs</p>
+            </div>
+          ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {internships.slice(0, 6).map((internship: any) => (
@@ -614,7 +710,11 @@ export default function HomeContent() {
               {internships.length > 6 && (
                 <div className="text-center mt-10">
                   <Link href="/internships">
-                    <Button size="lg" variant="outline" className="border border-blue-300 px-8 py-6 text-lg hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border border-blue-300 px-8 py-6 text-lg hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors"
+                    >
                       View All Internships
                       <ArrowRight className="ml-2 w-5 h-5" />
                     </Button>
@@ -635,16 +735,27 @@ export default function HomeContent() {
                 <Info className="w-6 h-6 text-blue-600" />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">About Our Service</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  About Our Service
+                </h3>
                 <p className="text-gray-700 leading-relaxed mb-3">
-                  JobKhoj is a job aggregator that collects job listings from various Nepali job portals to provide you with a comprehensive search experience. We use automated systems to gather publicly available job postings, ensuring you have access to the latest opportunities all in one place.
+                  kamkhoj is a job aggregator that collects job listings from
+                  various Nepali job portals to provide you with a comprehensive
+                  search experience. We use automated systems to gather publicly
+                  available job postings, ensuring you have access to the latest
+                  opportunities all in one place.
                 </p>
                 <div className="flex items-start gap-3 mt-4 p-4 bg-white/80 rounded-lg">
                   <Shield className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-semibold text-gray-900 mb-1">Ethical & Transparent</p>
+                    <p className="text-sm font-semibold text-gray-900 mb-1">
+                      Ethical & Transparent
+                    </p>
                     <p className="text-sm text-gray-600">
-                      We only collect publicly available information. We don't break any terms of service, and we respect the original job sources. All job applications are handled directly through the original job portals.
+                      We only collect publicly available information. We don't
+                      break any terms of service, and we respect the original
+                      job sources. All job applications are handled directly
+                      through the original job portals.
                     </p>
                   </div>
                 </div>
@@ -674,10 +785,13 @@ export default function HomeContent() {
                     <FileText className="w-8 h-8 text-gray-600" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">Resume Tips</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      Resume Tips
+                    </h3>
                     <p className="text-sm text-gray-600 leading-relaxed">
-                      Learn how to create a standout resume that gets noticed by employers. 
-                      Get tips on formatting, keywords, and highlighting your achievements.
+                      Learn how to create a standout resume that gets noticed by
+                      employers. Get tips on formatting, keywords, and
+                      highlighting your achievements.
                     </p>
                   </div>
                 </div>
@@ -691,10 +805,13 @@ export default function HomeContent() {
                     <Users className="w-8 h-8 text-gray-600" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">Interview Prep</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      Interview Prep
+                    </h3>
                     <p className="text-sm text-gray-600 leading-relaxed">
-                      Prepare for success with common interview questions, body language tips, 
-                      and strategies to make a great first impression.
+                      Prepare for success with common interview questions, body
+                      language tips, and strategies to make a great first
+                      impression.
                     </p>
                   </div>
                 </div>
@@ -708,10 +825,13 @@ export default function HomeContent() {
                     <TrendingUp className="w-8 h-8 text-gray-600" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">Career Growth</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      Career Growth
+                    </h3>
                     <p className="text-sm text-gray-600 leading-relaxed">
-                      Discover career paths, salary insights, and growth opportunities 
-                      in Nepal's job market. Plan your professional journey.
+                      Discover career paths, salary insights, and growth
+                      opportunities in Nepal's job market. Plan your
+                      professional journey.
                     </p>
                   </div>
                 </div>
@@ -725,10 +845,13 @@ export default function HomeContent() {
                     <Clock className="w-8 h-8 text-gray-600" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">Daily Updates</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      Daily Updates
+                    </h3>
                     <p className="text-sm text-gray-600 leading-relaxed">
-                      New job opportunities are added daily from top Nepali job portals. 
-                      Check back regularly to never miss an opportunity.
+                      New job opportunities are added daily from top Nepali job
+                      portals. Check back regularly to never miss an
+                      opportunity.
                     </p>
                   </div>
                 </div>
@@ -742,10 +865,13 @@ export default function HomeContent() {
                     <MapPin className="w-8 h-8 text-gray-600" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">Location Based</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      Location Based
+                    </h3>
                     <p className="text-sm text-gray-600 leading-relaxed">
-                      Find jobs in Kathmandu, Pokhara, Lalitpur, and cities across Nepal. 
-                      Filter by location to find opportunities near you.
+                      Find jobs in Kathmandu, Pokhara, Lalitpur, and cities
+                      across Nepal. Filter by location to find opportunities
+                      near you.
                     </p>
                   </div>
                 </div>
@@ -759,10 +885,13 @@ export default function HomeContent() {
                     <Sparkles className="w-8 h-8 text-gray-600" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">Free Service</h3>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      Free Service
+                    </h3>
                     <p className="text-sm text-gray-600 leading-relaxed">
-                      JobKhoj is completely free to use. No sign-up required. 
-                      Browse jobs, apply directly, and start your career journey today.
+                      kamkhoj is completely free to use. No sign-up required.
+                      Browse jobs, apply directly, and start your career journey
+                      today.
                     </p>
                   </div>
                 </div>

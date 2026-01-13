@@ -46,7 +46,7 @@ export function Navbar() {
             href="/" 
             className="text-xl font-bold text-gray-900"
           >
-            JobKhoj
+            kamkhoj
           </Link>
 
           {/* Desktop Navigation */}

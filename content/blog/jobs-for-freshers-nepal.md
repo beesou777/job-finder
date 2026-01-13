@@ -35,9 +35,9 @@ With the growth of digital marketing, there are increasing opportunities for fre
 
 ## Where to Find Fresher Jobs
 
-Use JobKhoj to search for entry-level positions. Filter by experience level and look for keywords like "fresher", "entry-level", or "trainee".
+Use kamkhoj to search for entry-level positions. Filter by experience level and look for keywords like "fresher", "entry-level", or "trainee".
 
 ## Conclusion
 
-Starting your career is an exciting journey. Use the right tools, stay persistent, and don't be afraid to start with internships or entry-level positions. [Browse fresher jobs](/jobs) on JobKhoj today.
+Starting your career is an exciting journey. Use the right tools, stay persistent, and don't be afraid to start with internships or entry-level positions. [Browse fresher jobs](/jobs) on kamkhoj today.
 

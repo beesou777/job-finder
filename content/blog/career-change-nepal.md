@@ -101,5 +101,5 @@ Skills that work across industries:
 
 ## Conclusion
 
-Career change is possible with planning and persistence. [Explore job opportunities](/jobs) on JobKhoj to find your next career path.
+Career change is possible with planning and persistence. [Explore job opportunities](/jobs) on kamkhoj to find your next career path.
 

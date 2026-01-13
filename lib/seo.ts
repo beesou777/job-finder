@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API || "https://kamkhoj.eventeir.ai";
-const SITE_NAME = "JobKhoj";
+const BASE_URL = process.env.NEXT_PUBLIC_API || "https://kamkhoj.com";
+const SITE_NAME = "kamkhoj";
 
 /**
  * Generate metadata for job detail pages
@@ -14,7 +14,7 @@ export function generateJobMetadata(job: {
   deadline?: string | null;
   id: string;
 }): Metadata {
-  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` - ${job.location}` : ""} | JobKhoj`;
+  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` - ${job.location}` : ""} | kamkhoj`;
   const description = job.description
     ? `${job.description.substring(0, 120)}...`
     : `Apply for ${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` in ${job.location}` : ""}. Job opportunity in Nepal.${job.deadline ? ` Deadline: ${job.deadline}.` : ""}`;
@@ -59,7 +59,7 @@ export function generateCategoryMetadata(
       `nepal ${categoryName.toLowerCase()} jobs`,
     ],
     openGraph: {
-      title: `${categoryName} Jobs in Nepal | JobKhoj`,
+      title: `${categoryName} Jobs in Nepal | kamkhoj`,
       description: `Latest ${categoryName} job opportunities in Nepal`,
       url: `${BASE_URL}/jobs?category=${encodeURIComponent(categoryName.toLowerCase())}`,
     },
@@ -89,7 +89,7 @@ export function generateLocationMetadata(
       `nepal jobs ${city.toLowerCase()}`,
     ],
     openGraph: {
-      title: `Jobs in ${city}, Nepal | JobKhoj`,
+      title: `Jobs in ${city}, Nepal | kamkhoj`,
       description: `Latest job opportunities in ${city}, Nepal`,
       url: `${BASE_URL}/jobs/location/${encodeURIComponent(city.toLowerCase())}`,
     },
@@ -200,8 +200,8 @@ export function generateOrganizationSchema() {
     description: "Best Job Aggregator Sites in Nepal - Find jobs and internships across Nepal from all major portals",
     sameAs: [
       // Add social media URLs when available
-      // "https://www.facebook.com/jobkhoj",
-      // "https://www.linkedin.com/company/jobkhoj",
+      // "https://www.facebook.com/kamkhoj",
+      // "https://www.linkedin.com/company/kamkhoj",
     ],
   };
 }
@@ -252,7 +252,7 @@ export function generateCollectionPageSchema(totalItems: number) {
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Best Job Aggregator Sites in Nepal - JobKhoj",
+    name: "Best Job Aggregator Sites in Nepal - kamkhoj",
     description: `Job aggregator sites in Nepal - Browse ${totalItems}+ job listings aggregated from top Nepali job portals including MeroJob, JobsNepal, KumariJob, Kantipur Job, and more.`,
     url: BASE_URL,
     mainEntity: {

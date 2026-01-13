@@ -10,17 +10,21 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getBlogPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { MarkdownContent } from "@/components/MarkdownContent";
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   const post = getBlogPostBySlug(params.slug);
-  
+
   if (!post) {
     return {
-      title: "Blog Post Not Found | JobKhoj",
+      title: "Blog Post Not Found | kamkhoj",
     };
   }
 
   return {
-    title: `${post.title} | JobKhoj Blog`,
+    title: `${post.title} | kamkhoj Blog`,
     description: post.description,
     keywords: [
       post.title.toLowerCase(),
@@ -33,7 +37,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       description: post.description,
       type: "article",
       publishedTime: post.date,
-      url: `https://kamkhoj.eventeir.ai/blog/${params.slug}`,
+      url: `https://www.kamkhoj.com//blog/${params.slug}`,
     },
     twitter: {
       card: "summary_large_image",
@@ -41,7 +45,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       description: post.description,
     },
     alternates: {
-      canonical: `https://kamkhoj.eventeir.ai/blog/${params.slug}`,
+      canonical: `https://www.kamkhoj.com//blog/${params.slug}`,
     },
   };
 }
@@ -86,7 +90,13 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
               <div className="flex items-center gap-4 text-gray-600 text-sm">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  <span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                  <span>
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4" />
@@ -106,11 +116,18 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             {post.faqs && post.faqs.length > 0 && (
               <Card className="mb-8">
                 <CardContent className="pt-6">
-                  <h2 className="text-2xl font-bold mb-4 text-gray-900">Frequently Asked Questions</h2>
+                  <h2 className="text-2xl font-bold mb-4 text-gray-900">
+                    Frequently Asked Questions
+                  </h2>
                   <div className="space-y-4">
                     {post.faqs.map((faq, index) => (
-                      <div key={index} className="border-l-4 border-blue-500 pl-4">
-                        <h3 className="font-semibold text-gray-900 mb-2">{faq.question}</h3>
+                      <div
+                        key={index}
+                        className="border-l-4 border-blue-500 pl-4"
+                      >
+                        <h3 className="font-semibold text-gray-900 mb-2">
+                          {faq.question}
+                        </h3>
                         <p className="text-gray-700">{faq.answer}</p>
                       </div>
                     ))}
@@ -122,10 +139,15 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             {/* Related Posts */}
             {relatedPosts.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4 text-gray-900">Related Articles</h2>
+                <h2 className="text-2xl font-bold mb-4 text-gray-900">
+                  Related Articles
+                </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {relatedPosts.map((relatedPost) => (
-                    <Link key={relatedPost.slug} href={`/blog/${relatedPost.slug}`}>
+                    <Link
+                      key={relatedPost.slug}
+                      href={`/blog/${relatedPost.slug}`}
+                    >
                       <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
                         <CardContent className="pt-6">
                           <h3 className="font-bold mb-2 text-gray-900 line-clamp-2">
@@ -153,7 +175,8 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                   Ready to Find Your Next Job?
                 </h2>
                 <p className="text-gray-600 mb-6">
-                  Browse thousands of job opportunities from top Nepali job portals
+                  Browse thousands of job opportunities from top Nepali job
+                  portals
                 </p>
                 <Link href="/jobs">
                   <Button className="bg-blue-600 hover:bg-blue-700 text-white">
@@ -168,4 +191,3 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     </>
   );
 }
-

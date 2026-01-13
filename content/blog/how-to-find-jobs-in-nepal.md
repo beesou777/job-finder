@@ -7,7 +7,7 @@ readTime: "8 min read"
 slug: "how-to-find-jobs-in-nepal"
 faqs:
   - question: "What are the best job portals in Nepal?"
-    answer: "The best job portals include MeroJob, JobsNepal, KumariJob, and JobKhoj which aggregates jobs from multiple sources, saving you time by searching all platforms at once."
+    answer: "The best job portals include MeroJob, JobsNepal, KumariJob, and kamkhoj which aggregates jobs from multiple sources, saving you time by searching all platforms at once."
   - question: "How long does it take to find a job in Nepal?"
     answer: "It typically takes 1-3 months to find a job in Nepal, depending on your field, experience level, and the current job market conditions. Being proactive and using multiple job search strategies can help speed up the process."
   - question: "Should I apply in English or Nepali?"
@@ -24,9 +24,9 @@ Finding a job in Nepal can be challenging, but with the right strategies, you ca
 
 Nepal has several excellent job portals that aggregate opportunities from various sources. Here are the best platforms to start your search:
 
-### 1. JobKhoj - The Job Aggregator
+### 1. kamkhoj - The Job Aggregator
 
-JobKhoj is Nepal's #1 job aggregator, collecting job listings from multiple portals including MeroJob, JobsNepal, KumariJob, and more. This saves you time by searching all platforms at once.
+kamkhoj is Nepal's #1 job aggregator, collecting job listings from multiple portals including MeroJob, JobsNepal, KumariJob, and more. This saves you time by searching all platforms at once.
 
 ### 2. MeroJob
 
@@ -60,7 +60,7 @@ When applying for jobs in Nepal, keep these tips in mind:
 
 ## Conclusion
 
-With these strategies, you're well on your way to finding the perfect job in Nepal. Remember to be persistent, stay organized, and leverage all available resources including job aggregators like JobKhoj.
+With these strategies, you're well on your way to finding the perfect job in Nepal. Remember to be persistent, stay organized, and leverage all available resources including job aggregators like kamkhoj.
 
 Ready to start your job search? [Browse thousands of jobs](/jobs) from top Nepali job portals.
 

@@ -73,5 +73,5 @@ You can find free resume templates online or use professional services. Make sur
 
 ## Conclusion
 
-A great resume opens doors. Take time to craft it well, and don't forget to tailor it for each job application. [Browse jobs](/jobs) on JobKhoj to find opportunities that match your skills.
+A great resume opens doors. Take time to craft it well, and don't forget to tailor it for each job application. [Browse jobs](/jobs) on kamkhoj to find opportunities that match your skills.
 

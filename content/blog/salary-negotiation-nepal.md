@@ -20,7 +20,7 @@ Salary negotiation can be uncomfortable, but it's an important skill in Nepal's 
 - Factor in location (Kathmandu vs. other cities)
 
 ### Resources
-- Job portals (JobKhoj, MeroJob)
+- Job portals (kamkhoj, MeroJob)
 - Industry reports
 - Professional networks
 - Salary surveys
@@ -90,5 +90,5 @@ Salary negotiation can be uncomfortable, but it's an important skill in Nepal's 
 
 ## Conclusion
 
-Salary negotiation is a skill that improves with practice. Do your research, be professional, and know your worth. [Explore job opportunities](/jobs) on JobKhoj to find positions that match your expectations.
+Salary negotiation is a skill that improves with practice. Do your research, be professional, and know your worth. [Explore job opportunities](/jobs) on kamkhoj to find positions that match your expectations.
 

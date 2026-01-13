@@ -33,10 +33,10 @@ export async function generateMetadata({
   params: { city: string };
 }): Promise<Metadata> {
   const city = params.city.toLowerCase();
-  
+
   if (!VALID_CITIES.includes(city)) {
     return {
-      title: "Location Not Found | JobKhoj",
+      title: "Location Not Found | kamkhoj",
     };
   }
 
@@ -44,7 +44,7 @@ export async function generateMetadata({
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
     const cityName = formatCityName(city);
-    
+
     // Count jobs in this city
     const total = await jobRepository.count({
       where: {
@@ -67,7 +67,7 @@ export async function generateMetadata({
     return generateLocationMetadata(cityName, validTotal);
   } catch (error) {
     return {
-      title: `Jobs in ${formatCityName(city)} | JobKhoj`,
+      title: `Jobs in ${formatCityName(city)} | kamkhoj`,
       description: `Find jobs in ${formatCityName(city)}, Nepal`,
     };
   }
@@ -123,9 +123,12 @@ export default async function LocationPage({
   }
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://kamkhoj.eventeir.ai" },
-    { name: "Jobs", url: "https://kamkhoj.eventeir.ai/jobs" },
-    { name: `Jobs in ${cityName}`, url: `https://kamkhoj.eventeir.ai/jobs/location/${city}` },
+    { name: "Home", url: "https://www.kamkhoj.com/" },
+    { name: "Jobs", url: "https://www.kamkhoj.com//jobs" },
+    {
+      name: `Jobs in ${cityName}`,
+      url: `https://www.kamkhoj.com//jobs/location/${city}`,
+    },
   ]);
 
   return (
@@ -143,13 +146,19 @@ export default async function LocationPage({
             <nav className="mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
               <ol className="flex items-center space-x-2">
                 <li>
-                  <Link href="/" className="hover:text-blue-600 transition-colors">
+                  <Link
+                    href="/"
+                    className="hover:text-blue-600 transition-colors"
+                  >
                     Home
                   </Link>
                 </li>
                 <li className="text-gray-400">/</li>
                 <li>
-                  <Link href="/jobs" className="hover:text-blue-600 transition-colors">
+                  <Link
+                    href="/jobs"
+                    className="hover:text-blue-600 transition-colors"
+                  >
                     Jobs
                   </Link>
                 </li>
@@ -172,52 +181,75 @@ export default async function LocationPage({
               <p className="text-lg text-gray-600 mb-4">
                 Browse {total.toLocaleString()} job opportunities in {cityName}
               </p>
-              
+
               {/* SEO Content Section */}
               <div className="prose max-w-none text-gray-700 mt-6">
                 {cityName === "Kathmandu" && (
                   <p className="text-base leading-relaxed">
-                    Kathmandu is Nepal's capital and economic hub, offering the most diverse job opportunities in the country. 
-                    The city is home to major corporations, IT companies, banks, international organizations, and government offices. 
-                    With a growing tech sector, established banking industry, and thriving tourism sector, Kathmandu provides excellent career 
-                    prospects across various industries. The city's infrastructure, networking opportunities, and higher salary ranges make it 
-                    an attractive destination for job seekers.
+                    Kathmandu is Nepal's capital and economic hub, offering the
+                    most diverse job opportunities in the country. The city is
+                    home to major corporations, IT companies, banks,
+                    international organizations, and government offices. With a
+                    growing tech sector, established banking industry, and
+                    thriving tourism sector, Kathmandu provides excellent career
+                    prospects across various industries. The city's
+                    infrastructure, networking opportunities, and higher salary
+                    ranges make it an attractive destination for job seekers.
                   </p>
                 )}
                 {cityName === "Pokhara" && (
                   <p className="text-base leading-relaxed">
-                    Pokhara is Nepal's second-largest city and a major tourist destination, offering unique job opportunities in tourism, 
-                    hospitality, and related services. The city's scenic beauty and growing infrastructure have attracted investment in 
-                    hotels, restaurants, adventure sports companies, and service industries. Pokhara also has a growing IT sector and 
-                    educational institutions, providing diverse employment options. The city offers a better work-life balance compared 
-                    to Kathmandu while still providing good career opportunities.
+                    Pokhara is Nepal's second-largest city and a major tourist
+                    destination, offering unique job opportunities in tourism,
+                    hospitality, and related services. The city's scenic beauty
+                    and growing infrastructure have attracted investment in
+                    hotels, restaurants, adventure sports companies, and service
+                    industries. Pokhara also has a growing IT sector and
+                    educational institutions, providing diverse employment
+                    options. The city offers a better work-life balance compared
+                    to Kathmandu while still providing good career
+                    opportunities.
                   </p>
                 )}
                 {cityName === "Butwal" && (
                   <p className="text-base leading-relaxed">
-                    Butwal is a rapidly growing city in western Nepal, strategically located on the East-West Highway. The city has 
-                    emerged as an important commercial and industrial hub, offering opportunities in manufacturing, trading, transportation, 
-                    and services. With its proximity to India and growing infrastructure, Butwal provides good employment prospects in 
-                    logistics, retail, and small to medium enterprises. The city's lower cost of living and growing economy make it an 
-                    attractive option for job seekers.
+                    Butwal is a rapidly growing city in western Nepal,
+                    strategically located on the East-West Highway. The city has
+                    emerged as an important commercial and industrial hub,
+                    offering opportunities in manufacturing, trading,
+                    transportation, and services. With its proximity to India
+                    and growing infrastructure, Butwal provides good employment
+                    prospects in logistics, retail, and small to medium
+                    enterprises. The city's lower cost of living and growing
+                    economy make it an attractive option for job seekers.
                   </p>
                 )}
                 {cityName === "Biratnagar" && (
                   <p className="text-base leading-relaxed">
-                    Biratnagar is Nepal's industrial capital and the largest city in the eastern region. The city is home to numerous 
-                    manufacturing industries, including jute mills, sugar factories, and other processing plants. Biratnagar offers 
-                    opportunities in industrial management, engineering, trade, and commerce. The city's strategic location near the 
-                    Indian border makes it a hub for cross-border trade, creating jobs in logistics, customs, and trading. With growing 
-                    infrastructure and industrial development, Biratnagar provides stable employment opportunities.
+                    Biratnagar is Nepal's industrial capital and the largest
+                    city in the eastern region. The city is home to numerous
+                    manufacturing industries, including jute mills, sugar
+                    factories, and other processing plants. Biratnagar offers
+                    opportunities in industrial management, engineering, trade,
+                    and commerce. The city's strategic location near the Indian
+                    border makes it a hub for cross-border trade, creating jobs
+                    in logistics, customs, and trading. With growing
+                    infrastructure and industrial development, Biratnagar
+                    provides stable employment opportunities.
                   </p>
                 )}
                 {cityName === "Lalitpur" && (
                   <p className="text-base leading-relaxed">
-                    Lalitpur (Patan) is part of the Kathmandu Valley and has emerged as a major tech and startup hub. The city is home 
-                    to many IT companies, software development firms, and innovative startups. Lalitpur offers excellent opportunities in 
-                    technology, design, and creative industries. The city's proximity to Kathmandu while maintaining its own identity makes 
-                    it attractive for professionals seeking tech jobs, remote work opportunities, and startup culture. With good infrastructure 
-                    and growing business ecosystem, Lalitpur provides modern career opportunities.
+                    Lalitpur (Patan) is part of the Kathmandu Valley and has
+                    emerged as a major tech and startup hub. The city is home to
+                    many IT companies, software development firms, and
+                    innovative startups. Lalitpur offers excellent opportunities
+                    in technology, design, and creative industries. The city's
+                    proximity to Kathmandu while maintaining its own identity
+                    makes it attractive for professionals seeking tech jobs,
+                    remote work opportunities, and startup culture. With good
+                    infrastructure and growing business ecosystem, Lalitpur
+                    provides modern career opportunities.
                   </p>
                 )}
               </div>
@@ -340,4 +372,3 @@ export default async function LocationPage({
     </>
   );
 }
-

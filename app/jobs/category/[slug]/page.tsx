@@ -21,20 +21,20 @@ export async function generateMetadata({
   try {
     const dataSource = await getDataSource();
     const categoryRepository = dataSource.getRepository(Category);
-    
+
     const category = await categoryRepository.findOne({
       where: { slug: params.slug },
     });
 
     if (!category) {
       return {
-        title: "Category Not Found | JobKhoj",
+        title: "Category Not Found | kamkhoj",
       };
     }
 
     const jobRepository = dataSource.getRepository(Job);
     const now = new Date();
-    
+
     // Count active jobs in this category
     const allJobs = await jobRepository.find({
       where: { categoryId: category.id },
@@ -48,7 +48,7 @@ export async function generateMetadata({
     return generateCategoryMetadata(category.name, total);
   } catch (error) {
     return {
-      title: "Category | JobKhoj",
+      title: "Category | kamkhoj",
     };
   }
 }
@@ -105,9 +105,12 @@ export default async function CategoryPage({
   }
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://kamkhoj.eventeir.ai" },
-    { name: "Jobs", url: "https://kamkhoj.eventeir.ai/jobs" },
-    { name: `${category.name} Jobs`, url: `https://kamkhoj.eventeir.ai/jobs/category/${params.slug}` },
+    { name: "Home", url: "https://www.kamkhoj.com/" },
+    { name: "Jobs", url: "https://www.kamkhoj.com//jobs" },
+    {
+      name: `${category.name} Jobs`,
+      url: `https://www.kamkhoj.com//jobs/category/${params.slug}`,
+    },
   ]);
 
   return (
@@ -125,13 +128,19 @@ export default async function CategoryPage({
             <nav className="mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
               <ol className="flex items-center space-x-2">
                 <li>
-                  <Link href="/" className="hover:text-blue-600 transition-colors">
+                  <Link
+                    href="/"
+                    className="hover:text-blue-600 transition-colors"
+                  >
                     Home
                   </Link>
                 </li>
                 <li className="text-gray-400">/</li>
                 <li>
-                  <Link href="/jobs" className="hover:text-blue-600 transition-colors">
+                  <Link
+                    href="/jobs"
+                    className="hover:text-blue-600 transition-colors"
+                  >
                     Jobs
                   </Link>
                 </li>
@@ -152,29 +161,45 @@ export default async function CategoryPage({
                 {category.name} Jobs in Nepal
               </h1>
               <p className="text-lg text-gray-600 mb-4">
-                Browse {total.toLocaleString()} {category.name.toLowerCase()} job opportunities
+                Browse {total.toLocaleString()} {category.name.toLowerCase()}{" "}
+                job opportunities
               </p>
-              
+
               {/* SEO Content Section */}
               <div className="prose max-w-none text-gray-700 mt-6">
                 {(() => {
                   const catLower = category.name.toLowerCase();
-                  if (catLower.includes("it") || catLower.includes("software") || catLower.includes("technology")) {
+                  if (
+                    catLower.includes("it") ||
+                    catLower.includes("software") ||
+                    catLower.includes("technology")
+                  ) {
                     return (
                       <p className="text-base leading-relaxed">
-                        IT and software jobs in Nepal are growing rapidly, with opportunities in software development, web development, 
-                        mobile app development, and emerging technologies. The sector offers competitive salaries, remote work options, 
-                        and excellent career growth potential. Major IT companies, startups, and international clients provide diverse 
-                        opportunities for tech professionals across all experience levels.
+                        IT and software jobs in Nepal are growing rapidly, with
+                        opportunities in software development, web development,
+                        mobile app development, and emerging technologies. The
+                        sector offers competitive salaries, remote work options,
+                        and excellent career growth potential. Major IT
+                        companies, startups, and international clients provide
+                        diverse opportunities for tech professionals across all
+                        experience levels.
                       </p>
                     );
                   }
-                  if (catLower.includes("banking") || catLower.includes("finance")) {
+                  if (
+                    catLower.includes("banking") ||
+                    catLower.includes("finance")
+                  ) {
                     return (
                       <p className="text-base leading-relaxed">
-                        Banking and finance jobs in Nepal offer stability, competitive salaries, and excellent benefits. The sector includes 
-                        commercial banks, development banks, microfinance institutions, and financial service companies. Opportunities range 
-                        from entry-level positions to senior management roles, with clear career progression paths and professional development 
+                        Banking and finance jobs in Nepal offer stability,
+                        competitive salaries, and excellent benefits. The sector
+                        includes commercial banks, development banks,
+                        microfinance institutions, and financial service
+                        companies. Opportunities range from entry-level
+                        positions to senior management roles, with clear career
+                        progression paths and professional development
                         opportunities.
                       </p>
                     );
@@ -182,37 +207,54 @@ export default async function CategoryPage({
                   if (catLower.includes("marketing")) {
                     return (
                       <p className="text-base leading-relaxed">
-                        Marketing jobs in Nepal span digital marketing, traditional marketing, brand management, and sales. The growing digital 
-                        landscape has created demand for digital marketing specialists, social media managers, content creators, and SEO experts. 
-                        Marketing roles offer creative opportunities, competitive compensation, and the chance to work with diverse brands and 
-                        industries.
+                        Marketing jobs in Nepal span digital marketing,
+                        traditional marketing, brand management, and sales. The
+                        growing digital landscape has created demand for digital
+                        marketing specialists, social media managers, content
+                        creators, and SEO experts. Marketing roles offer
+                        creative opportunities, competitive compensation, and
+                        the chance to work with diverse brands and industries.
                       </p>
                     );
                   }
                   if (catLower.includes("engineering")) {
                     return (
                       <p className="text-base leading-relaxed">
-                        Engineering jobs in Nepal include civil engineering, software engineering, electrical engineering, and mechanical engineering. 
-                        The infrastructure development sector, IT industry, and manufacturing companies provide diverse opportunities. Engineering 
-                        positions offer good salaries, project-based work, and opportunities to work on significant infrastructure and development 
-                        projects across Nepal.
+                        Engineering jobs in Nepal include civil engineering,
+                        software engineering, electrical engineering, and
+                        mechanical engineering. The infrastructure development
+                        sector, IT industry, and manufacturing companies provide
+                        diverse opportunities. Engineering positions offer good
+                        salaries, project-based work, and opportunities to work
+                        on significant infrastructure and development projects
+                        across Nepal.
                       </p>
                     );
                   }
-                  if (catLower.includes("hr") || catLower.includes("human resource")) {
+                  if (
+                    catLower.includes("hr") ||
+                    catLower.includes("human resource")
+                  ) {
                     return (
                       <p className="text-base leading-relaxed">
-                        HR jobs in Nepal involve talent acquisition, employee relations, training and development, and organizational development. 
-                        As companies grow and professionalize, the demand for skilled HR professionals is increasing. HR roles offer opportunities 
-                        to work across industries, contribute to organizational success, and help shape workplace culture and employee experiences.
+                        HR jobs in Nepal involve talent acquisition, employee
+                        relations, training and development, and organizational
+                        development. As companies grow and professionalize, the
+                        demand for skilled HR professionals is increasing. HR
+                        roles offer opportunities to work across industries,
+                        contribute to organizational success, and help shape
+                        workplace culture and employee experiences.
                       </p>
                     );
                   }
                   return (
                     <p className="text-base leading-relaxed">
-                      {category.name} jobs in Nepal offer diverse opportunities across various industries and experience levels. The sector 
-                      provides competitive employment options with opportunities for career growth and professional development. Browse available 
-                      positions to find the right opportunity that matches your skills and career goals.
+                      {category.name} jobs in Nepal offer diverse opportunities
+                      across various industries and experience levels. The
+                      sector provides competitive employment options with
+                      opportunities for career growth and professional
+                      development. Browse available positions to find the right
+                      opportunity that matches your skills and career goals.
                     </p>
                   );
                 })()}
@@ -325,4 +367,3 @@ export default async function CategoryPage({
     </>
   );
 }
-

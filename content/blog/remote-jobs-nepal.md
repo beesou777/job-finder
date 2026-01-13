@@ -30,7 +30,7 @@ Remote work has become increasingly popular in Nepal, offering flexibility and a
 
 ## Where to Find Remote Jobs
 
-Search for remote jobs on JobKhoj by filtering for remote positions. You can also check international platforms like Upwork, Fiverr, and Remote.co.
+Search for remote jobs on kamkhoj by filtering for remote positions. You can also check international platforms like Upwork, Fiverr, and Remote.co.
 
 ## Tips for Remote Work Success
 
@@ -42,5 +42,5 @@ Search for remote jobs on JobKhoj by filtering for remote positions. You can als
 
 ## Conclusion
 
-Remote work offers great opportunities for professionals in Nepal. Start your search for remote positions on [JobKhoj](/jobs) today.
+Remote work offers great opportunities for professionals in Nepal. Start your search for remote positions on [kamkhoj](/jobs) today.
 

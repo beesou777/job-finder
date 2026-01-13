@@ -16,6 +16,7 @@ A fullstack Next.js application that scrapes and aggregates job listings from ma
 ## 📋 Features
 
 ### ✨ Core Features
+
 - **Job Scraping** from major Nepal job portals:
   - MeroCareer.com
   - JobsNepal.com
@@ -24,8 +25,8 @@ A fullstack Next.js application that scrapes and aggregates job listings from ma
   - RamroJob.com
   - InternSathi.com (Internships & Jobs)
   - JobAxle.com (Internships & Jobs)
-  
 - **Internship Scraping** from popular platforms:
+
   - InternSathi.com
   - JobAxle.com
   - More platforms coming soon...
@@ -38,6 +39,7 @@ A fullstack Next.js application that scrapes and aggregates job listings from ma
 - **Authentication:** Secure login with NextAuth
 
 ### 🔮 Coming Soon (Post-MVP)
+
 - Automated cron job scheduling
 - Redis caching for faster performance
 - Email/Telegram job alerts
@@ -106,6 +108,7 @@ job-finder/
 ## 🛠️ Setup Instructions
 
 ### Prerequisites
+
 - Node.js 18+ installed
 - PostgreSQL installed and running
 - npm or yarn package manager
@@ -158,6 +161,7 @@ NEXT_PUBLIC_API=http://localhost:3000
 ```
 
 **Generate a secure NEXTAUTH_SECRET:**
+
 ```bash
 openssl rand -base64 32
 ```
@@ -209,11 +213,13 @@ The application will be available at `http://localhost:3000`
 ### For Admins
 
 1. **Login:** Navigate to `/login`
+
    - Default credentials: `admin@example.com` / `admin123`
 
 2. **Dashboard:** Access `/dashboard` after logging in
 
 3. **Run Scraper:**
+
    - Click "Run Scraper Now" button
    - Wait for the process to complete (30-60 seconds)
    - View statistics showing jobs scraped
@@ -227,38 +233,42 @@ The application will be available at `http://localhost:3000`
 
 ### Public Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/jobs` | List all jobs (supports `?source=merojob`, `?limit=50`, `?offset=0`) |
-| GET | `/api/jobs/:id` | Get single job details |
-| GET | `/api/stats` | Get statistics (total jobs, by source) |
+| Method | Endpoint        | Description                                                          |
+| ------ | --------------- | -------------------------------------------------------------------- |
+| GET    | `/api/jobs`     | List all jobs (supports `?source=merojob`, `?limit=50`, `?offset=0`) |
+| GET    | `/api/jobs/:id` | Get single job details                                               |
+| GET    | `/api/stats`    | Get statistics (total jobs, by source)                               |
 
 ### Protected Endpoints (Require Auth)
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/scrape/run` | Trigger job scraper |
-| DELETE | `/api/jobs/:id` | Delete a job |
-| POST | `/api/auth/register` | Register new user |
+| Method | Endpoint             | Description         |
+| ------ | -------------------- | ------------------- |
+| POST   | `/api/scrape/run`    | Trigger job scraper |
+| DELETE | `/api/jobs/:id`      | Delete a job        |
+| POST   | `/api/auth/register` | Register new user   |
 
 ### Example API Calls
 
 **Get all jobs:**
+
 ```bash
 curl http://localhost:3000/api/jobs
 ```
 
 **Get jobs from specific source:**
+
 ```bash
 curl http://localhost:3000/api/jobs?source=merojob&limit=20
 ```
 
 **Get statistics:**
+
 ```bash
 curl http://localhost:3000/api/stats
 ```
 
 **Trigger scraper (requires auth token):**
+
 ```bash
 curl -X POST http://localhost:3000/api/scrape/run \
   -H "Cookie: next-auth.session-token=YOUR_TOKEN"
@@ -271,14 +281,15 @@ The scraper can run automatically using GitHub Actions on a daily schedule.
 ### Setup GitHub Actions Workflow
 
 1. **Add Secrets to GitHub (Optional):**
+
    - Go to your repository → Settings → Secrets and variables → Actions
-   - Add `API_URL` secret only if you want to override the default URL (default: `https://kamkhoj.eventeir.ai`)
+   - Add `API_URL` secret only if you want to override the default URL (default: `https://www.kamkhoj.com/`)
 
 2. **Workflow File:**
    - `.github/workflows/daily-scraper-api.yml` - Calls your deployed API endpoint (recommended)
    - `.github/workflows/daily-scraper.yml` - Runs scraper script directly (alternative, requires DATABASE_URL)
 
-The workflow runs daily at midnight UTC and calls your deployed API at `https://kamkhoj.eventeir.ai/api/scrape/run`.
+The workflow runs daily at midnight UTC and calls your deployed API at `https://www.kamkhoj.com//api/scrape/run`.
 
 ### Manual Trigger
 
@@ -295,7 +306,7 @@ gh workflow run "Daily Job Scraper"
 ### Test the API Endpoint
 
 ```bash
-curl -X POST https://kamkhoj.eventeir.ai/api/scrape/run \
+curl -X POST https://www.kamkhoj.com//api/scrape/run \
   -H "Content-Type: application/json"
 ```
 
@@ -323,11 +334,11 @@ curl -X POST https://kamkhoj.eventeir.ai/api/scrape/run \
 
 ```typescript
 {
-  id: number;              // Primary key
-  email: string;           // Unique email
-  password: string;        // Hashed password
-  role: string;            // User role (admin/user)
-  createdAt: Date;         // Registration date
+  id: number; // Primary key
+  email: string; // Unique email
+  password: string; // Hashed password
+  role: string; // User role (admin/user)
+  createdAt: Date; // Registration date
 }
 ```
 
@@ -336,6 +347,7 @@ curl -X POST https://kamkhoj.eventeir.ai/api/scrape/run \
 ### Scraper Architecture
 
 1. **Individual Scrapers** (`lib/scrapers/*.ts`):
+
    - Each portal has its own scraper module
    - Uses Axios to fetch HTML
    - Uses Cheerio to parse DOM
@@ -343,6 +355,7 @@ curl -X POST https://kamkhoj.eventeir.ai/api/scrape/run \
    - Returns standardized job objects
 
 2. **Orchestrator** (`lib/scraper-runner.ts`):
+
    - Runs all scrapers in parallel
    - Handles errors gracefully
    - Aggregates results
@@ -432,6 +445,7 @@ export async function runAllScrapers() {
 ### Deploy to Other Platforms
 
 Works on any platform supporting Next.js:
+
 - Railway
 - Render
 - DigitalOcean App Platform
@@ -545,6 +559,7 @@ Contributions are welcome! Please:
 ## 📞 Support
 
 For issues and questions:
+
 - Open a GitHub issue
 - Check existing documentation
 - Review troubleshooting section
@@ -552,6 +567,7 @@ For issues and questions:
 ## 🙏 Acknowledgments
 
 Built with:
+
 - Next.js team for the amazing framework
 - Shadcn for beautiful UI components
 - Nepal job portals for providing job data
@@ -561,13 +577,17 @@ Built with:
 **Made with ❤️ for Nepal's job seekers**
 
 # Get all job URLs
+
 GET /api/kamkhoj/data/all
 
 # Get URLs from a specific source
+
 GET /api/kamkhoj/data/all?source=necojobs
 
 # Get only internship URLs
+
 GET /api/kamkhoj/data/all?type=internship
 
 # Combine filters
+
 GET /api/kamkhoj/data/all?source=internsathi&type=internship

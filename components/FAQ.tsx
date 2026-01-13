@@ -12,12 +12,12 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
   {
-    question: "How does JobKhoj work?",
-    answer: "JobKhoj is a job aggregator that collects job listings from various Nepali job portals including MeroJob, Kantipur Job, Jobs Nepal, and more. We use automated systems to gather publicly available job postings, ensuring you have access to the latest opportunities all in one place. You can search, filter, and apply directly through our platform."
+    question: "How does kamkhoj work?",
+    answer: "kamkhoj is a job aggregator that collects job listings from various Nepali job portals including MeroJob, Kantipur Job, Jobs Nepal, and more. We use automated systems to gather publicly available job postings, ensuring you have access to the latest opportunities all in one place. You can search, filter, and apply directly through our platform."
   },
   {
-    question: "Is JobKhoj free to use?",
-    answer: "Yes, JobKhoj is completely free to use. There's no sign-up required, no hidden fees, and no premium memberships. You can browse all job listings, search by category, location, or job type, and apply directly to jobs without any cost."
+    question: "Is kamkhoj free to use?",
+    answer: "Yes, kamkhoj is completely free to use. There's no sign-up required, no hidden fees, and no premium memberships. You can browse all job listings, search by category, location, or job type, and apply directly to jobs without any cost."
   },
   {
     question: "How often are job listings updated?",
@@ -25,11 +25,11 @@ const faqData: FAQItem[] = [
   },
   {
     question: "Do I need to create an account?",
-    answer: "No, you don't need to create an account to browse or search for jobs on JobKhoj. However, when you click 'Apply Now' on a job listing, you'll be redirected to the original job portal where you may need to create an account to submit your application, depending on their requirements."
+    answer: "No, you don't need to create an account to browse or search for jobs on kamkhoj. However, when you click 'Apply Now' on a job listing, you'll be redirected to the original job portal where you may need to create an account to submit your application, depending on their requirements."
   },
   {
     question: "How do I apply for a job?",
-    answer: "Simply click the 'Apply Now' button on any job card. This will redirect you to the original job portal where the position was posted. You'll complete the application process directly on that portal. JobKhoj acts as a search and discovery platform, while applications are handled by the original job sources."
+    answer: "Simply click the 'Apply Now' button on any job card. This will redirect you to the original job portal where the position was posted. You'll complete the application process directly on that portal. kamkhoj acts as a search and discovery platform, while applications are handled by the original job sources."
   },
   {
     question: "Can I filter jobs by location?",
@@ -41,7 +41,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "What types of jobs are available?",
-    answer: "JobKhoj aggregates various types of opportunities including full-time jobs, part-time positions, internships, contract work, and remote positions across multiple industries such as IT, Finance, Marketing, Healthcare, Education, and more. You can filter by job type to find exactly what you're looking for."
+    answer: "kamkhoj aggregates various types of opportunities including full-time jobs, part-time positions, internships, contract work, and remote positions across multiple industries such as IT, Finance, Marketing, Healthcare, Education, and more. You can filter by job type to find exactly what you're looking for."
   },
   {
     question: "How do you collect job listings?",
@@ -49,7 +49,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "Can I save jobs for later?",
-    answer: "Currently, JobKhoj doesn't have a built-in save feature. However, you can bookmark job pages in your browser or keep track of job IDs. We recommend applying to jobs as soon as possible since positions can fill quickly. You can always use the search and filter features to find jobs again."
+    answer: "Currently, kamkhoj doesn't have a built-in save feature. However, you can bookmark job pages in your browser or keep track of job IDs. We recommend applying to jobs as soon as possible since positions can fill quickly. You can always use the search and filter features to find jobs again."
   }
 ];
 
@@ -78,7 +78,7 @@ export function FAQ() {
             </h2>
           </div>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Everything you need to know about using JobKhoj to find your next opportunity
+            Everything you need to know about using kamkhoj to find your next opportunity
           </p>
         </div>
 
