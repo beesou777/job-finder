@@ -123,7 +123,7 @@ function RemoteJobsPageContent() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const query = searchValue || searchParams.get("q") || "";
+      const query = searchValue || searchParams.get("q") || "*";
       
       const payload = {
         searches: [
@@ -299,11 +299,13 @@ function RemoteJobsPageContent() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Countries</SelectItem>
-                  {getFacetOptions("countries").map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.value} ({item.count})
-                    </SelectItem>
-                  ))}
+                  {getFacetOptions("countries")
+                    .filter((item) => item.value && item.value.trim() !== "")
+                    .map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.value} ({item.count})
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
 
@@ -317,11 +319,13 @@ function RemoteJobsPageContent() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Levels</SelectItem>
-                  {getFacetOptions("experience_level").map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.value} ({item.count})
-                    </SelectItem>
-                  ))}
+                  {getFacetOptions("experience_level")
+                    .filter((item) => item.value && item.value.trim() !== "")
+                    .map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.value} ({item.count})
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
 
@@ -335,11 +339,13 @@ function RemoteJobsPageContent() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Functions</SelectItem>
-                  {getFacetOptions("functions").map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.value} ({item.count})
-                    </SelectItem>
-                  ))}
+                  {getFacetOptions("functions")
+                    .filter((item) => item.value && item.value.trim() !== "")
+                    .map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.value} ({item.count})
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
 
@@ -353,11 +359,14 @@ function RemoteJobsPageContent() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Locations</SelectItem>
-                  {getFacetOptions("locations").slice(0, 50).map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.value} ({item.count})
-                    </SelectItem>
-                  ))}
+                  {getFacetOptions("locations")
+                    .filter((item) => item.value && item.value.trim() !== "")
+                    .slice(0, 50)
+                    .map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.value} ({item.count})
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
 
@@ -371,11 +380,13 @@ function RemoteJobsPageContent() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Degrees</SelectItem>
-                  {getFacetOptions("degrees").map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.value} ({item.count})
-                    </SelectItem>
-                  ))}
+                  {getFacetOptions("degrees")
+                    .filter((item) => item.value && item.value.trim() !== "")
+                    .map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.value} ({item.count})
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
 
@@ -389,11 +400,13 @@ function RemoteJobsPageContent() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Types</SelectItem>
-                  {getFacetOptions("type").map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.value} ({item.count})
-                    </SelectItem>
-                  ))}
+                  {getFacetOptions("type")
+                    .filter((item) => item.value && item.value.trim() !== "")
+                    .map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.value} ({item.count})
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
 
@@ -406,11 +419,13 @@ function RemoteJobsPageContent() {
                   <SelectValue placeholder="Travel" />
                 </SelectTrigger>
                 <SelectContent>
-                  {getFacetOptions("travel_requirements").map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
-                      {item.value} ({item.count})
-                    </SelectItem>
-                  ))}
+                  {getFacetOptions("travel_requirements")
+                    .filter((item) => item.value && item.value.trim() !== "")
+                    .map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.value} ({item.count})
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </div>
