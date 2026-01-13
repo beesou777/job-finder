@@ -123,7 +123,7 @@ function RemoteJobsPageContent() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const query = searchValue || searchParams.get("q") || "frontend";
+      const query = searchValue || searchParams.get("q") || "";
       
       const payload = {
         searches: [
