@@ -35,6 +35,10 @@ import { scrapeInternNepalList } from "./listPages/internepal";
 import { scrapeInternNepalDetail } from "./detailPages/internepal";
 import { scrapeFroxjobList } from "./listPages/froxjob";
 import { scrapeFroxjobDetail } from "./detailPages/froxjob";
+import { scrapeSojoDataList } from "./listPages/sojodata";
+import { scrapeSojoDataDetail } from "./detailPages/sojodata";
+import { scrapeRecruitNepalList } from "./listPages/recruitnepal";
+import { scrapeRecruitNepalDetail } from "./detailPages/recruitnepal";
 import { JobData } from "./core/types";
 
 export interface ScraperConfig {
@@ -219,6 +223,24 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     ],
     maxPages: 50, // Will fetch all pages automatically
     maxJobs: 500,
+  },
+  {
+    baseUrl: "https://api.sojodata.com",
+    source: "sojodata",
+    listScraper: scrapeSojoDataList,
+    detailScraper: scrapeSojoDataDetail,
+    listingUrls: ["https://api.sojodata.com/api/v1/public/getEliteJobs?limit=100&page=1"], // API endpoint
+    maxPages: 50, // Will fetch all pages automatically via API
+    maxJobs: 500,
+  },
+  {
+    baseUrl: "https://recruitnepal.com",
+    source: "recruitnepal",
+    listScraper: scrapeRecruitNepalList,
+    detailScraper: scrapeRecruitNepalDetail,
+    listingUrls: ["https://api.recruitnepal.com/api/v1/application/questions?page=1&limit=1000"], // API endpoint (uses questions API which includes vacancy data)
+    maxPages: 100, // Will fetch all pages automatically via API
+    maxJobs: 1000,
   },
   // Note: sajilojob.com domain not found
   // If you have the correct URL, add it here
