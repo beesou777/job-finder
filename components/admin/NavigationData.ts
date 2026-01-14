@@ -8,7 +8,8 @@ import {
     Bell,
     CheckSquare,
     FileText,
-    Building2
+    Building2,
+    Target
 } from "lucide-react";
 
 export const ADMIN_NAV_ITEMS = [
@@ -23,6 +24,12 @@ export const ADMIN_NAV_ITEMS = [
         label: "Company Enrichment",
         icon: Building2,
         description: "Hiring intent intelligence and sales outreach."
+    },
+    {
+        id: "opportunities",
+        label: "Client Opportunities",
+        icon: Target,
+        description: "LinkedIn companies not on our platform - sales leads."
     },
     {
         id: "sources",
