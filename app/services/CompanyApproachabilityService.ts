@@ -143,28 +143,36 @@ export async function getCompanyApproachability(
       
       // Match by normalized name
       if (companyNormalizedName === normalizedName && normalizedName !== "") {
+        // Filter out LinkedIn URLs from website
+        const website = company.website && !company.website.includes('linkedin.com') 
+          ? company.website 
+          : null;
+        
         return {
           isKnownCompany: true,
           hasContactInfo: !!(company.email || company.phoneNumber),
           email: company.email,
           phoneNumber: company.phoneNumber,
-          website: company.website,
+          website,
           source,
         };
       }
 
-      // Match by domain if available
+      // Match by domain if available (but skip LinkedIn URLs)
       if (companyDomain && company.website) {
         const companyDomainNormalized = extractDomain(company.website);
-        if (companyDomainNormalized === companyDomain) {
-          return {
-            isKnownCompany: true,
-            hasContactInfo: !!(company.email || company.phoneNumber),
-            email: company.email,
-            phoneNumber: company.phoneNumber,
-            website: company.website,
-            source,
-          };
+        if (companyDomainNormalized && companyDomainNormalized === companyDomain) {
+          // Only return if it's not a LinkedIn URL
+          if (!company.website.includes('linkedin.com')) {
+            return {
+              isKnownCompany: true,
+              hasContactInfo: !!(company.email || company.phoneNumber),
+              email: company.email,
+              phoneNumber: company.phoneNumber,
+              website: company.website,
+              source,
+            };
+          }
         }
       }
     }

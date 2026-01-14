@@ -25,19 +25,39 @@ export function normalizeCompanyName(name: string | null | undefined): string {
 
 /**
  * Extract domain from URL
+ * Filters out LinkedIn company URLs and removes /mycompany/ path
  */
 export function extractDomain(url: string | null | undefined): string | null {
   if (!url) return null;
   
+  // Remove /mycompany/ from LinkedIn URLs
+  let cleanedUrl = url.replace(/\/mycompany\/?$/, "").replace(/\/mycompany\//, "/");
+  
   try {
     // Add protocol if missing
-    const urlWithProtocol = url.startsWith("http") ? url : `https://${url}`;
+    const urlWithProtocol = cleanedUrl.startsWith("http") ? cleanedUrl : `https://${cleanedUrl}`;
     const urlObj = new URL(urlWithProtocol);
-    return urlObj.hostname.replace(/^www\./, "").toLowerCase();
+    const hostname = urlObj.hostname.replace(/^www\./, "").toLowerCase();
+    
+    // Filter out LinkedIn company URLs - return null if it's a LinkedIn company page
+    if (hostname === "linkedin.com" || hostname === "www.linkedin.com") {
+      return null;
+    }
+    
+    return hostname;
   } catch {
     // If URL parsing fails, try to extract domain manually
-    const match = url.match(/(?:https?:\/\/)?(?:www\.)?([^\/\s]+)/);
-    return match ? match[1].toLowerCase().replace(/^www\./, "") : null;
+    const match = cleanedUrl.match(/(?:https?:\/\/)?(?:www\.)?([^\/\s]+)/);
+    if (!match) return null;
+    
+    const hostname = match[1].toLowerCase().replace(/^www\./, "");
+    
+    // Filter out LinkedIn
+    if (hostname === "linkedin.com" || hostname === "www.linkedin.com") {
+      return null;
+    }
+    
+    return hostname;
   }
 }
 

@@ -42,6 +42,14 @@ interface OpportunityScore {
     website?: string | null;
     source?: string;
   };
+  linkedInJobs?: Array<{
+    id: number;
+    job_id: string;
+    title: string;
+    job_date: string | Date | null;
+    place: string | null;
+    job_link: string | null;
+  }>;
 }
 
 interface OpportunitiesResponse {
@@ -507,7 +515,7 @@ Job Finder Team`;
               </div>
               <div>
                 <h4 className="font-semibold mb-2">LinkedIn Activity</h4>
-                <p className="text-sm">
+                <p className="text-sm mb-3">
                   {selectedCompany.linkedInJobCount} active job{selectedCompany.linkedInJobCount !== 1 ? 's' : ''}
                   {selectedCompany.lastJobDate && (
                     <> • Last posted: {new Date(selectedCompany.lastJobDate as string).toLocaleDateString()}</>
@@ -516,21 +524,69 @@ Job Finder Team`;
                     <> • <span className="text-green-600">Posted in last 7 days</span></>
                   )}
                 </p>
+                {selectedCompany.linkedInJobs && selectedCompany.linkedInJobs.length > 0 && (
+                  <div className="space-y-2 mt-3">
+                    <h5 className="font-medium text-sm">LinkedIn Jobs:</h5>
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {selectedCompany.linkedInJobs.map((job) => (
+                        <div key={job.id} className="border rounded-md p-2 text-sm">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1">
+                              <p className="font-medium">{job.title}</p>
+                              {job.place && (
+                                <p className="text-muted-foreground text-xs mt-1">{job.place}</p>
+                              )}
+                              {job.job_date && (
+                                <p className="text-muted-foreground text-xs">
+                                  {new Date(job.job_date as string).toLocaleDateString()}
+                                </p>
+                              )}
+                            </div>
+                            {job.job_link && (
+                              <Button size="sm" variant="outline" asChild>
+                                <a
+                                  href={job.job_link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-1"
+                                >
+                                  <ExternalLink className="w-3 h-3" />
+                                  View
+                                </a>
+                              </Button>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-              {(selectedCompany.domain || selectedCompany.approachability?.website) && (
-                <div>
-                  <h4 className="font-semibold mb-2">Website</h4>
-                  <a
-                    href={selectedCompany.approachability?.website || `https://${selectedCompany.domain}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline flex items-center gap-2"
-                  >
-                    {selectedCompany.approachability?.website || selectedCompany.domain}
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
-              )}
+              {(() => {
+                // Prefer approachability website, then domain, but exclude LinkedIn URLs
+                const website = selectedCompany.approachability?.website || 
+                  (selectedCompany.domain ? `https://${selectedCompany.domain}` : null);
+                
+                // Filter out LinkedIn company URLs
+                if (website && (website.includes('linkedin.com/company') || website.includes('linkedin.com/mycompany'))) {
+                  return null;
+                }
+                
+                return website ? (
+                  <div>
+                    <h4 className="font-semibold mb-2">Website</h4>
+                    <a
+                      href={website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:underline flex items-center gap-2"
+                    >
+                      {website}
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                ) : null;
+              })()}
               {selectedCompany.approachability?.hasContactInfo && (
                 <div>
                   <h4 className="font-semibold mb-2">Contact Information</h4>

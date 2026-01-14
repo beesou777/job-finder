@@ -34,6 +34,7 @@ export interface CompanyMatchResult {
     title: string;
     job_date: Date | null;
     place: string | null;
+    job_link: string | null;
   }>;
 }
 
@@ -183,6 +184,7 @@ export async function findOpportunityGaps(): Promise<CompanyMatchResult[]> {
         title: job.title,
         job_date: job.job_date,
         place: job.place,
+        job_link: job.job_link,
       })),
     });
   }

@@ -61,6 +61,10 @@ export async function GET(request: NextRequest) {
     const serializedOpportunities = limitedOpportunities.map(opp => ({
       ...opp,
       lastJobDate: opp.lastJobDate ? opp.lastJobDate.toISOString() : null,
+      linkedInJobs: opp.linkedInJobs?.map(job => ({
+        ...job,
+        job_date: job.job_date ? (job.job_date instanceof Date ? job.job_date.toISOString() : new Date(job.job_date).toISOString()) : null,
+      })),
     }));
 
     // Calculate metadata

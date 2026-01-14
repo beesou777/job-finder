@@ -21,6 +21,14 @@ export interface OpportunityScore {
   isNepalLocation: boolean;
   status: MatchStatus;
   approachability?: ApproachabilityData;
+  linkedInJobs?: Array<{
+    id: number;
+    job_id: string;
+    title: string;
+    job_date: Date | null;
+    place: string | null;
+    job_link: string | null;
+  }>;
 }
 
 /**
@@ -159,6 +167,7 @@ export async function calculateOpportunityScore(
     isNepalLocation: hasNepalLocation,
     status: matchResult.status,
     approachability,
+    linkedInJobs: matchResult.linkedInJobs,
   };
 }
 
