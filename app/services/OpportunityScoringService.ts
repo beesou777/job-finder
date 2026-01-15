@@ -78,13 +78,13 @@ export async function calculateOpportunityScore(
   // Signal 3: Posted in last 7 days (+30)
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  
+
   const recentJobs = matchResult.linkedInJobs.filter(job => {
     if (!job.job_date) return false;
     const jobDate = job.job_date instanceof Date ? job.job_date : new Date(job.job_date);
     return !isNaN(jobDate.getTime()) && jobDate >= sevenDaysAgo;
   });
-  
+
   const hasRecentJobs = recentJobs.length > 0;
   if (hasRecentJobs) {
     score += 30;
@@ -101,7 +101,7 @@ export async function calculateOpportunityScore(
   const nepalJobs = matchResult.linkedInJobs.filter(
     job => isNepalLocation(job.place)
   );
-  
+
   const hasNepalLocation = nepalJobs.length > 0;
   if (hasNepalLocation) {
     score += 10;
@@ -127,22 +127,27 @@ export async function calculateOpportunityScore(
     .map(date => date instanceof Date ? date : new Date(date as string))
     .filter(date => !isNaN(date.getTime())) // Filter out invalid dates
     .sort((a, b) => b.getTime() - a.getTime());
-  
+
   const lastJobDate = jobDates.length > 0 ? jobDates[0] : null;
 
-  // Get approachability data from JSON files
+  // Get approachability data from DB or JSON files
   const approachability = await getCompanyApproachability(
     matchResult.company,
     matchResult.domain
   );
 
-  // Bonus points if we have contact info from JSON files
-  if (approachability.hasContactInfo) {
+  // Integrate approachability score if available (from DB)
+  if (approachability.score !== undefined) {
+    // We weight the approachability score (0-100) highly
+    // and combine it with LinkedIn signals
+    score = (score * 0.4) + (approachability.score * 0.6);
+    reasons.push(`Enhanced approachability score: ${approachability.score} (weighted)`);
+  } else if (approachability.hasContactInfo) {
     score += 15;
     reasons.push("Contact info available in our database");
   }
 
-  // Recalculate level after bonus
+  // Recalculate level after integration
   let finalLevel: OpportunityLevel;
   if (score >= 100) {
     finalLevel = "VERY_HIGH";
@@ -180,7 +185,7 @@ export async function scoreAllOpportunities(
   const scores = await Promise.all(
     matchResults.map(calculateOpportunityScore)
   );
-  
+
   return scores.sort((a, b) => {
     // Sort by: NOT_ON_PLATFORM first, then by score descending
     if (a.status !== b.status) {

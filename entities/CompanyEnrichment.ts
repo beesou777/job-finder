@@ -1,6 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, Index, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { CanonicalCompany } from "./CanonicalCompany";
 
+export enum ApproachabilityLevel {
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
+}
+
 export enum HiringIntentLevel {
   LOW = "LOW",
   MEDIUM = "MEDIUM",
@@ -114,6 +120,17 @@ export class CompanyEnrichment {
   @Column({ type: "boolean", default: false })
   @Index()
   isNewLead: boolean; // Company not in CanonicalCompany table
+
+  @Column({ type: "int", default: 0 })
+  @Index()
+  approachabilityScore: number; // 0-100
+
+  @Column({ type: "enum", enum: ApproachabilityLevel, default: ApproachabilityLevel.LOW })
+  @Index()
+  approachabilityLevel: ApproachabilityLevel;
+
+  @Column({ type: "timestamp", nullable: true })
+  approachabilityLastComputed: Date;
 
   @Column({ type: "boolean", default: false })
   @Index()

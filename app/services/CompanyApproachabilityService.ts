@@ -1,11 +1,9 @@
-/**
- * Company Approachability Service
- * Maps companies from JSON files to determine approachability
- */
-
 import { normalizeCompanyName, extractDomain } from "./CompanyNormalizationService";
 import { readFileSync } from "fs";
 import { join } from "path";
+import { getDataSource } from "@/lib/db";
+import { CompanyEnrichment, ApproachabilityLevel } from "@/entities/CompanyEnrichment";
+import { CanonicalCompany } from "@/entities/CanonicalCompany";
 
 interface CompanyFromJSON {
   name: string;
@@ -21,7 +19,9 @@ export interface ApproachabilityData {
   email?: string | null;
   phoneNumber?: string | null;
   website?: string | null;
-  source?: string; // Which JSON file it came from
+  source?: string; // Which JSON file or 'DB'
+  score?: number;
+  level?: ApproachabilityLevel;
 }
 
 // Cache for loaded companies
@@ -127,12 +127,41 @@ async function loadCompanyData(): Promise<Map<string, CompanyFromJSON[]>> {
 }
 
 /**
- * Check if a company is approachable based on JSON data
+ * Check if a company is approachable based on database or JSON data
  */
 export async function getCompanyApproachability(
   companyName: string,
   companyDomain: string | null
 ): Promise<ApproachabilityData> {
+  // 1. Check Database First
+  try {
+    const dataSource = await getDataSource();
+    const enrichmentRepo = dataSource.getRepository(CompanyEnrichment);
+
+    // Exact match or domain match in DB
+    const enrichment = await enrichmentRepo.createQueryBuilder("enrichment")
+      .leftJoinAndSelect("enrichment.company", "company")
+      .where("LOWER(company.name) = LOWER(:name)", { name: companyName })
+      .orWhere(companyDomain ? "LOWER(enrichment.website) LIKE LOWER(:domain)" : "1=0", { domain: `%${companyDomain}%` })
+      .getOne();
+
+    if (enrichment) {
+      return {
+        isKnownCompany: true,
+        hasContactInfo: !!(enrichment.email || enrichment.phoneNumber),
+        email: enrichment.email,
+        phoneNumber: enrichment.phoneNumber,
+        website: enrichment.website,
+        source: "DB",
+        score: enrichment.approachabilityScore,
+        level: enrichment.approachabilityLevel,
+      };
+    }
+  } catch (dbError) {
+    console.warn("Failed to check database for approachability:", dbError);
+  }
+
+  // 2. Fallback to JSON files
   const companies = await loadCompanyData();
   const normalizedName = normalizeCompanyName(companyName);
 
@@ -140,14 +169,14 @@ export async function getCompanyApproachability(
   for (const [source, companyList] of companies.entries()) {
     for (const company of companyList) {
       const companyNormalizedName = normalizeCompanyName(company.name);
-      
+
       // Match by normalized name
       if (companyNormalizedName === normalizedName && normalizedName !== "") {
         // Filter out LinkedIn URLs from website
-        const website = company.website && !company.website.includes('linkedin.com') 
-          ? company.website 
+        const website = company.website && !company.website.includes('linkedin.com')
+          ? company.website
           : null;
-        
+
         return {
           isKnownCompany: true,
           hasContactInfo: !!(company.email || company.phoneNumber),
@@ -191,14 +220,14 @@ export async function batchGetApproachability(
   companies: Array<{ name: string; domain: string | null }>
 ): Promise<Map<string, ApproachabilityData>> {
   const results = new Map<string, ApproachabilityData>();
-  
+
   // Load all company data once
   await loadCompanyData();
-  
+
   for (const company of companies) {
     const approachability = await getCompanyApproachability(company.name, company.domain);
     results.set(company.name, approachability);
   }
-  
+
   return results;
 }
