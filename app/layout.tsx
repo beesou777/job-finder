@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: {
     default:
       "Best Job Aggregator Sites in Nepal | Job Aggregator Sites in Nepal | kamkhoj",
-    template: "%s | kamkhoj - Nepal's #1 Job Aggregator",
+    template: "%s | kamkhoj",
   },
   description:
     "Best job aggregator sites in Nepal - Find the latest jobs and internships from top Nepali job portals - MeroCareer, JobsNepal, KumariJob, InternSathi, JobAxle all in one place. Your career journey starts here.",
