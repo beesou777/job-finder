@@ -1,14 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compress: true,
+
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: ['kamkhoj.eventeir.ai'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'kamkhoj.eventeir.ai',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        pathname: '/images/**',
+      },
+    ],
   },
-  experimental: {
-    serverComponentsExternalPackages: ['typeorm'],
-  },
+
+  serverExternalPackages: ['typeorm'],
 }
 
 module.exports = nextConfig
-

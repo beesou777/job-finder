@@ -86,7 +86,7 @@ export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteri
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Companies</SelectItem>
-              {companies.map((item) => (
+              {companies.filter((item) => item.value).map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.value} ({item.count})
                 </SelectItem>
@@ -103,7 +103,7 @@ export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteri
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Locations</SelectItem>
-              {places.map((item) => (
+              {places.filter((item) => item.value).map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   {item.value} ({item.count})
                 </SelectItem>

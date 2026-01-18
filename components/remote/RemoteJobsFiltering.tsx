@@ -100,7 +100,7 @@ export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Countries</SelectItem>
-                {getFacetOptions("countries").map((item: any) => (
+                {getFacetOptions("countries").filter((item: any) => item.value).map((item: any) => (
                   <SelectItem key={item.value} value={item.value}>
                     {item.value} ({item.count})
                   </SelectItem>
@@ -118,7 +118,7 @@ export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Levels</SelectItem>
-                {getFacetOptions("experience_level").map((item: any) => (
+                {getFacetOptions("experience_level").filter((item: any) => item.value).map((item: any) => (
                   <SelectItem key={item.value} value={item.value}>
                     {item.value} ({item.count})
                   </SelectItem>
@@ -136,7 +136,7 @@ export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Functions</SelectItem>
-                {getFacetOptions("functions").map((item: any) => (
+                {getFacetOptions("functions").filter((item: any) => item.value).map((item: any) => (
                   <SelectItem key={item.value} value={item.value}>
                     {item.value} ({item.count})
                   </SelectItem>
@@ -154,7 +154,7 @@ export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Locations</SelectItem>
-                {getFacetOptions("locations").slice(0, 50).map((item: any) => (
+                {getFacetOptions("locations").filter((item: any) => item.value).slice(0, 50).map((item: any) => (
                   <SelectItem key={item.value} value={item.value}>
                     {item.value} ({item.count})
                   </SelectItem>
@@ -172,7 +172,7 @@ export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Types</SelectItem>
-                {getFacetOptions("type").map((item: any) => (
+                {getFacetOptions("type").filter((item: any) => item.value).map((item: any) => (
                   <SelectItem key={item.value} value={item.value}>
                     {item.value} ({item.count})
                   </SelectItem>
@@ -189,7 +189,7 @@ export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
                 <SelectValue placeholder="Travel" />
               </SelectTrigger>
               <SelectContent>
-                {getFacetOptions("travel_requirements").map((item: any) => (
+                {getFacetOptions("travel_requirements").filter((item: any) => item.value).map((item: any) => (
                   <SelectItem key={item.value} value={item.value}>
                     {item.value} ({item.count})
                   </SelectItem>
