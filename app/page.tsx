@@ -1,5 +1,15 @@
 import { Metadata } from "next";
-import HomeContent from "@/components/HomeContent";
+import { HomeHero } from "@/components/home/HomeHero";
+import { ExpiringSection } from "@/components/home/ExpiringSection";
+import { LatestJobs } from "@/components/home/LatestJobs";
+import { LatestInternships } from "@/components/home/LatestInternships";
+import { 
+  FeaturesSection, 
+  ScrapingInfoSection, 
+  ResourcesSection 
+} from "@/components/home/HomeStaticSections";
+import { FAQ } from "@/components/FAQ";
+import { getJobs } from "@/lib/data-fetching";
 
 export const metadata: Metadata = {
   title:
@@ -59,6 +69,120 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  return <HomeContent />;
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: { urgency?: string };
+}) {
+  const urgency = searchParams.urgency || "7days";
+  
+  // Prefetch first 10 jobs for SEO structured data (SSR)
+  const { jobs: latestJobs, total } = await getJobs({ limit: 10, type: "job" });
+
+  const baseUrl = "https://www.kamkhoj.com";
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "kamkhoj",
+    description: "Nepal's #1 Job Finder - Find jobs and internships across Nepal",
+    url: baseUrl,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${baseUrl}/jobs?search={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
+  const collectionPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Best Job Aggregator Sites in Nepal - kamkhoj",
+    description: `Job aggregator sites in Nepal - Browse ${total}+ job listings aggregated from top Nepali job portals`,
+    url: baseUrl,
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: total,
+      description: "Job listings aggregated from multiple Nepali job portals",
+    },
+  };
+
+  const jobPostingStructuredData = latestJobs.map((job: any) => ({
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: job.title,
+    description: job.description || job.title,
+    identifier: {
+      "@type": "PropertyValue",
+      name: "kamkhoj",
+      value: job.id,
+    },
+    datePosted: job.createdAt,
+    validThrough:
+      job.expiresAt ||
+      new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    employmentType: job.type === "internship" ? "INTERN" : "FULL_TIME",
+    hiringOrganization: {
+      "@type": "Organization",
+      name: job.company || "Company",
+    },
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: job.location || "Nepal",
+        addressCountry: "NP",
+      },
+    },
+    baseSalary: job.salaryText
+      ? {
+          "@type": "MonetaryAmount",
+          currency: "NPR",
+          value: {
+            "@type": "QuantitativeValue",
+            value: job.salaryText,
+          },
+        }
+      : undefined,
+    url: job.applyUrl,
+  }));
+
+  return (
+    <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(collectionPageSchema),
+        }}
+      />
+      {jobPostingStructuredData.map((data: any, index: number) => (
+        <script
+          key={index}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+        />
+      ))}
+
+      <HomeHero />
+      <ExpiringSection urgency={urgency} />
+      <FeaturesSection />
+      <LatestJobs />
+      <LatestInternships />
+      <ScrapingInfoSection />
+      <ResourcesSection />
+      
+      <section className="bg-gray-50 py-20">
+        <div className="container mx-auto px-4">
+          <FAQ />
+        </div>
+      </section>
+    </div>
+  );
 }
