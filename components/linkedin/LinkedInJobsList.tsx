@@ -1,8 +1,10 @@
 import { getLinkedInJobs } from "@/lib/data-fetching";
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, MapPin, Calendar } from "lucide-react";
+import { Building2, MapPin, Calendar, ArrowRight } from "lucide-react";
 import { Pagination } from "@/components/Pagination";
+import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { slugify } from "@/lib/utils";
 
 import { LinkedInPagination } from "./LinkedInPagination";
 
@@ -14,7 +16,6 @@ interface LinkedInJobsListProps {
   company?: string;
   place?: string;
   datePosted?: string;
-  selectedJobId?: number;
 }
 
 export function LinkedInJobsList({
@@ -25,7 +26,6 @@ export function LinkedInJobsList({
   company,
   place,
   datePosted,
-  selectedJobId,
 }: LinkedInJobsListProps) {
   const ITEMS_PER_PAGE = 20;
 
@@ -57,51 +57,57 @@ export function LinkedInJobsList({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
       {jobs.map((job) => (
-        <Link 
-          key={job.id} 
-          href={`/linkedin-jobs?jobId=${job.id}${search ? `&search=${search}` : ""}${company ? `&company=${company}` : ""}${place ? `&place=${place}` : ""}${datePosted ? `&datePosted=${datePosted}` : ""}${page > 1 ? `&page=${page}` : ""}`}
-          scroll={false}
+        <Card
+          key={job.id}
+          className="h-full flex flex-col border border-gray-300 bg-white hover:shadow-md transition-shadow"
         >
-          <Card
-            className={`border-2 cursor-pointer transition-all hover:shadow-md mb-3 ${
-              selectedJobId === job.id
-                ? "border-[#0A66C2] bg-blue-50"
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-          >
-            <CardContent className="pt-4">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="font-semibold text-base text-gray-900 line-clamp-2 flex-1">
+          <div className="flex-1 flex flex-col pt-6 pb-6 px-6">
+            <div className="flex items-start justify-between gap-3 mb-3 min-h-[4.5rem]">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg font-semibold mb-2 line-clamp-2 leading-snug text-gray-900">
                   {job.title}
                 </h3>
+                {job.company && (
+                  <div className="flex items-center gap-2 mt-2 text-gray-700">
+                    <Building2 className="w-4 h-4 flex-shrink-0 text-gray-500" />
+                    <span className="truncate text-sm font-medium">{job.company}</span>
+                  </div>
+                )}
               </div>
-              {job.company && (
-                <div className="flex items-center text-sm text-gray-600 mb-1">
-                  <Building2 className="h-4 w-4 mr-1" />
-                  <span className="truncate">{job.company}</span>
-                </div>
-              )}
+            </div>
+
+            <div className="flex flex-wrap gap-2 mb-4">
               {job.place && (
-                <div className="flex items-center text-sm text-gray-600 mb-2">
-                  <MapPin className="h-4 w-4 mr-1" />
+                <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
                   <span className="truncate">{job.place}</span>
-                </div>
+                </Badge>
               )}
               {job.job_date && (
-                <div className="flex items-center text-xs text-gray-500">
-                  <Calendar className="h-3 w-3 mr-1" />
+                <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
                   <span>{formatRelativeTime(job.job_date)}</span>
-                </div>
+                </Badge>
               )}
-            </CardContent>
-          </Card>
-        </Link>
+            </div>
+
+            <div className="mt-auto pt-4 border-t border-gray-200">
+              <Link
+                href={`/linkedin-jobs/${slugify(job.title)}-${job.id}`}
+                className="flex items-center justify-between text-[#0A66C2] hover:text-[#004182] font-semibold text-sm transition-colors"
+              >
+                <span>View Details</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </Card>
       ))}
 
       {total > ITEMS_PER_PAGE && (
-        <div className="mt-6">
+        <div className="col-span-full mt-6">
           <LinkedInPagination 
             currentPage={page}
             totalPages={Math.ceil(total / ITEMS_PER_PAGE)}
@@ -116,14 +122,24 @@ export function LinkedInJobsList({
 
 export function LinkedInJobsSkeleton() {
   return (
-    <div className="space-y-4">
-      {[...Array(5)].map((_, i) => (
-        <Card key={i} className="border-2 border-gray-200">
-          <CardContent className="pt-4">
-            <div className="space-y-3">
-              <div className="h-5 bg-gray-200 rounded w-3/4 animate-pulse"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
-              <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse"></div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      {[...Array(6)].map((_, i) => (
+        <Card key={i} className="border border-gray-200 bg-white h-full">
+          <CardContent className="pt-6">
+            <div className="space-y-4">
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
+                <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
+              </div>
+              <div className="pt-4 border-t border-gray-100">
+                <div className="h-4 bg-gray-200 rounded w-1/4 animate-pulse"></div>
+              </div>
             </div>
           </CardContent>
         </Card>

@@ -243,8 +243,12 @@ export const getLinkedInJobs = cache(async (options: {
 
     const dataSource = await getDataSource();
     const linkedinRepository = dataSource.getRepository(LinkedInJob);
+    const now = new Date();
+    const thirtyDaysAgo = new Date(now);
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
-    let query = linkedinRepository.createQueryBuilder("job");
+    let query = linkedinRepository.createQueryBuilder("job")
+        .where("job.job_date >= :thirtyDaysAgo", { thirtyDaysAgo });
 
     if (search) {
         query = query.andWhere(
@@ -329,4 +333,42 @@ export const getLinkedInJobDetails = cache(async (id: number) => {
     const dataSource = await getDataSource();
     const linkedinRepository = dataSource.getRepository(LinkedInJob);
     return await linkedinRepository.findOne({ where: { id } });
+});
+
+export const getRemoteJobs = cache(async (options: { page?: number; limit?: number } = {}) => {
+    const page = options.page || 1;
+    const limit = options.limit || 21;
+
+    try {
+        const response = await fetch(`https://api.ambitionpad.com/api/v1/search/browsejobs?page=${page}&limit=${limit}`, {
+            next: { revalidate: 3600 } // Cache for 1 hour
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch remote jobs");
+        const data = await response.json();
+
+        return {
+            jobs: data.data.jobs || [],
+            total: data.data.pagination?.total || 0,
+            pagination: data.data.pagination
+        };
+    } catch (error) {
+        console.error("Error fetching remote jobs:", error);
+        return { jobs: [], total: 0 };
+    }
+});
+
+export const getRemoteJobDetails = cache(async (id: string) => {
+    try {
+        const response = await fetch(`https://api.ambitionpad.com/api/v1/jobs/job/${id}`, {
+            next: { revalidate: 3600 }
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch remote job details");
+        const data = await response.json();
+        return data.data;
+    } catch (error) {
+        console.error("Error fetching remote job details:", error);
+        return null;
+    }
 });

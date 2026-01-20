@@ -2,6 +2,7 @@ import { getLinkedInJobDetails } from "@/lib/data-fetching";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, MapPin, Calendar, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { addUtmParams } from "@/lib/utils";
 
 interface LinkedInJobDetailProps {
   jobId?: number;
@@ -79,7 +80,7 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
                 asChild
               >
                 <a
-                  href={job.job_link}
+                  href={addUtmParams(job.job_link, "linkedin", String(job.id))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center"
@@ -96,7 +97,7 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
                 asChild
               >
                 <a
-                  href={job.apply_link}
+                  href={addUtmParams(job.apply_link, "linkedin", String(job.id))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center"

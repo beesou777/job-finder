@@ -39,41 +39,24 @@ export default async function LinkedInJobsPage({
         places={filters.places}
       />
       
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex flex-col md:flex-row gap-6">
-          {/* Left Sidebar - Job List */}
-          <div className="w-full md:w-1/3 lg:w-2/5">
-            <div className="sticky top-4">
-              <div className="flex items-center justify-between mb-4">
-                <p className="text-sm text-gray-600">
-                  Total {total.toLocaleString()} LinkedIn Jobs
-                </p>
-              </div>
-
-              {/* No key here because data is already resolved, preventing skeleton flicker on selection */}
-              <LinkedInJobsList 
-                jobs={jobs}
-                total={total}
-                page={page}
-                search={searchParams.search}
-                company={searchParams.company}
-                place={searchParams.place}
-                datePosted={searchParams.datePosted}
-                selectedJobId={jobId}
-              />
-            </div>
+      <div className="container mx-auto px-4 py-8">
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-3xl font-bold text-gray-900">LinkedIn Jobs</h1>
+            <p className="text-sm text-gray-600">
+              Total {total.toLocaleString()} Jobs found
+            </p>
           </div>
 
-          {/* Right Side - Job Details */}
-          <div className="w-full md:w-2/3 lg:w-3/5">
-            <Suspense key={`detail-${jobId}`} fallback={
-               <div className="flex items-center justify-center p-12 bg-white border-2 border-dashed border-gray-200 rounded-lg">
-                 <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
-               </div>
-            }>
-              <LinkedInJobDetail jobId={jobId} />
-            </Suspense>
-          </div>
+          <LinkedInJobsList 
+            jobs={jobs}
+            total={total}
+            page={page}
+            search={searchParams.search}
+            company={searchParams.company}
+            place={searchParams.place}
+            datePosted={searchParams.datePosted}
+          />
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { slugify } from "./utils";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API || "https://kamkhoj.com";
 const SITE_NAME = "kamkhoj";
@@ -35,6 +36,44 @@ export function generateJobMetadata(job: {
     },
     alternates: {
       canonical: `${BASE_URL}/jobs/${job.id}`,
+    },
+  };
+}
+
+/**
+ * Generate metadata for LinkedIn job detail pages
+ */
+export function generateLinkedInJobMetadata(job: {
+  title: string;
+  company?: string | null;
+  place?: string | null;
+  description?: string | null;
+  id: number;
+  slug?: string | null;
+}): Metadata {
+  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.place ? ` - ${job.place}` : ""} | LinkedIn Jobs | kamkhoj`;
+  const description = job.description
+    ? `${job.description.substring(0, 155).replace(/\n/g, ' ')}...`
+    : `Apply for ${job.title}${job.company ? ` at ${job.company}` : ""}${job.place ? ` in ${job.place}` : ""}. LinkedIn job opportunity.`;
+
+  const jobSlug = job.slug || `${slugify(job.title)}-${job.id}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url: `${BASE_URL}/linkedin-jobs/${jobSlug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `${BASE_URL}/linkedin-jobs/${jobSlug}`,
     },
   };
 }
@@ -153,8 +192,8 @@ export function generateJobPostingSchema(job: {
       job.type === "internship"
         ? "INTERN"
         : job.type === "part-time"
-        ? "PART_TIME"
-        : "FULL_TIME",
+          ? "PART_TIME"
+          : "FULL_TIME",
     hiringOrganization: {
       "@type": "Organization",
       name: job.company || "Company",
@@ -185,6 +224,47 @@ export function generateJobPostingSchema(job: {
   }
 
   return baseSchema;
+}
+
+/**
+ * Generate JobPosting structured data for LinkedIn jobs
+ */
+export function generateLinkedInJobPostingSchema(job: {
+  title: string;
+  description?: string | null;
+  company?: string | null;
+  place?: string | null;
+  job_date?: Date | string | null;
+  apply_link: string;
+  id: number;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: job.title,
+    description: job.description || job.title,
+    identifier: {
+      "@type": "PropertyValue",
+      name: SITE_NAME,
+      value: `linkedin-${job.id}`,
+    },
+    datePosted: job.job_date
+      ? (typeof job.job_date === "string" ? job.job_date : job.job_date.toISOString())
+      : new Date().toISOString(),
+    hiringOrganization: {
+      "@type": "Organization",
+      name: job.company || "Company",
+    },
+    jobLocation: {
+      "@type": "Place",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: job.place || "Nepal",
+        addressCountry: "NP",
+      },
+    },
+    url: job.apply_link,
+  };
 }
 
 /**

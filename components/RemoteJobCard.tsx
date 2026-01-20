@@ -1,175 +1,118 @@
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Building2, DollarSign, Briefcase, GraduationCap, ArrowRight } from "lucide-react";
+import { MapPin, Building2, Calendar, ArrowRight, Briefcase } from "lucide-react";
+import { slugify } from "@/lib/utils";
 
 interface RemoteJobCardProps {
   job: {
-    id: string;
-    title: string;
-    company_name: string;
-    company_logo?: string;
-    locations?: string[];
-    functions?: string[];
-    experience_level?: string[];
-    travel_requirements?: string;
-    type?: string;
-    min_salary?: number;
-    max_salary?: number;
-    currency_type?: string;
-    salary_period?: number;
-    posting_id: string;
-    company_id?: string;
-    start_date?: number;
+    _id: string;
+    jobTitle: string;
+    companyName: string;
+    companyImage?: string;
+    region?: string;
+    candidateLocation?: string;
+    tags?: string[];
+    salary?: string;
+    neededExperience?: string;
+    createdAt?: string;
   };
 }
 
 export function RemoteJobCard({ job }: RemoteJobCardProps) {
-  // Format salary
-  const formatSalary = () => {
-    if (!job.min_salary && !job.max_salary) return null;
-    
-    const formatCurrency = (amount: number) => {
-      return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: job.currency_type || 'USD',
-        maximumFractionDigits: 0,
-      }).format(amount);
-    };
+  // Format relative time
+  const formatRelativeTime = (dateString?: string) => {
+    if (!dateString) return "N/A";
+    const now = new Date();
+    const jobDate = new Date(dateString);
+    const diffInMs = now.getTime() - jobDate.getTime();
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+    const diffInDays = Math.floor(diffInHours / 24);
 
-    const periodMap: Record<number, string> = {
-      1: 'hour',
-      2: 'day',
-      3: 'week',
-      4: 'month',
-      5: 'year',
-    };
-    
-    const period = periodMap[job.salary_period || 5] || 'year';
-    
-    if (job.min_salary && job.max_salary) {
-      return `${formatCurrency(job.min_salary)} - ${formatCurrency(job.max_salary)}/${period}`;
-    } else if (job.min_salary) {
-      return `From ${formatCurrency(job.min_salary)}/${period}`;
-    } else if (job.max_salary) {
-      return `Up to ${formatCurrency(job.max_salary)}/${period}`;
+    if (diffInHours < 24) {
+      return `Posted ${diffInHours}h ago`;
+    } else if (diffInDays < 7) {
+      return `Posted ${diffInDays}d ago`;
+    } else {
+      return jobDate.toLocaleDateString();
     }
-    
-    return null;
   };
 
-  // Format date
-  const formatDate = (timestamp?: number) => {
-    if (!timestamp) return null;
-    const date = new Date(timestamp * 1000);
-    const daysAgo = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24));
-    
-    if (daysAgo === 0) return 'Today';
-    if (daysAgo === 1) return '1 day ago';
-    if (daysAgo <= 7) return `${daysAgo} days ago`;
-    if (daysAgo <= 30) return `${Math.floor(daysAgo / 7)} weeks ago`;
-    return date.toLocaleDateString();
-  };
-
-  const salaryText = formatSalary();
-  const postedDate = formatDate(job.start_date);
+  const postedDate = formatRelativeTime(job.createdAt);
+  const location = job.region || job.candidateLocation || "Remote";
+  const slug = `${slugify(job.jobTitle)}-${job._id}`;
 
   return (
-    <Card className="h-full flex flex-col border border-gray-300 bg-white hover:shadow-lg transition-shadow">
-      <CardHeader className="pb-4 pt-6 px-6">
-        <div className="flex items-start justify-between gap-3 mb-3">
+    <Card className="h-full flex flex-col border border-gray-300 bg-white hover:shadow-md transition-shadow group">
+      <div className="flex-1 flex flex-col pt-6 pb-6 px-6">
+        <div className="flex items-start justify-between gap-3 mb-3 min-h-[4.5rem]">
           <div className="flex-1 min-w-0">
-            <CardTitle className="text-lg font-semibold mb-2 line-clamp-2 leading-snug text-gray-900">
-              {job.title}
-            </CardTitle>
+            <h3 className="text-lg font-semibold mb-2 line-clamp-2 leading-snug text-gray-900 group-hover:text-[#0A66C2] transition-colors">
+              {job.jobTitle}
+            </h3>
             <div className="flex items-center gap-2 mt-2">
-              {job.company_logo && (
+              {job.companyImage ? (
                 <img
-                  src={job.company_logo}
-                  alt={job.company_name}
-                  className="w-8 h-8 rounded object-contain"
+                  src={job.companyImage}
+                  alt={job.companyName}
+                  className="w-6 h-6 rounded object-contain"
                 />
+              ) : (
+                <Building2 className="w-5 h-5 flex-shrink-0 text-gray-400" />
               )}
-              <div className="flex items-center gap-2 min-w-0">
-                <Building2 className="w-4 h-4 flex-shrink-0 text-gray-500" />
-                <span className="truncate text-sm font-medium text-gray-700">{job.company_name}</span>
-              </div>
+              <span className="truncate text-sm font-medium text-gray-700">{job.companyName}</span>
             </div>
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="flex-1 flex flex-col px-6 pb-6">
-        {/* Horizontal Badges for Key Info */}
+
         <div className="flex flex-wrap gap-2 mb-4">
-          {job.travel_requirements && (
-            <Badge className="text-xs px-3 py-1.5 bg-blue-100 hover:bg-blue-200 text-blue-700 border-0 font-normal rounded-md flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-              <span className="truncate">{job.travel_requirements}</span>
+          <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5">
+            <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
+            <span className="truncate">{location}</span>
+          </Badge>
+          
+          {job.salary && job.salary !== "N/A" && (
+            <Badge className="text-xs px-3 py-1.5 bg-green-50 text-green-700 border border-green-100 font-normal rounded-md flex items-center gap-1.5">
+              <span>{job.salary}</span>
             </Badge>
           )}
-          {job.locations && job.locations.length > 0 && (
-            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
-              <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
-              <span className="truncate max-w-[200px]">{job.locations[0]}</span>
-              {job.locations.length > 1 && (
-                <span className="text-gray-500">+{job.locations.length - 1}</span>
-              )}
+
+          {job.neededExperience && job.neededExperience !== "N/A" && (
+            <Badge className="text-xs px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-100 font-normal rounded-md flex items-center gap-1.5">
+              <Briefcase className="w-3.5 h-3.5 flex-shrink-0" />
+              <span>{job.neededExperience}</span>
             </Badge>
           )}
-          {job.type && (
-            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5">
-              <Briefcase className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
-              <span className="truncate">{job.type}</span>
-            </Badge>
-          )}
-          {job.experience_level && job.experience_level.length > 0 && (
-            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5">
-              <GraduationCap className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
-              <span className="truncate">{job.experience_level[0]}</span>
-            </Badge>
-          )}
-          {salaryText && (
-            <Badge className="text-xs px-3 py-1.5 bg-green-100 hover:bg-green-200 text-green-700 border-0 font-normal rounded-md flex items-center gap-1.5">
-              <DollarSign className="w-3.5 h-3.5 flex-shrink-0" />
-              <span className="truncate">{salaryText}</span>
-            </Badge>
+
+          <Badge className="text-xs px-3 py-1.5 bg-gray-50 text-gray-600 border border-gray-100 font-normal rounded-md flex items-center gap-1.5">
+            <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-gray-400" />
+            <span>{postedDate}</span>
+          </Badge>
+        </div>
+
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {job.tags?.slice(0, 3).map((tag, idx) => (
+            <span key={idx} className="text-[11px] px-2 py-0.5 bg-gray-50 text-gray-500 rounded border border-gray-200">
+              {tag}
+            </span>
+          ))}
+          {job.tags && job.tags.length > 3 && (
+            <span className="text-[11px] px-2 py-0.5 text-gray-400">
+              +{job.tags.length - 3}
+            </span>
           )}
         </div>
 
-        {job.functions && job.functions.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            {job.functions.slice(0, 3).map((func, idx) => (
-              <Badge key={idx} className="text-xs px-2 py-0.5 border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 font-normal">
-                <span className="truncate block">{func}</span>
-              </Badge>
-            ))}
-            {job.functions.length > 3 && (
-              <Badge className="text-xs px-2 py-0.5 border border-gray-300 bg-white text-gray-500 font-normal">
-                +{job.functions.length - 3} more
-              </Badge>
-            )}
-          </div>
-        )}
-
-        {postedDate && (
-          <div className="text-xs text-gray-500 mb-4">
-            Posted {postedDate}
-          </div>
-        )}
-
-        <div className="mt-auto pt-4 border-t border-gray-200">
-          <a
-            href={`https://simplify.jobs/p/${job.posting_id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-primary hover:text-primary/90 font-medium text-sm"
+        <div className="mt-auto pt-4 border-t border-gray-100">
+          <Link
+            href={`/remote-jobs/${slug}`}
+            className="flex items-center justify-between text-[#0A66C2] hover:text-[#004182] font-semibold text-sm transition-colors"
           >
-            Apply Now
+            <span>View Details</span>
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }
-

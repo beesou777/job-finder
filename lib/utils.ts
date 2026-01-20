@@ -18,13 +18,13 @@ export function addUtmParams(
 ): string {
   try {
     const urlObj = new URL(url);
-    
+
     // Add UTM parameters
     // utm_source is always "kamkhoj" since that's our website sending the traffic
     urlObj.searchParams.set("utm_source", "kamkhoj");
     urlObj.searchParams.set("utm_medium", "referral");
     urlObj.searchParams.set("utm_campaign", "job-application");
-    
+
     // Combine job source and job ID in utm_content for better tracking
     if (jobSource || jobId) {
       const contentParts = [];
@@ -32,7 +32,7 @@ export function addUtmParams(
       if (jobId) contentParts.push(jobId);
       urlObj.searchParams.set("utm_content", contentParts.join("-"));
     }
-    
+
     return urlObj.toString();
   } catch (error) {
     // If URL parsing fails, try to append params manually
@@ -42,7 +42,7 @@ export function addUtmParams(
       utm_medium: "referral",
       utm_campaign: "job-application",
     });
-    
+
     // Combine job source and job ID in utm_content for better tracking
     if (jobSource || jobId) {
       const contentParts = [];
@@ -50,7 +50,22 @@ export function addUtmParams(
       if (jobId) contentParts.push(jobId);
       params.set("utm_content", contentParts.join("-"));
     }
-    
+
     return `${url}${separator}${params.toString()}`;
   }
+}
+
+/**
+ * Convert a string to a URL-friendly slug
+ */
+export function slugify(text: string): string {
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w-]+/g, "") // Remove all non-word chars
+    .replace(/--+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/, "") // Trim - from start of text
+    .replace(/-+$/, ""); // Trim - from end of text
 }
