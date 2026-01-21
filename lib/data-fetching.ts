@@ -336,8 +336,8 @@ export const getLinkedInJobDetails = cache(async (id: number) => {
 });
 
 // Internal helper for AmbitionPad API calls to avoid server-to-server fetch issues
-async function fetchRemoteJobsFromAPI(page: number, limit: number) {
-    const targetUrl = `https://api.ambitionpad.com/api/v1/search/browsejobs?page=${page}&limit=${limit}`;
+async function fetchRemoteJobsFromAPI(page: number, limit: number,search: string) {
+    const targetUrl = `https://api.ambitionpad.com/api/v1/search/browsejobs?page=${page}&limit=${limit}&search=${search}`;
     const url = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
 
     const response = await fetch(url, {
@@ -378,13 +378,13 @@ async function fetchRemoteJobDetailsFromAPI(id: string) {
     return await response.json();
 }
 
-export const getRemoteJobs = cache(async (options: { page?: number; limit?: number } = {}) => {
+export const getRemoteJobs = cache(async (options: { page?: number; limit?: number; search?: string } = {}) => {
     const page = options.page || 1;
     const limit = options.limit || 21;
-
+    const search = options.search || "";
     try {
         // Call the API directly from the server to avoid localhost proxy issues in RSCs
-        const data = await fetchRemoteJobsFromAPI(page, limit);
+        const data = await fetchRemoteJobsFromAPI(page, limit,search);
 
         return {
             jobs: data?.data?.jobs || [],

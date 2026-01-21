@@ -18,6 +18,7 @@ export default async function RemoteJobsPage({
 }: {
   searchParams: { 
     page?: string;
+    q?: string;
   };
 }) {
   const page = parseInt(searchParams.page || "1");
@@ -26,6 +27,7 @@ export default async function RemoteJobsPage({
   const { jobs, total } = await getRemoteJobs({
     page,
     limit: ITEMS_PER_PAGE,
+    search: searchParams.q || "",
   });
 
   return (
