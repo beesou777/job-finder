@@ -335,22 +335,61 @@ export const getLinkedInJobDetails = cache(async (id: number) => {
     return await linkedinRepository.findOne({ where: { id } });
 });
 
+// Internal helper for AmbitionPad API calls to avoid server-to-server fetch issues
+async function fetchRemoteJobsFromAPI(page: number, limit: number) {
+    const targetUrl = `https://api.ambitionpad.com/api/v1/search/browsejobs?page=${page}&limit=${limit}`;
+    const url = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+
+    const response = await fetch(url, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'application/json, text/plain, */*',
+            'Origin': 'https://www.ambitionpad.com',
+            'Referer': 'https://www.ambitionpad.com/',
+        },
+        next: { revalidate: 3600 }
+    });
+
+    if (!response.ok) {
+        const text = await response.text().catch(() => "No error body");
+        throw new Error(`AmbitionPad Fetch Failed (via proxy): ${response.status} - ${text.substring(0, 100)}`);
+    }
+    return await response.json();
+}
+
+async function fetchRemoteJobDetailsFromAPI(id: string) {
+    const targetUrl = `https://api.ambitionpad.com/api/v1/jobs/job/${id}`;
+    const url = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+
+    const response = await fetch(url, {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'application/json, text/plain, */*',
+            'Origin': 'https://www.ambitionpad.com',
+            'Referer': 'https://www.ambitionpad.com/',
+        },
+        next: { revalidate: 3600 }
+    });
+
+    if (!response.ok) {
+        const text = await response.text().catch(() => "No error body");
+        throw new Error(`AmbitionPad Detail Fetch Failed (via proxy): ${response.status} - ${text.substring(0, 100)}`);
+    }
+    return await response.json();
+}
+
 export const getRemoteJobs = cache(async (options: { page?: number; limit?: number } = {}) => {
     const page = options.page || 1;
     const limit = options.limit || 21;
 
     try {
-        const response = await fetch(`https://api.ambitionpad.com/api/v1/search/browsejobs?page=${page}&limit=${limit}`, {
-            next: { revalidate: 3600 } // Cache for 1 hour
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch remote jobs");
-        const data = await response.json();
+        // Call the API directly from the server to avoid localhost proxy issues in RSCs
+        const data = await fetchRemoteJobsFromAPI(page, limit);
 
         return {
-            jobs: data.data.jobs || [],
-            total: data.data.pagination?.total || 0,
-            pagination: data.data.pagination
+            jobs: data?.data?.jobs || [],
+            total: data?.data?.pagination?.total || 0,
+            pagination: data?.data?.pagination || null
         };
     } catch (error) {
         console.error("Error fetching remote jobs:", error);
@@ -360,15 +399,14 @@ export const getRemoteJobs = cache(async (options: { page?: number; limit?: numb
 
 export const getRemoteJobDetails = cache(async (id: string) => {
     try {
-        const response = await fetch(`https://api.ambitionpad.com/api/v1/jobs/job/${id}`, {
-            next: { revalidate: 3600 }
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch remote job details");
-        const data = await response.json();
-        return data.data;
+        // Call the API directly from the server
+        const data = await fetchRemoteJobDetailsFromAPI(id);
+        return data?.data || null;
     } catch (error) {
         console.error("Error fetching remote job details:", error);
         return null;
     }
 });
+
+// For API routes to reuse the same logic
+export { fetchRemoteJobsFromAPI, fetchRemoteJobDetailsFromAPI };
