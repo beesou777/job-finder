@@ -371,45 +371,40 @@ export const getLinkedInJobDetails = cache(async (id: number) => {
     return await linkedinRepository.findOne({ where: { id } });
 });
 
-// Internal helper for AmbitionPad API calls to avoid server-to-server fetch issues
-async function fetchRemoteJobsFromAPI(page: number, limit: number,search: string) {
-    const targetUrl = `https://api.ambitionpad.com/api/v1/search/browsejobs?page=${page}&limit=${limit}&search=${search}`;
-    const url = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+// Fetch AmbitionPad API directly (no CORS proxy - server-side has no CORS restrictions)
+// corsproxy.io free tier only works on localhost; direct fetch works in production
+async function fetchRemoteJobsFromAPI(page: number, limit: number, search: string) {
+    const url = `https://api.ambitionpad.com/api/v1/search/browsejobs?page=${page}&limit=${limit}&search=${encodeURIComponent(search)}`;
 
     const response = await fetch(url, {
         headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'application/json, text/plain, */*',
-            'Origin': 'https://www.ambitionpad.com',
-            'Referer': 'https://www.ambitionpad.com/',
+            "User-Agent": "Mozilla/5.0 (compatible; kamkhoj/1.0; +https://www.kamkhoj.com)",
+            "Accept": "application/json",
         },
-        next: { revalidate: 3600 }
+        next: { revalidate: 3600 },
     });
 
     if (!response.ok) {
         const text = await response.text().catch(() => "No error body");
-        throw new Error(`AmbitionPad Fetch Failed (via proxy): ${response.status} - ${text.substring(0, 100)}`);
+        throw new Error(`AmbitionPad Fetch Failed: ${response.status} - ${text.substring(0, 150)}`);
     }
     return await response.json();
 }
 
 async function fetchRemoteJobDetailsFromAPI(id: string) {
-    const targetUrl = `https://api.ambitionpad.com/api/v1/jobs/job/${id}`;
-    const url = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const url = `https://api.ambitionpad.com/api/v1/jobs/job/${id}`;
 
     const response = await fetch(url, {
         headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'application/json, text/plain, */*',
-            'Origin': 'https://www.ambitionpad.com',
-            'Referer': 'https://www.ambitionpad.com/',
+            "User-Agent": "Mozilla/5.0 (compatible; kamkhoj/1.0; +https://www.kamkhoj.com)",
+            "Accept": "application/json",
         },
-        next: { revalidate: 3600 }
+        next: { revalidate: 3600 },
     });
 
     if (!response.ok) {
         const text = await response.text().catch(() => "No error body");
-        throw new Error(`AmbitionPad Detail Fetch Failed (via proxy): ${response.status} - ${text.substring(0, 100)}`);
+        throw new Error(`AmbitionPad Detail Fetch Failed: ${response.status} - ${text.substring(0, 150)}`);
     }
     return await response.json();
 }
