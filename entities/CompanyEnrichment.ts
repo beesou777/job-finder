@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, Index, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { CanonicalCompany } from "./CanonicalCompany";
+import type { HiringIntentScoreHistory } from "./HiringIntentScoreHistory";
 
 export enum ApproachabilityLevel {
   LOW = "LOW",
@@ -136,17 +137,9 @@ export class CompanyEnrichment {
   @Index()
   isPitchTarget: boolean; // Flagged for sales outreach
 
-  // History tracking (using lazy function to avoid circular dependency)
-  @OneToMany(
-    () => {
-      // Dynamic import to avoid circular dependency
-      const { HiringIntentScoreHistory } = require("./HiringIntentScoreHistory");
-      return HiringIntentScoreHistory;
-    },
-    (history: any) => history.enrichment,
-    { cascade: true }
-  )
-  scoreHistory: any[];
+  // History tracking
+  @OneToMany("HiringIntentScoreHistory", "enrichment", { cascade: true })
+  scoreHistory: HiringIntentScoreHistory[];
 
   @CreateDateColumn()
   createdAt: Date;

@@ -6,6 +6,7 @@ import { User } from "@/entities/User";
 
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
