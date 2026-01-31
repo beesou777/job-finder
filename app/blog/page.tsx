@@ -41,7 +41,7 @@ export default function BlogPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
             Career Blog
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto ">
             Tips, guides, and advice for your job search in Nepal
           </p>
         </div>
