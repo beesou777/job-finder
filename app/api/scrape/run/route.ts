@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
 import { runAllScrapers } from "@/lib/scraper-runner";
@@ -42,6 +43,11 @@ export async function POST() {
       } catch (e) {
         console.error("Error saving job:", e);
       }
+    }
+
+    if (saved > 0) {
+      revalidateTag("jobs");
+      revalidateTag("categories");
     }
 
     return NextResponse.json({

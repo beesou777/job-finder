@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    // response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
+    response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
     return response;
   } catch (error: any) {
     console.error("Error fetching filters:", error);

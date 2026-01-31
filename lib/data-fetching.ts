@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
 import { Category } from "@/entities/Category";
@@ -16,7 +17,7 @@ export interface GetJobsOptions {
     offset?: number;
 }
 
-export async function getJobs(options: GetJobsOptions = {}) {
+async function getJobsUncached(options: GetJobsOptions = {}) {
     const {
         jobType,
         urgency,
@@ -129,7 +130,27 @@ export async function getJobs(options: GetJobsOptions = {}) {
     return { jobs, total };
 }
 
-export async function getStats() {
+/** Cached getJobs - 5 min revalidate to reduce DB egress */
+export async function getJobs(options: GetJobsOptions = {}) {
+  const key = [
+    "jobs",
+    String(options.limit ?? 12),
+    String(options.offset ?? 0),
+    String(options.type ?? ""),
+    String(options.search ?? ""),
+    String(options.categoryId ?? ""),
+    String(options.location ?? ""),
+    String(options.jobType ?? ""),
+    String(options.urgency ?? ""),
+  ];
+  return unstable_cache(
+    () => getJobsUncached(options),
+    key,
+    { revalidate: 300, tags: ["jobs"] }
+  )();
+}
+
+async function getStatsUncached() {
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
     const now = new Date();
@@ -160,7 +181,12 @@ export async function getStats() {
     };
 }
 
-export async function getCategories(options: { popular?: boolean; limit?: number } = {}) {
+/** Cached getStats - 5 min to reduce egress */
+export async function getStats() {
+    return unstable_cache(getStatsUncached, ["stats"], { revalidate: 300, tags: ["jobs"] })();
+}
+
+async function getCategoriesUncached(options: { popular?: boolean; limit?: number } = {}) {
     const { popular = false, limit = 20 } = options;
     const dataSource = await getDataSource();
     const categoryRepository = dataSource.getRepository(Category);
@@ -222,6 +248,16 @@ export async function getCategories(options: { popular?: boolean; limit?: number
     }
 
     return categories;
+}
+
+/** Cached getCategories - 5 min to reduce egress */
+export async function getCategories(options: { popular?: boolean; limit?: number } = {}) {
+    const key = ["categories", String(options.popular ?? false), String(options.limit ?? 20)];
+    return unstable_cache(
+        () => getCategoriesUncached(options),
+        key,
+        { revalidate: 300, tags: ["jobs", "categories"] }
+    )();
 }
 
 export const getLinkedInJobs = cache(async (options: {

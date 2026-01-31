@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
 import { runAllScrapers, scrapeSource } from "@/src/scrapers/runAll";
@@ -223,6 +224,11 @@ export async function POST(request: NextRequest) {
     } catch (enrichmentError: any) {
       console.error("⚠️ Error updating enrichments (non-fatal):", enrichmentError?.message || enrichmentError);
       // Don't fail the scraping job if enrichment update fails
+    }
+
+    if (saved > 0) {
+      revalidateTag("jobs");
+      revalidateTag("categories");
     }
 
     return NextResponse.json({

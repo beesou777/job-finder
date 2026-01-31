@@ -69,6 +69,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Revalidate every 5 min to reduce DB egress (ISR)
+export const revalidate = 300;
+
 export default async function Home({
   searchParams,
 }: {

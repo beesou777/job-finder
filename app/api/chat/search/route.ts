@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
       limit: 10,
     });
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       jobs: jobs.map((j) => ({
         id: j.id,
         title: j.title,
@@ -39,6 +39,8 @@ export async function GET(request: NextRequest) {
         description: j.description ? j.description.slice(0, 300) : null,
       })),
     });
+    response.headers.set("Cache-Control", "public, s-maxage=30, stale-while-revalidate=60");
+    return response;
   } catch (error: unknown) {
     console.error("[chat/search] Error:", error);
     return NextResponse.json(
