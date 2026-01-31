@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Index, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 import { CanonicalCompany } from "./CanonicalCompany";
-import type { HiringIntentScoreHistory } from "./HiringIntentScoreHistory";
 
 export enum ApproachabilityLevel {
   LOW = "LOW",
@@ -136,10 +135,6 @@ export class CompanyEnrichment {
   @Column({ type: "boolean", default: false })
   @Index()
   isPitchTarget: boolean; // Flagged for sales outreach
-
-  // History tracking
-  @OneToMany("HiringIntentScoreHistory", "enrichment", { cascade: true })
-  scoreHistory: HiringIntentScoreHistory[];
 
   @CreateDateColumn()
   createdAt: Date;

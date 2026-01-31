@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { CompanyEnrichment } from "@/entities/CompanyEnrichment";
+import { HiringIntentScoreHistory } from "@/entities/HiringIntentScoreHistory";
 
 export const dynamic = "force-dynamic";
 
@@ -15,12 +16,27 @@ export async function GET(
   try {
     const dataSource = await getDataSource();
     const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
-    
+    const historyRepository = dataSource.getRepository(HiringIntentScoreHistory);
+
     const enrichment = await enrichmentRepository.findOne({
       where: { companyId: params.companyId },
-      relations: ["company", "scoreHistory"],
-      order: { scoreHistory: { recordedAt: "DESC" } },
+      relations: ["company"],
     });
+
+    let scoreHistory: Array<{ score: number; level: string; signalBreakdown?: unknown; trigger?: string; recordedAt: Date }> = [];
+    if (enrichment) {
+      const history = await historyRepository.find({
+        where: { enrichmentId: enrichment.id },
+        order: { recordedAt: "DESC" },
+      });
+      scoreHistory = history.map((h) => ({
+        score: h.score,
+        level: h.level,
+        signalBreakdown: h.signalBreakdown,
+        trigger: h.trigger,
+        recordedAt: h.recordedAt,
+      }));
+    }
     
     if (!enrichment) {
       return NextResponse.json(
@@ -77,13 +93,7 @@ export async function GET(
           createdAt: enrichment.createdAt,
           updatedAt: enrichment.updatedAt,
         },
-        scoreHistory: enrichment.scoreHistory?.map((h) => ({
-          score: h.score,
-          level: h.level,
-          signalBreakdown: h.signalBreakdown,
-          trigger: h.trigger,
-          recordedAt: h.recordedAt,
-        })) || [],
+        scoreHistory,
       },
     });
   } catch (error: any) {

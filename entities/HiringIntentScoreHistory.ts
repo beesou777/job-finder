@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, ManyToOne, JoinColumn, Index } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Index } from "typeorm";
 import { HiringIntentLevel } from "./CompanyEnrichment";
-import type { CompanyEnrichment } from "./CompanyEnrichment";
 
 @Entity("hiring_intent_score_history")
 export class HiringIntentScoreHistory {
@@ -10,10 +9,6 @@ export class HiringIntentScoreHistory {
   @Column({ type: "uuid" })
   @Index()
   enrichmentId: string;
-
-  @ManyToOne("CompanyEnrichment", "scoreHistory", { onDelete: "CASCADE" })
-  @JoinColumn({ name: "enrichmentId" })
-  enrichment: CompanyEnrichment;
 
   @Column({ type: "int" })
   score: number;
