@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { JobsFiltering } from "@/components/jobs/JobsFiltering";
 import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { getCategories } from "@/lib/data-fetching";
-import { Loader2 } from "lucide-react";
 
 export const dynamic = 'force-dynamic';
 
