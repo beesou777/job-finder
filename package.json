@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "build:cloudflare": "opennextjs-cloudflare build",
+    "deploy:cloudflare": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "start": "next start",
     "lint": "next lint",
     "typeorm": "typeorm-ts-node-commonjs",
@@ -69,7 +71,8 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
     "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.7.1"
+    "tsx": "^4.7.1",
+    "wrangler": "^4.61.1"
   },
   "engines": {
     "node": ">=18.0.0"

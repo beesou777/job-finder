@@ -1,2 +1,5 @@
 name = "kamkhoj"
 compatibility_date = "2026-02-01"
+[assets]
+directory = "./dist"
+main = "src/index.ts"
