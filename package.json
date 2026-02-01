@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cloudflare": "opennextjs-cloudflare build",
     "start": "next start",
     "lint": "next lint",
     "typeorm": "typeorm-ts-node-commonjs",
@@ -62,6 +63,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.16.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/string-similarity": "^4.0.2",
     "eslint": "^8.57.0",

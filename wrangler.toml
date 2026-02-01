@@ -1,7 +1,2 @@
 name = "kamkhoj"
 compatibility_date = "2026-02-01"
-
-# This is a Next.js app, not a Worker
-# Cloudflare Pages will handle the deployment
-[build]
-command = "yarn build"
