@@ -1,7 +1,8 @@
-// default open-next.config.ts file created by @opennextjs/cloudflare
-import { defineCloudflareConfig } from "@opennextjs/cloudflare/config";
-import r2IncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/r2-incremental-cache";
+import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 
 export default defineCloudflareConfig({
-	incrementalCache: r2IncrementalCache,
+  // Use dummy cache to avoid R2 (R2 requires enabling in Cloudflare Dashboard).
+  // Trade-off: No ISR/page revalidation; pages are served statically.
+  incrementalCache: "dummy",
+  tagCache: "dummy",
 });
