@@ -44,7 +44,7 @@ async function fetchRemoteJobsFromAPI(options: any) {
     });
 
     if (!response.ok) return { jobs: [], total: 0, facetCounts: [] };
-    const data = await response.json();
+    const data:any = await response.json();
     const result = data.results[0];
     return {
         jobs: (result.hits || []).map((hit: any) => ({ ...hit.document, id: hit.document.id || hit.document.posting_id })),

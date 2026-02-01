@@ -10,7 +10,7 @@ export function ReportsView() {
 
     useEffect(() => {
         // Fetch categories for the table (can be optimized to pass as prop)
-        fetch('/api/analytics?range=30d').then(res => res.json()).then(data => {
+        fetch('/api/analytics?range=30d').then(res => res.json()).then((data:any) => {
             if(data.success) setCategories(data.data.categoryStats || []);
         });
     }, []);

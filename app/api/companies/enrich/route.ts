@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
  */
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body:any = await request.json();
     
     // Check if it's a single company or batch
     if (body.name) {

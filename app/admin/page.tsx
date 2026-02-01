@@ -58,7 +58,7 @@ export default function AdminPage() {
     setIsLoading(true);
     try {
       const res = await fetch(`/api/analytics?range=${range}`);
-      const data = await res.json();
+      const data:any = await res.json();
       if (data.success) {
         setAnalyticsData(data.data);
       }
@@ -83,7 +83,7 @@ export default function AdminPage() {
         },
       });
 
-      const data = await res.json();
+      const data:any = await res.json();
       setScrapeResult(data);
       
       if (data.success) {

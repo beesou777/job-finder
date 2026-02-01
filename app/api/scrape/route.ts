@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const body = await request.json().catch(() => ({}));
+    const body:any = await request.json().catch(() => ({}));
     const source = body.source; // Optional: scrape specific source
 
     const dataSource = await getDataSource();

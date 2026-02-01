@@ -67,7 +67,7 @@ export function CompanyEnrichmentView() {
           'Pragma': 'no-cache',
         },
       });
-      const data = await res.json();
+      const data:any = await res.json();
       console.log(data);
       if (data.success) {
         let filteredData = data.data;
@@ -122,7 +122,7 @@ export function CompanyEnrichmentView() {
           'Pragma': 'no-cache',
         },
       });
-      const data = await res.json();
+      const data:any = await res.json();
       
       if (data.success) {
         let sortedData = [...data.data];

@@ -111,7 +111,7 @@ function AssistantMessageContent({
     fetchedFor.current.add(message.id);
     fetch(`/api/chat/search?q=${encodeURIComponent(userQuery)}`)
       .then((r) => r.json())
-      .then((data) => {
+      .then((data:any) => {
         if (data.jobs?.length) setFallbackJobs(data.jobs);
       })
       .catch(() => {});

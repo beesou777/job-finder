@@ -46,7 +46,7 @@ export async function GET(request: Request) {
                 cache: 'no-store',
             });
             if (enrichedResponse.ok) {
-                const enrichedData = await enrichedResponse.json();
+                const enrichedData:any = await enrichedResponse.json();
                 if (enrichedData.success && enrichedData.data) {
                     // Count companies with 90%+ match confidence
                     strongMatchesCount = enrichedData.data.filter((c: any) => 

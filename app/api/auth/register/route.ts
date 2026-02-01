@@ -5,7 +5,7 @@ import { User } from "@/entities/User";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const { email, password }:any = await request.json();
 
     if (!email || !password) {
       return NextResponse.json(

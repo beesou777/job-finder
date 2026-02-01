@@ -117,7 +117,7 @@ export async function PATCH(
     const dataSource = await getDataSource();
     const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
     
-    const body = await request.json();
+    const body:any = await request.json();
     
     const enrichment = await enrichmentRepository.findOne({
       where: { companyId: params.companyId },

@@ -89,7 +89,7 @@ export default function HomeContent() {
 
       // Process jobs
       if (jobsRes.ok) {
-        const jobsData = await jobsRes.json();
+        const jobsData:any = await jobsRes.json();
         console.log(`[Client] Jobs API response:`, jobsData);
         setJobs(jobsData.data || []);
         setTotal(jobsData.total || 0);
@@ -104,7 +104,7 @@ export default function HomeContent() {
 
       // Process internships
       if (internshipsRes.ok) {
-        const internshipsData = await internshipsRes.json();
+        const internshipsData:any = await internshipsRes.json();
         console.log(`[Client] Internships API response:`, internshipsData);
         setInternships(internshipsData.data || []);
         console.log(
@@ -120,7 +120,7 @@ export default function HomeContent() {
 
       // Process expiring jobs - sort by expiration date (soonest first)
       if (expiringRes.ok) {
-        const expiringData = await expiringRes.json();
+        const expiringData:any = await expiringRes.json();
         const sortedExpiring = (expiringData.data || []).sort(
           (a: any, b: any) => {
             const dateA = a.expiresAt
@@ -142,7 +142,7 @@ export default function HomeContent() {
 
       // Process stats - use optimized stats endpoint
       if (statsRes.ok) {
-        const statsData = await statsRes.json();
+        const statsData:any = await statsRes.json();
         console.log(`[Client] Stats API response:`, statsData);
         setStats({
           totalJobs: statsData.data?.totalJobs || 0,
@@ -166,7 +166,7 @@ export default function HomeContent() {
 
       // Process categories
       if (categoriesRes.ok) {
-        const categoriesData = await categoriesRes.json();
+        const categoriesData:any = await categoriesRes.json();
         setCategories(categoriesData.data || []);
         console.log(
           `[Client] Loaded ${categoriesData.data?.length || 0} categories`

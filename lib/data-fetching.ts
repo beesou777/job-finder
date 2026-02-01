@@ -415,7 +415,7 @@ export const getRemoteJobs = cache(async (options: { page?: number; limit?: numb
     const search = options.search || "";
     try {
         // Call the API directly from the server to avoid localhost proxy issues in RSCs
-        const data = await fetchRemoteJobsFromAPI(page, limit,search);
+        const data:any = await fetchRemoteJobsFromAPI(page, limit,search);
 
         return {
             jobs: data?.data?.jobs || [],
@@ -431,7 +431,7 @@ export const getRemoteJobs = cache(async (options: { page?: number; limit?: numb
 export const getRemoteJobDetails = cache(async (id: string) => {
     try {
         // Call the API directly from the server
-        const data = await fetchRemoteJobDetailsFromAPI(id);
+        const data:any = await fetchRemoteJobDetailsFromAPI(id);
         return data?.data || null;
     } catch (error) {
         console.error("Error fetching remote job details:", error);
