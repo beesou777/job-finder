@@ -156,6 +156,11 @@ export default function RootLayout({
             `,
           }}
         />
+        <Script
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3058200678941123"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+        />
         <Providers>
           <Navbar />
           <main className="min-h-screen">{children}</main>
