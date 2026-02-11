@@ -102,6 +102,7 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
+        <meta name="google-adsense-account" content="ca-pub-3058200678941123" />
       </head>
       <body className={inter.className}>
         {/* Google Analytics - Only load in production */}
@@ -156,9 +157,10 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Google AdSense - Injected into head via beforeInteractive strategy */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3058200678941123"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
           crossOrigin="anonymous"
         />
         <Providers>
