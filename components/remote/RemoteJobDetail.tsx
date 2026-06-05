@@ -121,7 +121,7 @@ export function RemoteJobDetail({ job }: RemoteJobDetailProps) {
   return (
     <div className="space-y-6">
       <Card className="overflow-hidden border border-white/10 bg-[#1b1b1d] shadow-2xl shadow-black/25">
-        <div className="bg-[radial-gradient(circle_at_0%_0%,rgba(166,255,70,0.12),transparent_34%)] px-6 py-8 md:px-10">
+        <div className="bg-[radial-gradient(circle_at_0%_0%,rgba(184,244,96,0.12),transparent_34%)] px-6 py-8 md:px-10">
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
             <div className="flex items-start gap-5">
               <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-black p-2 shadow-sm md:h-20 md:w-20">

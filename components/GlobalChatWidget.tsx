@@ -13,7 +13,7 @@ export function GlobalChatWidget() {
       <button
         onClick={() => setIsOpen(true)}
         aria-label="Open AI job search"
-        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#0A66C2] text-white shadow-lg hover:bg-[#004182] transition-all hover:scale-105 active:scale-95"
+        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full border border-primary/20 bg-primary text-zinc-950 shadow-lg transition-all hover:scale-105 hover:bg-white active:scale-95"
       >
         <MessageCircle className="h-6 w-6" />
       </button>

@@ -43,6 +43,9 @@ export default function ContactPage() {
           </div>
         </div>
         <div className="mt-8">
+          <Link href="/how-kamkhoj-works" className="mr-6 text-primary font-semibold hover:underline">
+            How KamKhoj works
+          </Link>
           <Link href="/editorial-policy" className="text-primary font-semibold hover:underline">
             Read the editorial policy
           </Link>

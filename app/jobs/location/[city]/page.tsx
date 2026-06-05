@@ -141,7 +141,7 @@ export default async function LocationPage({
       />
 
       <div className="min-h-screen bg-[#070708] text-zinc-100">
-        <div className="border-b border-white/10 bg-[radial-gradient(circle_at_80%_0%,rgba(166,255,70,0.12),transparent_32%)]">
+        <div className="border-b border-white/10 bg-[radial-gradient(circle_at_80%_0%,rgba(184,244,96,0.12),transparent_32%)]">
           <div className="container mx-auto px-4 py-8 md:py-10">
             {/* Breadcrumbs */}
             <nav className="mb-6 text-sm font-bold text-zinc-500" aria-label="Breadcrumb">

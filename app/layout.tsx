@@ -98,7 +98,6 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/icon-192.png" />
         <meta name="theme-color" content="#09090b" />
         <meta
           name="viewport"

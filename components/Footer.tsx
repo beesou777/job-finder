@@ -22,6 +22,7 @@ const searchLinks = [
 ];
 
 const legalLinks = [
+  { href: "/how-kamkhoj-works", label: "How it works" },
   { href: "/privacy-policy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
   { href: "/disclaimer", label: "Disclaimer" },

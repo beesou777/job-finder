@@ -21,6 +21,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: absoluteUrl('/skills/python'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.75 },
   { url: absoluteUrl('/about'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
   { url: absoluteUrl('/contact'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+  { url: absoluteUrl('/how-kamkhoj-works'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.55 },
   { url: absoluteUrl('/editorial-policy'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
   { url: absoluteUrl('/privacy-policy'), lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
   { url: absoluteUrl('/terms'), lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },

@@ -70,7 +70,7 @@ export function JobCard({ job }: JobCardProps) {
       <CardHeader className="px-6 pb-4 pt-6">
         <div className="mb-5 flex items-start justify-between gap-4">
           <div className="flex min-w-0 items-center gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-zinc-950 text-primary shadow-[0_0_18px_rgba(190,242,100,.18)]">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-zinc-950 text-primary shadow-[0_0_18px_rgba(184,244,96,.16)]">
               <span className="font-mono text-sm font-black">{companyInitial}</span>
             </div>
             <div className="min-w-0">

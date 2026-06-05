@@ -85,6 +85,9 @@ export default function AboutPage() {
                 <li>Users should verify salary, deadline, eligibility, and application instructions on the original source before applying.</li>
               </ul>
               <div className="mt-6 flex flex-wrap gap-3">
+                <Link href="/how-kamkhoj-works" className="text-primary font-semibold hover:underline">
+                  How KamKhoj works
+                </Link>
                 <Link href="/editorial-policy" className="text-primary font-semibold hover:underline">
                   Read editorial policy
                 </Link>

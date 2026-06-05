@@ -38,7 +38,7 @@ const platforms = [
 export default function PostJobPage() {
   return (
     <div className="bg-[#070708] min-h-screen text-zinc-100">
-      <section className="border-b border-white/10 bg-[radial-gradient(circle_at_80%_0%,rgba(166,255,70,0.12),transparent_32%)]">
+      <section className="border-b border-white/10 bg-[radial-gradient(circle_at_80%_0%,rgba(184,244,96,0.12),transparent_32%)]">
         <div className="container mx-auto px-4 py-16 md:py-24">
           <div className="max-w-4xl">
             <p className="mb-4 text-sm font-bold uppercase tracking-[0.16em] text-primary">
