@@ -17,7 +17,7 @@ export function RemotePagination({
   itemsPerPage,
 }: RemotePaginationProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams() ?? ""
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());

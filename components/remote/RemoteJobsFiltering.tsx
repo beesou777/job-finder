@@ -20,11 +20,11 @@ interface RemoteJobsFilteringProps {
 
 export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const [searchValue, setSearchValue] = useState(searchParams.get("q") || "");
+  const searchParams = useSearchParams() ?? new URLSearchParams();
+  const [searchValue, setSearchValue] = useState(searchParams?.get("q") || "");
 
   const updateParams = (newParams: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams?.toString());
     Object.entries(newParams).forEach(([key, value]) => {
       if (value === null) {
         params.delete(key);
