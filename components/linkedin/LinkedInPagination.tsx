@@ -18,9 +18,10 @@ export function LinkedInPagination({
 }: LinkedInPaginationProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const paramsSnapshot = searchParams ?? new URLSearchParams();
 
   const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(paramsSnapshot.toString());
     params.set("page", String(page));
     router.push(`/linkedin-jobs?${params.toString()}`);
   };

@@ -119,19 +119,19 @@ export default async function RemoteJobPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
       />
       
-      <div className="min-h-screen bg-gray-50 pb-12">
-        <div className="bg-white border-b sticky top-0 z-10">
+      <div className="min-h-screen bg-[#070708] pb-12 text-zinc-100">
+        <div className="sticky top-0 z-10 border-b border-white/10 bg-[#09090a]/90 backdrop-blur-xl">
           <div className="container mx-auto px-4 py-4">
-            <nav className="flex items-center text-sm text-gray-400 mb-2">
+            <nav className="flex items-center text-sm font-bold text-zinc-500 mb-2">
               <Link href="/" className="hover:text-primary transition-colors">Home</Link>
               <span className="mx-2">/</span>
               <Link href="/remote-jobs" className="hover:text-primary transition-colors">Remote Jobs</Link>
               <span className="mx-2">/</span>
-              <span className="text-gray-900 truncate max-w-[200px]">{job.jobTitle}</span>
+              <span className="text-zinc-200 truncate max-w-[200px]">{job.jobTitle}</span>
             </nav>
             
             <div className="mt-4">
-              <Button variant="ghost" size="sm" asChild className="text-[#0A66C2] hover:text-[#004182] hover:bg-transparent hover:underline p-0 -ml-2">
+              <Button variant="ghost" size="sm" asChild className="-ml-2 p-0 text-primary hover:bg-transparent hover:text-zinc-50 hover:underline">
                 <Link href="/remote-jobs" className="flex items-center">
                   <ChevronLeft className="h-4 w-4 mr-1" />
                   Back to Remote Jobs

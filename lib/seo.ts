@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 import { slugify } from "./utils";
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, absoluteUrl } from "./site";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API || "https://kamkhoj.com";
-const SITE_NAME = "kamkhoj";
+const BASE_URL = SITE_URL;
 
 /**
  * Generate metadata for job detail pages
@@ -15,7 +15,7 @@ export function generateJobMetadata(job: {
   deadline?: string | null;
   id: string;
 }): Metadata {
-  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` - ${job.location}` : ""} | kamkhoj`;
+  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` - ${job.location}` : ""} | ${SITE_NAME}`;
   const description = job.description
     ? `${job.description.substring(0, 120)}...`
     : `Apply for ${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` in ${job.location}` : ""}. Job opportunity in Nepal.${job.deadline ? ` Deadline: ${job.deadline}.` : ""}`;
@@ -28,6 +28,7 @@ export function generateJobMetadata(job: {
       description: `Job opportunity${job.location ? ` in ${job.location}` : " in Nepal"}`,
       type: "article",
       url: `${BASE_URL}/jobs/${job.id}`,
+      images: [{ url: DEFAULT_OG_IMAGE }],
     },
     twitter: {
       card: "summary_large_image",
@@ -51,7 +52,7 @@ export function generateLinkedInJobMetadata(job: {
   id: number;
   slug?: string | null;
 }): Metadata {
-  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.place ? ` - ${job.place}` : ""} | LinkedIn Jobs | kamkhoj`;
+  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.place ? ` - ${job.place}` : ""} | LinkedIn Jobs | ${SITE_NAME}`;
   const description = job.description
     ? `${job.description.substring(0, 155).replace(/\n/g, ' ')}...`
     : `Apply for ${job.title}${job.company ? ` at ${job.company}` : ""}${job.place ? ` in ${job.place}` : ""}. LinkedIn job opportunity.`;
@@ -66,6 +67,7 @@ export function generateLinkedInJobMetadata(job: {
       description,
       type: "article",
       url: `${BASE_URL}/linkedin-jobs/${jobSlug}`,
+      images: [{ url: DEFAULT_OG_IMAGE }],
     },
     twitter: {
       card: "summary_large_image",
@@ -100,10 +102,11 @@ export function generateCategoryMetadata(
     openGraph: {
       title: `${categoryName} Jobs in Nepal | kamkhoj`,
       description: `Latest ${categoryName} job opportunities in Nepal`,
-      url: `${BASE_URL}/jobs?category=${encodeURIComponent(categoryName.toLowerCase())}`,
+      url: `${BASE_URL}/jobs/category/${slugify(categoryName)}`,
+      images: [{ url: DEFAULT_OG_IMAGE }],
     },
     alternates: {
-      canonical: `${BASE_URL}/jobs?category=${encodeURIComponent(categoryName.toLowerCase())}`,
+      canonical: `${BASE_URL}/jobs/category/${slugify(categoryName)}`,
     },
   };
 }
@@ -130,10 +133,11 @@ export function generateLocationMetadata(
     openGraph: {
       title: `Jobs in ${city}, Nepal | kamkhoj`,
       description: `Latest job opportunities in ${city}, Nepal`,
-      url: `${BASE_URL}/jobs/location/${encodeURIComponent(city.toLowerCase())}`,
+      url: `${BASE_URL}/jobs/${slugify(city)}`,
+      images: [{ url: DEFAULT_OG_IMAGE }],
     },
     alternates: {
-      canonical: `${BASE_URL}/jobs/location/${encodeURIComponent(city.toLowerCase())}`,
+      canonical: `${BASE_URL}/jobs/${slugify(city)}`,
     },
   };
 }
@@ -206,7 +210,8 @@ export function generateJobPostingSchema(job: {
         addressCountry: "NP",
       },
     },
-    url: job.applyUrl,
+    url: `${BASE_URL}/jobs/${job.id}`,
+    directApply: false,
   };
 
   if (job.salaryText) {
@@ -217,7 +222,8 @@ export function generateJobPostingSchema(job: {
         currency: "NPR",
         value: {
           "@type": "QuantitativeValue",
-          value: job.salaryText,
+          minValue: 0,
+          unitText: job.salaryText,
         },
       },
     };
@@ -264,6 +270,7 @@ export function generateLinkedInJobPostingSchema(job: {
       },
     },
     url: job.apply_link,
+    validThrough: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
   };
 }
 
@@ -276,7 +283,7 @@ export function generateOrganizationSchema() {
     "@type": "Organization",
     name: SITE_NAME,
     url: BASE_URL,
-    logo: `${BASE_URL}/favicon.svg`,
+    logo: `${BASE_URL}/kamkhoj.png`,
     description: "Best Job Aggregator Sites in Nepal - Find jobs and internships across Nepal from all major portals",
     sameAs: [
       // Add social media URLs when available
@@ -322,6 +329,36 @@ export function generateFAQSchema(faqs: Array<{ question: string; answer: string
         text: faq.answer,
       },
     })),
+  };
+}
+
+export function generateCollectionMetadata(input: {
+  path: string;
+  title: string;
+  description: string;
+  keywords?: string[];
+}): Metadata {
+  return {
+    title: input.title,
+    description: input.description,
+    keywords: input.keywords,
+    openGraph: {
+      title: input.title,
+      description: input.description,
+      url: absoluteUrl(input.path),
+      siteName: SITE_NAME,
+      type: "website",
+      images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME} job search` }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: input.title,
+      description: input.description,
+      images: [DEFAULT_OG_IMAGE],
+    },
+    alternates: {
+      canonical: absoluteUrl(input.path),
+    },
   };
 }
 

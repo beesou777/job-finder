@@ -21,17 +21,17 @@ export function GlobalChatWidget() {
       {/* Overlay panel - keep mounted when closed so chat history persists until refresh */}
       <div className={isOpen ? "contents" : "hidden"}>
         <div
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+          className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm"
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />
-        <div className="fixed inset-0 z-50 flex flex-col bg-white shadow-2xl animate-in slide-in-from-right duration-300 md:inset-auto md:left-auto md:right-4 md:top-4 md:bottom-4 md:w-[420px] md:max-w-[95vw] md:h-[calc(100dvh-2rem)] md:min-h-[600px] md:rounded-xl">
-          <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 bg-white shrink-0">
-            <h2 className="font-semibold text-gray-900">AI Job Search</h2>
+        <div className="fixed inset-0 z-50 flex flex-col border border-white/10 bg-[#111113] shadow-2xl animate-in slide-in-from-right duration-300 md:inset-auto md:left-auto md:right-4 md:top-4 md:bottom-4 md:w-[420px] md:max-w-[95vw] md:h-[calc(100dvh-2rem)] md:min-h-[600px] md:rounded-2xl">
+          <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 bg-[#111113] shrink-0">
+            <h2 className="font-black text-zinc-50">AI Job Search</h2>
             <button
               onClick={() => setIsOpen(false)}
               aria-label="Close chat"
-              className="rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              className="rounded-full p-2 text-zinc-500 hover:bg-white/10 hover:text-zinc-100"
             >
               <X className="h-5 w-5" />
             </button>

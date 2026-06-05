@@ -1,0 +1,10 @@
+{
+  "scannedAt": "2026-06-05",
+  "framework": "Next.js 14 app router",
+  "fontStack": "Inter via next/font/google",
+  "palette": "Tailwind HSL custom properties in app/globals.css",
+  "motion": "motion-cut; no dedicated motion library detected",
+  "spacing": "Tailwind container with 2rem padding and default 4px scale",
+  "preserve": ["Inter", "Tailwind", "Radix UI", "lucide-react", "existing SEO routes"],
+  "introduce": ["shared footer", "tighter job-board layout", "trust pages", "SEO landing polish"]
+}

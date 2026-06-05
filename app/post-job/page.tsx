@@ -37,25 +37,41 @@ const platforms = [
 
 export default function PostJobPage() {
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-white border-b border-gray-200">
+    <div className="bg-[#070708] min-h-screen text-zinc-100">
+      <section className="border-b border-white/10 bg-[radial-gradient(circle_at_80%_0%,rgba(166,255,70,0.12),transparent_32%)]">
         <div className="container mx-auto px-4 py-16 md:py-24">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 tracking-tight leading-tight">
-              Where Can You Post a Job?
+          <div className="max-w-4xl">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.16em] text-primary">
+              Employer hiring guide
+            </p>
+            <h1 className="text-4xl md:text-6xl font-black text-zinc-50 mb-6 tracking-tight leading-tight">
+              Where to post a job in Nepal
             </h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-              Find the most effective platforms to reach qualified candidates in Nepal. 
-              Discover specialized and general job boards for your next hire.
+            <p className="text-lg md:text-xl text-zinc-400 max-w-3xl leading-8">
+              Compare Nepali job portals, internship platforms, and hiring
+              directories before publishing your next vacancy. KamKhoj is a
+              discovery layer, so employers should still review each platform's
+              current posting rules, pricing, and candidate audience.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Directory Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-7xl mx-auto">
+          <div className="mb-8 grid gap-4 md:grid-cols-3">
+            {[
+              ["General job portals", "Reach broad candidate pools across industries and experience levels."],
+              ["Specialist platforms", "Use internship, IT, technical, or niche boards when the role needs focus."],
+              ["Source visibility", "KamKhoj links candidates back to original portals for final applications."],
+            ].map(([title, text]) => (
+              <div key={title} className="rounded-2xl border border-white/10 bg-[#1b1b1d] p-6 shadow-2xl shadow-black/20">
+                <h2 className="mb-2 text-lg font-black text-zinc-50">{title}</h2>
+                <p className="text-sm leading-6 text-zinc-400">{text}</p>
+              </div>
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {platforms.map((platform) => (
               <PlatformCard
@@ -67,18 +83,17 @@ export default function PostJobPage() {
             ))}
           </div>
 
-          {/* Ethics & Transparency Banner */}
           <div className="mt-24 max-w-4xl mx-auto">
-            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8 md:p-12">
+            <div className="bg-[#1b1b1d] border border-primary/20 rounded-2xl p-8 md:p-12 shadow-2xl shadow-black/25">
               <div className="flex flex-col md:flex-row gap-8 items-start">
-                <div className="bg-[#0A66C2] rounded-xl p-4 shrink-0 shadow-lg">
-                  <Shield className="w-8 h-8 text-white" />
+                <div className="bg-primary rounded-2xl p-4 shrink-0 shadow-lg">
+                  <Shield className="w-8 h-8 text-zinc-950" />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  <h3 className="text-2xl font-black text-zinc-50 mb-4">
                     Our Commitment to Ethical Aggregation
                   </h3>
-                  <div className="space-y-4 text-gray-700 leading-relaxed">
+                  <div className="space-y-4 text-zinc-300 leading-7">
                     <p>
                       At kamkhoj, we believe in supporting the entire employment ecosystem. 
                       Our platform acts as a bridge, providing visibility to vacancies while 
@@ -86,19 +101,19 @@ export default function PostJobPage() {
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                       <div className="flex gap-3 items-start">
-                        <CheckCircle className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+                        <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm font-medium">Direct credit to all sources</span>
                       </div>
                       <div className="flex gap-3 items-start">
-                        <CheckCircle className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+                        <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm font-medium">No bypassing of original portals</span>
                       </div>
                       <div className="flex gap-3 items-start">
-                        <CheckCircle className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+                        <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm font-medium">Transparent data scraping ethics</span>
                       </div>
                       <div className="flex gap-3 items-start">
-                        <CheckCircle className="w-5 h-5 text-green-600 shrink-0 mt-0.5" />
+                        <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm font-medium">Focus on candidate accessibility</span>
                       </div>
                     </div>
@@ -108,9 +123,9 @@ export default function PostJobPage() {
             </div>
           </div>
 
-          <div className="mt-20 pt-8 border-t border-gray-200 text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full text-sm text-gray-600">
-              <Info className="w-4 h-4 text-gray-500" />
+          <div className="mt-20 pt-8 border-t border-white/10 text-center">
+            <div className="inline-flex max-w-3xl items-center gap-2 rounded-full bg-white/5 px-4 py-3 text-sm text-zinc-400 border border-white/10">
+              <Info className="w-4 h-4 text-primary shrink-0" />
               <span>Please refer to the respective platform for job posting terms, conditions, and current pricing.</span>
             </div>
           </div>

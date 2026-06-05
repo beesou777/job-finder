@@ -89,7 +89,7 @@ export default function HomeContent() {
 
       // Process jobs
       if (jobsRes.ok) {
-        const jobsData:any = await jobsRes.json();
+        const jobsData: any = await jobsRes.json();
         console.log(`[Client] Jobs API response:`, jobsData);
         setJobs(jobsData.data || []);
         setTotal(jobsData.total || 0);
@@ -98,29 +98,29 @@ export default function HomeContent() {
         const errorText = await jobsRes.text();
         console.error(
           `[Client] Failed to fetch jobs: ${jobsRes.status}`,
-          errorText
+          errorText,
         );
       }
 
       // Process internships
       if (internshipsRes.ok) {
-        const internshipsData:any = await internshipsRes.json();
+        const internshipsData: any = await internshipsRes.json();
         console.log(`[Client] Internships API response:`, internshipsData);
         setInternships(internshipsData.data || []);
         console.log(
-          `[Client] Loaded ${internshipsData.data?.length || 0} internships`
+          `[Client] Loaded ${internshipsData.data?.length || 0} internships`,
         );
       } else {
         const errorText = await internshipsRes.text();
         console.error(
           `[Client] Failed to fetch internships: ${internshipsRes.status}`,
-          errorText
+          errorText,
         );
       }
 
       // Process expiring jobs - sort by expiration date (soonest first)
       if (expiringRes.ok) {
-        const expiringData:any = await expiringRes.json();
+        const expiringData: any = await expiringRes.json();
         const sortedExpiring = (expiringData.data || []).sort(
           (a: any, b: any) => {
             const dateA = a.expiresAt
@@ -130,19 +130,19 @@ export default function HomeContent() {
               ? new Date(b.expiresAt).getTime()
               : Infinity;
             return dateA - dateB; // Soonest first
-          }
+          },
         );
         setExpiringJobs(sortedExpiring);
         console.log(`[Client] Loaded ${sortedExpiring.length} expiring jobs`);
       } else {
         console.error(
-          `[Client] Failed to fetch expiring jobs: ${expiringRes.status}`
+          `[Client] Failed to fetch expiring jobs: ${expiringRes.status}`,
         );
       }
 
       // Process stats - use optimized stats endpoint
       if (statsRes.ok) {
-        const statsData:any = await statsRes.json();
+        const statsData: any = await statsRes.json();
         console.log(`[Client] Stats API response:`, statsData);
         setStats({
           totalJobs: statsData.data?.totalJobs || 0,
@@ -152,13 +152,13 @@ export default function HomeContent() {
         console.log(
           `[Client] Stats: ${statsData.data?.totalJobs || 0} jobs, ${
             statsData.data?.totalInternships || 0
-          } internships`
+          } internships`,
         );
       } else {
         const errorText = await statsRes.text();
         console.error(
           `[Client] Failed to fetch stats: ${statsRes.status}`,
-          errorText
+          errorText,
         );
         // Fallback to 0 if stats fail
         setStats({ totalJobs: 0, totalInternships: 0, total: 0 });
@@ -166,14 +166,14 @@ export default function HomeContent() {
 
       // Process categories
       if (categoriesRes.ok) {
-        const categoriesData:any = await categoriesRes.json();
+        const categoriesData: any = await categoriesRes.json();
         setCategories(categoriesData.data || []);
         console.log(
-          `[Client] Loaded ${categoriesData.data?.length || 0} categories`
+          `[Client] Loaded ${categoriesData.data?.length || 0} categories`,
         );
       } else {
         console.error(
-          `[Client] Failed to fetch categories: ${categoriesRes.status}`
+          `[Client] Failed to fetch categories: ${categoriesRes.status}`,
         );
       }
     } catch (error: any) {
@@ -646,8 +646,7 @@ export default function HomeContent() {
                   <Link href="/jobs">
                     <Button
                       size="lg"
-                      variant="outline"
-                      className="border border-gray-300 px-8 py-6 text-lg hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors"
+                      className="rounded-full border border-primary bg-primary px-7 text-zinc-950 hover:bg-white font-black"
                     >
                       View All {total} Jobs
                       <ArrowRight className="ml-2 w-5 h-5" />
@@ -680,7 +679,10 @@ export default function HomeContent() {
               </p>
             </div>
             <Link href="/internships">
-              <Button className="hidden md:flex bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-md hover:shadow-lg transition-all">
+              <Button
+                size="lg"
+                className="rounded-full border border-primary bg-primary px-7 text-zinc-950 hover:bg-white font-black"
+              >
                 View All Internships
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
@@ -712,8 +714,7 @@ export default function HomeContent() {
                   <Link href="/internships">
                     <Button
                       size="lg"
-                      variant="outline"
-                      className="border border-blue-300 px-8 py-6 text-lg hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-colors"
+                      className="rounded-full border border-primary bg-primary px-7 text-zinc-950 hover:bg-white font-black"
                     >
                       View All Internships
                       <ArrowRight className="ml-2 w-5 h-5" />

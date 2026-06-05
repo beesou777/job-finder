@@ -89,7 +89,7 @@ export function FilterSidebar({
       {/* Filter Button */}
       <Button
         variant="outline"
-        className="gap-2"
+        className="gap-2 rounded-full border-white/10 bg-white/5 text-zinc-200 hover:bg-white/10 hover:text-white"
         onClick={() => setIsOpen(true)}
       >
         <Filter className="h-4 w-4" />
@@ -111,15 +111,15 @@ export function FilterSidebar({
           />
           
           {/* Modal */}
-          <div className="fixed inset-y-0 right-0 w-full sm:w-96 bg-white shadow-xl overflow-y-auto flex flex-col">
+          <div className="fixed inset-y-0 right-0 w-full sm:w-96 bg-[#111113] text-zinc-100 shadow-2xl overflow-y-auto flex flex-col border-l border-white/10">
             {/* Header */}
-            <div className="p-4 border-b flex items-center justify-between bg-white sticky top-0 z-10">
-              <h3 className="text-lg font-semibold">Filter Results</h3>
+            <div className="p-4 border-b border-white/10 flex items-center justify-between bg-[#111113] sticky top-0 z-10">
+              <h3 className="text-lg font-black">Filter Results</h3>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsOpen(false)}
-                className="h-8 w-8 p-0"
+                className="h-8 w-8 p-0 text-zinc-400 hover:bg-white/10 hover:text-white"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -144,16 +144,16 @@ export function FilterSidebar({
             </div>
             
             {/* Footer Actions */}
-            <div className="p-4 border-t bg-white sticky bottom-0 flex gap-3">
+            <div className="p-4 border-t border-white/10 bg-[#111113] sticky bottom-0 flex gap-3">
               <Button
                 variant="outline"
-                className="flex-1"
+                className="flex-1 rounded-full border-white/10 bg-transparent text-zinc-300 hover:bg-white/10 hover:text-white"
                 onClick={handleClearAll}
               >
                 Clear filters
               </Button>
               <Button
-                className="flex-1"
+                className="flex-1 rounded-full bg-primary text-zinc-950 hover:bg-white font-black"
                 onClick={handleApply}
               >
                 Apply filters
@@ -221,7 +221,7 @@ function FilterContent({
               className={`w-full text-left flex items-center justify-between p-2 rounded-md text-sm transition-colors ${
                 !selectedCategory 
                   ? "bg-blue-50 text-blue-700 font-medium" 
-                  : "hover:bg-gray-50"
+                  : "hover:bg-white/5"
               }`}
             >
               <span>All Categories</span>
@@ -233,7 +233,7 @@ function FilterContent({
                 className={`w-full text-left flex items-center justify-between p-2 rounded-md text-sm transition-colors ${
                   selectedCategory === category.id 
                     ? "bg-blue-50 text-blue-700 font-medium" 
-                    : "hover:bg-gray-50"
+                    : "hover:bg-white/5"
                 }`}
               >
                 <span className="truncate">{category.name}</span>
@@ -264,7 +264,7 @@ function FilterContent({
 
         {openUrgency && (
           <div className="space-y-1">
-            <p className="text-xs text-gray-600 mb-2">
+            <p className="text-xs text-zinc-500 mb-2">
               This is the date the job was posted by a recruiter or employer. Select one.
             </p>
             <div className="space-y-1">
@@ -273,7 +273,7 @@ function FilterContent({
                 className={`w-full text-left p-2 rounded-md text-sm transition-colors ${
                   !selectedUrgency 
                     ? "bg-blue-50 text-blue-700 font-medium" 
-                    : "hover:bg-gray-50"
+                    : "hover:bg-white/5"
                 }`}
               >
                 <span>No preference</span>
@@ -285,7 +285,7 @@ function FilterContent({
                   className={`w-full text-left p-2 rounded-md text-sm transition-colors ${
                     selectedUrgency === option.value 
                       ? "bg-blue-50 text-blue-700 font-medium" 
-                      : "hover:bg-gray-50"
+                      : "hover:bg-white/5"
                   }`}
                 >
                   <span>{option.label}</span>
@@ -313,7 +313,7 @@ function FilterContent({
 
           {openJobType && (
             <div className="space-y-1">
-              <p className="text-xs text-gray-600 mb-2">
+              <p className="text-xs text-zinc-500 mb-2">
                 Tell us the type of work you're looking for. You can select multiple options.
               </p>
               <div className="space-y-1 max-h-[280px] overflow-y-auto">
@@ -322,7 +322,7 @@ function FilterContent({
                   className={`w-full text-left flex items-center justify-between p-2 rounded-md text-sm transition-colors ${
                     !selectedJobType 
                       ? "bg-blue-50 text-blue-700 font-medium" 
-                      : "hover:bg-gray-50"
+                      : "hover:bg-white/5"
                   }`}
                 >
                   <span>All Types</span>
@@ -334,7 +334,7 @@ function FilterContent({
                     className={`w-full text-left flex items-center justify-between p-2 rounded-md text-sm transition-colors ${
                       selectedJobType === jobType.value 
                         ? "bg-blue-50 text-blue-700 font-medium" 
-                        : "hover:bg-gray-50"
+                        : "hover:bg-white/5"
                     }`}
                   >
                     <div className="flex flex-col">
@@ -373,7 +373,7 @@ function FilterContent({
                 className={`w-full text-left flex items-center justify-between p-2 rounded-md text-sm transition-colors ${
                   !selectedLocation 
                     ? "bg-blue-50 text-blue-700 font-medium" 
-                    : "hover:bg-gray-50"
+                    : "hover:bg-white/5"
                 }`}
               >
                 <span>All Locations</span>
@@ -385,7 +385,7 @@ function FilterContent({
                   className={`w-full text-left flex items-center justify-between p-2 rounded-md text-sm transition-colors ${
                     selectedLocation === location.value 
                       ? "bg-blue-50 text-blue-700 font-medium" 
-                      : "hover:bg-gray-50"
+                      : "hover:bg-white/5"
                   }`}
                 >
                   <span className="truncate">{location.label}</span>

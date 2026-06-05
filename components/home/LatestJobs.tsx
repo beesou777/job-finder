@@ -30,8 +30,7 @@ async function JobsList() {
           <Link href="/jobs">
             <Button
               size="lg"
-              variant="outline"
-              className="border border-gray-300 px-8 py-6 text-lg hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2] transition-colors"
+              className="rounded-full border border-primary bg-primary px-7 text-zinc-950 hover:bg-white font-black"
             >
               View All {total} Jobs
               <ArrowRight className="ml-2 w-5 h-5" />
@@ -47,21 +46,21 @@ function JobsSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {[1, 2, 3, 4, 5, 6].map((i) => (
-        <Card key={i} className="border-2 border-gray-200 bg-white h-full">
+        <Card key={i} className="border border-white/10 bg-[#18181a] h-full">
           <CardContent className="pt-6">
             <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
-                  <div className="h-6 bg-gray-200 rounded w-3/4 mb-2 animate-pulse"></div>
-                  <div className="h-4 bg-gray-200 rounded w-1/2 animate-pulse"></div>
+                  <div className="h-6 bg-white/10 rounded w-3/4 mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-white/10 rounded w-1/2 animate-pulse"></div>
                 </div>
-                <div className="h-6 bg-gray-200 rounded w-16 animate-pulse"></div>
+                <div className="h-6 bg-white/10 rounded w-16 animate-pulse"></div>
               </div>
               <div className="space-y-2">
-                <div className="h-4 bg-gray-200 rounded w-full animate-pulse"></div>
-                <div className="h-4 bg-gray-200 rounded w-2/3 animate-pulse"></div>
+                <div className="h-4 bg-white/10 rounded w-full animate-pulse"></div>
+                <div className="h-4 bg-white/10 rounded w-2/3 animate-pulse"></div>
               </div>
-              <div className="h-10 bg-gray-200 rounded w-full animate-pulse mt-4"></div>
+              <div className="h-10 bg-white/10 rounded w-full animate-pulse mt-4"></div>
             </div>
           </CardContent>
         </Card>
@@ -72,27 +71,28 @@ function JobsSkeleton() {
 
 export function LatestJobs() {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-zinc-950 py-20 text-white">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-10 gap-4">
+        <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-10 gap-4">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <Star className="w-6 h-6 text-[#0A66C2]" />
-              <Badge className="bg-[#0A66C2]/10 text-[#0A66C2] border-[#0A66C2]/20 hover:bg-[#0A66C2]/20">
-                Fresh Opportunities
-              </Badge>
+              <span className="h-2.5 w-2.5 bg-primary" />
+              <span className="font-mono text-sm font-black uppercase tracking-[0.18em] text-zinc-200">
+                Latest jobs in Nepal
+              </span>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-snug mb-3">
-              Latest Job Opportunities
+            <h2 className="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight mb-3">
+              Fresh vacancies, designed for fast scanning.
             </h2>
-            <p className="text-xl text-muted-foreground">
-              Discover the most recent job postings from top companies in Nepal
+            <p className="text-lg text-zinc-400 max-w-2xl">
+              Browse recent vacancies and open the source page to verify the
+              final application instructions before you apply.
             </p>
           </div>
           <Link href="/jobs">
             <Button
               size="lg"
-              className="bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold shadow-md hover:shadow-lg transition-all"
+              className="rounded-full border border-primary bg-primary px-7 text-zinc-950 hover:bg-white font-black"
             >
               View All Jobs
               <ArrowRight className="ml-2 w-5 h-5" />

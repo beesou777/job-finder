@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { generateFAQSchema } from "@/lib/seo";
 
 interface FAQItem {
@@ -64,7 +64,7 @@ export function FAQ() {
   const faqSchema = generateFAQSchema(faqData);
 
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="bg-zinc-950 py-20 text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -72,12 +72,12 @@ export function FAQ() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <HelpCircle className="w-8 h-8 text-blue-600" />
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+            <span className="h-2.5 w-2.5 bg-primary" />
+            <h2 className="text-4xl md:text-5xl font-black text-white">
               Frequently Asked Questions
             </h2>
           </div>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
             Everything you need to know about using kamkhoj to find your next opportunity
           </p>
         </div>
@@ -86,10 +86,10 @@ export function FAQ() {
           {faqData.map((faq, index) => (
             <Card
               key={index}
-              className={`border border-gray-200 bg-white transition-all duration-300 ${
+              className={`border bg-[#18181a] transition-all duration-300 ${
                 openIndex === index
-                  ? "shadow-md border-blue-300"
-                  : "shadow-sm hover:shadow-md hover:border-blue-200"
+                  ? "border-primary/70"
+                  : "border-white/10 hover:border-primary/40"
               }`}
             >
               <CardContent className="p-0">
@@ -99,11 +99,11 @@ export function FAQ() {
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
-                  <span className="text-lg font-semibold text-gray-900 pr-4">
+                  <span className="text-lg font-black text-white pr-4">
                     {faq.question}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-blue-600 flex-shrink-0 transition-transform duration-300 ${
+                    className={`w-5 h-5 text-primary flex-shrink-0 transition-transform duration-300 ${
                       openIndex === index ? "transform rotate-180" : ""
                     }`}
                   />
@@ -117,7 +117,7 @@ export function FAQ() {
                   }`}
                 >
                   <div className="px-6 pb-5 pt-0">
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-zinc-400 leading-relaxed">
                       {faq.answer}
                     </p>
                   </div>

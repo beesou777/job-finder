@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Calendar, ArrowRight } from "lucide-react";
 import { getAllBlogPosts } from "@/lib/blog";
+import { DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Career Blog | Job Search Tips & Guides | kamkhoj",
@@ -20,10 +20,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Career Blog | kamkhoj",
     description: "Career advice and job search tips for Nepal",
-    url: "https://www.kamkhoj.com//blog",
+    url: absoluteUrl("/blog"),
+    images: [{ url: DEFAULT_OG_IMAGE }],
   },
   alternates: {
-    canonical: "https://www.kamkhoj.com//blog",
+    canonical: absoluteUrl("/blog"),
   },
 };
 
@@ -31,39 +32,38 @@ export default function BlogPage() {
   const blogPosts = getAllBlogPosts();
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-16">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <Badge className="mb-4 bg-blue-100 text-blue-700 border-blue-200">
-            Career Resources
-          </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-            Career Blog
+    <div className="min-h-screen bg-zinc-950 text-white">
+      <div className="container mx-auto px-4 py-14 md:py-16">
+        <div className="mb-12 max-w-3xl">
+          <p className="mb-3 font-mono text-sm font-black uppercase tracking-[0.18em] text-primary">
+            Career resources
+          </p>
+          <h1 className="text-4xl md:text-5xl font-black tracking-tight leading-tight mb-4 text-white">
+            Career blog for job seekers in Nepal
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto ">
-            Tips, guides, and advice for your job search in Nepal
+          <p className="text-lg leading-8 text-zinc-400">
+            Practical advice on resumes, interviews, job search strategy,
+            internships, remote roles, and navigating Nepali job portals.
           </p>
         </div>
 
-        {/* Blog Posts Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {blogPosts.map((post) => (
             <Link key={post.slug} href={`/blog/${post.slug}`}>
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer border border-gray-200">
-                <CardContent className="pt-6">
-                  <div className="mb-3">
-                    <Badge variant="outline" className="text-xs">
+              <Card className="h-full cursor-pointer rounded-xl border border-white/10 bg-[#18181a] text-white transition-all hover:-translate-y-0.5 hover:border-primary/60">
+                <CardContent className="p-6">
+                  <div className="mb-4">
+                    <span className="rounded-full border border-white/10 px-3 py-1 font-mono text-[10px] font-black uppercase tracking-[0.16em] text-primary">
                       {post.category}
-                    </Badge>
+                    </span>
                   </div>
-                  <h2 className="text-xl font-bold mb-3 text-gray-900 line-clamp-2">
+                  <h2 className="text-xl font-black mb-3 text-white line-clamp-2">
                     {post.title}
                   </h2>
-                  <p className="text-gray-600 mb-4 line-clamp-3 text-sm">
+                  <p className="text-zinc-400 mb-4 line-clamp-3 text-sm leading-6">
                     {post.description}
                   </p>
-                  <div className="flex items-center justify-between text-sm text-gray-500">
+                  <div className="flex items-center justify-between text-sm text-zinc-500">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       <span>
@@ -76,7 +76,7 @@ export default function BlogPage() {
                     </div>
                     <span>{post.readTime}</span>
                   </div>
-                  <div className="mt-4 flex items-center text-blue-600 font-medium text-sm">
+                  <div className="mt-4 flex items-center text-primary font-bold text-sm">
                     Read more
                     <ArrowRight className="w-4 h-4 ml-1" />
                   </div>
@@ -86,16 +86,16 @@ export default function BlogPage() {
           ))}
         </div>
 
-        {/* CTA Section */}
-        <div className="text-center bg-white rounded-lg p-8 border border-gray-200">
-          <h2 className="text-2xl font-bold mb-3 text-gray-900">
-            Ready to Find Your Next Job?
+        <div className="rounded-xl border border-white/10 bg-[#18181a] p-8">
+          <h2 className="text-2xl font-black mb-3 text-white">
+            Ready to search current vacancies?
           </h2>
-          <p className="text-gray-600 mb-6">
-            Browse thousands of job opportunities from top Nepali job portals
+          <p className="text-zinc-400 mb-6 max-w-2xl">
+            Browse active job listings, internships, and remote roles from Nepali
+            sources, then apply through the original posting.
           </p>
           <Link href="/jobs">
-            <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+            <button className="rounded-full bg-primary px-6 py-3 font-black text-zinc-950 hover:bg-white transition-colors">
               Browse Jobs
             </button>
           </Link>

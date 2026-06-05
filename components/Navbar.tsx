@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { BriefcaseBusiness, Menu, Search, X } from "lucide-react";
 import { useState } from "react";
 
 export function Navbar() {
@@ -12,35 +12,16 @@ export function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   const navLinks = [
-    {
-      href: "/jobs",
-      label: "Jobs",
-    },
-    {
-      href: "/internships",
-      label: "Internships",
-    },
-    {
-      href: "/remote-jobs",
-      label: "Remote",
-    },
-    {
-      href: "/linkedin-jobs",
-      label: "LinkedIn",
-    },
-    {
-      href: "/blog",
-      label: "Blog",
-    },
-    {
-      href: "/post-job",
-      label: "Post a Job",
-    },
+    { href: "/jobs", label: "Jobs" },
+    { href: "/internships", label: "Internships" },
+    { href: "/remote-jobs", label: "Remote" },
+    { href: "/linkedin-jobs", label: "Linkedin" },
+    { href: "/blog", label: "Blog" },
   ];
 
   const supportLink = {
-    href: "/about",
-    label: "Buy Me a Coffee",
+    href: "/post-job",
+    label: "Hiring resources",
   };
 
   const isJobsPage = pathname?.startsWith("/jobs");
@@ -51,18 +32,16 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white shadow-sm border-b border-gray-100">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo - Left */}
+    <nav className="sticky top-0 z-50 w-full bg-zinc-950 px-2 py-3 md:px-5">
+      <div className="mx-auto max-w-[1840px] rounded-2xl border border-white/5 bg-zinc-950/95 px-4 shadow-2xl shadow-black/40 backdrop-blur">
+        <div className="flex h-14 items-center justify-between gap-4">
           <Link 
             href="/" 
-            className="text-2xl font-black text-gray-900 shrink-0"
+            className="flex shrink-0 items-center gap-3 text-xl font-black tracking-tight text-white"
           >
-            kamkhoj
+            <span>kamkhoj</span>
           </Link>
 
-          {/* Desktop Navigation - Center */}
           <div className="hidden md:flex items-center justify-center flex-1 px-8">
             <div className="flex items-center gap-1">
               {navLinks.map((link) => {
@@ -72,10 +51,10 @@ export function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-4 py-2 font-bold text-[15px] transition-all rounded-lg whitespace-nowrap ${
+                    className={`rounded-md px-3 py-2 text-sm font-semibold transition-all whitespace-nowrap ${
                       active
-                        ? "text-[#0A66C2] bg-[#0A66C2]/5"
-                        : "text-gray-600 hover:text-[#0A66C2] hover:bg-gray-50"
+                        ? "bg-white/10 text-primary"
+                        : "text-zinc-300 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     {link.label}
@@ -85,11 +64,17 @@ export function Navbar() {
             </div>
           </div>
 
-          {/* Support Button - Right */}
-          <div className="hidden md:flex items-center shrink-0">
+          <div className="hidden md:flex items-center gap-2 shrink-0">
+            <Link
+              href="/jobs"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-zinc-300 hover:border-primary hover:bg-primary hover:text-zinc-950"
+              aria-label="Search jobs"
+            >
+              <Search className="h-4 w-4" />
+            </Link>
             <Link
               href={supportLink.href}
-              className="px-6 py-2.5 font-bold text-sm text-[#0A66C2] border-2 border-[#0A66C2] rounded-full hover:bg-[#0A66C2] hover:text-white transition-all duration-200 shadow-sm hover:shadow-md"
+              className="rounded-full border border-primary bg-primary px-5 py-2.5 text-xs font-black uppercase tracking-[0.18em] text-zinc-950 transition-colors hover:bg-white"
             >
               {supportLink.label}
             </Link>
@@ -98,7 +83,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-gray-700 hover:bg-gray-100 transition-colors"
+            className="md:hidden rounded-md p-2 text-zinc-200 transition-colors hover:bg-white/10"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
@@ -111,7 +96,7 @@ export function Navbar() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-50 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="md:hidden border-t border-white/10 py-4 animate-in fade-in slide-in-from-top-2 duration-200">
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
@@ -121,10 +106,10 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`px-4 py-3 font-bold text-base rounded-xl transition-all ${
+                    className={`rounded-md px-4 py-3 text-base font-bold transition-all ${
                       active
-                        ? "text-[#0A66C2] bg-[#0A66C2]/5"
-                        : "text-gray-700 hover:text-[#0A66C2] hover:bg-gray-50"
+                        ? "bg-white/10 text-primary"
+                        : "text-zinc-200 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     {link.label}
@@ -135,7 +120,7 @@ export function Navbar() {
                 <Link
                   href={supportLink.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-3 flex items-center justify-center font-bold text-base text-[#0A66C2] border-2 border-[#0A66C2] rounded-xl hover:bg-[#0A66C2] hover:text-white transition-all"
+                  className="flex w-full items-center justify-center rounded-full bg-primary py-3 text-sm font-black uppercase tracking-[0.16em] text-zinc-950 transition-colors hover:bg-white"
                 >
                   {supportLink.label}
                 </Link>

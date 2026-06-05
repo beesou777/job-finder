@@ -11,9 +11,9 @@ interface LinkedInJobDetailProps {
 export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
   if (!jobId) {
     return (
-      <Card className="border-2 border-gray-200">
+      <Card className="border border-white/10 bg-[#1b1b1d]">
         <CardContent className="pt-6 text-center py-12">
-          <p className="text-gray-600">Select a job to view details</p>
+          <p className="text-zinc-400">Select a job to view details</p>
         </CardContent>
       </Card>
     );
@@ -23,7 +23,7 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
 
   if (!job) {
     return (
-      <Card className="border-2 border-gray-200">
+      <Card className="border border-white/10 bg-[#1b1b1d]">
         <CardContent className="pt-6 text-center py-12 text-red-500">
           Job not found.
         </CardContent>
@@ -49,20 +49,20 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
   };
 
   return (
-    <Card className="border-2 border-gray-200">
+    <Card className="border border-white/10 bg-[#1b1b1d] text-zinc-100 shadow-2xl shadow-black/25">
       <CardContent className="pt-6">
         <div className="flex justify-between items-start mb-4">
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">{job.title}</h2>
+            <h2 className="text-2xl font-black text-zinc-50 mb-2">{job.title}</h2>
             {job.company && (
-              <div className="flex items-center text-lg text-gray-700 mb-2">
+              <div className="flex items-center text-lg text-zinc-400 mb-2">
                 <Building2 className="h-5 w-5 mr-2" />
                 {job.company_link ? (
                   <a
                     href={job.company_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#0A66C2] hover:underline"
+                    className="text-primary hover:underline"
                   >
                     {job.company}
                   </a>
@@ -75,7 +75,7 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
           <div className="flex gap-3 ml-4 flex-shrink-0">
             {job.job_link && (
               <Button
-                className="border-2 border-[#0A66C2] text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white bg-white font-semibold transition-colors"
+                className="rounded-full border border-primary bg-transparent text-primary hover:bg-primary hover:text-zinc-950 font-black transition-colors"
                 size="sm"
                 asChild
               >
@@ -92,7 +92,7 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
             )}
             {job.apply_link && (
               <Button
-                className="bg-[#004182] hover:bg-[#003366] text-white font-semibold shadow-sm"
+                className="rounded-full bg-primary hover:bg-white text-zinc-950 font-black shadow-sm"
                 size="sm"
                 asChild
               >
@@ -110,7 +110,7 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-4 mb-6 text-sm text-gray-600">
+        <div className="flex flex-wrap gap-4 mb-6 text-sm text-zinc-400">
           {job.place && (
             <div className="flex items-center">
               <MapPin className="h-4 w-4 mr-2" />
@@ -125,12 +125,12 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
           )}
         </div>
 
-        <div className="border-t border-gray-200 pt-6">
+        <div className="border-t border-white/10 pt-6">
           <div className="mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">Job Description</h3>
+            <h3 className="text-lg font-black text-zinc-50 mb-3">Job Description</h3>
             {job.description ? (
               <div
-                className="text-gray-700 leading-relaxed space-y-2"
+                className="text-zinc-300 leading-relaxed space-y-2"
                 style={{ lineHeight: '1.7' }}
                 dangerouslySetInnerHTML={{
                   __html: job.description
@@ -142,18 +142,18 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
                 }}
               />
             ) : (
-              <p className="text-gray-500 italic">No description available.</p>
+              <p className="text-zinc-500 italic">No description available.</p>
             )}
           </div>
 
           {job.insights && Object.keys(job.insights).length > 0 && (
-            <div className="mt-6 border-t border-gray-200 pt-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">Job Insights</h3>
+            <div className="mt-6 border-t border-white/10 pt-6">
+              <h3 className="text-lg font-black text-zinc-50 mb-3">Job Insights</h3>
               <div className="space-y-2">
                 {Object.entries(job.insights).map(([key, value]) => (
                   <div key={key} className="flex">
-                    <span className="font-medium text-gray-700 w-32">{key}:</span>
-                    <span className="text-gray-600">{String(value)}</span>
+                    <span className="font-medium text-zinc-300 w-32">{key}:</span>
+                    <span className="text-zinc-500">{String(value)}</span>
                   </div>
                 ))}
               </div>

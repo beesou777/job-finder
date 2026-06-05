@@ -33,7 +33,7 @@ export default async function LinkedInJobsPage({
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#070708] text-zinc-100">
       <LinkedInJobsFiltering 
         companies={filters.companies}
         places={filters.places}
@@ -41,9 +41,18 @@ export default async function LinkedInJobsPage({
       
       <div className="container mx-auto px-4 py-8">
         <div>
-          <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">LinkedIn Jobs</h1>
-            <p className="text-sm text-gray-600">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-6">
+            <div>
+              <p className="mb-2 text-sm font-bold uppercase tracking-[0.16em] text-primary">
+                External job discovery
+              </p>
+              <h1 className="text-4xl font-black tracking-tight text-zinc-50">LinkedIn Jobs</h1>
+              <p className="mt-3 max-w-2xl text-zinc-400">
+                Search LinkedIn-sourced opportunities by company, location, and
+                posting date, then verify details on the source before applying.
+              </p>
+            </div>
+            <p className="text-sm font-bold text-zinc-400">
               Total {total.toLocaleString()} Jobs found
             </p>
           </div>

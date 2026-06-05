@@ -11,6 +11,7 @@ import { MapPin, Briefcase, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { generateBreadcrumbSchema } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 
 const VALID_CITIES = [
   "kathmandu",
@@ -123,11 +124,11 @@ export default async function LocationPage({
   }
 
   const breadcrumbSchema = generateBreadcrumbSchema([
-    { name: "Home", url: "https://www.kamkhoj.com/" },
-    { name: "Jobs", url: "https://www.kamkhoj.com//jobs" },
+    { name: "Home", url: absoluteUrl("/") },
+    { name: "Jobs", url: absoluteUrl("/jobs") },
     {
       name: `Jobs in ${cityName}`,
-      url: `https://www.kamkhoj.com//jobs/location/${city}`,
+      url: absoluteUrl(`/jobs/location/${city}`),
     },
   ]);
 
@@ -139,51 +140,51 @@ export default async function LocationPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <div className="min-h-screen bg-gray-50">
-        <div className="bg-white border-b border-gray-200">
+      <div className="min-h-screen bg-[#070708] text-zinc-100">
+        <div className="border-b border-white/10 bg-[radial-gradient(circle_at_80%_0%,rgba(166,255,70,0.12),transparent_32%)]">
           <div className="container mx-auto px-4 py-8 md:py-10">
             {/* Breadcrumbs */}
-            <nav className="mb-6 text-sm text-gray-600" aria-label="Breadcrumb">
+            <nav className="mb-6 text-sm font-bold text-zinc-500" aria-label="Breadcrumb">
               <ol className="flex items-center space-x-2">
                 <li>
                   <Link
                     href="/"
-                    className="hover:text-blue-600 transition-colors"
+                    className="hover:text-primary transition-colors"
                   >
                     Home
                   </Link>
                 </li>
-                <li className="text-gray-400">/</li>
+                <li className="text-zinc-600">/</li>
                 <li>
                   <Link
                     href="/jobs"
-                    className="hover:text-blue-600 transition-colors"
+                    className="hover:text-primary transition-colors"
                   >
                     Jobs
                   </Link>
                 </li>
-                <li className="text-gray-400">/</li>
-                <li className="text-gray-900">{cityName}</li>
+                <li className="text-zinc-600">/</li>
+                <li className="text-zinc-200">{cityName}</li>
               </ol>
             </nav>
 
             {/* Header */}
             <div className="mb-8">
               <div className="flex items-center gap-3 mb-4">
-                <MapPin className="w-8 h-8 text-blue-600" />
-                <Badge className="bg-blue-100 text-blue-700 border-blue-200">
+                <MapPin className="w-8 h-8 text-primary" />
+                <Badge className="bg-primary/10 text-primary border-primary/20 rounded-full">
                   Location
                 </Badge>
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-3 text-gray-900">
+              <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-3 text-zinc-50">
                 Jobs in {cityName}, Nepal
               </h1>
-              <p className="text-lg text-gray-600 mb-4">
+              <p className="text-lg text-zinc-400 mb-4">
                 Browse {total.toLocaleString()} job opportunities in {cityName}
               </p>
 
               {/* SEO Content Section */}
-              <div className="prose max-w-none text-gray-700 mt-6">
+              <div className="prose prose-invert max-w-none text-zinc-300 mt-6">
                 {cityName === "Kathmandu" && (
                   <p className="text-base leading-relaxed">
                     Kathmandu is Nepal's capital and economic hub, offering the
@@ -257,41 +258,41 @@ export default async function LocationPage({
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <Card>
+              <Card className="border-white/10 bg-[#1b1b1d]">
                 <CardContent className="pt-6">
                   <div className="flex items-center gap-3">
-                    <Briefcase className="w-6 h-6 text-blue-600" />
+                    <Briefcase className="w-6 h-6 text-primary" />
                     <div>
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-black text-zinc-50">
                         {total.toLocaleString()}
                       </div>
-                      <div className="text-sm text-gray-600">Total Jobs</div>
+                      <div className="text-sm text-zinc-500">Total Jobs</div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="border-white/10 bg-[#1b1b1d]">
                 <CardContent className="pt-6">
                   <div className="flex items-center gap-3">
-                    <TrendingUp className="w-6 h-6 text-green-600" />
+                    <TrendingUp className="w-6 h-6 text-primary" />
                     <div>
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-black text-zinc-50">
                         {categories.length}
                       </div>
-                      <div className="text-sm text-gray-600">Categories</div>
+                      <div className="text-sm text-zinc-500">Categories</div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="border-white/10 bg-[#1b1b1d]">
                 <CardContent className="pt-6">
                   <div className="flex items-center gap-3">
-                    <MapPin className="w-6 h-6 text-red-600" />
+                    <MapPin className="w-6 h-6 text-primary" />
                     <div>
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-black text-zinc-50">
                         {cityName}
                       </div>
-                      <div className="text-sm text-gray-600">Location</div>
+                      <div className="text-sm text-zinc-500">Location</div>
                     </div>
                   </div>
                 </CardContent>
@@ -301,7 +302,7 @@ export default async function LocationPage({
             {/* Categories */}
             {categories.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4 text-gray-900">
+                <h2 className="text-2xl font-black mb-4 text-zinc-50">
                   Popular Categories in {cityName}
                 </h2>
                 <div className="flex flex-wrap gap-3">
@@ -313,7 +314,7 @@ export default async function LocationPage({
                         key={category.id}
                         href={`/jobs?category=${category.id}&location=${cityName}`}
                       >
-                        <Badge className="px-4 py-2 text-sm cursor-pointer hover:bg-blue-600 hover:text-white transition-colors">
+                        <Badge className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm cursor-pointer text-zinc-200 hover:border-primary/60 hover:text-primary transition-colors">
                           {category.name} ({category.count})
                         </Badge>
                       </Link>
@@ -324,7 +325,7 @@ export default async function LocationPage({
 
             {/* View All Jobs Button */}
             <Link href={`/jobs?location=${cityName}`}>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Button className="rounded-full bg-primary text-zinc-950 hover:bg-white font-black">
                 View All Jobs in {cityName}
               </Button>
             </Link>
@@ -334,13 +335,13 @@ export default async function LocationPage({
         {/* Jobs List */}
         <div className="container mx-auto px-4 py-6">
           {jobs.length === 0 ? (
-            <Card>
+            <Card className="border-white/10 bg-[#1b1b1d]">
               <CardContent className="pt-16 pb-16 text-center">
-                <MapPin className="w-16 h-16 mx-auto mb-4 text-gray-400" />
-                <h3 className="text-2xl font-bold mb-2 text-gray-900">
+                <MapPin className="w-16 h-16 mx-auto mb-4 text-zinc-600" />
+                <h3 className="text-2xl font-black mb-2 text-zinc-50">
                   No Jobs Found in {cityName}
                 </h3>
-                <p className="text-gray-600 mb-6">
+                <p className="text-zinc-400 mb-6">
                   We're constantly updating our job listings. Check back soon or
                   browse jobs in other locations.
                 </p>

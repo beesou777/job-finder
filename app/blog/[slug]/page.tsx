@@ -3,12 +3,11 @@ import { notFound } from "next/navigation";
 import { generateFAQSchema } from "@/lib/seo";
 import Script from "next/script";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, ArrowLeft, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { getBlogPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { MarkdownContent } from "@/components/MarkdownContent";
+import { DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
 
 export async function generateMetadata({
   params,
@@ -37,7 +36,8 @@ export async function generateMetadata({
       description: post.description,
       type: "article",
       publishedTime: post.date,
-      url: `https://www.kamkhoj.com//blog/${params.slug}`,
+      url: absoluteUrl(`/blog/${params.slug}`),
+      images: [{ url: DEFAULT_OG_IMAGE }],
     },
     twitter: {
       card: "summary_large_image",
@@ -45,7 +45,7 @@ export async function generateMetadata({
       description: post.description,
     },
     alternates: {
-      canonical: `https://www.kamkhoj.com//blog/${params.slug}`,
+      canonical: absoluteUrl(`/blog/${params.slug}`),
     },
   };
 }
@@ -70,24 +70,35 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
         />
       )}
 
-      <article className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto">
-            {/* Back Button */}
-            <Link href="/blog">
-              <Button variant="ghost" className="mb-6">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Blog
-              </Button>
+      <article className="min-h-screen bg-zinc-950 text-white">
+        <div className="container mx-auto px-4 py-14 md:py-16">
+          <div className="mx-auto max-w-6xl">
+            <Link
+              href="/blog"
+              className="mb-10 inline-flex items-center gap-2 text-sm font-bold text-zinc-400 hover:text-primary"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to blog
             </Link>
 
-            {/* Header */}
-            <div className="mb-8">
-              <Badge className="mb-4">{post.category}</Badge>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
-                {post.title}
-              </h1>
-              <div className="flex items-center gap-4 text-gray-600 text-sm">
+            <header className="grid gap-10 border-b border-white/10 pb-10 lg:grid-cols-[1fr_320px]">
+              <div>
+                <p className="mb-5 font-mono text-sm font-black uppercase tracking-[0.18em] text-primary">
+                  Career article
+                </p>
+                <h1 className="max-w-4xl text-5xl font-black leading-[0.95] tracking-tight text-white md:text-7xl">
+                  {post.title}
+                </h1>
+                <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-400">
+                  {post.description}
+                </p>
+              </div>
+
+              <aside className="h-fit rounded-2xl border border-white/10 bg-[#18181a] p-6">
+                <p className="mb-4 font-mono text-xs font-black uppercase tracking-[0.18em] text-zinc-500">
+                  Reading details
+                </p>
+                <div className="space-y-4 text-sm text-zinc-400">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   <span>
@@ -103,32 +114,52 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                   <span>{post.readTime}</span>
                 </div>
               </div>
-            </div>
+                <Link
+                  href="/jobs"
+                  className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-black text-zinc-950 hover:bg-white"
+                >
+                  Browse jobs
+                </Link>
+              </aside>
+            </header>
 
-            {/* Content */}
-            <Card className="mb-8">
-              <CardContent className="pt-6">
+            <div className="grid gap-10 py-10 lg:grid-cols-[220px_1fr]">
+              <aside className="hidden lg:block">
+                <div className="sticky top-28 rounded-2xl border border-white/10 bg-[#18181a] p-5">
+                  <p className="font-mono text-xs font-black uppercase tracking-[0.18em] text-zinc-500">
+                    KamKhoj blog
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-zinc-400">
+                    Practical career writing for Nepali job seekers. Verify job
+                    details at the original source before applying.
+                  </p>
+                </div>
+              </aside>
+
+              <Card className="mb-8 border-white/10 bg-[#18181a] text-white">
+                <CardContent className="p-6 md:p-8">
                 <MarkdownContent content={post.content} />
               </CardContent>
             </Card>
+            </div>
 
             {/* FAQ Section */}
             {post.faqs && post.faqs.length > 0 && (
-              <Card className="mb-8">
+              <Card className="mb-8 border-white/10 bg-[#18181a] text-white">
                 <CardContent className="pt-6">
-                  <h2 className="text-2xl font-bold mb-4 text-gray-900">
+                  <h2 className="text-2xl font-black mb-4 text-white">
                     Frequently Asked Questions
                   </h2>
                   <div className="space-y-4">
                     {post.faqs.map((faq, index) => (
                       <div
                         key={index}
-                        className="border-l-4 border-blue-500 pl-4"
+                        className="border-l-4 border-primary pl-4"
                       >
-                        <h3 className="font-semibold text-gray-900 mb-2">
+                        <h3 className="font-black text-white mb-2">
                           {faq.question}
                         </h3>
-                        <p className="text-gray-700">{faq.answer}</p>
+                        <p className="text-zinc-400">{faq.answer}</p>
                       </div>
                     ))}
                   </div>
@@ -139,7 +170,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             {/* Related Posts */}
             {relatedPosts.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4 text-gray-900">
+                <h2 className="text-2xl font-black mb-4 text-white">
                   Related Articles
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -148,15 +179,15 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                       key={relatedPost.slug}
                       href={`/blog/${relatedPost.slug}`}
                     >
-                      <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
+                      <Card className="h-full cursor-pointer border-white/10 bg-[#18181a] text-white transition-all hover:border-primary/60">
                         <CardContent className="pt-6">
-                          <h3 className="font-bold mb-2 text-gray-900 line-clamp-2">
+                          <h3 className="font-black mb-2 text-white line-clamp-2">
                             {relatedPost.title}
                           </h3>
-                          <p className="text-sm text-gray-600 line-clamp-2">
+                          <p className="text-sm text-zinc-400 line-clamp-2">
                             {relatedPost.description}
                           </p>
-                          <div className="mt-4 flex items-center text-blue-600 text-sm font-medium">
+                          <div className="mt-4 flex items-center text-primary text-sm font-bold">
                             Read more
                             <ArrowRight className="w-4 h-4 ml-1" />
                           </div>
@@ -169,19 +200,19 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             )}
 
             {/* CTA */}
-            <Card className="bg-blue-50 border-blue-200">
+            <Card className="border-white/10 bg-[#18181a] text-white">
               <CardContent className="pt-6 text-center">
-                <h2 className="text-2xl font-bold mb-3 text-gray-900">
+                <h2 className="text-2xl font-black mb-3 text-white">
                   Ready to Find Your Next Job?
                 </h2>
-                <p className="text-gray-600 mb-6">
+                <p className="text-zinc-400 mb-6">
                   Browse thousands of job opportunities from top Nepali job
                   portals
                 </p>
                 <Link href="/jobs">
-                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <span className="inline-flex rounded-full bg-primary px-5 py-3 font-black text-zinc-950 hover:bg-white">
                     Browse Jobs
-                  </Button>
+                  </span>
                 </Link>
               </CardContent>
             </Card>

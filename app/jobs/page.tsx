@@ -52,7 +52,7 @@ export default async function JobsPage({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-zinc-950">
       <JobsFiltering 
         categories={categories}
         jobTypes={jobTypes}

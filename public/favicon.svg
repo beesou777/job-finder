@@ -1,12 +1,8 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="6" fill="url(#gradient)"/>
-  <defs>
-    <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#3b82f6"/>
-      <stop offset="50%" stop-color="#6366f1"/>
-      <stop offset="100%" stop-color="#8b5cf6"/>
-    </linearGradient>
-  </defs>
-  <text x="16" y="22" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">JK</text>
+  <rect x="2" y="2" width="28" height="28" rx="8" fill="#09090B"/>
+  <rect x="3.5" y="3.5" width="25" height="25" rx="6.5" stroke="#A3FF3F" stroke-width="3"/>
+  <path d="M10 14.25H22V22H10V14.25Z" stroke="#A3FF3F" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M13 14.25V11.75C13 10.65 13.9 9.75 15 9.75H17C18.1 9.75 19 10.65 19 11.75V14.25" stroke="#A3FF3F" stroke-width="2"/>
+  <path d="M13 17.5H19" stroke="#A3FF3F" stroke-width="2" stroke-linecap="round"/>
 </svg>
 

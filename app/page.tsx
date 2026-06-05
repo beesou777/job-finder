@@ -10,6 +10,7 @@ import {
 } from "@/components/home/HomeStaticSections";
 import { FAQ } from "@/components/FAQ";
 import { getJobs } from "@/lib/data-fetching";
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title:
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     siteName: "kamkhoj - Nepal's Best Job Aggregator",
     images: [
       {
-        url: "https://www.kamkhoj.com//og-image.png",
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "kamkhoj - Nepal's Job Finder",
@@ -62,10 +63,10 @@ export const metadata: Metadata = {
     title: "Best Job Aggregator Sites in Nepal | kamkhoj",
     description:
       "Best job aggregator sites in Nepal - Search thousands of jobs from top Nepali job portals all in one place",
-    images: ["https://www.kamkhoj.com//og-image.png"],
+    images: [DEFAULT_OG_IMAGE],
   },
   alternates: {
-    canonical: "https://www.kamkhoj.com/",
+    canonical: SITE_URL,
   },
 };
 
@@ -82,12 +83,12 @@ export default async function Home({
   // Prefetch first 10 jobs for SEO structured data (SSR)
   const { jobs: latestJobs, total } = await getJobs({ limit: 10, type: "job" });
 
-  const baseUrl = "https://www.kamkhoj.com";
+  const baseUrl = SITE_URL;
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "kamkhoj",
+    name: SITE_NAME,
     description: "Nepal's #1 Job Finder - Find jobs and internships across Nepal",
     url: baseUrl,
     potentialAction: {
@@ -181,11 +182,7 @@ export default async function Home({
       <ScrapingInfoSection />
       <ResourcesSection />
       
-      <section className="bg-gray-50 py-20">
-        <div className="container mx-auto px-4">
-          <FAQ />
-        </div>
-      </section>
+      <FAQ />
     </div>
   );
 }

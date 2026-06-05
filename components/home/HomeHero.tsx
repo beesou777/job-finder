@@ -1,47 +1,41 @@
-import { Suspense } from "react";
-import { HomeSearch } from "./HomeSearch";
-import { Stats, StatsSkeleton } from "./Stats";
+import Link from "next/link";
+import { ArrowRight, Search } from "lucide-react";
 
 export function HomeHero() {
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-4 py-12 md:py-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            {/* Left Side - Search Section */}
-            <div>
-              <div className="mb-6">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-snug mb-4">
-                  Find Jobs in Nepal
-                  <span className="block text-[#0A66C2] mt-2">
-                    Latest Opportunities {new Date().getFullYear()}
-                  </span>
-                </h1>
-                <p className="text-base md:text-lg text-gray-600 mb-2 leading-relaxed">
-                  Discover 1000+ job opportunities from top Nepali job portals
-                </p>
-                <p className="text-sm text-gray-500">
-                  Search across MeroJob, Kantipur Job, JobsNepal, KumariJob,
-                  and more - all in one place
-                </p>
-              </div>
+    <section className="bg-zinc-950 px-2 pb-8 md:px-5">
+      <div className="hero-grid relative mx-auto min-h-[680px] max-w-[1880px] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,rgba(255,255,255,.035)_44%,transparent_72%)]" />
 
-              <HomeSearch />
-
-              <Suspense fallback={<StatsSkeleton />}>
-                <Stats />
-              </Suspense>
+        <div className="relative z-10 mx-auto flex min-h-[680px] max-w-6xl flex-col justify-center px-6 py-20 md:px-10 lg:px-0">
+          <div className="max-w-5xl">
+            <div className="mb-5 flex items-center gap-3 font-mono text-xs font-black uppercase tracking-[0.18em] text-zinc-400 md:text-sm">
+              <span className="h-2.5 w-2.5 bg-primary" />
+              Nepal jobs, internships, and remote openings
             </div>
+            <h1 className="max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.02em] text-zinc-100 md:text-7xl lg:text-8xl">
+              Your <span className="text-primary">Nepal job search</span> starts here.
+            </h1>
+            <p className="mt-8 max-w-3xl text-lg font-semibold leading-8 text-zinc-300 md:text-2xl">
+              Search fresh vacancies from Nepali job sources, compare the
+              details that matter, and apply through the original posting.
+            </p>
 
-            {/* Right Side - Image */}
-            <div className="hidden lg:block">
-              <div className="relative">
-                <img
-                  src="/man-search-hiring-job-online-from-laptop.avif"
-                  alt="Person searching for jobs online"
-                  className="w-full h-auto rounded-lg mix-blend-darken"
-                />
-              </div>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href="/jobs"
+                className="inline-flex min-h-14 items-center gap-3 rounded-full bg-white px-7 text-base font-black text-zinc-950 transition-colors hover:bg-primary"
+              >
+                <Search className="h-5 w-5" />
+                Browse Jobs
+              </Link>
+              <Link
+                href="/post-job"
+                className="inline-flex min-h-14 items-center gap-3 rounded-full border border-white/20 bg-transparent px-7 text-base font-black text-white transition-colors hover:border-primary hover:bg-primary hover:text-zinc-950"
+              >
+                Hiring Resources
+                <ArrowRight className="h-5 w-5" />
+              </Link>
             </div>
           </div>
         </div>

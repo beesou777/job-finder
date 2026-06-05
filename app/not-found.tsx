@@ -1,49 +1,71 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Home, Search, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Briefcase, Home, Search } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">
-      <div className="relative mb-8">
-        <h1 className="text-[12rem] font-extrabold text-gray-100 select-none">404</h1>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-gray-100">
-             <div className="w-24 h-24 bg-blue-50 rounded-full flex items-center justify-center mb-4 mx-auto">
-                <Search className="w-12 h-12 text-[#0A66C2]" />
-             </div>
-             <h2 className="text-2xl font-bold text-gray-900">Page Not Found</h2>
-             <p className="text-gray-600 mt-2 max-w-xs">
-                Oops! The page you're looking for doesn't exist or has been moved.
-             </p>
+    <div className="relative min-h-[78vh] overflow-hidden bg-[#070708] px-4 py-16 text-zinc-100">
+      <div className="pointer-events-none absolute inset-0 dark-page-pattern opacity-70" />
+      <div className="pointer-events-none absolute right-[-10rem] top-20 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+
+      <div className="relative mx-auto grid max-w-6xl items-center gap-10 md:grid-cols-[1fr_0.8fr]">
+        <section>
+          <p className="mb-4 text-xs font-black uppercase tracking-[0.28em] text-primary">
+            Page not found
+          </p>
+          <h1 className="max-w-3xl text-5xl font-black tracking-tight text-zinc-50 md:text-7xl">
+            This job lead moved or the link is broken.
+          </h1>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
+            KamKhoj keeps listings tied to their original sources. If this page
+            is unavailable, start from the latest jobs, remote roles, or
+            internships instead.
+          </p>
+
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Button asChild className="h-12 rounded-full bg-primary px-7 font-black text-zinc-950 hover:bg-white">
+              <Link href="/jobs" className="flex items-center gap-2">
+                <Briefcase className="h-5 w-5" />
+                Browse Jobs
+              </Link>
+            </Button>
+            <Button asChild variant="outline" className="h-12 rounded-full border-white/10 bg-transparent px-7 font-black text-zinc-200 hover:bg-white/10 hover:text-white">
+              <Link href="/" className="flex items-center gap-2">
+                <Home className="h-5 w-5" />
+                Back Home
+              </Link>
+            </Button>
           </div>
-        </div>
-      </div>
+        </section>
 
-      <div className="flex flex-col sm:flex-row gap-4 mt-8">
-        <Button asChild variant="default" className="bg-[#0A66C2] hover:bg-[#004182] h-12 px-8 text-base font-semibold">
-          <Link href="/" className="flex items-center gap-2">
-            <Home className="w-5 h-5" />
-            Back to Home
-          </Link>
-        </Button>
-        <Button asChild variant="outline" className="h-12 px-8 text-base font-semibold border-gray-300">
-          <Link href="/remote-jobs" className="flex items-center gap-2">
-            <ArrowLeft className="w-5 h-5" />
-            Explore Remote Jobs
-          </Link>
-        </Button>
-      </div>
-
-      <div className="mt-12 text-sm text-gray-400">
-        <p>If you think this is a mistake, please <Link href="/contact" className="underline hover:text-[#0A66C2]">contact support</Link>.</p>
-      </div>
-
-      {/* Background Decorative Elements */}
-      <div className="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
-         <div className="absolute top-[10%] left-[5%] w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-         <div className="absolute top-[20%] right-[10%] w-72 h-72 bg-purple-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-         <div className="absolute bottom-[20%] left-[15%] w-80 h-80 bg-pink-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+        <aside className="rounded-3xl border border-white/10 bg-[#1b1b1d] p-6 shadow-2xl shadow-black/30">
+          <div className="mb-8 flex items-center justify-between">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary text-zinc-950">
+              <Search className="h-7 w-7" />
+            </div>
+            <span className="font-mono text-5xl font-black text-white/10">404</span>
+          </div>
+          <div className="space-y-3">
+            {[
+              ["/remote-jobs", "Explore remote jobs"],
+              ["/internships", "Find internships"],
+              ["/blog", "Read career guides"],
+            ].map(([href, label]) => (
+              <Link
+                key={href}
+                href={href}
+                className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 font-bold text-zinc-200 transition-colors hover:border-primary/60 hover:text-primary"
+              >
+                <span>{label}</span>
+                <ArrowLeft className="h-4 w-4 rotate-180" />
+              </Link>
+            ))}
+          </div>
+          <p className="mt-6 text-sm leading-6 text-zinc-500">
+            If you think this page should exist, send the URL from the contact
+            page and we will review it.
+          </p>
+        </aside>
       </div>
     </div>
   );

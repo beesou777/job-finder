@@ -22,10 +22,11 @@ interface LinkedInJobsFilteringProps {
 export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteringProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [searchValue, setSearchValue] = useState(searchParams.get("search") || "");
+  const paramsSnapshot = searchParams ?? new URLSearchParams();
+  const [searchValue, setSearchValue] = useState(paramsSnapshot.get("search") || "");
 
   const updateParams = (newParams: Record<string, string | null>) => {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(paramsSnapshot.toString());
     Object.entries(newParams).forEach(([key, value]) => {
       if (value === null) {
         params.delete(key);
@@ -48,30 +49,33 @@ export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteri
     if (key === "search") setSearchValue("");
   };
 
-  const selectedCompany = searchParams.get("company");
-  const selectedPlace = searchParams.get("place");
-  const selectedDatePosted = searchParams.get("datePosted");
+  const selectedCompany = paramsSnapshot.get("company");
+  const selectedPlace = paramsSnapshot.get("place");
+  const selectedDatePosted = paramsSnapshot.get("datePosted");
 
   return (
-    <div className="bg-white border-b border-gray-200">
+    <div className="bg-zinc-950 border-b border-white/10 text-white">
       <div className="container mx-auto px-4 py-6">
         <div className="mb-6">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-snug">
-            LinkedIn Jobs - Find Your <span className="text-[#0A66C2]">Next Opportunity</span>
+          <p className="mb-3 font-mono text-sm font-black uppercase tracking-[0.18em] text-primary">
+            LinkedIn sourced
+          </p>
+          <h1 className="text-3xl md:text-5xl font-black text-white leading-tight">
+            LinkedIn jobs from public leads
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-zinc-400 mt-3 max-w-2xl">
             Discover thousands of LinkedIn job opportunities from top companies in Nepal
           </p>
         </div>
 
         <form onSubmit={handleSearch} className="mb-4">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 w-5 h-5" />
             <Input
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Search for roles, companies, or locations"
-              className="pl-12 pr-4 h-12 text-base border-gray-300 focus:border-[#0A66C2] focus:ring-[#0A66C2]"
+              className="pl-12 pr-4 h-12 text-base rounded-xl border-white/10 bg-[#18181a] text-white placeholder:text-zinc-500 focus:border-primary focus:ring-primary"
             />
           </div>
         </form>
@@ -127,51 +131,51 @@ export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteri
             </SelectContent>
           </Select>
 
-          {(selectedCompany || selectedPlace || selectedDatePosted || searchParams.get("search")) && (
+          {(selectedCompany || selectedPlace || selectedDatePosted || paramsSnapshot.get("search")) && (
             <Button
               onClick={() => {
                 router.push("/linkedin-jobs");
                 setSearchValue("");
               }}
               variant="outline"
-              className="h-10"
+              className="h-10 rounded-full border-white/10 bg-transparent text-zinc-300 hover:bg-white/10 hover:text-white"
             >
               Clear All Filters
             </Button>
           )}
         </div>
 
-        {(selectedCompany || selectedPlace || selectedDatePosted || searchParams.get("search")) && (
-          <div className="flex flex-wrap gap-2 items-center pt-2 border-t border-gray-100">
-            <span className="text-sm text-gray-500 font-medium mr-1">Active filters:</span>
+        {(selectedCompany || selectedPlace || selectedDatePosted || paramsSnapshot.get("search")) && (
+          <div className="flex flex-wrap gap-2 items-center pt-2 border-t border-white/10">
+            <span className="text-sm text-zinc-500 font-medium mr-1">Active filters:</span>
             {selectedCompany && (
-              <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+              <Badge variant="secondary" className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
                 Company: {selectedCompany}
-                <button onClick={() => removeFilter("company")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                <button onClick={() => removeFilter("company")} className="ml-0.5 hover:text-zinc-50 transition-colors">
                   <X className="h-3.5 w-3.5" />
                 </button>
               </Badge>
             )}
             {selectedPlace && (
-              <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+              <Badge variant="secondary" className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
                 Location: {selectedPlace}
-                <button onClick={() => removeFilter("place")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                <button onClick={() => removeFilter("place")} className="ml-0.5 hover:text-zinc-50 transition-colors">
                   <X className="h-3.5 w-3.5" />
                 </button>
               </Badge>
             )}
             {selectedDatePosted && (
-              <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+              <Badge variant="secondary" className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
                 Date: {selectedDatePosted}
-                <button onClick={() => removeFilter("datePosted")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                <button onClick={() => removeFilter("datePosted")} className="ml-0.5 hover:text-zinc-50 transition-colors">
                   <X className="h-3.5 w-3.5" />
                 </button>
               </Badge>
             )}
-            {searchParams.get("search") && (
-              <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
-                {searchParams.get("search")}
-                <button onClick={() => removeFilter("search")} className="ml-0.5 hover:text-blue-900 transition-colors">
+            {paramsSnapshot.get("search") && (
+              <Badge variant="secondary" className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
+                {paramsSnapshot.get("search")}
+                <button onClick={() => removeFilter("search")} className="ml-0.5 hover:text-zinc-50 transition-colors">
                   <X className="h-3.5 w-3.5" />
                 </button>
               </Badge>

@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MapPin, Building2, ExternalLink, DollarSign, Calendar, Sparkles, Clock, Briefcase, ArrowRight } from "lucide-react";
-import { addUtmParams } from "@/lib/utils";
+import { MapPin, Calendar, Briefcase, ArrowRight, Clock3 } from "lucide-react";
+import { slugify } from "@/lib/utils";
 
 interface JobCardProps {
   job: {
@@ -12,7 +12,7 @@ interface JobCardProps {
     company?: string;
     location?: string;
     source: string;
-    category?: string;
+    category?: string | { id?: string; name: string; slug?: string };
     type?: "job" | "internship";
     jobType?: string;
     salaryText?: string;
@@ -27,7 +27,6 @@ interface JobCardProps {
 export function JobCard({ job }: JobCardProps) {
   const postedDate = job.postedAt ? new Date(job.postedAt) : (job.createdAt ? new Date(job.createdAt) : new Date());
   const daysAgo = Math.floor((Date.now() - postedDate.getTime()) / (1000 * 60 * 60 * 24));
-  const isNew = daysAgo <= 3;
 
   // Calculate days left until deadline/expiration
   const getDaysLeft = () => {
@@ -64,39 +63,67 @@ export function JobCard({ job }: JobCardProps) {
   // Determine job type text
   const jobTypeText = job.jobType || (job.type === "internship" ? "Internship" : "Full Time");
   const salaryText = job.salaryText || "Negotiable";
+  const companyInitial = (job.company || job.source || "K").charAt(0).toUpperCase();
 
   return (
-    <Card className="h-full flex flex-col border border-gray-300 bg-white">
-      <CardHeader className="pb-4 pt-6 px-6">
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <div className="flex-1 min-w-0">
-            <CardTitle className="text-lg font-semibold mb-2 line-clamp-2 leading-snug text-gray-900">
+    <Card className="group h-full min-h-[260px] flex flex-col overflow-hidden rounded-xl border border-white/10 bg-[#242426] text-zinc-100 shadow-xl shadow-black/20 transition-all hover:-translate-y-0.5 hover:border-primary/80 hover:bg-[#29292c]">
+      <CardHeader className="px-6 pb-4 pt-6">
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div className="flex min-w-0 items-center gap-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/15 bg-zinc-950 text-primary shadow-[0_0_18px_rgba(190,242,100,.18)]">
+              <span className="font-mono text-sm font-black">{companyInitial}</span>
+            </div>
+            <div className="min-w-0">
+              {job.company && (
+                <Link
+                  href={`/company/${slugify(job.company)}`}
+                  className="block truncate font-mono text-sm font-black uppercase tracking-[0.18em] text-zinc-200 hover:text-primary"
+                >
+                  {job.company}
+                </Link>
+              )}
+              <span className="mt-1 block truncate text-xs font-bold uppercase tracking-[0.14em] text-zinc-500">
+                {job.type === "internship" ? "Internship" : job.source}
+              </span>
+            </div>
+          </div>
+
+          <a
+            href={`/apply/${job.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden shrink-0 items-center gap-2 rounded-full border-2 border-primary px-6 py-3 font-mono text-sm font-black uppercase tracking-[0.18em] text-zinc-100 transition-colors hover:bg-primary hover:text-zinc-950 md:inline-flex"
+          >
+            View Job
+            <ArrowRight className="h-4 w-4" />
+          </a>
+        </div>
+
+        <div className="min-w-0">
+          <CardTitle className="mb-2 line-clamp-2 text-xl font-black leading-tight text-zinc-100">
               {job.title}
-            </CardTitle>
-            {job.company && (
-              <CardDescription className="flex items-center gap-2 mt-2">
-                <Building2 className="w-4 h-4 flex-shrink-0 text-gray-500" />
-                <span className="truncate text-sm font-medium text-gray-700">{job.company}</span>
-              </CardDescription>
-            )}
-          </div>
-          <div className="flex flex-col gap-1.5 items-end ml-2 flex-shrink-0">
-            {isNew && (
-              <Badge className="text-[10px] px-2 py-0.5 bg-[#0A66C2] text-white border-0 font-medium">
-                New
-              </Badge>
-            )}
-            <Badge className="text-[10px] px-2 py-0.5 bg-gray-100 hover:bg-gray-200 text-gray-600 border-0 font-normal">
-              {job.type === "internship" ? "Internship" : job.source}
-            </Badge>
-          </div>
+          </CardTitle>
+          {job.location && (
+            <Link href={`/jobs/${slugify(job.location)}`} className="inline-flex items-center gap-2 text-base font-semibold text-zinc-300 hover:text-primary">
+              <MapPin className="h-4 w-4 text-zinc-500" />
+              {job.location}
+            </Link>
+          )}
         </div>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col px-6 pb-6">
-        {/* Horizontal Badges for Key Info */}
-        <div className="flex flex-wrap gap-2 mb-4">
+
+      <CardContent className="flex flex-1 flex-col px-6 pb-6">
+        <div className="mb-6 min-h-8">
+          {salaryText && (
+            <div className="inline-flex items-baseline gap-2 text-2xl font-black text-white">
+              {salaryText}
+            </div>
+          )}
+        </div>
+
+        <div className="mt-auto flex flex-wrap items-center gap-2">
           {(job.deadline || daysLeft !== null) && (
-            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
+            <Badge className="max-w-full rounded-full border border-white/25 bg-transparent px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-zinc-300 hover:bg-transparent">
               <Calendar className={`w-3.5 h-3.5 flex-shrink-0 ${
                 daysLeft !== null && daysLeft <= 3 
                   ? "text-red-500" 
@@ -113,46 +140,40 @@ export function JobCard({ job }: JobCardProps) {
               </span>
             </Badge>
           )}
-          {job.location && (
-            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
-              <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
-              <span className="truncate max-w-[200px]">{job.location}</span>
-            </Badge>
-          )}
           {jobTypeText && (
-            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
-              <Briefcase className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
+            <Badge className="max-w-full rounded-full border border-white/25 bg-transparent px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-zinc-300 hover:bg-transparent">
+              <Briefcase className="w-3.5 h-3.5 flex-shrink-0 text-zinc-400" />
               <span className="truncate">{jobTypeText}</span>
             </Badge>
           )}
-          {salaryText && (
-            <Badge className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border-0 font-normal rounded-md flex items-center gap-1.5 max-w-full">
-              <Briefcase className="w-3.5 h-3.5 flex-shrink-0 text-gray-500" />
-              <span className="truncate">{salaryText}</span>
-            </Badge>
-          )}
-        </div>
-
-        {job.category && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            <Badge className="text-xs px-2 py-0.5 border border-gray-300 bg-white hover:bg-gray-100 text-gray-700 font-normal max-w-full">
+          {job.category && (
+            <Link
+              href={
+                typeof job.category === "object" && job.category !== null && "slug" in job.category
+                  ? `/jobs/category/${(job.category as { slug?: string; name: string }).slug || slugify((job.category as { name: string }).name)}`
+                  : `/jobs?search=${encodeURIComponent(String(job.category))}`
+              }
+            >
+            <Badge className="max-w-full rounded-full border border-white/25 bg-transparent px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-zinc-300 hover:bg-transparent">
               <span className="truncate block">
                 {typeof job.category === 'object' && job.category !== null && 'name' in job.category 
                   ? (job.category as { name: string }).name 
                   : String(job.category)}
               </span>
             </Badge>
-          </div>
-        )}
-
-        <div className="mt-auto pt-4 border-t border-gray-200">
-          <a 
-            href={addUtmParams(job.applyUrl, job.source, job.id)}
+            </Link>
+          )}
+          <span className="ml-auto inline-flex items-center gap-1.5 whitespace-nowrap text-xs font-black text-zinc-400">
+            <Clock3 className="h-3.5 w-3.5" />
+            {daysAgo <= 0 ? "Posted today" : `${daysAgo}d ago`}
+          </span>
+          <a
+            href={`/apply/${job.id}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-primary hover:text-primary/90 font-medium text-sm"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary px-5 py-3 font-mono text-sm font-black uppercase tracking-[0.16em] text-zinc-100 transition-colors hover:bg-primary hover:text-zinc-950 md:hidden"
           >
-            Apply Now
+            View Job
             <ArrowRight className="w-4 h-4" />
           </a>
         </div>

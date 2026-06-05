@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Jobs in Nepal | Browse Latest Job Openings | kamkhoj",
@@ -16,10 +17,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Jobs in Nepal | kamkhoj",
     description: "Browse thousands of job opportunities in Nepal",
-    url: "https://www.kamkhoj.com//jobs",
+    url: absoluteUrl("/jobs"),
+    images: [{ url: DEFAULT_OG_IMAGE }],
   },
   alternates: {
-    canonical: "https://www.kamkhoj.com//jobs",
+    canonical: absoluteUrl("/jobs"),
   },
 };
 

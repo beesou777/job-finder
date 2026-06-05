@@ -62,10 +62,10 @@ export function Pagination({
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
-      <div className="text-sm text-muted-foreground">
-        Showing <span className="font-semibold text-foreground">{startItem}</span> to{" "}
-        <span className="font-semibold text-foreground">{endItem}</span> of{" "}
-        <span className="font-semibold text-foreground">{totalItems}</span> results
+      <div className="text-sm text-zinc-500">
+        Showing <span className="font-semibold text-white">{startItem}</span> to{" "}
+        <span className="font-semibold text-white">{endItem}</span> of{" "}
+        <span className="font-semibold text-white">{totalItems}</span> results
       </div>
 
       <div className="flex items-center gap-2">
@@ -74,7 +74,7 @@ export function Pagination({
           size="sm"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="gap-1"
+          className="gap-1 border-white/10 bg-[#18181a] text-zinc-300 hover:bg-white/10 hover:text-white"
         >
           <ChevronLeft className="h-4 w-4" />
           <span className="hidden sm:inline">Previous</span>
@@ -100,7 +100,7 @@ export function Pagination({
                 size="sm"
                 onClick={() => onPageChange(pageNumber)}
                 className={`min-w-[2.5rem] ${
-                  isActive ? "bg-primary text-primary-foreground" : ""
+                  isActive ? "bg-primary text-zinc-950" : "border-white/10 bg-[#18181a] text-zinc-300 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 {pageNumber}
@@ -114,7 +114,7 @@ export function Pagination({
           size="sm"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="gap-1"
+          className="gap-1 border-white/10 bg-[#18181a] text-zinc-300 hover:bg-white/10 hover:text-white"
         >
           <span className="hidden sm:inline">Next</span>
           <ChevronRight className="h-4 w-4" />

@@ -1,21 +1,24 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 import { GlobalChatWidget } from "@/components/GlobalChatWidget";
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
-const inter = Inter({ subsets: ["latin"] });
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default:
-      "Best Job Aggregator Sites in Nepal | Job Aggregator Sites in Nepal | kamkhoj",
-    template: "%s | kamkhoj",
+      "Jobs in Nepal | Latest Vacancies and Internships | KamKhoj",
+    template: "%s | KamKhoj",
   },
   description:
-    "Best job aggregator sites in Nepal - Find the latest jobs and internships from top Nepali job portals - MeroCareer, JobsNepal, KumariJob, InternSathi, JobAxle all in one place. Your career journey starts here.",
+    "Find latest jobs in Nepal, internships in Kathmandu, IT jobs, banking jobs, remote jobs, and vacancies from major Nepali job portals in one search engine.",
   keywords: [
     "best job aggregator sites in nepal",
     "job aggregator sites in nepal",
@@ -38,9 +41,9 @@ export const metadata: Metadata = {
     "best job sites nepal",
     "top job aggregator nepal",
   ],
-  authors: [{ name: "kamkhoj" }],
-  creator: "kamkhoj",
-  publisher: "kamkhoj",
+  authors: [{ name: SITE_NAME }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
   robots: {
     index: true,
     follow: true,
@@ -55,15 +58,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://www.kamkhoj.com/",
-    siteName: "kamkhoj - Best Job Aggregator Sites in Nepal",
-    title:
-      "Best Job Aggregator Sites in Nepal | Job Aggregator Sites in Nepal | kamkhoj",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: "Jobs in Nepal | Latest Vacancies and Internships | KamKhoj",
     description:
       "Best job aggregator sites in Nepal - Find the latest jobs and internships from top Nepali job portals all in one place.",
     images: [
       {
-        url: "https://www.kamkhoj.com/kamkhoj.png",
+        url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "kamkhoj - Nepal's Job Finder - Find Jobs in Nepal",
@@ -72,13 +74,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Best Job Aggregator Sites in Nepal | kamkhoj",
+    title: "Jobs in Nepal | KamKhoj",
     description:
       "Best job aggregator sites in Nepal - Find the latest jobs and internships from all major portals",
-    images: ["https://www.kamkhoj.com/kamkhoj.png"],
+    images: [DEFAULT_OG_IMAGE],
   },
   alternates: {
-    canonical: "https://www.kamkhoj.com/",
+    canonical: SITE_URL,
   },
   verification: {
     // Add your verification codes here when available
@@ -97,14 +99,14 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
-        <meta name="theme-color" content="#3b82f6" />
+        <meta name="theme-color" content="#09090b" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=5"
         />
         <meta name="google-adsense-account" content="ca-pub-7656502769250843" />
       </head>
-      <body className={inter.className}>
+      <body className={manrope.className}>
         {/* Google Analytics - Only load in production */}
         {process.env.NODE_ENV === "production" && (
           <>
@@ -165,7 +167,8 @@ export default function RootLayout({
         />
         <Providers>
           <Navbar />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen bg-zinc-950">{children}</main>
+          <Footer />
           <GlobalChatWidget />
         </Providers>
       </body>

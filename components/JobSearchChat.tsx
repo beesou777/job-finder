@@ -128,7 +128,7 @@ function AssistantMessageContent({
       ))}
       {jobsToShow.length > 0 && (
         <div className="space-y-3 w-full mt-2">
-          <p className="text-xs font-medium text-gray-500">
+          <p className="text-xs font-medium text-zinc-500">
             {jobsToShow.length} job{jobsToShow.length !== 1 ? "s" : ""} found
           </p>
           <div className="space-y-2.5">
@@ -154,40 +154,40 @@ function JobCard({ job }: { job: JobResult }) {
       href={applyUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="block p-4 rounded-xl border border-gray-200 bg-white hover:border-[#0A66C2] hover:shadow-md transition-all text-left group"
+      className="block p-4 rounded-xl border border-white/10 bg-[#1b1b1d] hover:border-primary/60 transition-all text-left group"
     >
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0 flex-1">
-          <p className="font-semibold text-gray-900 group-hover:text-[#0A66C2] line-clamp-2">
+          <p className="font-semibold text-zinc-50 group-hover:text-primary line-clamp-2">
             {job.title}
           </p>
           {job.company && (
-            <p className="flex items-center gap-1.5 mt-1 text-sm text-gray-600">
+            <p className="flex items-center gap-1.5 mt-1 text-sm text-zinc-400">
               <Building2 className="h-3.5 w-3.5 shrink-0" />
               <span className="truncate">{job.company}</span>
             </p>
           )}
           {job.location && (
-            <p className="flex items-center gap-1.5 mt-0.5 text-xs text-gray-500">
+            <p className="flex items-center gap-1.5 mt-0.5 text-xs text-zinc-500">
               <MapPin className="h-3 w-3 shrink-0" />
               <span className="truncate">{job.location}</span>
             </p>
           )}
           {job.salaryText && (
-            <p className="flex items-center gap-1.5 mt-0.5 text-xs text-green-600">
+            <p className="flex items-center gap-1.5 mt-0.5 text-xs text-primary">
               <DollarSign className="h-3 w-3 shrink-0" />
               <span>{job.salaryText}</span>
             </p>
           )}
           {descSnippet && (
-            <p className="mt-2 text-xs text-gray-500 line-clamp-2">{descSnippet}</p>
+            <p className="mt-2 text-xs text-zinc-500 line-clamp-2">{descSnippet}</p>
           )}
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
-          <span className="text-[10px] px-2 py-0.5 rounded bg-gray-100 text-gray-600">
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-zinc-400 border border-white/10">
             {job.source}
           </span>
-          <span className="flex items-center gap-1 text-xs font-medium text-[#0A66C2] group-hover:underline">
+          <span className="flex items-center gap-1 text-xs font-bold text-primary group-hover:underline">
             Apply
             <ExternalLink className="h-3.5 w-3.5" />
           </span>
@@ -241,22 +241,22 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
         {messages.length === 0 && (
           <div className="space-y-4">
             <div className="flex gap-3">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100">
-                <MessageCircle className="h-4 w-4 text-gray-500" />
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                <MessageCircle className="h-4 w-4 text-primary" />
               </div>
-              <div className="rounded-2xl rounded-tl-none bg-gray-100 px-4 py-3 text-sm text-gray-700">
+              <div className="rounded-2xl rounded-tl-none bg-white/5 px-4 py-3 text-sm text-zinc-300">
                 Hi! I search across <strong>Nepal jobs</strong>, <strong>internships</strong>, and{" "}
                 <strong>LinkedIn</strong>. Tell me what you want role, skills, location, job type.
               </div>
             </div>
-            <p className="text-xs text-gray-500 font-medium pl-11">Try:</p>
+            <p className="text-xs text-zinc-500 font-medium pl-11">Try:</p>
             <div className="flex flex-wrap gap-2 pl-11">
               {SUGGESTIONS.map((suggestion) => (
                 <button
                   key={suggestion}
                   type="button"
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="text-left text-sm px-3 py-2 rounded-lg border border-gray-200 hover:border-[#0A66C2] hover:bg-[#0A66C2]/5 text-gray-700 transition-colors"
+                  className="text-left text-sm px-3 py-2 rounded-full border border-white/10 hover:border-primary/60 hover:bg-primary/10 text-zinc-300 transition-colors"
                 >
                   {suggestion}
                 </button>
@@ -265,7 +265,7 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
           </div>
         )}
         {error && (
-          <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
+          <div className="rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-200">
             {error.message}
           </div>
         )}
@@ -276,20 +276,20 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
           >
             <div
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                message.role === "user" ? "bg-[#0A66C2] text-white" : "bg-gray-100"
+                message.role === "user" ? "bg-primary text-zinc-950" : "bg-white/10"
               }`}
             >
               {message.role === "user" ? (
                 <span className="text-xs font-semibold">U</span>
               ) : (
-                <Sparkles className="h-4 w-4 text-gray-600" />
+                <Sparkles className="h-4 w-4 text-primary" />
               )}
             </div>
             <div
               className={`rounded-2xl px-4 py-3 text-sm max-w-[95%] w-full ${
                 message.role === "user"
-                  ? "rounded-tr-none bg-[#0A66C2] text-white"
-                  : "rounded-tl-none bg-gray-100 text-gray-800"
+                  ? "rounded-tr-none bg-primary text-zinc-950"
+                  : "rounded-tl-none bg-white/5 text-zinc-300"
               }`}
             >
               {message.role === "user" ? (
@@ -314,25 +314,25 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
         ))}
         {isLoading && (
           <div className="flex gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100">
-              <Loader2 className="h-4 w-4 text-gray-600 animate-spin" />
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
+              <Loader2 className="h-4 w-4 text-primary animate-spin" />
             </div>
-            <div className="rounded-2xl rounded-tl-none bg-gray-100 px-4 py-3">
-              <Loader2 className="h-4 w-4 animate-spin text-gray-500" />
+            <div className="rounded-2xl rounded-tl-none bg-white/5 px-4 py-3">
+              <Loader2 className="h-4 w-4 animate-spin text-primary" />
             </div>
           </div>
         )}
       </div>
-      <form onSubmit={handleSubmit} className="p-4 border-t border-gray-100 shrink-0">
+      <form onSubmit={handleSubmit} className="p-4 border-t border-white/10 shrink-0">
         <div className="flex gap-2">
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="E.g., Frontend dev with React, remote..."
-            className="flex-1"
+            className="flex-1 border-white/10 bg-black text-zinc-100 placeholder:text-zinc-600"
             disabled={isLoading}
           />
-          <Button type="submit" disabled={isLoading} className="bg-[#0A66C2] hover:bg-[#004182]">
+          <Button type="submit" disabled={isLoading} className="bg-primary text-zinc-950 hover:bg-white">
             {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
           </Button>
         </div>
@@ -349,15 +349,15 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
   }
 
   return (
-    <div className="border border-gray-200 bg-white shadow-sm rounded-xl overflow-hidden flex flex-col h-[500px] md:h-[560px]">
-      <div className="py-4 px-5 border-b border-gray-100 bg-gradient-to-r from-[#0A66C2]/5 to-transparent shrink-0">
+    <div className="border border-white/10 bg-[#111113] shadow-2xl rounded-2xl overflow-hidden flex flex-col h-[500px] md:h-[560px]">
+      <div className="py-4 px-5 border-b border-white/10 bg-primary/5 shrink-0">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#0A66C2] text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-zinc-950">
             <Sparkles className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">AI Job Search</h3>
-            <p className="text-sm text-gray-500">Jobs, internships & LinkedIn</p>
+            <h3 className="font-black text-zinc-50">AI Job Search</h3>
+            <p className="text-sm text-zinc-500">Jobs, internships & LinkedIn</p>
           </div>
         </div>
       </div>

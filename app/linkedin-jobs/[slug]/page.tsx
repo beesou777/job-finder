@@ -82,27 +82,27 @@ export default async function LinkedInJobPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
       />
       
-      <div className="min-h-screen bg-gray-50 pb-12">
+      <div className="min-h-screen bg-[#070708] pb-12 text-zinc-100">
         {/* Navigation / Breadcrumbs */}
-        <div className="bg-white border-b border-gray-200 mb-6">
+        <div className="bg-[#09090a]/90 border-b border-white/10 mb-6 backdrop-blur-xl">
           <div className="container mx-auto px-4 py-4">
-            <nav className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-              <Link href="/" className="hover:text-[#0A66C2] flex items-center">
+            <nav className="flex items-center space-x-2 text-sm font-bold text-zinc-500 mb-2">
+              <Link href="/" className="hover:text-primary flex items-center">
                 <Home className="h-4 w-4 mr-1" />
                 Home
               </Link>
               <span>/</span>
-              <Link href="/linkedin-jobs" className="hover:text-[#0A66C2]">
+              <Link href="/linkedin-jobs" className="hover:text-primary">
                 LinkedIn Jobs
               </Link>
               <span>/</span>
-              <span className="text-gray-900 font-medium truncate max-w-[200px] md:max-w-md">
+              <span className="text-zinc-200 font-medium truncate max-w-[200px] md:max-w-md">
                 {job.title}
               </span>
             </nav>
             
             <div className="mt-4">
-              <Button variant="ghost" size="sm" asChild className="text-[#0A66C2] hover:text-[#004182] hover:bg-transparent hover:underline p-0 -ml-2">
+              <Button variant="ghost" size="sm" asChild className="text-primary hover:text-zinc-50 hover:bg-transparent hover:underline p-0 -ml-2">
                 <Link href="/linkedin-jobs" className="flex items-center">
                   <ChevronLeft className="h-4 w-4 mr-1" />
                   Back to LinkedIn Jobs
