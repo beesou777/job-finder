@@ -410,17 +410,6 @@ export default function HomeContent() {
                   </div>
                 </div>
               </div>
-
-              {/* Right Side - Image */}
-              <div className="hidden lg:block">
-                <div className="relative">
-                  <img
-                    src="/man-search-hiring-job-online-from-laptop.avif"
-                    alt="Person searching for jobs online"
-                    className="w-full h-auto rounded-lg mix-blend-darken"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>
