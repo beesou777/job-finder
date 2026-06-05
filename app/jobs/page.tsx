@@ -1,9 +1,46 @@
+import { Metadata } from "next";
 import { Suspense } from "react";
 import { JobsFiltering } from "@/components/jobs/JobsFiltering";
 import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { getCategories } from "@/lib/data-fetching";
+import { absoluteUrl } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
+
+export function generateMetadata({
+  searchParams,
+}: {
+  searchParams: {
+    search?: string;
+    category?: string;
+    type?: string;
+    jobType?: string;
+    location?: string;
+    urgency?: string;
+    page?: string;
+  };
+}): Metadata {
+  const page = parseInt(searchParams.page || "1", 10);
+  const hasActiveFilters = Boolean(
+    searchParams.search ||
+      searchParams.category ||
+      searchParams.jobType ||
+      searchParams.location ||
+      searchParams.urgency ||
+      (searchParams.type && searchParams.type !== "job")
+  );
+  const shouldNoIndex = hasActiveFilters || page > 1;
+
+  return {
+    title: "Jobs in Nepal | Browse Latest Job Openings",
+    description:
+      "Browse active jobs in Nepal by company, category, location, and source. Compare listings from major Nepali job portals in one place.",
+    alternates: {
+      canonical: absoluteUrl("/jobs"),
+    },
+    robots: shouldNoIndex ? { index: false, follow: true } : undefined,
+  };
+}
 
 export default async function JobsPage({
   searchParams,

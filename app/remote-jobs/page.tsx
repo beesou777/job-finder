@@ -3,15 +3,32 @@ import { RemoteJobsFiltering } from "@/components/remote/RemoteJobsFiltering";
 import { RemoteJobCard } from "@/components/RemoteJobCard";
 import { RemotePagination } from "@/components/remote/RemotePagination";
 import { Card, CardContent } from "@/components/ui/card";
-import { Suspense } from "react";
 import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "International Remote Jobs | kamkhoj",
-  description: "Browse high-paying international remote jobs in technology, design, marketing, and more. Apply to top global companies from anywhere.",
-};
+import { absoluteUrl } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
+
+export function generateMetadata({
+  searchParams,
+}: {
+  searchParams: {
+    page?: string;
+    q?: string;
+  };
+}): Metadata {
+  const page = parseInt(searchParams.page || "1", 10);
+  const shouldNoIndex = Boolean(searchParams.q) || page > 1;
+
+  return {
+    title: "International Remote Jobs",
+    description:
+      "Browse international remote jobs in technology, design, marketing, and more, then open the original source for the latest application details.",
+    alternates: {
+      canonical: absoluteUrl("/remote-jobs"),
+    },
+    robots: shouldNoIndex ? { index: false, follow: true } : undefined,
+  };
+}
 
 export default async function RemoteJobsPage({
   searchParams,

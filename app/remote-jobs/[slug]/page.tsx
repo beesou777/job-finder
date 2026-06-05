@@ -27,16 +27,20 @@ export async function generateMetadata({
     return { title: "Job Not Found | kamkhoj" };
   }
 
-  // Reuse LinkedIn SEO helpers as they are generic enough or adaptable
-  // For now, I'll pass relevant data to it
-  return generateLinkedInJobMetadata({
-    title: job.jobTitle,
-    company: job.companyName,
-    place: job.region || job.candidateLocation,
-    description: job.description,
-    id: 0, // Not used when slug is provided
-    slug: params.slug,
-  });
+  return {
+    ...generateLinkedInJobMetadata({
+      title: job.jobTitle,
+      company: job.companyName,
+      place: job.region || job.candidateLocation,
+      description: job.description,
+      id: 0,
+      slug: params.slug,
+    }),
+    robots: {
+      index: false,
+      follow: true,
+    },
+  };
 }
 
 export default async function RemoteJobPage({

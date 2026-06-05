@@ -45,8 +45,18 @@ export async function generateMetadata({
       (job) => !job.expiresAt || job.expiresAt > now
     );
     const total = validJobs.length;
+    const shouldNoIndex =
+      total === 0 ||
+      /^\d+$/.test(params.slug.trim()) ||
+      /^\d+$/.test(category.name.trim());
+    const metadata = generateCategoryMetadata(category.name, total);
 
-    return generateCategoryMetadata(category.name, total);
+    return shouldNoIndex
+      ? {
+          ...metadata,
+          robots: { index: false, follow: true },
+        }
+      : metadata;
   } catch (error) {
     return {
       title: "Category | kamkhoj",

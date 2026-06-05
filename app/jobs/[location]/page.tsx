@@ -28,12 +28,20 @@ export async function generateMetadata({
   }
 
   const locationName = titleCaseSlug(params.location);
-  return generateCollectionMetadata({
+  const metadata = generateCollectionMetadata({
     path: `/jobs/${params.location}`,
     title: `Jobs in ${locationName}, Nepal | Latest Vacancies | KamKhoj`,
     description: `Find latest jobs in ${locationName}, Nepal. Browse vacancies by company, category, skills, and source from major Nepali job portals.`,
     keywords: [`jobs in ${locationName.toLowerCase()}`, `${locationName.toLowerCase()} jobs nepal`, "vacancy in nepal"],
   });
+  const shouldNoIndex = !knownLocations.includes(params.location.toLowerCase());
+
+  return shouldNoIndex
+    ? {
+        ...metadata,
+        robots: { index: false, follow: true },
+      }
+    : metadata;
 }
 
 export default async function LocationSlugPage({

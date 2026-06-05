@@ -1,11 +1,43 @@
-import { Suspense } from "react";
+import { Metadata } from "next";
 import { LinkedInJobsFiltering } from "@/components/linkedin/LinkedInJobsFiltering";
-import { LinkedInJobsList, LinkedInJobsSkeleton } from "@/components/linkedin/LinkedInJobsList";
-import { LinkedInJobDetail } from "@/components/linkedin/LinkedInJobDetail";
+import { LinkedInJobsList } from "@/components/linkedin/LinkedInJobsList";
 import { getLinkedInJobs } from "@/lib/data-fetching";
-import { Loader2 } from "lucide-react";
+import { absoluteUrl } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
+
+export function generateMetadata({
+  searchParams,
+}: {
+  searchParams: {
+    search?: string;
+    company?: string;
+    place?: string;
+    datePosted?: string;
+    page?: string;
+    jobId?: string;
+  };
+}): Metadata {
+  const page = parseInt(searchParams.page || "1", 10);
+  const hasActiveFilters = Boolean(
+    searchParams.search ||
+      searchParams.company ||
+      searchParams.place ||
+      searchParams.datePosted ||
+      searchParams.jobId
+  );
+  const shouldNoIndex = hasActiveFilters || page > 1;
+
+  return {
+    title: "LinkedIn Jobs | External Job Discovery",
+    description:
+      "Search LinkedIn-sourced opportunities by company, location, and posting date, then verify the latest details on the original source before applying.",
+    alternates: {
+      canonical: absoluteUrl("/linkedin-jobs"),
+    },
+    robots: shouldNoIndex ? { index: false, follow: true } : undefined,
+  };
+}
 
 export default async function LinkedInJobsPage({
   searchParams,
@@ -20,8 +52,7 @@ export default async function LinkedInJobsPage({
   };
 }) {
   const page = parseInt(searchParams.page || "1");
-  const jobId = searchParams.jobId ? parseInt(searchParams.jobId) : undefined;
-  
+
   // Fetch filters AND jobs in one efficient cached call
   const { filters, total, jobs } = await getLinkedInJobs({
       search: searchParams.search,

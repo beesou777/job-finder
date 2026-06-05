@@ -24,14 +24,20 @@ export async function generateMetadata({
     return { title: "Job Not Found | kamkhoj" };
   }
 
-  return generateLinkedInJobMetadata({
-    title: job.title,
-    company: job.company,
-    place: job.place,
-    description: job.description,
-    id: job.id,
-    slug: params.slug,
-  });
+  return {
+    ...generateLinkedInJobMetadata({
+      title: job.title,
+      company: job.company,
+      place: job.place,
+      description: job.description,
+      id: job.id,
+      slug: params.slug,
+    }),
+    robots: {
+      index: false,
+      follow: true,
+    },
+  };
 }
 
 export default async function LinkedInJobPage({
