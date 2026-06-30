@@ -284,7 +284,7 @@ export function generateOrganizationSchema() {
     name: SITE_NAME,
     url: BASE_URL,
     logo: `${BASE_URL}/kamkhoj.png`,
-    description: "Best Job Aggregator Sites in Nepal - Find jobs and internships across Nepal from all major portals",
+    description: "KamKhoj is a Nepal job search and career resource website.",
     sameAs: [
       // Add social media URLs when available
       // "https://www.facebook.com/kamkhoj",
@@ -301,7 +301,7 @@ export function generateWebSiteSchema() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
-    description: "Best Job Aggregator Sites in Nepal - Job aggregator sites in Nepal - Find jobs and internships from all major portals",
+    description: "KamKhoj helps job seekers discover Nepal vacancies and career resources.",
     url: BASE_URL,
     potentialAction: {
       "@type": "SearchAction",
@@ -369,8 +369,8 @@ export function generateCollectionPageSchema(totalItems: number) {
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Best Job Aggregator Sites in Nepal - kamkhoj",
-    description: `Job aggregator sites in Nepal - Browse ${totalItems}+ job listings aggregated from top Nepali job portals including MeroJob, JobsNepal, KumariJob, Kantipur Job, and more.`,
+    name: "KamKhoj job search collection",
+    description: `Browse ${totalItems}+ listings organized for Nepal job discovery and continue to the original source to verify final details.`,
     url: BASE_URL,
     mainEntity: {
       "@type": "ItemList",
@@ -378,14 +378,14 @@ export function generateCollectionPageSchema(totalItems: number) {
       itemListElement: {
         "@type": "ListItem",
         position: 1,
-        name: "Job Listings from Multiple Portals",
-        description: "Aggregated job listings from all major Nepali job portals",
+        name: "Curated job discovery",
+        description: "Listings organized for easier comparison by Nepal job seekers",
       },
     },
     about: {
       "@type": "Thing",
-      name: "Job Aggregator Sites in Nepal",
-      description: "Platform that collects and displays job listings from multiple Nepali job portals in one unified interface",
+      name: "Nepal job search",
+      description: "Job discovery and career-resource content for Nepal job seekers",
     },
   };
 }
@@ -397,8 +397,8 @@ export function generateJobAggregatorSchema(jobs: Array<{ id: string; title: str
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Best Job Aggregator Sites in Nepal - Job Listings",
-    description: "Job listings aggregated from top Nepali job portals",
+    name: "KamKhoj job listings",
+    description: "Listings organized for KamKhoj users",
     numberOfItems: jobs.length,
     itemListElement: jobs.map((job, index) => ({
       "@type": "ListItem",

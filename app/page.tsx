@@ -5,6 +5,7 @@ import { LatestJobs } from "@/components/home/LatestJobs";
 import { LatestInternships } from "@/components/home/LatestInternships";
 import { 
   FeaturesSection, 
+  EditorialStandardsSection,
   ScrapingInfoSection, 
   ResourcesSection 
 } from "@/components/home/HomeStaticSections";
@@ -13,40 +14,23 @@ import { getJobs } from "@/lib/data-fetching";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title:
-    "Best Job Aggregator Sites in Nepal | Job Aggregator Sites in Nepal | kamkhoj",
+  title: "KamKhoj | Find Jobs and Internships in Nepal",
   description:
-    "Best job aggregator sites in Nepal - Search 10,000+ jobs from MeroJob, JobsNepal, KumariJob, Kantipur Job all in one place. Top job aggregator sites in Nepal. Free job search. Updated daily.",
+    "Search Nepal jobs and internships, compare the details that matter, and continue to the original source for the final application process.",
   keywords: [
-    "best job aggregator sites in nepal",
-    "job aggregator sites in nepal",
     "jobs in nepal",
     "nepal jobs",
-    "jobs kathmandu",
-    "job portal nepal",
     "nepal job search",
     "internships nepal",
-    "jobs pokhara",
-    "nepal employment",
-    "job opportunities nepal",
     "remote jobs nepal",
-    "part time jobs nepal",
-    "merocareer",
-    "jobsnepal",
-    "kumarijob",
-    "internsathi",
-    "jobaxle",
-    "nepal job aggregator",
-    "job aggregator nepal",
-    "best job sites nepal",
-    "top job aggregator nepal",
+    "career resources nepal",
   ],
   openGraph: {
-    title: "Best Job Aggregator Sites in Nepal | Job Aggregator Sites in Nepal",
+    title: "KamKhoj | Find Jobs and Internships in Nepal",
     description:
-      "Best job aggregator sites in Nepal - Search thousands of jobs from top Nepali job portals all in one place. Find jobs in Kathmandu, Pokhara, and cities across Nepal. Free job search.",
+      "Browse Nepal jobs, internships, and practical career resources, then verify final details at the original source.",
     url: "https://www.kamkhoj.com/",
-    siteName: "kamkhoj - Nepal's Best Job Aggregator",
+    siteName: "kamkhoj",
     images: [
       {
         url: DEFAULT_OG_IMAGE,
@@ -60,9 +44,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Best Job Aggregator Sites in Nepal | kamkhoj",
+    title: "KamKhoj | Find Jobs and Internships in Nepal",
     description:
-      "Best job aggregator sites in Nepal - Search thousands of jobs from top Nepali job portals all in one place",
+      "Search Nepal jobs and internships and continue to the original source to apply.",
     images: [DEFAULT_OG_IMAGE],
   },
   alternates: {
@@ -89,7 +73,7 @@ export default async function Home({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: SITE_NAME,
-    description: "Nepal's #1 Job Finder - Find jobs and internships across Nepal",
+    description: "Nepal job search and career resources from KamKhoj",
     url: baseUrl,
     potentialAction: {
       "@type": "SearchAction",
@@ -104,8 +88,8 @@ export default async function Home({
   const collectionPageSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Best Job Aggregator Sites in Nepal - kamkhoj",
-    description: `Job aggregator sites in Nepal - Browse ${total}+ job listings aggregated from top Nepali job portals`,
+    name: "KamKhoj job search",
+    description: `Browse ${total}+ current listings collected for Nepal job discovery and continue to the original source to apply.`,
     url: baseUrl,
     mainEntity: {
       "@type": "ItemList",
@@ -180,6 +164,7 @@ export default async function Home({
       <LatestJobs />
       <LatestInternships />
       <ScrapingInfoSection />
+      <EditorialStandardsSection />
       <ResourcesSection />
       
       <FAQ />

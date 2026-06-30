@@ -47,6 +47,7 @@ export async function generateMetadata({
     alternates: {
       canonical: absoluteUrl(`/blog/${params.slug}`),
     },
+    robots: post.noindex ? { index: false, follow: true } : undefined,
   };
 }
 
@@ -99,21 +100,28 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
                   Reading details
                 </p>
                 <div className="space-y-4 text-sm text-zinc-400">
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>
-                    {new Date(post.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    <span>
+                      {new Date(post.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    <span>{post.readTime}</span>
+                  </div>
+                  <div>{post.wordCount} words</div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  <span>{post.readTime}</span>
-                </div>
-              </div>
+                <p className="mt-6 text-sm leading-6 text-zinc-400">
+                  This guide is part of KamKhoj&apos;s Nepal job-search resource
+                  library and should be used together with the original employer
+                  or platform source when a role, salary, or hiring rule may
+                  have changed.
+                </p>
                 <Link
                   href="/jobs"
                   className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-black text-zinc-950 hover:bg-white"

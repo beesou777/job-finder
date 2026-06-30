@@ -5,6 +5,7 @@ date: "2026-01-12"
 category: "Job Search"
 readTime: "9 min read"
 slug: "it-jobs-nepal"
+noindex: true
 ---
 
 ## Introduction

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BriefcaseBusiness, Menu, Search, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { useState } from "react";
 
 export function Navbar() {
@@ -15,16 +15,10 @@ export function Navbar() {
     { href: "/jobs", label: "Jobs" },
     { href: "/internships", label: "Internships" },
     { href: "/remote-jobs", label: "Remote" },
-    { href: "/linkedin-jobs", label: "Linkedin" },
     { href: "/blog", label: "Blog" },
+    { href: "/how-kamkhoj-works", label: "How it works" },
   ];
 
-  const supportLink = {
-    href: "/post-job",
-    label: "Hiring resources",
-  };
-
-  const isJobsPage = pathname?.startsWith("/jobs");
   const isAdminPage = pathname?.startsWith("/admin");
 
   if (isAdminPage) {
@@ -73,10 +67,10 @@ export function Navbar() {
               <Search className="h-4 w-4" />
             </Link>
             <Link
-              href={supportLink.href}
+              href="/post-job"
               className="rounded-full border border-primary bg-primary px-5 py-2.5 text-xs font-black uppercase tracking-[0.18em] text-zinc-950 transition-colors hover:bg-white"
             >
-              {supportLink.label}
+              Hiring resources
             </Link>
           </div>
 
@@ -118,11 +112,11 @@ export function Navbar() {
               })}
               <div className="px-4 pt-2">
                 <Link
-                  href={supportLink.href}
+                  href="/post-job"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex w-full items-center justify-center rounded-full bg-primary py-3 text-sm font-black uppercase tracking-[0.16em] text-zinc-950 transition-colors hover:bg-white"
                 >
-                  {supportLink.label}
+                  Hiring resources
                 </Link>
               </div>
             </div>

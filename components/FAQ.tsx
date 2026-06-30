@@ -13,43 +13,43 @@ interface FAQItem {
 const faqData: FAQItem[] = [
   {
     question: "How does kamkhoj work?",
-    answer: "kamkhoj is a job aggregator that collects job listings from various Nepali job portals including MeroJob, Kantipur Job, Jobs Nepal, and more. We use automated systems to gather publicly available job postings, ensuring you have access to the latest opportunities all in one place. You can search, filter, and apply directly through our platform."
+    answer: "KamKhoj organizes publicly available job listings from Nepali sources so candidates can search, compare, and then continue to the original posting for the final application process."
   },
   {
     question: "Is kamkhoj free to use?",
-    answer: "Yes, kamkhoj is completely free to use. There's no sign-up required, no hidden fees, and no premium memberships. You can browse all job listings, search by category, location, or job type, and apply directly to jobs without any cost."
+    answer: "Yes. KamKhoj is free to browse and does not require a paid subscription to search jobs, internships, or career guides."
   },
   {
     question: "How often are job listings updated?",
-    answer: "Our automated system scrapes the latest job postings daily from top Nepali job portals. New opportunities are added regularly, ensuring you never miss a chance to apply for your dream job. We recommend checking back daily for the freshest opportunities."
+    answer: "Listings are refreshed regularly, but the original source remains the final authority because deadlines, availability, and eligibility can change after a page is collected."
   },
   {
     question: "Do I need to create an account?",
-    answer: "No, you don't need to create an account to browse or search for jobs on kamkhoj. However, when you click 'Apply Now' on a job listing, you'll be redirected to the original job portal where you may need to create an account to submit your application, depending on their requirements."
+    answer: "No account is required to browse KamKhoj. Some original job portals or employer pages may require their own account when you leave KamKhoj to apply."
   },
   {
     question: "How do I apply for a job?",
-    answer: "Simply click the 'Apply Now' button on any job card. This will redirect you to the original job portal where the position was posted. You'll complete the application process directly on that portal. kamkhoj acts as a search and discovery platform, while applications are handled by the original job sources."
+    answer: "Open the listing, review the job details, and then use the source link or apply button to continue on the original portal or employer page. KamKhoj does not submit the application for you."
   },
   {
     question: "Can I filter jobs by location?",
-    answer: "Yes! You can filter jobs by location, job type (full-time, part-time, internship), category, and more. Use the search bar and filters on the jobs page to narrow down opportunities based on your preferences. We cover jobs from Kathmandu, Pokhara, Lalitpur, and cities throughout Nepal."
+    answer: "Yes. You can narrow results by location, job type, category, and keywords so you spend less time opening listings that do not match your needs."
   },
   {
     question: "Are the job listings accurate and up-to-date?",
-    answer: "We strive to provide the most accurate and up-to-date information. Our system updates job listings daily from multiple sources. However, since we aggregate from various portals, we recommend verifying details on the original job portal before applying. Some jobs may expire or be filled, so we display deadline information when available."
+    answer: "KamKhoj tries to keep listings useful, but candidates should always verify the final salary, deadline, eligibility, documents, and instructions on the original source before applying."
   },
   {
     question: "What types of jobs are available?",
-    answer: "kamkhoj aggregates various types of opportunities including full-time jobs, part-time positions, internships, contract work, and remote positions across multiple industries such as IT, Finance, Marketing, Healthcare, Education, and more. You can filter by job type to find exactly what you're looking for."
+    answer: "The site includes full-time jobs, internships, remote roles, and other opportunities across categories such as IT, banking, marketing, operations, and more."
   },
   {
     question: "How do you collect job listings?",
-    answer: "We use automated web scraping systems to collect publicly available job postings from major Nepali job portals. We only gather information that is already publicly accessible and respect the terms of service of the original sources. All applications are handled directly through the original job portals."
+    answer: "KamKhoj uses automated collection and site organization for publicly available listings, then links candidates back to the original source for verification and application."
   },
   {
-    question: "Can I save jobs for later?",
-    answer: "Currently, kamkhoj doesn't have a built-in save feature. However, you can bookmark job pages in your browser or keep track of job IDs. We recommend applying to jobs as soon as possible since positions can fill quickly. You can always use the search and filter features to find jobs again."
+    question: "What should I do if a listing is wrong or outdated?",
+    answer: "Use the contact page to send the job title, company, source URL, and the issue you found. KamKhoj can review correction or removal requests."
   }
 ];
 
@@ -78,7 +78,7 @@ export function FAQ() {
             </h2>
           </div>
           <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-            Everything you need to know about using kamkhoj to find your next opportunity
+            Useful answers about how KamKhoj handles listings, source links, and job-search workflows
           </p>
         </div>
 

@@ -26,8 +26,6 @@ export function generateMetadata({
       searchParams.datePosted ||
       searchParams.jobId
   );
-  const shouldNoIndex = hasActiveFilters || page > 1;
-
   return {
     title: "LinkedIn Jobs | External Job Discovery",
     description:
@@ -35,7 +33,7 @@ export function generateMetadata({
     alternates: {
       canonical: absoluteUrl("/linkedin-jobs"),
     },
-    robots: shouldNoIndex ? { index: false, follow: true } : undefined,
+    robots: { index: false, follow: true },
   };
 }
 

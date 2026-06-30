@@ -38,6 +38,10 @@ export async function generateMetadata({
   if (!VALID_CITIES.includes(city)) {
     return {
       title: "Location Not Found | kamkhoj",
+      robots: {
+        index: false,
+        follow: true,
+      },
     };
   }
 
@@ -65,11 +69,21 @@ export async function generateMetadata({
     );
     const validTotal = validJobs.length;
 
-    return generateLocationMetadata(cityName, validTotal);
+    return {
+      ...generateLocationMetadata(cityName, validTotal),
+      robots: {
+        index: false,
+        follow: true,
+      },
+    };
   } catch (error) {
     return {
       title: `Jobs in ${formatCityName(city)} | kamkhoj`,
       description: `Find jobs in ${formatCityName(city)}, Nepal`,
+      robots: {
+        index: false,
+        follow: true,
+      },
     };
   }
 }

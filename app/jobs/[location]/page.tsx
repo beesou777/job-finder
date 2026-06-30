@@ -34,14 +34,10 @@ export async function generateMetadata({
     description: `Find latest jobs in ${locationName}, Nepal. Browse vacancies by company, category, skills, and source from major Nepali job portals.`,
     keywords: [`jobs in ${locationName.toLowerCase()}`, `${locationName.toLowerCase()} jobs nepal`, "vacancy in nepal"],
   });
-  const shouldNoIndex = !knownLocations.includes(params.location.toLowerCase());
-
-  return shouldNoIndex
-    ? {
-        ...metadata,
-        robots: { index: false, follow: true },
-      }
-    : metadata;
+  return {
+    ...metadata,
+    robots: { index: false, follow: true },
+  };
 }
 
 export default async function LocationSlugPage({

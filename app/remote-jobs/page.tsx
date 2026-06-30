@@ -17,8 +17,6 @@ export function generateMetadata({
   };
 }): Metadata {
   const page = parseInt(searchParams.page || "1", 10);
-  const shouldNoIndex = Boolean(searchParams.q) || page > 1;
-
   return {
     title: "International Remote Jobs",
     description:
@@ -26,7 +24,7 @@ export function generateMetadata({
     alternates: {
       canonical: absoluteUrl("/remote-jobs"),
     },
-    robots: shouldNoIndex ? { index: false, follow: true } : undefined,
+    robots: { index: false, follow: true },
   };
 }
 

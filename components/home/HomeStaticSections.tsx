@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Zap, MapPin, Info, Shield, FileText, Building2, Route, Clock3, ListChecks, Compass, ExternalLink } from "lucide-react";
 
@@ -171,6 +172,69 @@ export function ResourcesSection() {
             title="Smart discovery paths"
             description="Move between latest jobs, expiring jobs, internships, remote roles, company pages, and skill pages without starting over."
           />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function EditorialStandardsSection() {
+  return (
+    <section className="bg-zinc-950 py-20 text-white">
+      <div className="container mx-auto px-4">
+        <div className="grid gap-8 lg:grid-cols-[1fr_0.95fr]">
+          <div className="rounded-2xl border border-white/10 bg-[#18181a] p-6 md:p-8">
+            <p className="mb-3 font-mono text-sm font-black uppercase tracking-[0.18em] text-primary">
+              What makes this useful
+            </p>
+            <h2 className="text-3xl font-black tracking-tight text-white md:text-4xl">
+              KamKhoj should save time, not replace your judgment.
+            </h2>
+            <div className="mt-6 space-y-4 text-zinc-300 leading-7">
+              <p>
+                Job discovery pages work best when they help candidates compare
+                opportunities quickly and then move to the original source for
+                the final decision. KamKhoj is built around that workflow.
+              </p>
+              <p>
+                The strongest pages on the site are the ones that add original
+                help for Nepal job seekers: search guidance, sourcing
+                explanations, correction routes, and practical career articles
+                that are revised when they stop being useful.
+              </p>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/how-kamkhoj-works"
+                className="rounded-full bg-primary px-5 py-3 font-black text-zinc-950 transition-colors hover:bg-white"
+              >
+                How KamKhoj works
+              </Link>
+              <Link
+                href="/editorial-policy"
+                className="rounded-full border border-white/10 px-5 py-3 font-black text-zinc-200 transition-colors hover:border-primary/60 hover:text-primary"
+              >
+                Editorial policy
+              </Link>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-white/10 bg-[#141416] p-6 md:p-8">
+            <h3 className="text-2xl font-black text-white">Before you apply</h3>
+            <div className="mt-6 space-y-4">
+              {[
+                "Open the original job source and confirm the deadline, salary text, and application instructions.",
+                "Check whether the role is truly remote, hybrid, or office-based before tailoring your CV.",
+                "Use category and location filters to narrow the list before you spend time on applications.",
+                "Read one relevant career guide before applying if the role is new to you or you are changing sectors.",
+              ].map((item) => (
+                <div key={item} className="flex gap-3 rounded-xl border border-white/10 bg-zinc-950/60 p-4">
+                  <span className="mt-1 h-2.5 w-2.5 shrink-0 bg-primary" />
+                  <p className="text-sm leading-6 text-zinc-300">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

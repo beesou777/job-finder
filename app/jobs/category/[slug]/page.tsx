@@ -30,6 +30,7 @@ export async function generateMetadata({
     if (!category) {
       return {
         title: "Category Not Found | kamkhoj",
+        robots: { index: false, follow: true },
       };
     }
 
@@ -51,15 +52,14 @@ export async function generateMetadata({
       /^\d+$/.test(category.name.trim());
     const metadata = generateCategoryMetadata(category.name, total);
 
-    return shouldNoIndex
-      ? {
-          ...metadata,
-          robots: { index: false, follow: true },
-        }
-      : metadata;
+    return {
+      ...metadata,
+      robots: { index: false, follow: true },
+    };
   } catch (error) {
     return {
       title: "Category | kamkhoj",
+      robots: { index: false, follow: true },
     };
   }
 }

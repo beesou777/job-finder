@@ -13,33 +13,17 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      "Jobs in Nepal | Latest Vacancies and Internships | KamKhoj",
+    default: "KamKhoj | Nepal Job Search and Career Resources",
     template: "%s | KamKhoj",
   },
   description:
-    "Find latest jobs in Nepal, internships in Kathmandu, IT jobs, banking jobs, remote jobs, and vacancies from major Nepali job portals in one search engine.",
+    "KamKhoj helps Nepal job seekers browse vacancies, internships, and career resources, then continue to the original source for application details.",
   keywords: [
-    "best job aggregator sites in nepal",
-    "job aggregator sites in nepal",
     "jobs in nepal",
-    "nepal jobs",
-    "jobs kathmandu",
     "internships nepal",
-    "job portal nepal",
     "nepal job search",
-    "career nepal",
-    "nepal employment",
-    "job opportunities nepal",
-    "merocareer",
-    "jobsnepal",
-    "kumarijob",
-    "internsathi",
-    "jobaxle",
-    "nepal job aggregator",
-    "job aggregator nepal",
-    "best job sites nepal",
-    "top job aggregator nepal",
+    "career resources nepal",
+    "remote jobs nepal",
   ],
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
@@ -60,9 +44,9 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: "Jobs in Nepal | Latest Vacancies and Internships | KamKhoj",
+    title: "KamKhoj | Nepal Job Search and Career Resources",
     description:
-      "Best job aggregator sites in Nepal - Find the latest jobs and internships from top Nepali job portals all in one place.",
+      "Browse Nepal jobs, internships, and practical career guides, then verify final details on the original source.",
     images: [
       {
         url: DEFAULT_OG_IMAGE,
@@ -74,9 +58,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jobs in Nepal | KamKhoj",
+    title: "KamKhoj | Nepal Job Search",
     description:
-      "Best job aggregator sites in Nepal - Find the latest jobs and internships from all major portals",
+      "Browse Nepal jobs, internships, and practical career resources.",
     images: [DEFAULT_OG_IMAGE],
   },
   alternates: {

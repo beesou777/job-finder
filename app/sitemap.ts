@@ -9,16 +9,10 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: absoluteUrl('/internships-in-nepal'), lastModified: new Date(), changeFrequency: 'hourly', priority: 0.9 },
   { url: absoluteUrl('/it-jobs-nepal'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.85 },
   { url: absoluteUrl('/remote-jobs-nepal'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.85 },
-  { url: absoluteUrl('/remote-jobs'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
   { url: absoluteUrl('/jobs-in-kathmandu'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.85 },
   { url: absoluteUrl('/jobs-in-pokhara'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
   { url: absoluteUrl('/banking-jobs-nepal'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.82 },
   { url: absoluteUrl('/marketing-jobs-nepal'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
-  { url: absoluteUrl('/jobs/kathmandu'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
-  { url: absoluteUrl('/jobs/pokhara'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.75 },
-  { url: absoluteUrl('/jobs/category/software-development'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
-  { url: absoluteUrl('/skills/react'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.75 },
-  { url: absoluteUrl('/skills/python'), lastModified: new Date(), changeFrequency: 'daily', priority: 0.75 },
   { url: absoluteUrl('/about'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
   { url: absoluteUrl('/contact'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
   { url: absoluteUrl('/how-kamkhoj-works'), lastModified: new Date(), changeFrequency: 'monthly', priority: 0.55 },
@@ -42,8 +36,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Add individual blog posts from markdown files
     try {
-      const { getAllBlogPosts } = await import('@/lib/blog');
-      const blogPosts = getAllBlogPosts();
+      const { getVisibleBlogPosts } = await import('@/lib/blog');
+      const blogPosts = getVisibleBlogPosts();
 
       blogPosts.forEach((post) => {
         routes.push({

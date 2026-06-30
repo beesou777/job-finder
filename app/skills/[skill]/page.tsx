@@ -18,12 +18,18 @@ export async function generateMetadata({
   params: { skill: string };
 }): Promise<Metadata> {
   const skillName = titleCaseSlug(params.skill);
-  return generateCollectionMetadata({
-    path: `/skills/${params.skill}`,
-    title: `${skillName} Jobs in Nepal | Latest Skill-Based Vacancies | KamKhoj`,
-    description: `Find ${skillName} jobs in Nepal. Search vacancies, internships, remote roles, and companies hiring for ${skillName} skills.`,
-    keywords: [`${skillName} jobs nepal`, `${skillName} jobs kathmandu`, "skills jobs nepal"],
-  });
+  return {
+    ...generateCollectionMetadata({
+      path: `/skills/${params.skill}`,
+      title: `${skillName} Jobs in Nepal | Latest Skill-Based Vacancies | KamKhoj`,
+      description: `Find ${skillName} jobs in Nepal. Search vacancies, internships, remote roles, and companies hiring for ${skillName} skills.`,
+      keywords: [`${skillName} jobs nepal`, `${skillName} jobs kathmandu`, "skills jobs nepal"],
+    }),
+    robots: {
+      index: false,
+      follow: true,
+    },
+  };
 }
 
 export default function SkillPage({

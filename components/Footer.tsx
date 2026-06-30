@@ -8,8 +8,8 @@ const footerLinks = [
   { href: "/jobs", label: "Jobs" },
   { href: "/internships", label: "Internships" },
   { href: "/remote-jobs", label: "Remote" },
-  { href: "/linkedin-jobs", label: "Linkedin" },
   { href: "/blog", label: "Blog" },
+  { href: "/about", label: "About" },
   { href: "/post-job", label: "Post a job" },
   { href: "/contact", label: "Contact" },
 ];
@@ -59,7 +59,7 @@ export function Footer() {
         <div className="mt-14 border-y border-white/10 py-12">
           <Link
             href="/"
-            className="block text-6xl font-black tracking-[-0.05em] text-white md:text-8xl lg:text-9xl w-fit"
+            className="block w-fit text-6xl font-black tracking-[-0.05em] text-white md:text-8xl lg:text-9xl"
           >
             kamkhoj
           </Link>
@@ -79,7 +79,7 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-zinc-500 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} KamKhoj</p>
+          <p>&copy; {new Date().getFullYear()} KamKhoj</p>
           <p>Built for job seekers in Nepal</p>
         </div>
       </div>
