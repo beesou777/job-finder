@@ -27,10 +27,30 @@ export default function EditorialPolicyPage() {
             to the original source. Employers and portals retain ownership of their
             postings.
           </p>
+          <h2 className="text-2xl font-black text-zinc-50">Independent Aggregator</h2>
+          <p>
+            KamKhoj is an independent aggregator and is not the employer, recruiter,
+            or owner of third-party listings. We organize publicly available details
+            for discovery and send candidates to the original source for application.
+          </p>
+          <h2 className="text-2xl font-black text-zinc-50">Maintenance and Verification</h2>
+          <p>
+            Bishwa Shah maintains the site and reviews scraper output, career content,
+            and correction requests. Sources are checked during scheduled runs,
+            currently targeted at least twice daily when reachable. The listing's
+            last-verified signal and original source link should be used to confirm
+            current details.
+          </p>
           <h2 className="text-2xl font-black text-zinc-50">Corrections</h2>
           <p>
             If a listing is outdated, inaccurate, or should be removed, contact KamKhoj
             with the job title, company, source URL, and correction request.
+          </p>
+          <p>
+            Candidates can report expired or incorrect information. Employers and
+            publishers can request corrections, attribution updates, or removal.
+            Send the job title, company, source URL, and requested change through
+            the <Link href="/contact" className="text-primary hover:underline">contact page</Link>.
           </p>
           <h2 className="text-2xl font-black text-zinc-50">Career Articles</h2>
           <p>

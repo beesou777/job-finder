@@ -108,7 +108,7 @@ export default async function LinkedInJobPage({
             </nav>
             
             <div className="mt-4">
-              <Button variant="ghost" size="sm" asChild className="text-primary hover:text-zinc-50 hover:bg-transparent hover:underline p-0 -ml-2">
+              <Button variant="ghost" size="sm" asChild className="rounded-full border border-primary bg-transparent font-black text-primary transition-colors hover:bg-primary hover:text-zinc-950">
                 <Link href="/linkedin-jobs" className="flex items-center">
                   <ChevronLeft className="h-4 w-4 mr-1" />
                   Back to LinkedIn Jobs

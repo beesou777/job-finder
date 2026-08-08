@@ -118,3 +118,5 @@ Pause if an organisation asks for payment to secure an interview, refuses to exp
 - I know what information I will not share before verification.
 
 When you are ready, browse [current jobs in Nepal](/jobs) and prepare for each interview from the original vacancy—not only the short listing card.
+
+For location-specific searches, you can also browse [jobs in Kathmandu](/jobs/kathmandu) or compare [remote jobs in Nepal](/remote-jobs-nepal) before preparing your applications.

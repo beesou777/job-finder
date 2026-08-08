@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Disclaimer | KamKhoj",
@@ -34,6 +35,18 @@ export default function DisclaimerPage() {
               Job information can change after it appears on KamKhoj. Candidates
               should verify every important detail on the original source before
               applying or sharing personal information.
+            </p>
+            <h2>Aggregator Disclosure</h2>
+            <p>
+              KamKhoj is an independent aggregator. It organizes public listing
+              information but is not the employer or recruitment agency. Source
+              pages control the final deadline, eligibility, salary, and application
+              instructions.
+            </p>
+            <h2>Corrections and Contact</h2>
+            <p>
+              If you find an expired or incorrect listing, or if you represent an
+              employer requesting a correction or removal, use the <Link href="/contact">contact page</Link>.
             </p>
             <h2>Career Content</h2>
             <p>

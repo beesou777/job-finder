@@ -78,3 +78,5 @@ Prepare with the [interview tips for Nepal](/blog/interview-tips-nepal), then co
 - I can give two or three examples of my contribution.
 - I have asked for the offer and review terms in writing.
 - I will not pay money to obtain a job.
+
+Compare the responsibilities behind each offer by browsing [current jobs](/jobs) or [IT jobs in Nepal](/it-jobs-nepal) before you negotiate.

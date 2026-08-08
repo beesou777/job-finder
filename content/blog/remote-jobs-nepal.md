@@ -119,3 +119,6 @@ Yes, if the role clearly allows Nepal-based candidates and you can meet the comm
 ## Conclusion
 
 Remote jobs can expand your options, but they reward clarity, proof, and careful reading. Search by skill, verify the work arrangement early, and make it easy for employers to see how you will perform without being in the same office.
+## Find current remote roles
+
+Use KamKhoj's [remote jobs in Nepal](/remote-jobs-nepal) page to browse current listings, then verify the working hours, payment terms, equipment, and application process on the original source.

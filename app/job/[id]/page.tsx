@@ -124,6 +124,18 @@ export default async function JobDetailPage({ params }: { params: { id: string }
           </section>
         )}
 
+        <nav aria-label="Related job searches" className="border-b border-white/10 py-6">
+          <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">Explore related searches</p>
+          <div className="mt-3 flex flex-wrap gap-3 text-sm font-bold">
+            {job.category?.slug && <Link href={`/jobs/category/${job.category.slug}`} className="rounded-full border border-white/10 px-4 py-2 text-zinc-300 hover:border-primary hover:text-primary">{job.category.name} jobs</Link>}
+            {job.location && <Link href={`/jobs?location=${encodeURIComponent(job.location)}`} className="rounded-full border border-white/10 px-4 py-2 text-zinc-300 hover:border-primary hover:text-primary">Jobs in {job.location}</Link>}
+            {job.type === "internship" && <Link href="/internships-in-nepal" className="rounded-full border border-white/10 px-4 py-2 text-zinc-300 hover:border-primary hover:text-primary">Nepal internships</Link>}
+            {(job.jobType === "remote" || job.jobType === "hybrid") && <Link href="/remote-jobs-nepal" className="rounded-full border border-white/10 px-4 py-2 text-zinc-300 hover:border-primary hover:text-primary">Remote jobs in Nepal</Link>}
+            {job.category?.name && /it|software|developer|technology/i.test(job.category.name) && <Link href="/blog/it-jobs-nepal" className="rounded-full border border-white/10 px-4 py-2 text-zinc-300 hover:border-primary hover:text-primary">IT career guide</Link>}
+            <Link href="/blog/interview-tips-nepal" className="rounded-full border border-white/10 px-4 py-2 text-zinc-300 hover:border-primary hover:text-primary">Interview tips</Link>
+          </div>
+        </nav>
+
         <section className="grid gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="min-w-0">
             {completeDescription ? (

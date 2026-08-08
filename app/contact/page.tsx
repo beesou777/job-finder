@@ -42,6 +42,15 @@ export default function ContactPage() {
             </p>
           </div>
         </div>
+        <div className="mt-6 rounded-xl border border-primary/30 bg-primary/5 p-6">
+          <h2 className="text-xl font-black text-white mb-2">What to include in a report</h2>
+          <p className="text-zinc-300 leading-7">
+            Send the exact job title, company, KamKhoj URL, original source URL,
+            and the correction you are requesting. For removal requests, explain
+            your relationship to the listing or employer. This helps the maintainer
+            verify the issue quickly.
+          </p>
+        </div>
         <div className="mt-8">
           <Link href="/how-kamkhoj-works" className="mr-6 text-primary font-semibold hover:underline">
             How KamKhoj works

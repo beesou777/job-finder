@@ -10,6 +10,7 @@ import {
   ResourcesSection 
 } from "@/components/home/HomeStaticSections";
 import { FAQ } from "@/components/FAQ";
+import { MarketSnapshot } from "@/components/home/MarketSnapshot";
 import { getJobs } from "@/lib/data-fetching";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
@@ -163,6 +164,7 @@ export default async function Home({
       <FeaturesSection />
       <LatestJobs />
       <LatestInternships />
+      <MarketSnapshot />
       <ScrapingInfoSection />
       <EditorialStandardsSection />
       <ResourcesSection />
