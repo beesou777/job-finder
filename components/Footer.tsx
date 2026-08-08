@@ -13,6 +13,7 @@ const footerLinks = [
   { href: "/post-job", label: "Post a job" },
   { href: "/contact", label: "Contact" },
   { href: "/tools/salary-calculator-nepal", label: "Salary calculator" },
+  { href: "/interview-practice", label: "Interview practice" },
 ];
 
 const searchLinks = [

@@ -68,10 +68,10 @@ export function Navbar() {
               <Search className="h-4 w-4" />
             </Link>
             <Link
-              href="/post-job"
+              href="/interview-practice"
               className="rounded-full border border-primary bg-primary px-5 py-2.5 text-xs font-black uppercase tracking-[0.18em] text-zinc-950 transition-colors hover:bg-white"
             >
-              Hiring resources
+              Interview practice
             </Link>
           </div>
 
@@ -113,11 +113,11 @@ export function Navbar() {
               })}
               <div className="px-4 pt-2">
                 <Link
-                  href="/post-job"
+                  href="/interview-practice"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex w-full items-center justify-center rounded-full bg-primary py-3 text-sm font-black uppercase tracking-[0.16em] text-zinc-950 transition-colors hover:bg-white"
                 >
-                  Hiring resources
+                  Interview practice
                 </Link>
               </div>
             </div>
