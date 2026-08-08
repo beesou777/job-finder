@@ -35,7 +35,8 @@ export async function GET(request: NextRequest) {
     let jobsQuery = jobRepository
       .createQueryBuilder("job")
       .leftJoinAndSelect("job.category", "category")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+      .where("job.isActive = true")
+      .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
     // Apply filters
     if (jobType) {
@@ -181,13 +182,13 @@ export async function GET(request: NextRequest) {
 async function fetchCategories(categoryRepository: any, jobRepository: any, now: Date) {
   // Optimized: Get categories with job counts in a single query
   const categoriesWithJobs = await categoryRepository
-    .createQueryBuilder("category")
-    .leftJoin("category.jobs", "job", "(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-    .select("category.id", "id")
-    .addSelect("category.name", "name")
-    .addSelect("category.slug", "slug")
+    .createQueryBuilder("categories")
+    .leftJoin("categories.jobs", "job", "(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+    .select("categories.id", "id")
+    .addSelect("categories.name", "name")
+    .addSelect("categories.slug", "slug")
     .addSelect("COUNT(job.id)", "jobCount")
-    .groupBy("category.id")
+    .groupBy("categories.id")
     .having("COUNT(job.id) > 0")
     .orderBy("COUNT(job.id)", "DESC")
     .limit(20)
@@ -205,7 +206,8 @@ async function fetchFilters(jobRepository: any, type: string, now: Date) {
   // Build base query once
   let baseQuery = jobRepository
     .createQueryBuilder("job")
-    .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+    .where("job.isActive = true")
+    .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
   if (type) {
     baseQuery = baseQuery.andWhere("job.type = :type", { type });

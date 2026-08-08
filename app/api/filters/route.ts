@@ -17,7 +17,8 @@ export async function GET(request: NextRequest) {
     // Build base query
     let query = jobRepository
       .createQueryBuilder("job")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+      .where("job.isActive = true")
+      .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
     if (type) {
       query = query.andWhere("job.type = :type", { type });
@@ -38,7 +39,8 @@ export async function GET(request: NextRequest) {
     const locations = await locationsQuery
       .select("job.location", "location")
       .addSelect("COUNT(*)", "count")
-      .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+      .where("job.isActive = true")
+      .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
       .andWhere("job.location IS NOT NULL AND job.location != ''")
       .groupBy("job.location")
       .orderBy("COUNT(*)", "DESC")

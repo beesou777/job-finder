@@ -1,11 +1,15 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
 import { runAllScrapers } from "@/lib/scraper-runner";
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   try {
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword || request.headers.get("authorization") !== `Bearer ${adminPassword}`) {
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
+    }
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
 

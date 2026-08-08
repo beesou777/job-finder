@@ -1,6 +1,27 @@
 import { getDataSource } from "./db";
 import { Category } from "@/entities/Category";
 
+let categoryCache: Category[] | null = null;
+let categoryCachePromise: Promise<Category[]> | null = null;
+
+async function getCachedCategories(): Promise<Category[]> {
+  if (categoryCache) return categoryCache;
+  if (categoryCachePromise) return categoryCachePromise;
+
+  categoryCachePromise = (async () => {
+    const dataSource = await getDataSource();
+    const categories = await dataSource.getRepository(Category).find({
+      select: { id: true, name: true, slug: true },
+      order: { name: "ASC" },
+    });
+    categoryCache = categories;
+    categoryCachePromise = null;
+    return categories;
+  })();
+
+  return categoryCachePromise;
+}
+
 /**
  * Find or create a category with fuzzy matching
  * This helps match variations like "IT", "Information Technology", "Software Development", etc.
@@ -16,10 +37,8 @@ export async function findOrCreateCategory(categoryName: string): Promise<Catego
   // First normalize the category name (map variations to standard names)
   const normalizedName = normalizeCategoryName(categoryName.trim());
 
-  // First, try exact match (case-insensitive)
-  let category = await categoryRepository.findOne({
-    where: { name: normalizedName },
-  });
+  const existingCategories = await getCachedCategories();
+  let category = existingCategories.find((cat) => cat.name === normalizedName) || null;
 
   if (category) {
     console.log(`    ✅ Exact match found: "${normalizedName}" → ${category.name}`);
@@ -27,7 +46,6 @@ export async function findOrCreateCategory(categoryName: string): Promise<Catego
   }
 
   // Try case-insensitive match
-  const existingCategories = await categoryRepository.find();
   const lowerName = normalizedName.toLowerCase();
 
   // Check for exact case-insensitive match
@@ -89,6 +107,7 @@ export async function findOrCreateCategory(categoryName: string): Promise<Catego
   });
 
   category = await categoryRepository.save(category);
+  categoryCache = [...existingCategories, category];
   console.log(`    ➕ Created new category: ${normalizedName} (${category.id.substring(0, 8)}...)`);
 
   return category;

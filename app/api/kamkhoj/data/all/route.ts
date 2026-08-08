@@ -2,82 +2,42 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/entities/Job";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-/**
- * API endpoint to get all job data
- * Returns full job objects with all fields including category
- * 
- * Usage: GET /api/kamkhoj/data/all
- * Optional query params:
- *   - source: filter by source (e.g., ?source=merojob)
- *   - type: filter by type (e.g., ?type=job or ?type=internship)
- */
 export async function GET(request: NextRequest) {
   try {
-    const dataSource = await getDataSource();
-    const jobRepository = dataSource.getRepository(Job);
-
-    const searchParams = request.nextUrl.searchParams;
-    const source = searchParams.get("source");
-    const type = searchParams.get("type"); // "job" or "internship"
-
+    const params = request.nextUrl.searchParams;
+    const parsedLimit = Number.parseInt(params.get("limit") || "50", 10);
+    const parsedOffset = Number.parseInt(params.get("offset") || "0", 10);
+    const limit = Number.isFinite(parsedLimit) ? Math.min(50, Math.max(1, parsedLimit)) : 50;
+    const offset = Number.isFinite(parsedOffset) ? Math.min(10000, Math.max(0, parsedOffset)) : 0;
+    const source = params.get("source")?.slice(0, 50);
+    const type = params.get("type");
     const now = new Date();
 
-    // Build query with category join
-    let query = jobRepository
-      .createQueryBuilder("job")
-      .leftJoinAndSelect("job.category", "category")
+    const repository = (await getDataSource()).getRepository(Job);
+    let query = repository.createQueryBuilder("job")
+      .leftJoin("job.category", "category")
+      .select([
+        "job.id", "job.title", "job.company", "job.location", "job.applyUrl",
+        "job.type", "job.postedAt", "job.expiresAt", "job.salaryText",
+        "job.jobType", "job.source", "job.lastVerifiedAt",
+        "category.id", "category.name", "category.slug",
+      ])
+      .where("job.isActive = true")
+      .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
-    // Apply optional filters
-    if (source) {
-      query = query.andWhere("job.source = :source", { source });
-    }
+    if (source) query = query.andWhere("job.source = :source", { source });
+    if (type === "job" || type === "internship") query = query.andWhere("job.type = :type", { type });
 
-    if (type) {
-      query = query.andWhere("job.type = :type", { type });
-    }
-
-    // Execute query and get all jobs
-    const jobsEntities = await query
-      .orderBy("job.postedAt", "DESC", "NULLS LAST")
-      .addOrderBy("job.createdAt", "DESC")
-      .getMany();
-
-    // Map entities to the expected format
-    let jobs = jobsEntities.map((job) => ({
-      id: job.id,
-      title: job.title,
-      company: job.company,
-      location: job.location,
-      applyUrl: job.applyUrl,
-      type: job.type,
-      createdAt: job.createdAt,
-      postedAt: job.postedAt || job.createdAt,
-      expiresAt: job.expiresAt,
-      salaryText: job.salaryText || "Negotiable",
-      jobType: job.jobType,
-      source: job.source,
-      category: job.category ? {
-        id: job.category.id,
-        name: job.category.name,
-        slug: job.category.slug,
-      } : null,
-    }));
-      
-      // First sort by source (internsathi first)
-
-    return NextResponse.json({
-      success: true,
-      count: jobs.length,
-      data: jobs,
-    });
-  } catch (error) {
-    console.error("Error fetching job data:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch job data" },
-      { status: 500 }
-    );
+    const rows = await query.orderBy("job.postedAt", "DESC", "NULLS LAST").skip(offset).take(limit + 1).getMany();
+    const hasMore = rows.length > limit;
+    const jobs = rows.slice(0, limit);
+    const response = NextResponse.json({ success: true, count: jobs.length, limit, offset, hasMore, data: jobs });
+    response.headers.set("Cache-Control", "public, s-maxage=1800, stale-while-revalidate=3600");
+    return response;
+  } catch (error: any) {
+    console.error("Error fetching job data:", error?.message || error);
+    return NextResponse.json({ success: false, error: "Failed to fetch job data" }, { status: 500 });
   }
 }
-

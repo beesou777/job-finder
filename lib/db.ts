@@ -11,8 +11,19 @@ import { CompanyEnrichment } from "@/entities/CompanyEnrichment";
 import { HiringIntentScoreHistory } from "@/entities/HiringIntentScoreHistory";
 import { LinkedInJob } from "@/entities/LinkedInJob";
 
-let appDataSource: DataSource | null = null;
-let initializationPromise: Promise<DataSource> | null = null;
+const globalDatabase = globalThis as typeof globalThis & {
+  __kamkhojDataSource?: DataSource | null;
+  __kamkhojInitializationPromise?: Promise<DataSource> | null;
+};
+
+// Persist the pool across production serverless invocations. In development,
+// Next.js hot reload can recreate entity classes; reusing the old DataSource
+// would then produce "No metadata for Category/Job was found".
+const reuseGlobalConnection = process.env.NODE_ENV === "production";
+let appDataSource = reuseGlobalConnection ? globalDatabase.__kamkhojDataSource || null : null;
+let initializationPromise = reuseGlobalConnection
+  ? globalDatabase.__kamkhojInitializationPromise || null
+  : null;
 
 const ALL_ENTITIES = [
   Job,
@@ -60,6 +71,8 @@ function createDataSource(): DataSource {
         max: 1, // Limit connections for serverless
         connectionTimeoutMillis: 10000,
         idleTimeoutMillis: 30000,
+        keepAlive: true,
+        application_name: "kamkhoj-web",
       },
     });
   } catch (error) {
@@ -77,6 +90,8 @@ function createDataSource(): DataSource {
         max: 1, // Limit connections for serverless
         connectionTimeoutMillis: 10000,
         idleTimeoutMillis: 30000,
+        keepAlive: true,
+        application_name: "kamkhoj-web",
       },
     });
   }
@@ -95,6 +110,7 @@ export async function getDataSource() {
     try {
       if (!appDataSource) {
         appDataSource = createDataSource();
+        if (reuseGlobalConnection) globalDatabase.__kamkhojDataSource = appDataSource;
       }
 
       if (!appDataSource.isInitialized) {
@@ -102,7 +118,7 @@ export async function getDataSource() {
         console.log("✅ Database connection initialized");
 
         // In production, check if tables exist
-        if (process.env.NODE_ENV === "production" && !process.env.NEXT_PHASE) {
+        if (process.env.DB_SCHEMA_CHECK === "true" && !process.env.NEXT_PHASE) {
           try {
             const queryRunner = appDataSource.createQueryRunner();
             const tableNames = await queryRunner.query(`
@@ -135,9 +151,14 @@ export async function getDataSource() {
       console.error("❌ Database connection failed:", error?.message || error);
       initializationPromise = null; // Allow retry
       appDataSource = null;
+      if (reuseGlobalConnection) {
+        globalDatabase.__kamkhojInitializationPromise = null;
+        globalDatabase.__kamkhojDataSource = null;
+      }
       throw error;
     }
   })();
+  if (reuseGlobalConnection) globalDatabase.__kamkhojInitializationPromise = initializationPromise;
 
   return initializationPromise;
 }

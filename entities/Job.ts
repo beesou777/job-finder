@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Index, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Index, ManyToOne, JoinColumn } from "typeorm";
 import { Category } from "./Category";
 
 export enum JobTypeEnum {
@@ -71,6 +71,40 @@ export class Job {
   @Index()
   source: string;
 
+  @Column({ type: "boolean", default: true })
+  @Index()
+  isActive: boolean;
+
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Index()
+  firstSeenAt: Date;
+
+  @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  @Index()
+  lastSeenAt: Date;
+
+  @Column({ type: "timestamp", nullable: true })
+  lastVerifiedAt: Date | null;
+
+  @Column({ type: "timestamp", nullable: true })
+  inactiveAt: Date | null;
+
+  @Column({ type: "varchar", nullable: true })
+  inactiveReason: string | null;
+
+  @Column({ type: "integer", default: 0 })
+  consecutiveMisses: number;
+
+  @Column({ type: "varchar", nullable: true })
+  @Index()
+  sourceJobId: string | null;
+
+  @Column({ type: "varchar", nullable: true })
+  deadlineConfidence: "exact" | "relative" | "inferred" | "unknown" | null;
+
+  @Column({ type: "integer", default: 0 })
+  qualityScore: number;
+
   @Column({ type: "text", nullable: true })
   description: string;
 
@@ -84,5 +118,8 @@ export class Job {
   @CreateDateColumn()
   @Index()
   createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
 

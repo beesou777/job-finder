@@ -5,11 +5,13 @@ import { Job } from "@/entities/Job";
 import { runAllScrapers, scrapeSource } from "@/src/scrapers/runAll";
 import { JobData, calculateExpirationDate } from "@/src/scrapers/core/types";
 import { getCategoryForJob } from "@/lib/category-detector";
+import { calculateJobQuality, getDeadlineConfidence } from "@/lib/job-quality";
 
 // Check admin password
 function isAuthorized(request: NextRequest): boolean {
   const authHeader = request.headers.get("authorization");
-  const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) return false;
   
   if (!authHeader) {
     return false;
@@ -58,6 +60,8 @@ export async function POST(request: NextRequest) {
     // Save to database
     let saved = 0;
     let duplicates = 0;
+    let updated = 0;
+    const seenJobIds = new Set<string>();
     const categoryStats = new Map<string, { name: string; count: number }>();
 
     for (const jobData of allJobs) {
@@ -81,6 +85,49 @@ export async function POST(request: NextRequest) {
         });
 
         // If not found, try normalized URL comparison (handles trailing slashes, etc.)
+        if (existing) {
+          const now = new Date();
+          const { categoryId } = await getCategoryForJob(
+            jobData.category,
+            jobData.title,
+            jobData.description,
+            jobData.company
+          );
+          const { normalizeJobType } = await import("@/src/scrapers/core/normalizeJobType");
+          const expiresAt = jobData.expiresAt || calculateExpirationDate(jobData.deadline) || existing.expiresAt;
+          const expired = Boolean(expiresAt && expiresAt <= now);
+
+          jobRepository.merge(existing, {
+            title: jobData.title || existing.title,
+            company: jobData.company?.trim() || existing.company,
+            location: jobData.location?.trim() || existing.location,
+            salaryText: jobData.salaryText?.trim() || existing.salaryText || "Negotiable",
+            deadline: jobData.deadline || existing.deadline,
+            expiresAt: expiresAt || null,
+            jobType: normalizeJobType(jobData.jobType || null) || existing.jobType,
+            categoryId: categoryId || existing.categoryId,
+            categoryOld: jobData.category || existing.categoryOld,
+            type: jobData.type || existing.type,
+            description: jobData.description?.trim() || existing.description,
+            requirements: jobData.requirements?.trim() || existing.requirements,
+            postedAt: jobData.postedAt || existing.postedAt,
+            isActive: !expired,
+            lastSeenAt: now,
+            lastVerifiedAt: now,
+            inactiveAt: expired ? now : null,
+            inactiveReason: expired ? "deadline_passed" : null,
+            consecutiveMisses: 0,
+            sourceJobId: jobData.sourceJobId || existing.sourceJobId,
+            deadlineConfidence: getDeadlineConfidence(jobData.deadline, jobData.expiresAt),
+            qualityScore: calculateJobQuality(jobData),
+          } as any);
+          await jobRepository.save(existing);
+          seenJobIds.add(existing.id);
+          updated++;
+          duplicates++;
+          continue;
+        }
+
         if (!existing) {
           const allJobsWithSimilarUrl = await jobRepository
             .createQueryBuilder("job")
@@ -143,7 +190,8 @@ export async function POST(request: NextRequest) {
 
           // Set defaults
           const salaryText = jobData.salaryText?.trim() || "Negotiable";
-          const postedAt = new Date(); // Use current date as posted date
+          const postedAt = jobData.postedAt || new Date();
+          const now = new Date();
 
           // Create job entity
           const job = jobRepository.create({
@@ -153,10 +201,21 @@ export async function POST(request: NextRequest) {
             jobType: normalizedJobType,
             salaryText,
             postedAt,
+            isActive: !jobData.expiresAt || jobData.expiresAt > now,
+            firstSeenAt: now,
+            lastSeenAt: now,
+            lastVerifiedAt: now,
+            inactiveAt: jobData.expiresAt && jobData.expiresAt <= now ? now : null,
+            inactiveReason: jobData.expiresAt && jobData.expiresAt <= now ? "deadline_passed" : null,
+            consecutiveMisses: 0,
+            sourceJobId: jobData.sourceJobId || null,
+            deadlineConfidence: getDeadlineConfidence(jobData.deadline, jobData.expiresAt),
+            qualityScore: calculateJobQuality(jobData),
           } as any);
 
           try {
-            await jobRepository.save(job);
+            const savedJob = await jobRepository.save(job as unknown as Job);
+            seenJobIds.add(savedJob.id);
             saved++;
             
             if (categoryId && categoryName) {
@@ -193,6 +252,29 @@ export async function POST(request: NextRequest) {
           duplicates++; // Count as duplicate to avoid retrying
         }
       }
+    }
+
+    let deactivated = 0;
+    if (source && allJobs.length > 0 && seenJobIds.size > 0) {
+      const seenIds = Array.from(seenJobIds);
+      await jobRepository
+        .createQueryBuilder()
+        .update(Job)
+        .set({ consecutiveMisses: () => '"consecutiveMisses" + 1' } as any)
+        .where("source = :source", { source })
+        .andWhere('"isActive" = true')
+        .andWhere('id NOT IN (:...seenIds)', { seenIds })
+        .execute();
+
+      const reconciliation = await jobRepository
+        .createQueryBuilder()
+        .update(Job)
+        .set({ isActive: false, inactiveAt: new Date(), inactiveReason: "missing_from_source" })
+        .where("source = :source", { source })
+        .andWhere('"isActive" = true')
+        .andWhere('"consecutiveMisses" >= 2')
+        .execute();
+      deactivated = reconciliation.affected || 0;
     }
 
     // Print category statistics
@@ -235,7 +317,9 @@ export async function POST(request: NextRequest) {
       success: true,
       totalScraped: allJobs.length,
       saved,
+      updated,
       duplicates,
+      deactivated,
       categoryStats: Array.from(categoryStats.values()),
       companiesUpdated: enrichmentUpdateResult?.companiesUpdated || 0,
       message: `Scraped ${allJobs.length} jobs. Saved ${saved} new jobs, skipped ${duplicates} duplicates.${enrichmentUpdateResult ? ` Updated ${enrichmentUpdateResult.companiesUpdated} company enrichments.` : ""}`,

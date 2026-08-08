@@ -187,11 +187,14 @@ export function generateJobPostingSchema(job: {
       value: job.id,
     },
     datePosted: typeof job.createdAt === "string" ? job.createdAt : job.createdAt.toISOString(),
-    validThrough: job.expiresAt
-      ? typeof job.expiresAt === "string"
-        ? job.expiresAt
-        : job.expiresAt.toISOString()
-      : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+    ...(job.expiresAt
+      ? {
+          validThrough:
+            typeof job.expiresAt === "string"
+              ? job.expiresAt
+              : job.expiresAt.toISOString(),
+        }
+      : {}),
     employmentType:
       job.type === "internship"
         ? "INTERN"
@@ -210,24 +213,9 @@ export function generateJobPostingSchema(job: {
         addressCountry: "NP",
       },
     },
-    url: `${BASE_URL}/jobs/${job.id}`,
+    url: `${BASE_URL}/job/${job.id}`,
     directApply: false,
   };
-
-  if (job.salaryText) {
-    return {
-      ...baseSchema,
-      baseSalary: {
-        "@type": "MonetaryAmount",
-        currency: "NPR",
-        value: {
-          "@type": "QuantitativeValue",
-          minValue: 0,
-          unitText: job.salaryText,
-        },
-      },
-    };
-  }
 
   return baseSchema;
 }

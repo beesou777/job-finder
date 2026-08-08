@@ -113,7 +113,8 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
   let query = jobRepository
     .createQueryBuilder("job")
     .leftJoinAndSelect("job.category", "category")
-    .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+    .where("job.isActive = true")
+    .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
   if (type !== "all") {
     query = query.andWhere("job.type = :type", { type });
@@ -171,7 +172,8 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
   let jobsQuery = jobRepo
     .createQueryBuilder("job")
     .leftJoinAndSelect("job.category", "category")
-    .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+    .where("job.isActive = true")
+    .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
   if (type !== "all") {
     jobsQuery = jobsQuery.andWhere("job.type = :type", { type });
@@ -219,7 +221,8 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
       let fallbackJobsQ = jobRepo
         .createQueryBuilder("job")
         .leftJoinAndSelect("job.category", "category")
-        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+        .where("job.isActive = true")
+        .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
         .andWhere(jobSql, jobParams);
       let fallbackLiQ = linkedInRepo.createQueryBuilder("lj").andWhere(liSql, liParams);
       if (type !== "all") fallbackJobsQ = fallbackJobsQ.andWhere("job.type = :type", { type });

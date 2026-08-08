@@ -50,6 +50,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     } catch (error) {
       console.error('Error adding blog posts to sitemap:', error);
     }
+
+    try {
+      const { getDataSource } = await import('@/lib/db');
+      const { Job } = await import('@/entities/Job');
+      const dataSource = await getDataSource();
+      const jobs = await dataSource.getRepository(Job)
+        .createQueryBuilder('job')
+        .select(['job.id', 'job.updatedAt', 'job.lastVerifiedAt'])
+        .where('job.isActive = true')
+        .andWhere('(job.expiresAt IS NULL OR job.expiresAt > :now)', { now: new Date() })
+        .andWhere('job.qualityScore >= :minimumQuality', { minimumQuality: 45 })
+        .orderBy('job.lastVerifiedAt', 'DESC', 'NULLS LAST')
+        .take(5000)
+        .getMany();
+
+      jobs.forEach((job) => routes.push({
+        url: `${baseUrl}/job/${job.id}`,
+        lastModified: job.updatedAt || job.lastVerifiedAt || new Date(),
+        changeFrequency: 'daily',
+        priority: 0.7,
+      }));
+    } catch (error) {
+      console.error('Error adding verified jobs to sitemap:', error);
+    }
   } catch (error) {
     console.error('Error generating sitemap:', error)
   }

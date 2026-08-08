@@ -21,6 +21,8 @@ interface JobCardProps {
     applyUrl: string;
     createdAt?: string;
     postedAt?: string | Date;
+    lastVerifiedAt?: string | Date;
+    deadlineConfidence?: "exact" | "relative" | "inferred" | "unknown";
   };
 }
 
@@ -88,15 +90,13 @@ export function JobCard({ job }: JobCardProps) {
             </div>
           </div>
 
-          <a
-            href={`/apply/${job.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href={`/job/${job.id}`}
             className="hidden shrink-0 items-center gap-2 rounded-full border-2 border-primary px-6 py-3 font-mono text-sm font-black uppercase tracking-[0.18em] text-zinc-100 transition-colors hover:bg-primary hover:text-zinc-950 md:inline-flex"
           >
             View Job
             <ArrowRight className="h-4 w-4" />
-          </a>
+          </Link>
         </div>
 
         <div className="min-w-0">
@@ -167,15 +167,22 @@ export function JobCard({ job }: JobCardProps) {
             <Clock3 className="h-3.5 w-3.5" />
             {daysAgo <= 0 ? "Posted today" : `${daysAgo}d ago`}
           </span>
-          <a
-            href={`/apply/${job.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          {job.lastVerifiedAt && (
+            <span
+              className="w-full text-xs font-semibold text-emerald-400"
+              title={`Verified against the source on ${new Date(job.lastVerifiedAt).toLocaleString()}`}
+            >
+              Verified {new Date(job.lastVerifiedAt).toLocaleDateString()}
+              {job.deadlineConfidence === "unknown" ? " · deadline not provided" : ""}
+            </span>
+          )}
+          <Link
+            href={`/job/${job.id}`}
             className="inline-flex w-full items-center justify-center gap-2 rounded-full border-2 border-primary px-5 py-3 font-mono text-sm font-black uppercase tracking-[0.16em] text-zinc-100 transition-colors hover:bg-primary hover:text-zinc-950 md:hidden"
           >
             View Job
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </Link>
         </div>
       </CardContent>
     </Card>

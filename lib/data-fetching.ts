@@ -25,9 +25,11 @@ async function getJobsUncached(options: GetJobsOptions = {}) {
         categoryId,
         location,
         search,
-        limit = 12,
-        offset = 0,
+        limit: requestedLimit = 12,
+        offset: requestedOffset = 0,
     } = options;
+    const limit = Math.min(50, Math.max(1, requestedLimit));
+    const offset = Math.min(10000, Math.max(0, requestedOffset));
 
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
@@ -35,8 +37,16 @@ async function getJobsUncached(options: GetJobsOptions = {}) {
 
     let query = jobRepository
         .createQueryBuilder("job")
-        .leftJoinAndSelect("job.category", "category")
-        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+        .leftJoin("job.category", "category")
+        .select([
+            "job.id", "job.title", "job.company", "job.location", "job.applyUrl",
+            "job.type", "job.createdAt", "job.postedAt", "job.expiresAt", "job.deadline",
+            "job.lastVerifiedAt", "job.deadlineConfidence", "job.qualityScore",
+            "job.salaryText", "job.jobType", "job.source",
+            "category.id", "category.name", "category.slug",
+        ])
+        .where("job.isActive = true")
+        .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
     if (jobType) {
         query = query.andWhere("job.jobType = :jobType", { jobType });
@@ -117,6 +127,10 @@ async function getJobsUncached(options: GetJobsOptions = {}) {
         createdAt: job.createdAt,
         postedAt: job.postedAt || job.createdAt,
         expiresAt: job.expiresAt,
+        deadline: job.deadline,
+        lastVerifiedAt: job.lastVerifiedAt,
+        deadlineConfidence: job.deadlineConfidence,
+        qualityScore: job.qualityScore,
         salaryText: job.salaryText || "Negotiable",
         jobType: job.jobType,
         source: job.source,
@@ -132,21 +146,34 @@ async function getJobsUncached(options: GetJobsOptions = {}) {
 
 /** Cached getJobs - 5 min revalidate to reduce DB egress */
 export async function getJobs(options: GetJobsOptions = {}) {
+  const allowedUrgencies = new Set(["today", "3days", "7days", "30days"]);
+  const allowedTypes = new Set(["job", "internship"]);
+  const normalizedOptions: GetJobsOptions = {
+    ...options,
+    limit: Math.min(50, Math.max(1, options.limit ?? 12)),
+    offset: Math.min(10000, Math.max(0, options.offset ?? 0)),
+    search: options.search?.trim().slice(0, 100) || undefined,
+    location: options.location?.trim().slice(0, 80) || undefined,
+    urgency: options.urgency && allowedUrgencies.has(options.urgency) ? options.urgency : undefined,
+    type: options.type && allowedTypes.has(options.type) ? options.type : undefined,
+    categoryId: options.categoryId && /^[0-9a-f-]{36}$/i.test(options.categoryId) ? options.categoryId : undefined,
+    jobType: options.jobType?.trim().slice(0, 30) || undefined,
+  };
   const key = [
     "jobs",
-    String(options.limit ?? 12),
-    String(options.offset ?? 0),
-    String(options.type ?? ""),
-    String(options.search ?? ""),
-    String(options.categoryId ?? ""),
-    String(options.location ?? ""),
-    String(options.jobType ?? ""),
-    String(options.urgency ?? ""),
+    String(normalizedOptions.limit),
+    String(normalizedOptions.offset),
+    String(normalizedOptions.type ?? ""),
+    String(normalizedOptions.search ?? ""),
+    String(normalizedOptions.categoryId ?? ""),
+    String(normalizedOptions.location ?? ""),
+    String(normalizedOptions.jobType ?? ""),
+    String(normalizedOptions.urgency ?? ""),
   ];
   return unstable_cache(
-    () => getJobsUncached(options),
+    () => getJobsUncached(normalizedOptions),
     key,
-    { revalidate: 300, tags: ["jobs"] }
+    { revalidate: 600, tags: ["jobs"] }
   )();
 }
 
@@ -159,7 +186,8 @@ async function getStatsUncached() {
         .createQueryBuilder("job")
         .select("job.type", "type")
         .addSelect("COUNT(*)", "count")
-        .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+        .where("job.isActive = true")
+        .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
         .groupBy("job.type")
         .getRawMany();
 
@@ -183,7 +211,7 @@ async function getStatsUncached() {
 
 /** Cached getStats - 5 min to reduce egress */
 export async function getStats() {
-    return unstable_cache(getStatsUncached, ["stats"], { revalidate: 300, tags: ["jobs"] })();
+    return unstable_cache(getStatsUncached, ["stats"], { revalidate: 1800, tags: ["jobs"] })();
 }
 
 async function getCategoriesUncached(options: { popular?: boolean; limit?: number } = {}) {
@@ -194,14 +222,15 @@ async function getCategoriesUncached(options: { popular?: boolean; limit?: numbe
     let categories;
     if (popular) {
         const categoriesWithJobs = await categoryRepository
-            .createQueryBuilder("category")
-            .leftJoin("category.jobs", "job")
-            .where("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now: new Date() })
-            .select("category.id", "id")
-            .addSelect("category.name", "name")
-            .addSelect("category.slug", "slug")
+            .createQueryBuilder("categories")
+            .leftJoin("categories.jobs", "job")
+            .where("job.isActive = true")
+            .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now: new Date() })
+            .select("categories.id", "id")
+            .addSelect("categories.name", "name")
+            .addSelect("categories.slug", "slug")
             .addSelect("COUNT(job.id)", "jobCount")
-            .groupBy("category.id")
+            .groupBy("categories.id")
             .having("COUNT(job.id) > 0")
             .orderBy("COUNT(job.id)", "DESC")
             .limit(limit)
@@ -228,14 +257,14 @@ async function getCategoriesUncached(options: { popular?: boolean; limit?: numbe
         }
     } else {
         const allCategoriesWithCounts = await categoryRepository
-            .createQueryBuilder("category")
-            .leftJoin("category.jobs", "job")
-            .select("category.id", "id")
-            .addSelect("category.name", "name")
-            .addSelect("category.slug", "slug")
+            .createQueryBuilder("categories")
+            .leftJoin("categories.jobs", "job")
+            .select("categories.id", "id")
+            .addSelect("categories.name", "name")
+            .addSelect("categories.slug", "slug")
             .addSelect("COUNT(job.id)", "jobCount")
-            .groupBy("category.id")
-            .orderBy("category.name", "ASC")
+            .groupBy("categories.id")
+            .orderBy("categories.name", "ASC")
             .limit(limit)
             .getRawMany();
 
@@ -256,7 +285,7 @@ export async function getCategories(options: { popular?: boolean; limit?: number
     return unstable_cache(
         () => getCategoriesUncached(options),
         key,
-        { revalidate: 300, tags: ["jobs", "categories"] }
+        { revalidate: 1800, tags: ["jobs", "categories"] }
     )();
 }
 

@@ -202,7 +202,9 @@ export async function scrapeFroxjobDetail(url: string): Promise<JobData | null> 
     if (!expiresAt) {
       console.log(`[Froxjob] No deadline found, using calculateExpirationDate with deadline: "${deadline}"`);
       expiresAt = calculateExpirationDate(deadline);
-      console.log(`[Froxjob] Default expiration calculated: ${expiresAt.toISOString()}`);
+      console.log(expiresAt
+        ? `[Froxjob] Expiration calculated: ${expiresAt.toISOString()}`
+        : "[Froxjob] No confirmed expiration date found");
     }
 
     // Use the detail page URL as apply URL

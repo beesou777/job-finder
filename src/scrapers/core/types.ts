@@ -14,14 +14,17 @@ export const JobDataSchema = z.object({
   description: z.string().optional(),
   requirements: z.string().optional(),
   expiresAt: z.date().optional(),
+  postedAt: z.date().optional(),
+  sourceJobId: z.string().optional(),
 });
 
 export type JobData = z.infer<typeof JobDataSchema>;
 
 /**
- * Calculate expiration date from deadline string or default to 1 month from now
+ * Calculate expiration date only when the source supplied a parseable deadline.
+ * Unknown deadlines must stay unknown and are handled through source verification.
  */
-export function calculateExpirationDate(deadline?: string, createdAt?: Date): Date {
+export function calculateExpirationDate(deadline?: string, createdAt?: Date): Date | undefined {
   if (deadline) {
     // Try to parse deadline string
     const parsed = parseDeadline(deadline);
@@ -30,11 +33,7 @@ export function calculateExpirationDate(deadline?: string, createdAt?: Date): Da
     }
   }
   
-  // Default: 1 month from creation date or now
-  const baseDate = createdAt || new Date();
-  const expiresAt = new Date(baseDate);
-  expiresAt.setMonth(expiresAt.getMonth() + 1);
-  return expiresAt;
+  return undefined;
 }
 
 /**
