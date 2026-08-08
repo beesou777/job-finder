@@ -40,6 +40,7 @@ import { scrapeSojoDataDetail } from "./detailPages/sojodata";
 import { scrapeRecruitNepalList } from "./listPages/recruitnepal";
 import { scrapeRecruitNepalDetail } from "./detailPages/recruitnepal";
 import { JobData } from "./core/types";
+import { getSourceMetrics, sourceRequest } from "./core/request-control";
 
 export interface ScraperConfig {
   baseUrl: string;
@@ -272,7 +273,7 @@ async function enrichIncompletePrefetchedJobs(config: ScraperConfig, jobs: JobDa
     }
     attempts++;
     try {
-      const detail = await config.detailScraper(job.applyUrl);
+      const detail = await sourceRequest(config.source, () => config.detailScraper(job.applyUrl));
       if (detail) {
         enriched.push({
           ...job,
@@ -339,7 +340,7 @@ export async function runAllScrapers(): Promise<JobData[]> {
 
         while (currentUrl && pageCount < (config.maxPages || 5)) {
           try {
-            const listResult = await config.listScraper(currentUrl);
+            const listResult = await sourceRequest(config.source, () => config.listScraper(currentUrl!));
             
             // Check if this scraper returned pre-fetched jobs (Intern Sathi GraphQL, JobsNepal, etc.)
             if (listResult.preFetchedJobs && listResult.preFetchedJobs.length > 0) {
@@ -376,7 +377,7 @@ export async function runAllScrapers(): Promise<JobData[]> {
 
         for (const detailUrl of detailUrlsArray) {
           try {
-            const jobData = await config.detailScraper(detailUrl);
+            const jobData = await sourceRequest(config.source, () => config.detailScraper(detailUrl));
             
             if (jobData) {
               allJobs.push(jobData);
@@ -399,6 +400,7 @@ export async function runAllScrapers(): Promise<JobData[]> {
 
   console.log(`\n✅ Scraping complete! Total jobs: ${allJobs.length}`);
 
+  console.table(getSourceMetrics());
   return allJobs;
 }
 
@@ -439,7 +441,7 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
 
     while (currentUrl && pageCount < (config.maxPages || 5)) {
       try {
-        const listResult = await config.listScraper(currentUrl);
+        const listResult = await sourceRequest(config.source, () => config.listScraper(currentUrl!));
         
         // Check if this scraper returned pre-fetched jobs (API-based scrapers)
         if (listResult.preFetchedJobs && listResult.preFetchedJobs.length > 0) {
@@ -474,7 +476,7 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
 
     for (const detailUrl of detailUrlsArray) {
       try {
-        const jobData = await config.detailScraper(detailUrl);
+        const jobData = await sourceRequest(config.source, () => config.detailScraper(detailUrl));
         if (jobData) {
           jobs.push(jobData);
         }

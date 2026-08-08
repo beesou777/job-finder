@@ -18,6 +18,7 @@
     "migrate-categories": "tsx scripts/migrate-categories.ts",
     "migrate-jobtype": "tsx scripts/migrate-jobtype-and-defaults.ts",
     "migrate-job-lifecycle": "tsx scripts/migrate-job-lifecycle.ts",
+    "migrate-job-fingerprints": "tsx scripts/migrate-job-fingerprints.ts",
     "migrate-company-enrichment": "tsx scripts/migrate-company-enrichment.ts",
     "migrate-canonical-companies": "tsx scripts/migrate-canonical-companies.ts",
     "migrate-company-enrichment-fk": "tsx scripts/migrate-company-enrichment-fk.ts",

@@ -6,6 +6,29 @@ import { runAllScrapers, scrapeSource } from "@/src/scrapers/runAll";
 import { JobData, calculateExpirationDate } from "@/src/scrapers/core/types";
 import { getCategoryForJob } from "@/lib/category-detector";
 import { calculateJobQuality, getDeadlineConfidence } from "@/lib/job-quality";
+import { createHash } from "crypto";
+import { In } from "typeorm";
+import { acquireScrapeLock, releaseScrapeLock } from "@/lib/scrape-lock";
+
+function normalizeJobUrl(url: string) {
+  try {
+    const parsed = new URL(url);
+    parsed.search = "";
+    parsed.hash = "";
+    parsed.pathname = parsed.pathname.replace(/\/$/, "");
+    return parsed.toString().toLowerCase();
+  } catch {
+    return url.toLowerCase().split("?")[0].split("#")[0].replace(/\/$/, "");
+  }
+}
+
+function getJobFingerprint(job: Pick<JobData, "source" | "applyUrl">) {
+  return createHash("sha256").update(`${job.source.trim().toLowerCase()}|${normalizeJobUrl(job.applyUrl)}`).digest("hex");
+}
+
+function getContentHash(job: JobData) {
+  return createHash("sha256").update([job.title, job.company, job.location, job.deadline, job.description].map((value) => value || "").join("|"), "utf8").digest("hex");
+}
 
 // Check admin password
 function isAuthorized(request: NextRequest): boolean {
@@ -39,6 +62,10 @@ export async function POST(request: NextRequest) {
     const source = body.source; // Optional: scrape specific source
 
     const dataSource = await getDataSource();
+    const scrapeLock = await acquireScrapeLock();
+    if (!scrapeLock.locked) {
+      return NextResponse.json({ success: false, error: "A scraper run is already in progress." }, { status: 409 });
+    }
     const jobRepository = dataSource.getRepository(Job);
 
     console.log("🔄 Starting scraper...");
@@ -55,7 +82,28 @@ export async function POST(request: NextRequest) {
       allJobs = await runAllScrapers();
     }
     
-    console.log(`Total jobs scraped: ${allJobs.length}`);
+    const uniqueJobs = new Map<string, JobData>();
+    for (const job of allJobs) {
+      if (!job.applyUrl || !job.source) continue;
+      const key = getJobFingerprint(job);
+      const existing = uniqueJobs.get(key);
+      if (!existing || (job.description?.length || 0) > (existing.description?.length || 0)) uniqueJobs.set(key, job);
+    }
+    allJobs = Array.from(uniqueJobs.values());
+    console.log(`Total unique jobs after in-memory deduplication: ${allJobs.length}`);
+
+    // Load existing fingerprints in batches once instead of querying once per job.
+    const existingByFingerprint = new Map<string, Job>();
+    const fingerprints = allJobs.map(getJobFingerprint);
+    for (let offset = 0; offset < fingerprints.length; offset += 500) {
+      const batch = fingerprints.slice(offset, offset + 500);
+      if (!batch.length) continue;
+      const existingBatch = await jobRepository
+        .createQueryBuilder("job")
+        .where("job.fingerprint IN (:...fingerprints)", { fingerprints: batch })
+        .getMany();
+      existingBatch.forEach((job) => job.fingerprint && existingByFingerprint.set(job.fingerprint, job));
+    }
 
     // Save to database
     let saved = 0;
@@ -63,9 +111,22 @@ export async function POST(request: NextRequest) {
     let updated = 0;
     const seenJobIds = new Set<string>();
     const categoryStats = new Map<string, { name: string; count: number }>();
+    const pendingUpdates: Job[] = [];
+    const pendingCreates: Job[] = [];
+    const categoryCache = new Map<string, Awaited<ReturnType<typeof getCategoryForJob>>>();
+    const resolveCategory = async (jobData: JobData) => {
+      const key = [jobData.category, jobData.title, jobData.company].map((value) => (value || "").trim().toLowerCase()).join("|");
+      const cached = categoryCache.get(key);
+      if (cached) return cached;
+      const result = await getCategoryForJob(jobData.category, jobData.title, jobData.description, jobData.company);
+      categoryCache.set(key, result);
+      return result;
+    };
 
     for (const jobData of allJobs) {
       try {
+        const fingerprint = getJobFingerprint(jobData);
+        const contentHash = getContentHash(jobData);
         // Normalize applyUrl for better duplicate detection
         const normalizeUrl = (url: string): string => {
           try {
@@ -80,19 +141,18 @@ export async function POST(request: NextRequest) {
         const normalizedUrl = normalizeUrl(jobData.applyUrl);
         
         // Check for duplicates by exact applyUrl first (fastest)
-        let existing = await jobRepository.findOne({
+        let existing = existingByFingerprint.get(fingerprint) || null;
+        if (!existing) existing = await jobRepository.findOne({
+          where: { fingerprint },
+        });
+        if (!existing) existing = await jobRepository.findOne({
           where: { applyUrl: jobData.applyUrl },
         });
 
         // If not found, try normalized URL comparison (handles trailing slashes, etc.)
         if (existing) {
           const now = new Date();
-          const { categoryId } = await getCategoryForJob(
-            jobData.category,
-            jobData.title,
-            jobData.description,
-            jobData.company
-          );
+          const { categoryId } = await resolveCategory(jobData);
           const { normalizeJobType } = await import("@/src/scrapers/core/normalizeJobType");
           const expiresAt = jobData.expiresAt || calculateExpirationDate(jobData.deadline) || existing.expiresAt;
           const expired = Boolean(expiresAt && expiresAt <= now);
@@ -118,10 +178,12 @@ export async function POST(request: NextRequest) {
             inactiveReason: expired ? "deadline_passed" : null,
             consecutiveMisses: 0,
             sourceJobId: jobData.sourceJobId || existing.sourceJobId,
+            fingerprint,
+            contentHash,
             deadlineConfidence: getDeadlineConfidence(jobData.deadline, jobData.expiresAt),
             qualityScore: calculateJobQuality(jobData),
           } as any);
-          await jobRepository.save(existing);
+          pendingUpdates.push(existing);
           seenJobIds.add(existing.id);
           updated++;
           duplicates++;
@@ -161,12 +223,7 @@ export async function POST(request: NextRequest) {
 
         if (!existing) {
           // Handle category - find or create with smart matching, with fallback detection
-          const { categoryId, categoryName } = await getCategoryForJob(
-            jobData.category,
-            jobData.title,
-            jobData.description,
-            jobData.company
-          );
+          const { categoryId, categoryName } = await resolveCategory(jobData);
 
           if (categoryId && categoryName) {
             if (jobData.category) {
@@ -209,13 +266,14 @@ export async function POST(request: NextRequest) {
             inactiveReason: jobData.expiresAt && jobData.expiresAt <= now ? "deadline_passed" : null,
             consecutiveMisses: 0,
             sourceJobId: jobData.sourceJobId || null,
+            fingerprint,
+            contentHash,
             deadlineConfidence: getDeadlineConfidence(jobData.deadline, jobData.expiresAt),
             qualityScore: calculateJobQuality(jobData),
           } as any);
 
           try {
-            const savedJob = await jobRepository.save(job as unknown as Job);
-            seenJobIds.add(savedJob.id);
+            pendingCreates.push(job as unknown as Job);
             saved++;
             
             if (categoryId && categoryName) {
@@ -251,6 +309,23 @@ export async function POST(request: NextRequest) {
           console.error(`Error processing job:`, error.message);
           duplicates++; // Count as duplicate to avoid retrying
         }
+      }
+    }
+
+    // Flush writes in batches to avoid one INSERT/UPDATE round trip per job.
+    const flushBatches = async (jobs: Job[], conflictPaths: string[]) => {
+      for (let offset = 0; offset < jobs.length; offset += 250) {
+        const batch = jobs.slice(offset, offset + 250);
+        if (batch.length) await jobRepository.upsert(batch as any, conflictPaths as any);
+      }
+    };
+    await flushBatches(pendingUpdates, ["id"]);
+    await flushBatches(pendingCreates, ["fingerprint"]);
+    if (pendingCreates.length) {
+      const createdFingerprints = pendingCreates.map((job) => job.fingerprint).filter(Boolean) as string[];
+      for (let offset = 0; offset < createdFingerprints.length; offset += 500) {
+        const rows = await jobRepository.find({ where: { fingerprint: In(createdFingerprints.slice(offset, offset + 500)) } });
+        rows.forEach((job) => seenJobIds.add(job.id));
       }
     }
 
@@ -313,7 +388,7 @@ export async function POST(request: NextRequest) {
       revalidateTag("categories");
     }
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       totalScraped: allJobs.length,
       saved,
@@ -324,6 +399,8 @@ export async function POST(request: NextRequest) {
       companiesUpdated: enrichmentUpdateResult?.companiesUpdated || 0,
       message: `Scraped ${allJobs.length} jobs. Saved ${saved} new jobs, skipped ${duplicates} duplicates.${enrichmentUpdateResult ? ` Updated ${enrichmentUpdateResult.companiesUpdated} company enrichments.` : ""}`,
     });
+    await releaseScrapeLock(dataSource);
+    return response;
   } catch (error: any) {
     console.error("Scraping error:", error);
     return NextResponse.json(

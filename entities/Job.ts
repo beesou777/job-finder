@@ -99,6 +99,14 @@ export class Job {
   @Index()
   sourceJobId: string | null;
 
+  @Column({ type: "varchar", length: 64, nullable: true, unique: true })
+  @Index()
+  fingerprint: string | null;
+
+  @Column({ type: "varchar", length: 64, nullable: true })
+  @Index()
+  contentHash: string | null;
+
   @Column({ type: "varchar", nullable: true })
   deadlineConfidence: "exact" | "relative" | "inferred" | "unknown" | null;
 
