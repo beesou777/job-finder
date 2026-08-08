@@ -30,6 +30,7 @@ export async function migrateJobLifecycle() {
     await runner.query(`CREATE INDEX IF NOT EXISTS "IDX_jobs_active_type_posted" ON jobs ("isActive", type, "postedAt" DESC)`);
     await runner.query(`CREATE INDEX IF NOT EXISTS "IDX_jobs_active_category_posted" ON jobs ("isActive", "categoryId", "postedAt" DESC)`);
     await runner.query(`CREATE INDEX IF NOT EXISTS "IDX_jobs_active_jobtype_posted" ON jobs ("isActive", "jobType", "postedAt" DESC)`);
+    await runner.query(`CREATE INDEX IF NOT EXISTS "IDX_linkedin_jobs_date_id" ON linkedin_jobs (job_date DESC, id DESC)`);
     console.log("Job lifecycle migration completed.");
   } finally {
     await runner.release();

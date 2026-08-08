@@ -49,7 +49,8 @@ export default async function LinkedInJobsPage({
     jobId?: string;
   };
 }) {
-  const page = parseInt(searchParams.page || "1");
+  const parsedPage = parseInt(searchParams.page || "1", 10);
+  const page = Number.isFinite(parsedPage) ? Math.min(500, Math.max(1, parsedPage)) : 1;
 
   // Fetch filters AND jobs in one efficient cached call
   const { filters, total, jobs } = await getLinkedInJobs({

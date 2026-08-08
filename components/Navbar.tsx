@@ -13,6 +13,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/jobs", label: "Jobs" },
+    { href: "/linkedin-jobs", label: "LinkedIn Jobs" },
     { href: "/internships", label: "Internships" },
     { href: "/remote-jobs", label: "Remote" },
     { href: "/blog", label: "Blog" },

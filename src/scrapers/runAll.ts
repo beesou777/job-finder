@@ -255,6 +255,46 @@ export interface ScrapeResult {
   bySource: Record<string, { scraped: number; saved: number }>;
 }
 
+function hasUsefulDescription(job: JobData) {
+  return Boolean(job.description && job.description.replace(/\s+/g, " ").trim().length >= 160);
+}
+
+async function enrichIncompletePrefetchedJobs(config: ScraperConfig, jobs: JobData[]): Promise<JobData[]> {
+  const requestedLimit = Number.parseInt(process.env.SCRAPER_DETAIL_ENRICH_LIMIT || "20", 10);
+  const enrichmentLimit = Number.isFinite(requestedLimit) ? Math.min(50, Math.max(0, requestedLimit)) : 20;
+  let attempts = 0;
+  const enriched: JobData[] = [];
+
+  for (const job of jobs) {
+    if (hasUsefulDescription(job) || attempts >= enrichmentLimit || !job.applyUrl) {
+      enriched.push(job);
+      continue;
+    }
+    attempts++;
+    try {
+      const detail = await config.detailScraper(job.applyUrl);
+      if (detail) {
+        enriched.push({
+          ...job,
+          ...detail,
+          title: detail.title || job.title,
+          applyUrl: detail.applyUrl || job.applyUrl,
+          source: detail.source || job.source,
+          description: detail.description?.trim() || job.description,
+          requirements: detail.requirements?.trim() || job.requirements,
+        });
+        continue;
+      }
+    } catch (error: any) {
+      console.warn(`  Detail enrichment skipped for ${job.applyUrl}: ${error.message}`);
+    }
+    enriched.push(job);
+  }
+
+  if (attempts > 0) console.log(`  Attempted detail enrichment for ${attempts} incomplete ${config.source} jobs`);
+  return enriched;
+}
+
 /**
  * Master scraper orchestrator
  * Discovers routes, scrapes list pages, then scrapes detail pages
@@ -327,7 +367,8 @@ export async function runAllScrapers(): Promise<JobData[]> {
       if (preFetchedJobs.length > 0) {
         // Jobs already fetched from list page API or HTML
         console.log(`  ⚡ Using pre-fetched jobs from list page (${preFetchedJobs.length} jobs)`);
-        allJobs.push(...preFetchedJobs.slice(0, config.maxJobs || 50));
+        const selectedJobs = preFetchedJobs.slice(0, config.maxJobs || 50);
+        allJobs.push(...await enrichIncompletePrefetchedJobs(config, selectedJobs));
       } else if (detailUrls.size > 0) {
         // Other sites: Scrape detail pages
         console.log(`  🔍 Scraping ${detailUrls.size} detail pages...`);
@@ -425,7 +466,8 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
   // Handle pre-fetched jobs or scrape detail pages
   if (preFetchedJobs.length > 0) {
     console.log(`  ⚡ Using pre-fetched jobs from list page (${preFetchedJobs.length} jobs)`);
-    jobs.push(...preFetchedJobs.slice(0, config.maxJobs || 500));
+    const selectedJobs = preFetchedJobs.slice(0, config.maxJobs || 500);
+    jobs.push(...await enrichIncompletePrefetchedJobs(config, selectedJobs));
   } else if (detailUrls.size > 0) {
     console.log(`  🔍 Scraping ${detailUrls.size} detail pages...`);
     const detailUrlsArray = Array.from(detailUrls).slice(0, config.maxJobs || 50);

@@ -1,7 +1,5 @@
-import { getLinkedInJobs } from "@/lib/data-fetching";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, MapPin, Calendar, ArrowRight } from "lucide-react";
-import { Pagination } from "@/components/Pagination";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { slugify } from "@/lib/utils";

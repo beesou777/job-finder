@@ -289,7 +289,7 @@ export async function getCategories(options: { popular?: boolean; limit?: number
     )();
 }
 
-export const getLinkedInJobs = cache(async (options: {
+const getLinkedInJobsLegacy = cache(async (options: {
     search?: string | null;
     company?: string | null;
     place?: string | null;
@@ -394,11 +394,97 @@ export const getLinkedInJobs = cache(async (options: {
     };
 });
 
-export const getLinkedInJobDetails = cache(async (id: number) => {
-    const dataSource = await getDataSource();
-    const linkedinRepository = dataSource.getRepository(LinkedInJob);
-    return await linkedinRepository.findOne({ where: { id } });
-});
+type LinkedInJobsOptions = {
+    search?: string | null;
+    company?: string | null;
+    place?: string | null;
+    datePosted?: string | null;
+    limit?: number;
+    offset?: number;
+};
+
+function normalizeLinkedInOptions(options: LinkedInJobsOptions = {}) {
+    const allowedDates = new Set(["today", "3days", "7days", "30days"]);
+    return {
+        search: options.search?.trim().slice(0, 100) || "",
+        company: options.company?.trim().slice(0, 120) || "",
+        place: options.place?.trim().slice(0, 120) || "",
+        datePosted: options.datePosted && allowedDates.has(options.datePosted) ? options.datePosted : "",
+        limit: Math.min(50, Math.max(1, options.limit ?? 20)),
+        offset: Math.min(10000, Math.max(0, options.offset ?? 0)),
+    };
+}
+
+function applyLinkedInFilters(query: any, options: ReturnType<typeof normalizeLinkedInOptions>) {
+    if (options.search) {
+        query.andWhere("(job.title ILIKE :search OR job.company ILIKE :search)", { search: `%${options.search}%` });
+    }
+    if (options.company) query.andWhere("job.company = :company", { company: options.company });
+    if (options.place) query.andWhere("job.place = :place", { place: options.place });
+    if (options.datePosted) {
+        const days = options.datePosted === "today" ? 0 : Number.parseInt(options.datePosted, 10);
+        const from = new Date();
+        from.setHours(0, 0, 0, 0);
+        from.setDate(from.getDate() - days);
+        query.andWhere("job.job_date >= :from", { from });
+    }
+    return query;
+}
+
+async function getLinkedInPageUncached(options: ReturnType<typeof normalizeLinkedInOptions>) {
+    const repository = (await getDataSource()).getRepository(LinkedInJob);
+    const query = applyLinkedInFilters(
+        repository.createQueryBuilder("job").select([
+            "job.id", "job.job_id", "job.title", "job.company", "job.place", "job.job_date",
+        ]),
+        options
+    );
+    return query
+        .orderBy("job.job_date", "DESC", "NULLS LAST")
+        .addOrderBy("job.id", "DESC")
+        .skip(options.offset)
+        .take(options.limit)
+        .getMany();
+}
+
+async function getLinkedInTotalUncached(options: ReturnType<typeof normalizeLinkedInOptions>) {
+    const repository = (await getDataSource()).getRepository(LinkedInJob);
+    return applyLinkedInFilters(repository.createQueryBuilder("job"), options).getCount();
+}
+
+async function getLinkedInFiltersUncached() {
+    const repository = (await getDataSource()).getRepository(LinkedInJob);
+    const [companies, places] = await Promise.all([
+        repository.createQueryBuilder("job").select("job.company", "value").addSelect("COUNT(*)", "count")
+            .where("job.company IS NOT NULL AND job.company != ''").groupBy("job.company")
+            .orderBy("COUNT(*)", "DESC").limit(30).getRawMany(),
+        repository.createQueryBuilder("job").select("job.place", "value").addSelect("COUNT(*)", "count")
+            .where("job.place IS NOT NULL AND job.place != ''").groupBy("job.place")
+            .orderBy("COUNT(*)", "DESC").limit(30).getRawMany(),
+    ]);
+    return {
+        companies: companies.map((item: any) => ({ value: item.value, count: Number.parseInt(item.count, 10) || 0 })),
+        places: places.map((item: any) => ({ value: item.value, count: Number.parseInt(item.count, 10) || 0 })),
+    };
+}
+
+export async function getLinkedInJobs(options: LinkedInJobsOptions = {}) {
+    const normalized = normalizeLinkedInOptions(options);
+    const filterKey = [normalized.search, normalized.company, normalized.place, normalized.datePosted];
+    const [jobs, total, filters] = await Promise.all([
+        unstable_cache(() => getLinkedInPageUncached(normalized), ["linkedin-page", ...filterKey, String(normalized.limit), String(normalized.offset)], { revalidate: 600, tags: ["linkedin-jobs"] })(),
+        unstable_cache(() => getLinkedInTotalUncached(normalized), ["linkedin-total", ...filterKey], { revalidate: 1800, tags: ["linkedin-jobs"] })(),
+        unstable_cache(getLinkedInFiltersUncached, ["linkedin-filters"], { revalidate: 3600, tags: ["linkedin-jobs"] })(),
+    ]);
+    return { jobs, total, filters };
+}
+
+export async function getLinkedInJobDetails(id: number) {
+    return unstable_cache(async () => {
+        const dataSource = await getDataSource();
+        return dataSource.getRepository(LinkedInJob).findOne({ where: { id } });
+    }, ["linkedin-job-detail", String(id)], { revalidate: 3600, tags: ["linkedin-jobs"] })();
+}
 
 // Fetch AmbitionPad API directly (no CORS proxy - server-side has no CORS restrictions)
 // corsproxy.io free tier only works on localhost; direct fetch works in production
