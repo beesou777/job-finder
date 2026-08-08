@@ -1,85 +1,120 @@
 ---
-title: "Interview Tips for Nepal: How to Ace Your Job Interview"
-description: "Prepare for success with common interview questions, body language tips, and strategies to make a great first impression in Nepal's job market."
+title: "Interview Tips for Nepal: How to Prepare and Answer Clearly"
+description: "A practical interview guide for job seekers in Nepal, covering preparation, common questions, video interviews, technical rounds, follow-up, and warning signs."
 date: "2026-01-18"
 category: "Career Advice"
-readTime: "8 min read"
+readTime: "10 min read"
 slug: "interview-tips-nepal"
 ---
 
 ## Introduction
 
-Job interviews in Nepal can be challenging, but with proper preparation, you can confidently showcase your skills and land the position. This guide covers everything you need to know.
+An interview is not only a test of confidence. It is a short working conversation where an employer tries to understand how you think, communicate, and handle the responsibilities of the role.
 
-## Before the Interview
+The best preparation is specific. Study the vacancy, prepare evidence from your experience, and practise explaining your work in clear language. This guide covers common interview formats in Nepal and a practical preparation routine.
 
-### Research the Company
-- Visit their website
-- Understand their products/services
-- Know their mission and values
-- Check recent news about the company
+## Start with the vacancy
 
-### Prepare Your Answers
-Common questions in Nepal:
-- "Tell me about yourself"
-- "Why do you want to work here?"
-- "What are your strengths and weaknesses?"
-- "Where do you see yourself in 5 years?"
-- "Why should we hire you?"
+Read the job notice again and create three columns:
 
-### Prepare Questions to Ask
-- What does a typical day look like?
-- What are the growth opportunities?
-- What is the company culture like?
-- What are the biggest challenges in this role?
+| What the employer needs | Evidence I can show | Question I should ask |
+| --- | --- | --- |
+| A technical skill | Project, task, or result | How is the skill used day to day? |
+| Communication | Example of working with a team or client | Who will I work with most often? |
+| Reliability | A deadline, process, or responsibility you handled | How is success measured? |
 
-## During the Interview
+This turns a generic interview into a conversation about the actual role.
 
-### Body Language
-- Maintain eye contact
-- Sit up straight
-- Use hand gestures appropriately
-- Smile and show enthusiasm
+## A simple preparation routine
 
-### Communication
-- Speak clearly and confidently
-- Listen carefully to questions
-- Take a moment to think before answering
-- Be honest and authentic
+### Research the employer
 
-### Dress Code
-- Business formal for corporate jobs
-- Business casual for startups
-- Traditional attire may be appropriate for some organizations
-- When in doubt, dress professionally
+Review the official website, product or service, recent work, and the team or department hiring. Do not pretend to know information you could not verify. It is better to say what interests you specifically than to repeat a vague mission statement.
 
-## Common Interview Formats in Nepal
+### Prepare a 60-second introduction
 
-### 1. Face-to-Face Interview
-Most common format. Usually one-on-one or panel interview.
+Use this structure:
 
-### 2. Phone/Video Interview
-Becoming more common, especially for remote positions.
+1. What you do or study now.
+2. One or two relevant strengths.
+3. Evidence from a project, job, internship, or responsibility.
+4. Why this role is the next sensible step.
 
-### 3. Technical Interview
-For IT and technical roles. Prepare for coding tests or technical questions.
+For example: “I am a recent business graduate with project experience in customer research. In my final project, I organised interviews, analysed responses, and presented the findings. I am interested in this role because it combines research with direct customer work.”
 
-### 4. Group Discussion
-Some companies use group discussions to assess communication skills.
+Adapt the example to your real experience. Do not memorise a speech that sounds unlike you.
 
-## After the Interview
+### Prepare evidence, not adjectives
 
-### Follow-Up
-- Send a thank-you email within 24 hours
-- Reiterate your interest
-- Mention something specific from the interview
+Replace “I am hardworking” with a short example: what was the problem, what did you do, and what changed afterward? The STAR structure—Situation, Task, Action, Result—helps keep answers focused.
 
-### Be Patient
-- Wait 1-2 weeks before following up
-- Don't be discouraged by silence
-- Continue applying to other positions
+## Common questions and how to approach them
 
-## Conclusion
+### “Tell me about yourself.”
 
-Preparation is key to interview success. Research, practice, and be yourself. [Find job opportunities](/jobs) on kamkhoj and start preparing for your next interview.
+Keep this professional and relevant. Do not start with your entire life story. Connect your current skills to the vacancy.
 
+### “Why do you want this role?”
+
+Mention a real part of the work, the organisation, or the learning opportunity. Avoid saying only that you need a job.
+
+### “What is your weakness?”
+
+Choose a genuine but manageable area and explain what you are doing to improve it. Avoid a disguised strength such as “I work too hard.”
+
+### “Why should we hire you?”
+
+Connect two or three requirements in the notice to evidence from your experience. The answer should be about fit and contribution, not a claim that you are better than every other candidate.
+
+### “What are your salary expectations?”
+
+If the vacancy does not include a range, explain that you are open to discussing a fair package based on the responsibilities, your experience, and the organisation’s structure. Read the [salary negotiation guide](/blog/salary-negotiation-nepal) before the interview.
+
+## Different interview formats
+
+### Face-to-face interviews
+
+Plan the route, arrive with reasonable time, carry a clean copy of your CV, and silence your phone. Dress for the organisation and role; neat, comfortable, professional clothing is usually safer than an outfit that distracts you.
+
+### Phone and video interviews
+
+Test your microphone, camera, internet connection, and meeting link. Keep your CV and the vacancy open, but do not read every answer from the screen. Choose a quiet space and tell people nearby that you need uninterrupted time.
+
+### Technical interviews and tests
+
+Review the fundamentals relevant to the role. For software roles, be ready to explain your decisions, trade-offs, testing approach, and previous projects. If you do not know an answer, explain how you would investigate it instead of inventing one.
+
+### Group discussions and panel interviews
+
+Address the whole group, listen before responding, and disagree with ideas rather than people. In a panel, remember names where possible and answer the person who asked while including the others with eye contact.
+
+## Questions you can ask
+
+Good questions help you evaluate the job too:
+
+- What would the first 60–90 days look like?
+- What are the most important responsibilities in this role?
+- How is performance evaluated?
+- Who would I work with most closely?
+- What are the next steps and expected timeline?
+
+Avoid asking questions whose answers are clearly available in the vacancy. Save detailed compensation questions for the appropriate stage unless the interviewer raises them.
+
+## After the interview
+
+Send a short follow-up if appropriate. Thank the interviewer, mention one relevant part of the conversation, and confirm your interest. If the employer gave a timeline, wait until it passes before following up. Continue applying elsewhere while you wait.
+
+## Warning signs
+
+Pause if an organisation asks for payment to secure an interview, refuses to explain the role, requests sensitive documents too early, or pressures you to make an immediate decision. Verify the employer through an official source before sharing personal information.
+
+## Final checklist
+
+- I can explain why I want this role.
+- I have three real examples from my experience.
+- I understand the main requirements.
+- I have tested my route or video setup.
+- I have two thoughtful questions.
+- I know what information I will not share before verification.
+
+When you are ready, browse [current jobs in Nepal](/jobs) and prepare for each interview from the original vacancy—not only the short listing card.
