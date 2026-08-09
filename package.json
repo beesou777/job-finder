@@ -5,12 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:cloudflare": "opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion",
-    "deploy:cloudflare": "opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion && opennextjs-cloudflare deploy",
-    "deploy": "opennextjs-cloudflare build --dangerouslyUseUnsupportedNextVersion && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "knip": "knip --reporter compact",
     "typeorm": "typeorm-ts-node-commonjs",
     "init-admin": "tsx scripts/init-admin.ts",
@@ -27,6 +24,7 @@
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.66",
+    "@radix-ui/react-slot": "^1.2.3",
     "@openrouter/ai-sdk-provider": "^2.1.1",
     "@radix-ui/react-select": "^2.2.6",
     "@types/node": "^20.12.12",
@@ -63,15 +61,13 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.16.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/string-similarity": "^4.0.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
     "knip": "^6.32.0",
     "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.7.1",
-    "wrangler": "^4.61.1"
+    "tsx": "^4.7.1"
   },
   "engines": {
     "node": ">=18.0.0"
