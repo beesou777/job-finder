@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
 import { GlobalChatWidget } from "@/components/GlobalChatWidget";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
@@ -153,6 +154,7 @@ export default function RootLayout({
           <main className="min-h-screen bg-zinc-950">{children}</main>
           <Footer />
           <GlobalChatWidget />
+          <PWAInstallPrompt />
         </Providers>
       </body>
     </html>
