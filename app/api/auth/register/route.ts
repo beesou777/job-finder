@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import { getDataSource } from "@/lib/db";
-import { User } from "@/entities/User";
+import { User } from "@/server/db/entities/User";
 
 export async function POST(request: NextRequest) {
   try {

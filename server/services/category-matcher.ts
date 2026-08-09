@@ -1,5 +1,5 @@
-import { getDataSource } from "./db";
-import { Category } from "@/entities/Category";
+import { getDataSource } from "../db/data-source";
+import { Category } from "@/server/db/entities/Category";
 
 let categoryCache: Category[] | null = null;
 let categoryCachePromise: Promise<Category[]> | null = null;

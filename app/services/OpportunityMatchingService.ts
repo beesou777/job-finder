@@ -4,8 +4,8 @@
  */
 
 import { getDataSource } from "@/lib/db";
-import { LinkedInJob } from "@/entities/LinkedInJob";
-import { Job } from "@/entities/Job";
+import { LinkedInJob } from "@/server/db/entities/LinkedInJob";
+import { Job } from "@/server/db/entities/Job";
 import {
   normalizeCompanyName,
   extractDomain,

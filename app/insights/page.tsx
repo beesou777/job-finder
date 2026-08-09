@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Metadata } from "next";
 import { BarChart3, Clock3, MapPin, RefreshCw, BriefcaseBusiness, Wifi } from "lucide-react";
-import { getMarketInsights } from "@/lib/market-insights";
+import { getMarketInsights } from "@/server/services/market-insights";
 
 export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {

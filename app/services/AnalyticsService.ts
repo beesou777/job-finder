@@ -1,7 +1,7 @@
 
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
-import { Category } from "@/entities/Category";
+import { Job } from "@/server/db/entities/Job";
+import { Category } from "@/server/db/entities/Category";
 import { startOfDay, subDays, startOfWeek, subWeeks, format } from "date-fns";
 import { Between, IsNull, MoreThan, Not } from "typeorm";
 

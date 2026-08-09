@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { JobCard } from "@/components/JobCard";
 import Link from "next/link";
-import { getJobs } from "@/lib/data-fetching";
+import { getJobs } from "@/server/services/data-fetching";
 import { Card, CardContent } from "@/components/ui/card";
 
 async function JobsList() {

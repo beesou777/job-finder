@@ -1,6 +1,6 @@
 import { getDataSource } from "@/lib/db";
-import { CanonicalCompany } from "@/entities/CanonicalCompany";
-import { CompanyEnrichment, MatchConfidence, ExternalSource } from "@/entities/CompanyEnrichment";
+import { CanonicalCompany } from "@/server/db/entities/CanonicalCompany";
+import { CompanyEnrichment, MatchConfidence, ExternalSource } from "@/server/db/entities/CompanyEnrichment";
 import { compareTwoStrings } from "string-similarity";
 
 export interface ExternalCompanyData {

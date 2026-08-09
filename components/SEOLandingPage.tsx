@@ -4,7 +4,7 @@ import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { JobsFiltering } from "@/components/jobs/JobsFiltering";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { getCategories } from "@/lib/data-fetching";
+import { getCategories } from "@/server/services/data-fetching";
 import { generateFAQSchema } from "@/lib/seo";
 import { SeoLandingPageConfig } from "@/lib/seo-pages";
 import { Suspense } from "react";

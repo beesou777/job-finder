@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getStats } from "@/lib/data-fetching";
+import { getStats } from "@/server/services/data-fetching";
 
 export const dynamic = "force-dynamic";
 

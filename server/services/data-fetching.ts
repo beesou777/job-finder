@@ -2,9 +2,9 @@ import "reflect-metadata";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
-import { Category } from "@/entities/Category";
-import { LinkedInJob } from "@/entities/LinkedInJob";
+import { Job } from "@/server/db/entities/Job";
+import { Category } from "@/server/db/entities/Category";
+import { LinkedInJob } from "@/server/db/entities/LinkedInJob";
 
 export interface GetJobsOptions {
     jobType?: string | null;

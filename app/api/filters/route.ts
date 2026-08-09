@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
-import { Job, JobTypeEnum } from "@/entities/Job";
+import { Job, JobTypeEnum } from "@/server/db/entities/Job";
 
 // Mark route as dynamic to prevent static generation
 export const dynamic = 'force-dynamic';

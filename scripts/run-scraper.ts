@@ -12,9 +12,9 @@
 import "reflect-metadata";
 import { config } from "dotenv";
 import { getDataSource } from "../lib/db";
-import { Job } from "../entities/Job";
+import { Job } from "../server/db/entities/Job";
 import { runAllScrapers } from "../src/scrapers/runAll";
-import { getCategoryForJob } from "../lib/category-detector";
+import { getCategoryForJob } from "../server/services/category-detector";
 import { calculateExpirationDate } from "../src/scrapers/core/types";
 
 // Load environment variables
@@ -198,7 +198,7 @@ async function runScraper() {
     // Run approachability engine to score companies
     console.log("\n🧠 Running Approachability Engine to score outreach opportunities...");
     try {
-      const { bulkComputeApproachability } = await import("../lib/approachability-engine");
+      const { bulkComputeApproachability } = await import("../server/services/approachability-engine");
       const scoringResults = await bulkComputeApproachability(true); // Force recompute for fresh data
       console.log(`   ✅ Computed approachability scores for ${scoringResults.length} companies.`);
     } catch (scoringError: any) {

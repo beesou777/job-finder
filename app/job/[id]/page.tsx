@@ -10,7 +10,7 @@ import {
   ExternalLink, MapPin, ShieldCheck, Tags,
 } from "lucide-react";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
+import { Job } from "@/server/db/entities/Job";
 import { absoluteUrl } from "@/lib/site";
 import { generateJobPostingSchema } from "@/lib/seo";
 import { JobCard } from "@/components/JobCard";

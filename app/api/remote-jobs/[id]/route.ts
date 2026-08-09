@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { fetchRemoteJobDetailsFromAPI } from "@/lib/data-fetching";
+import { fetchRemoteJobDetailsFromAPI } from "@/server/services/data-fetching";
 
 export async function GET(
     request: NextRequest,

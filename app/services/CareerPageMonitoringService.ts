@@ -7,7 +7,7 @@
  */
 
 import { getDataSource } from "@/lib/db";
-import { CompanyEnrichment, HiringIntentLevel } from "@/entities/CompanyEnrichment";
+import { CompanyEnrichment, HiringIntentLevel } from "@/server/db/entities/CompanyEnrichment";
 import { updateIntentScore } from "./HiringIntentScoringService";
 import { In } from "typeorm";
 

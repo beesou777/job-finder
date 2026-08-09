@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { getRemoteJobDetails } from "@/lib/data-fetching";
+import { getRemoteJobDetails } from "@/server/services/data-fetching";
 import { RemoteJobDetail } from "@/components/remote/RemoteJobDetail";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";

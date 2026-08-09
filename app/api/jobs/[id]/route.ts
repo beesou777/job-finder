@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
+import { Job } from "@/server/db/entities/Job";
 
 export async function GET(
   request: NextRequest,
@@ -63,4 +63,3 @@ export async function DELETE(
     );
   }
 }
-

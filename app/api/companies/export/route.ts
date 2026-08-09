@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
-import { CompanyEnrichment, HiringIntentLevel } from "@/entities/CompanyEnrichment";
+import { CompanyEnrichment, HiringIntentLevel } from "@/server/db/entities/CompanyEnrichment";
 
 export const dynamic = "force-dynamic";
 

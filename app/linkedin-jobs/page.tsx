@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { LinkedInJobsFiltering } from "@/components/linkedin/LinkedInJobsFiltering";
 import { LinkedInJobsList } from "@/components/linkedin/LinkedInJobsList";
-import { getLinkedInJobs } from "@/lib/data-fetching";
+import { getLinkedInJobs } from "@/server/services/data-fetching";
 import { absoluteUrl } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';

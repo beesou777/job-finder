@@ -54,7 +54,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     try {
       const { getDataSource } = await import('@/lib/db');
-      const { Job } = await import('@/entities/Job');
+      const { Job } = await import('@/server/db/entities/Job');
       const dataSource = await getDataSource();
       const jobs = await dataSource.getRepository(Job)
         .createQueryBuilder('job')

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { generateLocationMetadata } from "@/lib/seo";
 import Script from "next/script";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
+import { Job } from "@/server/db/entities/Job";
 import { JobCard } from "@/components/JobCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as cheerio from "cheerio";
-import { JobResult, JobSchema } from "@/lib/types";
+import { JobResult, JobSchema } from "@/server/services/types";
 
 /**
  * MeroJob Scraper

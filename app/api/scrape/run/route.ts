@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
-import { runAllScrapers } from "@/lib/scraper-runner";
+import { Job } from "@/server/db/entities/Job";
+import { runAllScrapers } from "@/server/services/scraper-runner";
 
 export async function POST(request: NextRequest) {
   try {
@@ -69,4 +69,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

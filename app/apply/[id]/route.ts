@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
+import { Job } from "@/server/db/entities/Job";
 import { addUtmParams } from "@/lib/utils";
 
 export async function GET(

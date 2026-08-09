@@ -14,7 +14,8 @@ Thanks for helping improve KamKhoj. Small, focused pull requests are easiest to 
 - Keep changes scoped and explain user-facing behaviour in the pull request.
 - Do not commit `.env` files, API keys, database dumps, scraped personal data, or generated `.next` output.
 - Preserve source attribution and link every listing to its original source.
-- For schema changes, add or update a migration script and document how to run it.
+- For schema changes, update the entity first, then run `yarn migration:generate -- migrations/<descriptive-name>` and review the generated SQL.
+- Run `yarn migration:run` against a local database; do not run it against production without a backup.
 - Scraper changes must respect source terms, request limits, retries, and the run lock.
 - Prefer existing components and utilities over duplicate abstractions.
 

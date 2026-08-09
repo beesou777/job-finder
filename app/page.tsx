@@ -11,7 +11,7 @@ import {
 } from "@/components/home/HomeStaticSections";
 import { FAQ } from "@/components/FAQ";
 import { MarketSnapshot } from "@/components/home/MarketSnapshot";
-import { getJobs } from "@/lib/data-fetching";
+import { getJobs } from "@/server/services/data-fetching";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {

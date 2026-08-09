@@ -1,4 +1,4 @@
-import { getRemoteJobs } from "@/lib/data-fetching";
+import { getRemoteJobs } from "@/server/services/data-fetching";
 import { RemoteJobsFiltering } from "@/components/remote/RemoteJobsFiltering";
 import { RemoteJobCard } from "@/components/RemoteJobCard";
 import { RemotePagination } from "@/components/remote/RemotePagination";

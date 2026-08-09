@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getLinkedInJobDetails } from "@/lib/data-fetching";
+import { getLinkedInJobDetails } from "@/server/services/data-fetching";
 import { LinkedInJobDetail } from "@/components/linkedin/LinkedInJobDetail";
 import { generateLinkedInJobMetadata, generateBreadcrumbSchema, generateLinkedInJobPostingSchema } from "@/lib/seo";
 import Script from "next/script";

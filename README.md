@@ -42,21 +42,22 @@ Run the development server with `yarn dev` and open <http://localhost:3000>.
 | `yarn knip` | Find unused files, exports, and dependencies |
 | `yarn typecheck` | Run TypeScript without emitting files |
 | `yarn scrape` | Run the scraper locally (requires a database) |
-| `yarn migrate-job-fingerprints` | Add/backfill job fingerprint columns |
-| `yarn migrate-job-lifecycle` | Add job expiry/lifecycle columns |
-| `yarn migrate-approachability` | Add company approachability columns |
+| `yarn migration:generate -- migrations/<name>` | Generate a migration from entity changes |
+| `yarn migration:run` | Apply pending TypeORM migrations |
+| `yarn migration:revert` | Revert the latest migration |
 
-Database migrations are explicit scripts because schema changes should be reviewed and run against the intended database. Back up production before applying one.
+Database migrations are generated from entities and stored in `migrations/`. Review the generated SQL before committing it, and back up production before running `yarn migration:run`.
 
 ## Project layout
 
 - `app/` — pages, layouts, and API routes
 - `components/` — reusable UI components
 - `content/` — editorial articles
-- `entities/` — TypeORM entities
+- `server/db/entities/` — TypeORM entities
 - `lib/` — database, auth, insights, and shared application services
 - `src/scrapers/` — scraper implementations and request controls
 - `scripts/` — migrations, seeds, and operational commands
+- `ARCHITECTURE.md` — directory ownership and organization rules
 - `.github/workflows/` — scheduled scraper automation
 
 ## Data and source policy

@@ -1,9 +1,9 @@
-import { scrapeMeroJob } from "./scrapers/merojob";
-import { scrapeKantipurJob } from "./scrapers/kantipurjob";
-import { scrapeJobsNepal } from "./scrapers/jobsnepal";
-import { scrapeMeroCareer } from "./scrapers/merocareer";
-import { scrapeRamroJob } from "./scrapers/ramrojob";
-import { scrapeKumariJob } from "./scrapers/kumarijob";
+import { scrapeMeroJob } from "../scrapers/legacy/merojob";
+import { scrapeKantipurJob } from "../scrapers/legacy/kantipurjob";
+import { scrapeJobsNepal } from "../scrapers/legacy/jobsnepal";
+import { scrapeMeroCareer } from "../scrapers/legacy/merocareer";
+import { scrapeRamroJob } from "../scrapers/legacy/ramrojob";
+import { scrapeKumariJob } from "../scrapers/legacy/kumarijob";
 import { JobResult } from "./types";
 
 export async function runAllScrapers(): Promise<JobResult[]> {
@@ -42,7 +42,7 @@ export async function runAllScrapers(): Promise<JobResult[]> {
 
   console.log(`\n✅ Total jobs scraped: ${results.length}`);
   if (results.length === 0) {
-    console.log("💡 Tip: Check the actual website HTML structure and update selectors in lib/scrapers/");
+    console.log("💡 Tip: Check the actual website HTML structure and update selectors in server/scrapers/legacy/");
   }
   return results;
 }

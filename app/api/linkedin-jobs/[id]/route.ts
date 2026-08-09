@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
-import { LinkedInJob } from "@/entities/LinkedInJob";
+import { LinkedInJob } from "@/server/db/entities/LinkedInJob";
 
 export const dynamic = 'force-dynamic';
 
@@ -54,4 +54,3 @@ export async function GET(
     );
   }
 }
-

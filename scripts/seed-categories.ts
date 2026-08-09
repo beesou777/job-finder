@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import { getDataSource } from "../lib/db";
-import { Category } from "../entities/Category";
+import { Category } from "../server/db/entities/Category";
 
 // Common job categories in Nepal
 const COMMON_CATEGORIES = [
@@ -117,4 +117,3 @@ seedCategories()
     console.error("❌ Seed script failed:", error);
     process.exit(1);
   });
-

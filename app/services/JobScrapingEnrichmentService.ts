@@ -8,8 +8,8 @@
  */
 
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
-import { CompanyEnrichment } from "@/entities/CompanyEnrichment";
+import { Job } from "@/server/db/entities/Job";
+import { CompanyEnrichment } from "@/server/db/entities/CompanyEnrichment";
 import { updateIntentScore } from "./HiringIntentScoringService";
 
 /**
@@ -57,7 +57,7 @@ export async function updateEnrichmentForCompany(
 ): Promise<void> {
   const dataSource = await getDataSource();
   const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
-  const { CanonicalCompany } = await import("@/entities/CanonicalCompany");
+  const { CanonicalCompany } = await import("@/server/db/entities/CanonicalCompany");
   const companyRepository = dataSource.getRepository(CanonicalCompany);
   
   // Find canonical company by name
@@ -99,7 +99,7 @@ export async function batchUpdateEnrichmentsForCompanies(
 }> {
   const dataSource = await getDataSource();
   const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
-  const { CanonicalCompany } = await import("@/entities/CanonicalCompany");
+  const { CanonicalCompany } = await import("@/server/db/entities/CanonicalCompany");
   const companyRepository = dataSource.getRepository(CanonicalCompany);
   
   // Get unique company names

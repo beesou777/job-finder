@@ -12,14 +12,10 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "init-admin": "tsx scripts/init-admin.ts",
     "scrape": "tsx scripts/run-scraper.ts",
-    "migrate-categories": "tsx scripts/migrate-categories.ts",
-    "migrate-jobtype": "tsx scripts/migrate-jobtype-and-defaults.ts",
-    "migrate-job-lifecycle": "tsx scripts/migrate-job-lifecycle.ts",
-    "migrate-job-fingerprints": "tsx scripts/migrate-job-fingerprints.ts",
-    "migrate-approachability": "tsx scripts/migrate-approachability-columns.ts",
-    "migrate-company-enrichment": "tsx scripts/migrate-company-enrichment.ts",
-    "migrate-canonical-companies": "tsx scripts/migrate-canonical-companies.ts",
-    "migrate-company-enrichment-fk": "tsx scripts/migrate-company-enrichment-fk.ts",
+    "migration:generate": "node ./node_modules/tsx/dist/cli.mjs ./node_modules/typeorm/cli.js migration:generate -d scripts/data-source.ts",
+    "migration:run": "node ./node_modules/tsx/dist/cli.mjs ./node_modules/typeorm/cli.js migration:run -d scripts/data-source.ts",
+    "migration:revert": "node ./node_modules/tsx/dist/cli.mjs ./node_modules/typeorm/cli.js migration:revert -d scripts/data-source.ts",
+    "migrate": "yarn migration:run",
     "seed-categories": "tsx scripts/seed-categories.ts"
   },
   "dependencies": {

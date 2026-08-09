@@ -7,7 +7,7 @@ import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { generateCollectionMetadata } from "@/lib/seo";
 import { absoluteUrl, isUuid, titleCaseSlug } from "@/lib/site";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
+import { Job } from "@/server/db/entities/Job";
 import { addUtmParams } from "@/lib/utils";
 
 const knownLocations = ["kathmandu", "pokhara", "lalitpur", "bhaktapur", "butwal", "biratnagar", "chitwan", "remote"];

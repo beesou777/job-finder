@@ -1,7 +1,7 @@
 import { getDataSource } from "@/lib/db";
-import { CompanyEnrichment, HiringIntentLevel } from "@/entities/CompanyEnrichment";
-import { HiringIntentScoreHistory } from "@/entities/HiringIntentScoreHistory";
-import { Job } from "@/entities/Job";
+import { CompanyEnrichment, HiringIntentLevel } from "@/server/db/entities/CompanyEnrichment";
+import { HiringIntentScoreHistory } from "@/server/db/entities/HiringIntentScoreHistory";
+import { Job } from "@/server/db/entities/Job";
 
 /**
  * Signal weights for hiring intent scoring
@@ -165,7 +165,7 @@ export async function updateIntentScore(
   
   // Load company if not loaded
   if (!enrichment.company) {
-    const { CanonicalCompany } = await import("@/entities/CanonicalCompany");
+    const { CanonicalCompany } = await import("@/server/db/entities/CanonicalCompany");
     const companyRepository = dataSource.getRepository(CanonicalCompany);
     const company = await companyRepository.findOne({ where: { id: enrichment.companyId } });
     if (company) {

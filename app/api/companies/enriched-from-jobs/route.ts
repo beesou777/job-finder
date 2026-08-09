@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
+import { Job } from "@/server/db/entities/Job";
 import * as fs from "fs";
 import * as path from "path";
 import { compareTwoStrings } from "string-similarity";

@@ -1,6 +1,6 @@
 import { getDataSource } from "@/lib/db";
-import { CanonicalCompany } from "@/entities/CanonicalCompany";
-import { CompanyEnrichment, ExternalSource, MatchConfidence } from "@/entities/CompanyEnrichment";
+import { CanonicalCompany } from "@/server/db/entities/CanonicalCompany";
+import { CompanyEnrichment, ExternalSource, MatchConfidence } from "@/server/db/entities/CompanyEnrichment";
 import { matchCompany, findOrCreateCompany, ExternalCompanyData } from "./CompanyMatchingService";
 import { updateIntentScore } from "./HiringIntentScoringService";
 
@@ -72,7 +72,7 @@ export async function enrichCompany(
   
   // Load company relation if not already loaded (needed for scoring)
   if (!enrichment.company) {
-    const { CanonicalCompany } = await import("@/entities/CanonicalCompany");
+    const { CanonicalCompany } = await import("@/server/db/entities/CanonicalCompany");
     const companyRepository = dataSource.getRepository(CanonicalCompany);
     enrichment.company = await companyRepository.findOne({ where: { id: company.id } }) || company;
   }

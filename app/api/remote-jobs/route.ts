@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { fetchRemoteJobsFromAPI } from "@/lib/data-fetching";
+import { fetchRemoteJobsFromAPI } from "@/server/services/data-fetching";
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;

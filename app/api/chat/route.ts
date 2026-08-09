@@ -1,8 +1,8 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse, type UIMessage } from "ai";
-import { searchAllJobs, searchSimilarJobs, getJobSearchSchema } from "@/lib/job-search";
-import { parseJobQuery } from "@/lib/parse-query";
-import { checkRateLimit, getClientIP, RATE_LIMIT_RETRY_AFTER } from "@/lib/rate-limit";
+import { searchAllJobs, searchSimilarJobs, getJobSearchSchema } from "@/server/services/job-search";
+import { parseJobQuery } from "@/server/services/parse-query";
+import { checkRateLimit, getClientIP, RATE_LIMIT_RETRY_AFTER } from "@/server/services/rate-limit";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 30;

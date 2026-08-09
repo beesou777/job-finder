@@ -1,6 +1,6 @@
 import { JobCard } from "@/components/JobCard";
 import { JobsPagination } from "./JobsPagination";
-import { getJobs, GetJobsOptions } from "@/lib/data-fetching";
+import { getJobs, GetJobsOptions } from "@/server/services/data-fetching";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";

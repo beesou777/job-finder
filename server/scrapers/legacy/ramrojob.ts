@@ -1,5 +1,5 @@
 import axios from "axios";
-import { JobResult, JobSchema } from "@/lib/types";
+import { JobResult, JobSchema } from "@/server/services/types";
 
 const API_BASE = "https://www.ramrojob.com/advance_search";
 

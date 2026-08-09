@@ -1,7 +1,7 @@
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
-import { LinkedInJob } from "@/entities/LinkedInJob";
-import { Category } from "@/entities/Category";
+import { Job } from "@/server/db/entities/Job";
+import { LinkedInJob } from "@/server/db/entities/LinkedInJob";
+import { Category } from "@/server/db/entities/Category";
 
 /** Frameworks/tech that when user asks specifically, we require in job title */
 const FRAMEWORK_TERMS = ["angular", "react", "vue", "next", "node", "nodejs", "node.js", "python", "java", "php", "laravel", "django", "flutter"];

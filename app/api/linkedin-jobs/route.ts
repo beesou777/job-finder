@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getLinkedInJobs } from "@/lib/data-fetching";
+import { getLinkedInJobs } from "@/server/services/data-fetching";
 
 export const dynamic = "force-dynamic";
 

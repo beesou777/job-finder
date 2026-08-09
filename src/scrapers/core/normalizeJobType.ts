@@ -1,4 +1,4 @@
-import { JobTypeEnum } from "@/entities/Job";
+import { JobTypeEnum } from "@/server/db/entities/Job";
 
 /**
  * Normalize job type string to JobTypeEnum
@@ -56,4 +56,3 @@ export function normalizeJobType(jobType: string | null | undefined): JobTypeEnu
   
   return null;
 }
-

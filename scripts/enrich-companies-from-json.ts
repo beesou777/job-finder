@@ -13,7 +13,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { batchEnrichCompanies } from "../app/services/CompanyEnrichmentService";
 import { ExternalCompanyData } from "../app/services/CompanyMatchingService";
-import { ExternalSource } from "../entities/CompanyEnrichment";
+import { ExternalSource } from "../server/db/entities/CompanyEnrichment";
 
 config();
 
@@ -117,4 +117,3 @@ getDataSource()
     console.error("❌ Database connection failed:", error);
     process.exit(1);
   });
-

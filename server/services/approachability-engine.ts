@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import { getDataSource } from "@/lib/db";
-import { CompanyEnrichment, ApproachabilityLevel } from "@/entities/CompanyEnrichment";
-import { Job } from "@/entities/Job";
-import { LinkedInJob } from "@/entities/LinkedInJob";
-import { CanonicalCompany } from "@/entities/CanonicalCompany";
+import { CompanyEnrichment, ApproachabilityLevel } from "@/server/db/entities/CompanyEnrichment";
+import { Job } from "@/server/db/entities/Job";
+import { LinkedInJob } from "@/server/db/entities/LinkedInJob";
+import { CanonicalCompany } from "@/server/db/entities/CanonicalCompany";
 
 /**
  * Approachability Engine

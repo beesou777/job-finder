@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
-import { CompanyEnrichment } from "@/entities/CompanyEnrichment";
-import { HiringIntentScoreHistory } from "@/entities/HiringIntentScoreHistory";
+import { CompanyEnrichment } from "@/server/db/entities/CompanyEnrichment";
+import { HiringIntentScoreHistory } from "@/server/db/entities/HiringIntentScoreHistory";
 
 export const dynamic = "force-dynamic";
 
@@ -168,4 +168,3 @@ export async function PATCH(
     );
   }
 }
-

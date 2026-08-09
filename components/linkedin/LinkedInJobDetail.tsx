@@ -1,4 +1,4 @@
-import { getLinkedInJobDetails } from "@/lib/data-fetching";
+import { getLinkedInJobDetails } from "@/server/services/data-fetching";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, MapPin, Calendar, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";

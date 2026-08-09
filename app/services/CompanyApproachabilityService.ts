@@ -2,8 +2,8 @@ import { normalizeCompanyName, extractDomain } from "./CompanyNormalizationServi
 import { readFileSync } from "fs";
 import { join } from "path";
 import { getDataSource } from "@/lib/db";
-import { CompanyEnrichment, ApproachabilityLevel } from "@/entities/CompanyEnrichment";
-import { CanonicalCompany } from "@/entities/CanonicalCompany";
+import { CompanyEnrichment, ApproachabilityLevel } from "@/server/db/entities/CompanyEnrichment";
+import { CanonicalCompany } from "@/server/db/entities/CanonicalCompany";
 
 interface CompanyFromJSON {
   name: string;

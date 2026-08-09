@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { JobsFiltering } from "@/components/jobs/JobsFiltering";
 import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
-import { getCategories } from "@/lib/data-fetching";
+import { getCategories } from "@/server/services/data-fetching";
 import { absoluteUrl } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';

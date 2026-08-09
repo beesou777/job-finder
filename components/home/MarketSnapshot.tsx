@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, BarChart3, Clock3, Wifi } from "lucide-react";
-import { getMarketInsights } from "@/lib/market-insights";
+import { getMarketInsights } from "@/server/services/market-insights";
 
 export async function MarketSnapshot() {
   const report = await getMarketInsights();

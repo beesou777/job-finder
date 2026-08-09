@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { getDataSource } from "@/lib/db";
-import { Job } from "@/entities/Job";
+import { Job } from "@/server/db/entities/Job";
 import { runAllScrapers, scrapeSource } from "@/src/scrapers/runAll";
 import { JobData, calculateExpirationDate } from "@/src/scrapers/core/types";
-import { getCategoryForJob } from "@/lib/category-detector";
-import { calculateJobQuality, getDeadlineConfidence } from "@/lib/job-quality";
+import { getCategoryForJob } from "@/server/services/category-detector";
+import { calculateJobQuality, getDeadlineConfidence } from "@/server/services/job-quality";
 import { createHash } from "crypto";
 import { In } from "typeorm";
-import { acquireScrapeLock, releaseScrapeLock } from "@/lib/scrape-lock";
+import { acquireScrapeLock, releaseScrapeLock } from "@/server/services/scrape-lock";
 
 function normalizeJobUrl(url: string) {
   try {
@@ -409,4 +409,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
