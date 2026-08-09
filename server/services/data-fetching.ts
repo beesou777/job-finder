@@ -93,22 +93,42 @@ async function getJobsUncached(options: GetJobsOptions = {}) {
     }
 
     if (search) {
-        query = query.andWhere(
-            "(job.title ILIKE :search OR job.company ILIKE :search OR category.name ILIKE :search OR job.description ILIKE :search)",
-            { search: `%${search}%` }
-        );
+        const typoMap: Record<string, string> = {
+            develope: "developer",
+            developr: "developer",
+            develper: "developer",
+            enginer: "engineer",
+            accoutant: "accountant",
+            kathmndu: "kathmandu",
+        };
+        const normalizedSearch = search.toLowerCase().trim().split(/\s+/).map((term) => typoMap[term] || term).join(" ");
+        const terms = normalizedSearch.split(/\s+/).filter(Boolean).slice(0, 6);
+        const termConditions = terms.map((term, index) => ({
+            sql: `(job.title ILIKE :searchTerm${index} OR job.company ILIKE :searchTerm${index} OR category.name ILIKE :searchTerm${index} OR job.description ILIKE :searchTerm${index} OR job.title ILIKE :searchPrefix${index} OR category.name ILIKE :searchPrefix${index} OR word_similarity(:similarityTerm${index}, lower(job.title)) >= 0.8 OR word_similarity(:similarityTerm${index}, lower(job.company)) >= 0.8 OR word_similarity(:similarityTerm${index}, lower(category.name)) >= 0.8)`,
+            key: `searchTerm${index}`,
+            value: `%${term}%`,
+            prefixKey: `searchPrefix${index}`,
+            prefixValue: `%${term.length >= 5 ? term.slice(0, 5) : term}%`,
+            similarityKey: `similarityTerm${index}`,
+            similarityValue: term,
+        }));
+        query = query.andWhere(termConditions.map((condition) => condition.sql).join(" AND "), Object.fromEntries(termConditions.flatMap((condition) => [[condition.key, condition.value], [condition.prefixKey, condition.prefixValue], [condition.similarityKey, condition.similarityValue]])));
+        query = query.addSelect(`GREATEST(word_similarity(:similarityQuery, lower(job.title)), word_similarity(:similarityQuery, lower(job.company)), word_similarity(:similarityQuery, lower(category.name)))`, "search_similarity");
+        query = query.setParameter("similarityQuery", normalizedSearch);
     }
 
     const total = await query.clone().getCount();
 
     if (urgency) {
         query = query
-            .orderBy("job.expiresAt", "ASC", "NULLS LAST")
+            .orderBy(search ? "search_similarity" : "job.expiresAt", "ASC", "NULLS LAST")
+            .addOrderBy(search ? "job.expiresAt" : "job.expiresAt", "ASC", "NULLS LAST")
             .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
             .addOrderBy("job.createdAt", "DESC");
     } else {
         query = query
-            .orderBy("job.postedAt", "DESC", "NULLS LAST")
+            .orderBy(search ? "search_similarity" : "job.postedAt", "DESC", "NULLS LAST")
+            .addOrderBy(search ? "job.postedAt" : "job.postedAt", "DESC", "NULLS LAST")
             .addOrderBy("job.createdAt", "DESC");
     }
 
@@ -160,7 +180,7 @@ export async function getJobs(options: GetJobsOptions = {}) {
     jobType: options.jobType?.trim().slice(0, 30) || undefined,
   };
   const key = [
-    "jobs",
+        "jobs-v2",
     String(normalizedOptions.limit),
     String(normalizedOptions.offset),
     String(normalizedOptions.type ?? ""),

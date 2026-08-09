@@ -229,3 +229,16 @@ export const seoLandingPages: Record<string, SeoLandingPageConfig> = {
 };
 
 export const landingPageSlugs = Object.keys(seoLandingPages);
+
+/** Keep thin/empty landing pages out of search indexes while preserving discovery links. */
+export async function getLandingPageRobots(config: SeoLandingPageConfig): Promise<Metadata["robots"]> {
+  try {
+    const { total } = await getJobs({ ...config.filter, limit: 1 });
+    return total >= 10 ? { index: true, follow: true } : { index: false, follow: true };
+  } catch {
+    // A temporary database failure should not make a page look authoritative.
+    return { index: false, follow: true };
+  }
+}
+import type { Metadata } from "next";
+import { getJobs } from "@/server/services/data-fetching";

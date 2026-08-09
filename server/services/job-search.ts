@@ -2,39 +2,12 @@ import { getDataSource } from "@/lib/db";
 import { Job } from "@/server/db/entities/Job";
 import { LinkedInJob } from "@/server/db/entities/LinkedInJob";
 import { Category } from "@/server/db/entities/Category";
-
-/** Frameworks/tech that when user asks specifically, we require in job title */
-const FRAMEWORK_TERMS = ["angular", "react", "vue", "next", "node", "nodejs", "node.js", "python", "java", "php", "laravel", "django", "flutter"];
-
 export interface JobSearchParams {
   search?: string;
   location?: string;
   jobType?: string;
   type?: "job" | "internship" | "all";
   limit?: number;
-}
-
-/** Extract primary framework from search - when user asks "job in Angular", require it in title */
-function getRequiredFramework(search: string): string | null {
-  const lower = search.toLowerCase().trim();
-  const words = lower.split(/\s+/);
-  for (const term of FRAMEWORK_TERMS) {
-    if (words.some((w) => w.includes(term))) return term;
-  }
-  return null;
-}
-
-/** When user asks for a specific framework (e.g. Angular), only return jobs where title contains it */
-function filterByRequiredFramework<T extends { title?: string | null; category?: string | null }>(
-  jobs: T[],
-  framework: string
-): T[] {
-  const fw = framework.toLowerCase();
-  return jobs.filter((job) => {
-    const title = (job.title || "").toLowerCase();
-    const cat = (job.category || "").toLowerCase();
-    return title.includes(fw) || cat.includes(fw);
-  });
 }
 
 export interface JobSearchResult {
@@ -79,11 +52,8 @@ function buildSearchConditions(
           `(job.title ILIKE :term${i} OR category.name ILIKE :term${i} OR job.company ILIKE :term${i} OR job.description ILIKE :term${i} OR job.requirements ILIKE :term${i})`
       )
       .join(joinOp);
-    const titleOrCategoryMatch = terms
-      .map((_, i) => `(job.title ILIKE :term${i} OR category.name ILIKE :term${i})`)
-      .join(" OR ");
     return {
-      sql: `(${matchConditions}) AND (${titleOrCategoryMatch})`,
+      sql: `(${matchConditions})`,
       params,
     };
   }
@@ -129,15 +99,18 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
   if (search?.trim()) {
     const { sql, params } = buildSearchConditions(search, "job");
     query = query.andWhere(sql, params);
+    query = query.addSelect(`CASE WHEN job.title ILIKE :rankSearch THEN 0 WHEN category.name ILIKE :rankSearch THEN 1 ELSE 2 END`, "relevance");
+    query = query.setParameter("rankSearch", `%${search.trim()}%`);
   }
 
   const jobs = await query
-    .orderBy("job.postedAt", "DESC", "NULLS LAST")
+    .orderBy("relevance", "ASC")
+    .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
     .addOrderBy("job.createdAt", "DESC")
     .take(limit)
     .getMany();
 
-  return jobs.map((job) => ({
+  const results = jobs.map((job) => ({
     id: job.id,
     title: job.title,
     company: job.company,
@@ -152,6 +125,7 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
     expiresAt: job.expiresAt,
     postedAt: job.postedAt,
   }));
+  return results;
 }
 
 /**
@@ -161,7 +135,6 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
 export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchResult[]> {
   const { search, location, jobType, type = "all", limit = 12 } = params;
   const perSource = Math.ceil(limit / 2);
-  const requiredFramework = search?.trim() ? getRequiredFramework(search) : null;
 
   const dataSource = await getDataSource();
   const jobRepo = dataSource.getRepository(Job);
@@ -187,6 +160,8 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
   if (search?.trim()) {
     const { sql, params } = buildSearchConditions(search, "job");
     jobsQuery = jobsQuery.andWhere(sql, params);
+    jobsQuery = jobsQuery.addSelect(`CASE WHEN job.title ILIKE :jobRankSearch THEN 0 WHEN category.name ILIKE :jobRankSearch THEN 1 ELSE 2 END`, "relevance");
+    jobsQuery = jobsQuery.setParameter("jobRankSearch", `%${search.trim()}%`);
   }
 
   // 2. LinkedIn jobs
@@ -203,7 +178,8 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
 
   let [nepalJobs, linkedInJobs] = await Promise.all([
     jobsQuery
-      .orderBy("job.postedAt", "DESC", "NULLS LAST")
+      .orderBy("relevance", "ASC")
+      .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
       .take(perSource)
       .getMany(),
     linkedInQuery
@@ -212,7 +188,7 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
       .getMany(),
   ]);
 
-  if (nepalJobs.length === 0 && linkedInJobs.length === 0 && search?.trim() && !requiredFramework) {
+  if (nepalJobs.length === 0 && linkedInJobs.length === 0 && search?.trim()) {
     const terms = search.trim().split(/\s+/).filter(Boolean);
     if (terms.length >= 2) {
       const fallbackSearch = terms.slice(0, 3).join(" ");
@@ -271,9 +247,6 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
     })),
   ];
 
-  if (requiredFramework) {
-    results = filterByRequiredFramework(results, requiredFramework);
-  }
   return results.slice(0, limit);
 }
 
@@ -283,8 +256,7 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
  */
 export async function searchSimilarJobs(params: JobSearchParams): Promise<JobSearchResult[]> {
   const terms = (params.search || "").trim().split(/\s+/).filter(Boolean);
-  const nonFw = terms.find((t) => !FRAMEWORK_TERMS.some((fw) => t.toLowerCase().includes(fw)));
-  const similarKeyword = nonFw || "developer";
+  const similarKeyword = terms[0] || "jobs";
   return searchAllJobs({
     ...params,
     search: similarKeyword,

@@ -26,6 +26,15 @@ const JOB_TYPES: Record<string, ParsedQuery["jobType"]> = {
 };
 const JOB_ONLY_KEYWORDS = ["full job", "permanent job", "not intern"];
 
+const COMMON_TYPOS: Record<string, string> = {
+  develper: "developer",
+  developr: "developer",
+  enginer: "engineer",
+  kathmndu: "kathmandu",
+  accoutant: "accountant",
+  experiance: "experience",
+};
+
 /** Frameworks/tech - when user says "job in angular", ensure it's in search and first */
 const FRAMEWORK_TERMS = ["angular", "react", "vue", "next", "node", "nodejs", "python", "java", "php", "laravel", "django", "flutter"];
 
@@ -121,6 +130,7 @@ export function parseJobQuery(raw: string): ParsedQuery {
     const fw = FRAMEWORK_TERMS.find((t) => lower.includes(t));
     search = fw ? `${fw} ${base.replace(new RegExp(fw, "gi"), "").trim()}`.trim() || fw : base;
   }
+  search = search.split(/\s+/).map((term) => COMMON_TYPOS[term] || term).join(" ");
   if (!search.trim()) search = "jobs";
   return { search, location, jobType, type };
 }

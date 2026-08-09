@@ -99,46 +99,6 @@ export default async function Home({
     },
   };
 
-  const jobPostingStructuredData = latestJobs.map((job: any) => ({
-    "@context": "https://schema.org",
-    "@type": "JobPosting",
-    title: job.title,
-    description: job.description || job.title,
-    identifier: {
-      "@type": "PropertyValue",
-      name: "kamkhoj",
-      value: job.id,
-    },
-    datePosted: job.createdAt,
-    validThrough:
-      job.expiresAt ||
-      new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
-    employmentType: job.type === "internship" ? "INTERN" : "FULL_TIME",
-    hiringOrganization: {
-      "@type": "Organization",
-      name: job.company || "Company",
-    },
-    jobLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: job.location || "Nepal",
-        addressCountry: "NP",
-      },
-    },
-    baseSalary: job.salaryText
-      ? {
-          "@type": "MonetaryAmount",
-          currency: "NPR",
-          value: {
-            "@type": "QuantitativeValue",
-            value: job.salaryText,
-          },
-        }
-      : undefined,
-    url: job.applyUrl,
-  }));
-
   return (
     <div className="min-h-screen">
       <script
@@ -151,13 +111,6 @@ export default async function Home({
           __html: JSON.stringify(collectionPageSchema),
         }}
       />
-      {jobPostingStructuredData.map((data: any, index: number) => (
-        <script
-          key={index}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-        />
-      ))}
 
       <HomeHero />
       <ExpiringSection urgency={urgency} />
