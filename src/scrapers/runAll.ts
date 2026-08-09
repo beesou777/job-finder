@@ -39,7 +39,7 @@ import { scrapeSojoDataList } from "./listPages/sojodata";
 import { scrapeSojoDataDetail } from "./detailPages/sojodata";
 import { scrapeRecruitNepalList } from "./listPages/recruitnepal";
 import { scrapeRecruitNepalDetail } from "./detailPages/recruitnepal";
-import { JobData } from "./core/types";
+import { JobData, normalizeJobData } from "./core/types";
 import { getSourceMetrics, sourceRequest } from "./core/request-control";
 
 export interface ScraperConfig {
@@ -401,7 +401,7 @@ export async function runAllScrapers(): Promise<JobData[]> {
   console.log(`\n✅ Scraping complete! Total jobs: ${allJobs.length}`);
 
   console.table(getSourceMetrics());
-  return allJobs;
+  return allJobs.map(normalizeJobData);
 }
 
 /**

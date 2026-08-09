@@ -20,6 +20,39 @@ export const JobDataSchema = z.object({
 
 export type JobData = z.infer<typeof JobDataSchema>;
 
+function collapseRepeatedText(value?: string): string | undefined {
+  if (!value) return value;
+  let normalized = value.replace(/\s+/g, " ").trim();
+  const words = normalized.split(" ");
+  if (words.length >= 2 && words.length % 2 === 0) {
+    const half = words.length / 2;
+    if (words.slice(0, half).join(" ").toLowerCase() === words.slice(half).join(" ").toLowerCase()) {
+      normalized = words.slice(0, half).join(" ");
+    }
+  }
+  return normalized;
+}
+
+function normalizeSalary(value?: string): string | undefined {
+  const normalized = collapseRepeatedText(value);
+  if (!normalized) return normalized;
+  return normalized.replace(/\bRs\.?\s*([\d,]+)\s*(?:per|\/)?\s*month\b/i, "NPR $1/month");
+}
+
+/** Clean common scraper artifacts before jobs are persisted or rendered. */
+export function normalizeJobData(job: JobData): JobData {
+  return {
+    ...job,
+    title: collapseRepeatedText(job.title) || job.title,
+    company: collapseRepeatedText(job.company),
+    location: collapseRepeatedText(job.location),
+    category: collapseRepeatedText(job.category),
+    salaryText: normalizeSalary(job.salaryText),
+    description: collapseRepeatedText(job.description),
+    requirements: collapseRepeatedText(job.requirements),
+  };
+}
+
 /**
  * Calculate expiration date only when the source supplied a parseable deadline.
  * Unknown deadlines must stay unknown and are handled through source verification.
