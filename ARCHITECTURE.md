@@ -5,6 +5,8 @@ KamKhoj uses the Next.js App Router. New product pages and API routes belong in 
 ## Directory guide
 
 - `app/` — routes, pages, layouts, and route handlers
+- `app/blog/` — blog listing and detail routes
+- `app/(seo)/` — reusable SEO landing pages for locations, categories, internships, and remote jobs
 - `components/` — reusable UI grouped by feature (`jobs`, `home`, `linkedin`, etc.)
 - `content/` — editorial content
 - `server/db/` — TypeORM entities and the database connection
