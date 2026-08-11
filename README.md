@@ -42,7 +42,7 @@ Run the development server with `yarn dev` and open <http://localhost:3000>.
 | `yarn knip` | Find unused files, exports, and dependencies |
 | `yarn typecheck` | Run TypeScript without emitting files |
 | `yarn scrape` | Run the scraper locally (requires a database) |
-| `yarn migration:generate -- migrations/<name>` | Generate a migration from entity changes |
+| `yarn migration:generate` | Generate a timestamped migration from entity changes |
 | `yarn migration:run` | Apply pending TypeORM migrations |
 | `yarn migration:revert` | Revert the latest migration |
 

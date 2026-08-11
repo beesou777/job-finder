@@ -12,17 +12,17 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "init-admin": "tsx scripts/init-admin.ts",
     "scrape": "tsx scripts/run-scraper.ts",
-    "migration:generate": "node ./node_modules/tsx/dist/cli.mjs ./node_modules/typeorm/cli.js migration:generate -d scripts/data-source.ts",
-    "migration:run": "node ./node_modules/tsx/dist/cli.mjs ./node_modules/typeorm/cli.js migration:run -d scripts/data-source.ts",
-    "migration:revert": "node ./node_modules/tsx/dist/cli.mjs ./node_modules/typeorm/cli.js migration:revert -d scripts/data-source.ts",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate migrations/AutoMigration -d scripts/data-source.ts",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d scripts/data-source.ts",
+    "migration:revert": "typeorm-ts-node-commonjs migration:revert -d scripts/data-source.ts",
     "migrate": "yarn migration:run",
     "seed-categories": "tsx scripts/seed-categories.ts"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.66",
-    "@radix-ui/react-slot": "^1.2.3",
     "@openrouter/ai-sdk-provider": "^2.1.1",
     "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-slot": "^1.2.3",
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
@@ -63,6 +63,7 @@
     "eslint-config-next": "14.2.3",
     "knip": "^6.32.0",
     "tailwindcss-animate": "^1.0.7",
+    "ts-node": "^10.9.2",
     "tsx": "^4.7.1"
   },
   "engines": {
