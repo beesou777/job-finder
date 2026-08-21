@@ -43,21 +43,21 @@ function cleanHtml(html: string): string {
  */
 function extractDeadline(content: string): string | undefined {
   if (!content) return undefined;
-  
+
   // Look for patterns like "7th January, 2026", "January 09, 2026", "9 January 2026", etc.
   const deadlinePatterns = [
     /(?:deadline|last date|application|apply by|closing date)[:\s]+(?:is|on|by)?\s*(\d{1,2}(?:st|nd|rd|th)?\s+(?:January|February|March|April|May|June|July|August|September|October|November|December)[\s,]+(?:\d{4}))/i,
     /(?:deadline|last date|application|apply by|closing date)[:\s]+(?:is|on|by)?\s*((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}[\s,]+(?:\d{4}))/i,
     /(?:deadline|last date|application|apply by|closing date)[:\s]+(?:is|on|by)?\s*(\d{1,2}[\s\/-](?:January|February|March|April|May|June|July|August|September|October|November|December)[\s\/-]\d{4})/i,
   ];
-  
+
   for (const pattern of deadlinePatterns) {
     const match = content.match(pattern);
     if (match && match[1]) {
       return match[1].trim();
     }
   }
-  
+
   return undefined;
 }
 
@@ -67,40 +67,42 @@ function extractDeadline(content: string): string | undefined {
 function mapToJobData(item: RSSItem): JobData {
   // Extract title
   const title = Array.isArray(item.title) ? item.title[0] : item.title;
-  
+
   // Extract apply URL
   const link = Array.isArray(item.link) ? item.link[0] : item.link;
   const applyUrl = link || "";
 
   // Extract company
   const company = item["job_listing:company"]
-    ? (Array.isArray(item["job_listing:company"])
-        ? item["job_listing:company"][0]
-        : item["job_listing:company"])
+    ? Array.isArray(item["job_listing:company"])
+      ? item["job_listing:company"][0]
+      : item["job_listing:company"]
     : undefined;
 
   // Extract location
   const location = item["job_listing:location"]
-    ? (Array.isArray(item["job_listing:location"])
-        ? item["job_listing:location"][0]
-        : item["job_listing:location"])
+    ? Array.isArray(item["job_listing:location"])
+      ? item["job_listing:location"][0]
+      : item["job_listing:location"]
     : undefined;
 
   // Extract job type
   const jobType = item["job_listing:job_type"]
-    ? (Array.isArray(item["job_listing:job_type"])
-        ? item["job_listing:job_type"][0]
-        : item["job_listing:job_type"])
+    ? Array.isArray(item["job_listing:job_type"])
+      ? item["job_listing:job_type"][0]
+      : item["job_listing:job_type"]
     : undefined;
 
   // Extract description and content
   const descriptionRaw = item["content:encoded"]
-    ? (Array.isArray(item["content:encoded"])
-        ? item["content:encoded"][0]
-        : item["content:encoded"])
+    ? Array.isArray(item["content:encoded"])
+      ? item["content:encoded"][0]
+      : item["content:encoded"]
     : item.description
-    ? (Array.isArray(item.description) ? item.description[0] : item.description)
-    : undefined;
+      ? Array.isArray(item.description)
+        ? item.description[0]
+        : item.description
+      : undefined;
 
   const description = descriptionRaw ? cleanHtml(descriptionRaw) : undefined;
 
@@ -109,7 +111,9 @@ function mapToJobData(item: RSSItem): JobData {
 
   // Extract published date
   const pubDate = item.pubDate
-    ? (Array.isArray(item.pubDate) ? item.pubDate[0] : item.pubDate)
+    ? Array.isArray(item.pubDate)
+      ? item.pubDate[0]
+      : item.pubDate
     : undefined;
 
   // Determine if it's an internship
@@ -122,10 +126,7 @@ function mapToJobData(item: RSSItem): JobData {
     lowerJobType.includes("fresher");
 
   // Calculate expiration date from deadline or pubDate
-  const expiresAt = calculateExpirationDate(
-    deadline,
-    pubDate ? new Date(pubDate) : undefined
-  );
+  const expiresAt = calculateExpirationDate(deadline, pubDate ? new Date(pubDate) : undefined);
 
   return {
     title: title,
@@ -163,14 +164,13 @@ export async function scrapeMerorojgariList(url: string): Promise<{
       try {
         // Construct RSS URL with pagination
         const rssUrl = `${RSS_ENDPOINT}&paged=${currentPage}`;
-        
+
         console.log(`[Merorojgari] Fetching RSS page ${currentPage} from: ${rssUrl}`);
-        
+
         const response = await axios.get(rssUrl, {
           headers: {
-            "Accept": "application/rss+xml, application/xml, text/xml, */*",
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            Accept: "application/rss+xml, application/xml, text/xml, */*",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
           },
           timeout: 15000,
         });
@@ -181,11 +181,11 @@ export async function scrapeMerorojgariList(url: string): Promise<{
         }
 
         // Parse XML to JSON
-        const parsed = await parseStringPromise(response.data, {
+        const parsed = (await parseStringPromise(response.data, {
           explicitArray: false,
           mergeAttrs: true,
           trim: true,
-        }) as RSSFeed;
+        })) as RSSFeed;
 
         if (!parsed.rss?.channel) {
           console.warn(`[Merorojgari] Invalid RSS structure for page ${currentPage}`);
@@ -225,14 +225,10 @@ export async function scrapeMerorojgariList(url: string): Promise<{
         }
 
         console.log(
-          `[Merorojgari] Page ${currentPage - 1}: Fetched ${items.length} jobs (total: ${allJobs.length})`
+          `[Merorojgari] Page ${currentPage - 1}: Fetched ${items.length} jobs (total: ${allJobs.length})`,
         );
-
       } catch (error: any) {
-        console.error(
-          `[Merorojgari] Error fetching RSS page ${currentPage}:`,
-          error.message
-        );
+        console.error(`[Merorojgari] Error fetching RSS page ${currentPage}:`, error.message);
         if (error.response?.status === 404 || error.response?.status === 400) {
           // 404 or 400 likely means no more pages
           hasMore = false;
@@ -251,9 +247,7 @@ export async function scrapeMerorojgariList(url: string): Promise<{
       return { detailUrls: [], hasMore: false };
     }
 
-    console.log(
-      `✅ Merorojgari: Fetched ${allJobs.length} jobs from RSS feed`
-    );
+    console.log(`✅ Merorojgari: Fetched ${allJobs.length} jobs from RSS feed`);
 
     // Return detail URLs for compatibility
     const detailUrls = allJobs.map((job) => job.applyUrl);
@@ -268,4 +262,3 @@ export async function scrapeMerorojgariList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

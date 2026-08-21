@@ -5,7 +5,7 @@ import { Category } from "@/server/db/entities/Category";
 import { JobTypeEnum } from "@/server/db/entities/Job";
 
 // Mark route as dynamic to prevent static generation
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 /**
  * Combined endpoint that returns jobs, categories, and filters in a single request
@@ -48,25 +48,37 @@ export async function GET(request: NextRequest) {
         case "today":
           const todayEnd = new Date(now);
           todayEnd.setHours(23, 59, 59, 999);
-          jobsQuery = jobsQuery.andWhere("job.expiresAt >= :now AND job.expiresAt <= :todayEnd", { now, todayEnd });
+          jobsQuery = jobsQuery.andWhere("job.expiresAt >= :now AND job.expiresAt <= :todayEnd", {
+            now,
+            todayEnd,
+          });
           break;
         case "3days":
           const threeDaysFromNow = new Date(now);
           threeDaysFromNow.setDate(threeDaysFromNow.getDate() + 3);
           threeDaysFromNow.setHours(23, 59, 59, 999);
-          jobsQuery = jobsQuery.andWhere("job.expiresAt >= :now AND job.expiresAt <= :threeDaysFromNow", { now, threeDaysFromNow });
+          jobsQuery = jobsQuery.andWhere(
+            "job.expiresAt >= :now AND job.expiresAt <= :threeDaysFromNow",
+            { now, threeDaysFromNow },
+          );
           break;
         case "7days":
           const sevenDaysFromNow = new Date(now);
           sevenDaysFromNow.setDate(sevenDaysFromNow.getDate() + 7);
           sevenDaysFromNow.setHours(23, 59, 59, 999);
-          jobsQuery = jobsQuery.andWhere("job.expiresAt >= :now AND job.expiresAt <= :sevenDaysFromNow", { now, sevenDaysFromNow });
+          jobsQuery = jobsQuery.andWhere(
+            "job.expiresAt >= :now AND job.expiresAt <= :sevenDaysFromNow",
+            { now, sevenDaysFromNow },
+          );
           break;
         case "30days":
           const thirtyDaysFromNow = new Date(now);
           thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
           thirtyDaysFromNow.setHours(23, 59, 59, 999);
-          jobsQuery = jobsQuery.andWhere("job.expiresAt >= :now AND job.expiresAt <= :thirtyDaysFromNow", { now, thirtyDaysFromNow });
+          jobsQuery = jobsQuery.andWhere(
+            "job.expiresAt >= :now AND job.expiresAt <= :thirtyDaysFromNow",
+            { now, thirtyDaysFromNow },
+          );
           break;
       }
     }
@@ -86,7 +98,7 @@ export async function GET(request: NextRequest) {
     if (search) {
       jobsQuery = jobsQuery.andWhere(
         "(job.title ILIKE :search OR job.company ILIKE :search OR category.name ILIKE :search OR job.description ILIKE :search)",
-        { search: `%${search}%` }
+        { search: `%${search}%` },
       );
     }
 
@@ -115,30 +127,32 @@ export async function GET(request: NextRequest) {
       salaryText: job.salaryText || "Negotiable",
       jobType: job.jobType,
       source: job.source,
-      category: job.category ? {
-        id: job.category.id,
-        name: job.category.name,
-        slug: job.category.slug,
-      } : null,
+      category: job.category
+        ? {
+            id: job.category.id,
+            name: job.category.name,
+            slug: job.category.slug,
+          }
+        : null,
     }));
-    
+
     // Sort: InternSathi first, then by postedAt, then by createdAt
     jobs.sort((a, b) => {
       const aIsInternsathi = a.source === "internsathi" ? 0 : 1;
       const bIsInternsathi = b.source === "internsathi" ? 0 : 1;
-      
+
       // First sort by source (internsathi first)
       if (aIsInternsathi !== bIsInternsathi) {
         return aIsInternsathi - bIsInternsathi;
       }
-      
+
       // Then by postedAt (newest first)
       const aPostedAt = a.postedAt ? new Date(a.postedAt).getTime() : 0;
       const bPostedAt = b.postedAt ? new Date(b.postedAt).getTime() : 0;
       if (bPostedAt !== aPostedAt) {
         return bPostedAt - aPostedAt;
       }
-      
+
       // Finally by createdAt (newest first)
       const aCreatedAt = a.createdAt ? new Date(a.createdAt).getTime() : 0;
       const bCreatedAt = b.createdAt ? new Date(b.createdAt).getTime() : 0;
@@ -147,8 +161,12 @@ export async function GET(request: NextRequest) {
 
     // Fetch categories and filters in parallel only if needed
     const [categories, filters] = await Promise.all([
-      includeCategories ? fetchCategories(categoryRepository, jobRepository, now) : Promise.resolve([]),
-      includeFilters ? fetchFilters(jobRepository, type, now) : Promise.resolve({ jobTypes: [], locations: [] }),
+      includeCategories
+        ? fetchCategories(categoryRepository, jobRepository, now)
+        : Promise.resolve([]),
+      includeFilters
+        ? fetchFilters(jobRepository, type, now)
+        : Promise.resolve({ jobTypes: [], locations: [] }),
     ]);
 
     const response = NextResponse.json({
@@ -169,12 +187,12 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error("Error in combined jobs API:", error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: "Failed to fetch data",
         details: process.env.NODE_ENV === "development" ? error?.message : undefined,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -257,10 +275,10 @@ async function fetchFilters(jobRepository: any, type: string, now: Date) {
   });
 
   const normalizedJobTypes = Array.from(jobTypeMap.entries())
-    .map(([value, count]) => ({ 
-      value, 
-      label: jobTypeLabels[value] || value, 
-      count 
+    .map(([value, count]) => ({
+      value,
+      label: jobTypeLabels[value] || value,
+      count,
     }))
     .sort((a, b) => b.count - a.count);
 
@@ -273,4 +291,3 @@ async function fetchFilters(jobRepository: any, type: string, now: Date) {
     })),
   };
 }
-

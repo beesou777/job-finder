@@ -5,7 +5,7 @@ import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { getCategories } from "@/server/services/data-fetching";
 import { absoluteUrl } from "@/lib/site";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export function generateMetadata({
   searchParams,
@@ -22,14 +22,14 @@ export function generateMetadata({
   const page = parseInt(searchParams.page || "1", 10);
   const hasActiveFilters = Boolean(
     searchParams.search ||
-      searchParams.category ||
-      searchParams.jobType ||
-      searchParams.location ||
-      searchParams.urgency
+    searchParams.category ||
+    searchParams.jobType ||
+    searchParams.location ||
+    searchParams.urgency,
   );
   const shouldNoIndex = hasActiveFilters || page > 1;
 
-  return { 
+  return {
     title: "Internships in Nepal | Browse Latest Internship Openings",
     description:
       "Browse internships in Nepal by company, category, location, and source. Find current internship opportunities and verify details on the original posting.",
@@ -43,18 +43,18 @@ export function generateMetadata({
 export default async function InternshipsPage({
   searchParams,
 }: {
-  searchParams: { 
-    search?: string; 
-    category?: string; 
-    jobType?: string; 
-    location?: string; 
-    urgency?: string; 
-    page?: string; 
+  searchParams: {
+    search?: string;
+    category?: string;
+    jobType?: string;
+    location?: string;
+    urgency?: string;
+    page?: string;
   };
 }) {
   const page = parseInt(searchParams.page || "1");
   const categories = await getCategories({ limit: 100 });
-  
+
   const jobTypes = [
     { value: "full-time", label: "Full-time", count: 0 },
     { value: "part-time", label: "Part-time", count: 0 },
@@ -86,7 +86,7 @@ export default async function InternshipsPage({
 
   return (
     <div className="min-h-screen bg-zinc-950">
-      <JobsFiltering 
+      <JobsFiltering
         categories={categories}
         jobTypes={jobTypes}
         locations={locations}
@@ -94,13 +94,10 @@ export default async function InternshipsPage({
         title="Find the Best Internships in Nepal"
         searchPlaceholder="Search internships by title, company, or category..."
       />
-      
+
       <div className="container mx-auto px-4 py-8">
         <Suspense key={JSON.stringify(searchParams)} fallback={<JobsSkeleton />}>
-          <JobsList 
-            page={page}
-            {...filterOptions}
-          />
+          <JobsList page={page} {...filterOptions} />
         </Suspense>
       </div>
     </div>

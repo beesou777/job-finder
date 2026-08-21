@@ -73,9 +73,9 @@ function slugify(title: string): string {
   return title
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, '') // Remove special characters
-    .replace(/[\s_-]+/g, '-') // Replace spaces, underscores, and multiple hyphens with single hyphen
-    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+    .replace(/[^\w\s-]/g, "") // Remove special characters
+    .replace(/[\s_-]+/g, "-") // Replace spaces, underscores, and multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
 }
 
 /**
@@ -138,10 +138,10 @@ function mapToJobData(job: WorkHubNepalJob): JobData {
   const lowerTitle = job.title.toLowerCase();
   const lowerTimings = job.timings?.toLowerCase() || "";
   let jobType: string | undefined = job.timings || undefined;
-  
+
   // Determine if it's an internship
-  const isInternship = 
-    lowerTitle.includes("intern") || 
+  const isInternship =
+    lowerTitle.includes("intern") ||
     lowerTitle.includes("internship") ||
     lowerTimings.includes("intern");
 
@@ -185,14 +185,13 @@ async function fetchAllJobs(): Promise<JobData[]> {
       url.searchParams.set("category", "");
       url.searchParams.set("page", currentPage.toString());
       url.searchParams.set("_data", "routes/index");
-      
+
       console.log(`[WorkHub Nepal] Fetching page ${currentPage} from: ${url.toString()}`);
-      
+
       const response = await axios.get<WorkHubNepalResponse>(url.toString(), {
         headers: {
-          "Accept": "application/json",
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          Accept: "application/json",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         },
         timeout: 15000,
       });
@@ -205,21 +204,23 @@ async function fetchAllJobs(): Promise<JobData[]> {
       // Get totalPages from meta (should be available on every page)
       if (response.data.jobsData.meta?.totalPages) {
         totalPages = response.data.jobsData.meta.totalPages;
-        console.log(`[WorkHub Nepal] Total pages from API: ${totalPages}, Total jobs: ${response.data.jobsData.meta.totalJobs || 'N/A'}`);
+        console.log(
+          `[WorkHub Nepal] Total pages from API: ${totalPages}, Total jobs: ${response.data.jobsData.meta.totalJobs || "N/A"}`,
+        );
       }
 
       if (response.data.jobsData.jobs && Array.isArray(response.data.jobsData.jobs)) {
         const fetchedJobs = response.data.jobsData.jobs;
-        
+
         // Log job statuses for debugging
         const statusCounts = fetchedJobs.reduce((acc: Record<string, number>, job) => {
           acc[job.jobStatus] = (acc[job.jobStatus] || 0) + 1;
           return acc;
         }, {});
         console.log(
-          `[WorkHub Nepal] Page ${currentPage}/${totalPages}: Job statuses: ${JSON.stringify(statusCounts)}`
+          `[WorkHub Nepal] Page ${currentPage}/${totalPages}: Job statuses: ${JSON.stringify(statusCounts)}`,
         );
-        
+
         // Filter out expired jobs (where expiryDate is in the past)
         const now = new Date();
         const validJobs = fetchedJobs.filter((job) => {
@@ -233,21 +234,21 @@ async function fetchAllJobs(): Promise<JobData[]> {
             return true; // Include jobs with invalid expiry dates
           }
         });
-        
+
         // Log expiration stats
         const expiredCount = fetchedJobs.length - validJobs.length;
         if (expiredCount > 0) {
           console.log(
-            `[WorkHub Nepal] Page ${currentPage}: Filtered out ${expiredCount} expired job(s)`
+            `[WorkHub Nepal] Page ${currentPage}: Filtered out ${expiredCount} expired job(s)`,
           );
         }
-        
+
         // Map all valid (non-expired) jobs
         const mappedJobs = validJobs.map(mapToJobData);
         jobs.push(...mappedJobs);
 
         console.log(
-          `[WorkHub Nepal] Page ${currentPage}/${totalPages}: Fetched ${mappedJobs.length} jobs from ${fetchedJobs.length} total (accumulated: ${jobs.length})`
+          `[WorkHub Nepal] Page ${currentPage}/${totalPages}: Fetched ${mappedJobs.length} jobs from ${fetchedJobs.length} total (accumulated: ${jobs.length})`,
         );
 
         // If no jobs were returned, stop
@@ -268,21 +269,23 @@ async function fetchAllJobs(): Promise<JobData[]> {
         break;
       }
     } catch (error: any) {
-      console.error(
-        `[WorkHub Nepal] Error fetching page ${currentPage}:`,
-        error.message
-      );
+      console.error(`[WorkHub Nepal] Error fetching page ${currentPage}:`, error.message);
       if (error.response?.status) {
         console.error(`[WorkHub Nepal] HTTP Status: ${error.response.status}`);
       }
       if (error.response?.data) {
-        console.error(`[WorkHub Nepal] Response data:`, JSON.stringify(error.response.data).substring(0, 200));
+        console.error(
+          `[WorkHub Nepal] Response data:`,
+          JSON.stringify(error.response.data).substring(0, 200),
+        );
       }
       break;
     }
   } while (currentPage <= totalPages);
 
-  console.log(`[WorkHub Nepal] ✅ Completed fetching all pages. Total jobs collected: ${jobs.length}`);
+  console.log(
+    `[WorkHub Nepal] ✅ Completed fetching all pages. Total jobs collected: ${jobs.length}`,
+  );
   return jobs;
 }
 
@@ -299,7 +302,7 @@ export async function scrapeWorkHubNepalList(url: string): Promise<{
 }> {
   try {
     console.log(`[WorkHub Nepal] Fetching all jobs...`);
-    
+
     // Fetch all jobs with pagination
     const allJobs = await fetchAllJobs();
 
@@ -308,9 +311,7 @@ export async function scrapeWorkHubNepalList(url: string): Promise<{
       return { detailUrls: [], hasMore: false };
     }
 
-    console.log(
-      `✅ WorkHub Nepal: Fetched ${allJobs.length} jobs from API`
-    );
+    console.log(`✅ WorkHub Nepal: Fetched ${allJobs.length} jobs from API`);
 
     // Return detail URLs for compatibility (though we already have the jobs)
     const detailUrls = allJobs.map((job) => job.applyUrl);
@@ -325,4 +326,3 @@ export async function scrapeWorkHubNepalList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

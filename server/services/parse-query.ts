@@ -10,7 +10,20 @@ export interface ParsedQuery {
   type?: "job" | "internship" | "all";
 }
 
-const LOCATIONS = ["kathmandu", "pokhara", "lalitpur", "bhaktapur", "biratnagar", "birgunj", "bharatpur", "hetauda", "butwal", "nepalgunj", "dharan", "janakpur"];
+const LOCATIONS = [
+  "kathmandu",
+  "pokhara",
+  "lalitpur",
+  "bhaktapur",
+  "biratnagar",
+  "birgunj",
+  "bharatpur",
+  "hetauda",
+  "butwal",
+  "nepalgunj",
+  "dharan",
+  "janakpur",
+];
 const JOB_TYPES: Record<string, ParsedQuery["jobType"]> = {
   remote: "remote",
   "full-time": "full-time",
@@ -36,17 +49,96 @@ const COMMON_TYPOS: Record<string, string> = {
 };
 
 /** Frameworks/tech - when user says "job in angular", ensure it's in search and first */
-const FRAMEWORK_TERMS = ["angular", "react", "vue", "next", "node", "nodejs", "python", "java", "php", "laravel", "django", "flutter"];
+const FRAMEWORK_TERMS = [
+  "angular",
+  "react",
+  "vue",
+  "next",
+  "node",
+  "nodejs",
+  "python",
+  "java",
+  "php",
+  "laravel",
+  "django",
+  "flutter",
+];
 
 /** Words to ignore - filler, greetings, common non-job terms */
 const STOP_WORDS = new Set([
-  "hey", "hi", "hello", "i", "am", "is", "are", "was", "were", "be", "been", "being",
-  "have", "has", "had", "do", "does", "did", "will", "would", "could", "should", "may", "might",
-  "the", "a", "an", "for", "of", "with", "to", "from", "in", "on", "at", "by", "about",
-  "there", "any", "some", "me", "my", "we", "our", "you", "your", "it", "its",
-  "what", "which", "who", "whom", "this", "that", "these", "those",
-  "please", "kind", "looking", "find", "want", "need", "suitable", "suits", "job", "jobs",
-  "over", "years", "yrs", "year", "experiance", "experience", "experienced",
+  "hey",
+  "hi",
+  "hello",
+  "i",
+  "am",
+  "is",
+  "are",
+  "was",
+  "were",
+  "be",
+  "been",
+  "being",
+  "have",
+  "has",
+  "had",
+  "do",
+  "does",
+  "did",
+  "will",
+  "would",
+  "could",
+  "should",
+  "may",
+  "might",
+  "the",
+  "a",
+  "an",
+  "for",
+  "of",
+  "with",
+  "to",
+  "from",
+  "in",
+  "on",
+  "at",
+  "by",
+  "about",
+  "there",
+  "any",
+  "some",
+  "me",
+  "my",
+  "we",
+  "our",
+  "you",
+  "your",
+  "it",
+  "its",
+  "what",
+  "which",
+  "who",
+  "whom",
+  "this",
+  "that",
+  "these",
+  "those",
+  "please",
+  "kind",
+  "looking",
+  "find",
+  "want",
+  "need",
+  "suitable",
+  "suits",
+  "job",
+  "jobs",
+  "over",
+  "years",
+  "yrs",
+  "year",
+  "experiance",
+  "experience",
+  "experienced",
 ]);
 
 function extractSearchKeywords(raw: string): string[] {
@@ -98,7 +190,9 @@ export function parseJobQuery(raw: string): ParsedQuery {
       continue;
     }
 
-    const matchedJobType = Object.entries(JOB_TYPES).find(([key]) => w.includes(key) || key.includes(w));
+    const matchedJobType = Object.entries(JOB_TYPES).find(
+      ([key]) => w.includes(key) || key.includes(w),
+    );
     if (matchedJobType) {
       jobType = matchedJobType[1];
       continue;
@@ -121,7 +215,8 @@ export function parseJobQuery(raw: string): ParsedQuery {
   let search: string;
   if (searchTerms.length > 0) {
     const keywords = extractSearchKeywords(searchTerms.join(" "));
-    const base = keywords.length > 0 ? keywords.slice(0, 8).join(" ") : searchTerms.slice(0, 6).join(" ");
+    const base =
+      keywords.length > 0 ? keywords.slice(0, 8).join(" ") : searchTerms.slice(0, 6).join(" ");
     const fw = FRAMEWORK_TERMS.find((t) => lower.includes(t));
     search = fw ? `${fw} ${base.replace(new RegExp(fw, "gi"), "").trim()}`.trim() || fw : base;
   } else {
@@ -130,7 +225,10 @@ export function parseJobQuery(raw: string): ParsedQuery {
     const fw = FRAMEWORK_TERMS.find((t) => lower.includes(t));
     search = fw ? `${fw} ${base.replace(new RegExp(fw, "gi"), "").trim()}`.trim() || fw : base;
   }
-  search = search.split(/\s+/).map((term) => COMMON_TYPOS[term] || term).join(" ");
+  search = search
+    .split(/\s+/)
+    .map((term) => COMMON_TYPOS[term] || term)
+    .join(" ");
   if (!search.trim()) search = "jobs";
   return { search, location, jobType, type };
 }

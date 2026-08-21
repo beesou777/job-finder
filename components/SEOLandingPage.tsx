@@ -49,7 +49,9 @@ export async function SEOLandingPage({ config, page = 1 }: Props) {
         <section className="border-b border-white/10 bg-zinc-950">
           <div className="container mx-auto px-4 py-12 md:py-14">
             <nav className="mb-6 text-sm font-semibold text-zinc-500" aria-label="Breadcrumb">
-              <Link href="/" className="hover:text-primary">Home</Link>
+              <Link href="/" className="hover:text-primary">
+                Home
+              </Link>
               <span className="mx-2">/</span>
               <span className="text-zinc-300">{config.h1}</span>
             </nav>
@@ -60,8 +62,8 @@ export async function SEOLandingPage({ config, page = 1 }: Props) {
               {config.h1}
             </h1>
             <p className="text-lg leading-8 text-zinc-400 max-w-3xl">
-              Search current {config.keyword} listings from Nepali job sources,
-              compare key details, and apply through the original posting page.
+              Search current {config.keyword} listings from Nepali job sources, compare key details,
+              and apply through the original posting page.
             </p>
           </div>
         </section>
@@ -73,9 +75,9 @@ export async function SEOLandingPage({ config, page = 1 }: Props) {
                 <p key={paragraph}>{paragraph}</p>
               ))}
               <p>
-                KamKhoj is designed for practical discovery. Always review the
-                source page before applying because salary, deadline, documents,
-                and eligibility can change after a listing is collected.
+                KamKhoj is designed for practical discovery. Always review the source page before
+                applying because salary, deadline, documents, and eligibility can change after a
+                listing is collected.
               </p>
             </article>
             <aside className="bg-[#18181a] border border-white/10 rounded-xl p-6 h-fit">
@@ -83,7 +85,10 @@ export async function SEOLandingPage({ config, page = 1 }: Props) {
               <div className="flex flex-wrap gap-2">
                 {config.related.map((item) => (
                   <Link key={item.href} href={item.href}>
-                    <Badge variant="outline" className="border-white/10 px-3 py-1.5 font-semibold text-zinc-300 hover:bg-primary/10 hover:text-primary">
+                    <Badge
+                      variant="outline"
+                      className="border-white/10 px-3 py-1.5 font-semibold text-zinc-300 hover:bg-primary/10 hover:text-primary"
+                    >
                       {item.label}
                     </Badge>
                   </Link>

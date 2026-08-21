@@ -151,11 +151,10 @@ export async function scrapeSojoDataList(url: string): Promise<{
           {
             headers: {
               "Content-Type": "application/json",
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             },
             timeout: 15000,
-          }
+          },
         );
 
         if (!response.data?.data || response.data.data.length === 0) {
@@ -163,9 +162,7 @@ export async function scrapeSojoDataList(url: string): Promise<{
         }
 
         // Filter out inactive jobs
-        const activeJobs = response.data.data.filter(
-          (job) => job.jobStatus === "Active"
-        );
+        const activeJobs = response.data.data.filter((job) => job.jobStatus === "Active");
 
         const jobs = activeJobs.map(mapToJobData);
         allJobs.push(...jobs);
@@ -175,24 +172,18 @@ export async function scrapeSojoDataList(url: string): Promise<{
         const fetchedPage = response.data.pagination?.currentPage || currentPage;
 
         console.log(
-          `    📄 Page ${fetchedPage}/${totalPages}: Fetched ${jobs.length} jobs (total: ${allJobs.length})`
+          `    📄 Page ${fetchedPage}/${totalPages}: Fetched ${jobs.length} jobs (total: ${allJobs.length})`,
         );
 
         // Check if there's a next page
         const nextPage = response.data.pagination?.nextPage;
-        if (
-          fetchedPage >= totalPages ||
-          !nextPage ||
-          currentPage >= maxPages
-        ) {
+        if (fetchedPage >= totalPages || !nextPage || currentPage >= maxPages) {
           break;
         }
 
         currentPage = nextPage;
       } catch (error: any) {
-        console.error(
-          `    ❌ Error fetching page ${currentPage}: ${error.message}`
-        );
+        console.error(`    ❌ Error fetching page ${currentPage}: ${error.message}`);
         break;
       }
 
@@ -217,4 +208,3 @@ export async function scrapeSojoDataList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

@@ -18,13 +18,13 @@ function cleanHtml(html: string): string {
  */
 function extractDeadline(text: string): string | undefined {
   if (!text) return undefined;
-  
+
   // Look for patterns like "Apply Before : January 31, 2026" or "Apply Before: January 31, 2026"
   const match = text.match(/Apply Before\s*:?\s*(.+)/i);
   if (match && match[1]) {
     return match[1].trim();
   }
-  
+
   return undefined;
 }
 
@@ -40,9 +40,8 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
   try {
     const response = await axios.get(url, {
       headers: {
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
       },
       timeout: 15000,
     });
@@ -54,16 +53,19 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
     const $ = cheerio.load(response.data);
 
     // Extract title
-    const title = $("h2.jobsearch-jobdetail-list h2, .jobsearch-jobdetail-list h2").first().text().trim() ||
-                  $("h1").first().text().trim() ||
-                  $("title").text().trim();
-    
+    const title =
+      $("h2.jobsearch-jobdetail-list h2, .jobsearch-jobdetail-list h2").first().text().trim() ||
+      $("h1").first().text().trim() ||
+      $("title").text().trim();
+
     if (!title) {
       return null;
     }
 
     // Extract company
-    const companyLink = $(".jobsearch-jobdetail-list figcaption span a, .jobsearch-jobdetail-list figcaption a[href*='companies']");
+    const companyLink = $(
+      ".jobsearch-jobdetail-list figcaption span a, .jobsearch-jobdetail-list figcaption a[href*='companies']",
+    );
     let company: string | undefined;
     if (companyLink.length > 0) {
       const companyText = companyLink.text().trim();
@@ -79,7 +81,9 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
     }
 
     // Extract location (if available on detail page)
-    const locationElement = $(".jobsearch-jobdetail-list small:has(.jobsearch-map-pin), .jobsearch-maps-and-flags").parent();
+    const locationElement = $(
+      ".jobsearch-jobdetail-list small:has(.jobsearch-map-pin), .jobsearch-maps-and-flags",
+    ).parent();
     const location = locationElement.text().trim() || undefined;
 
     // Extract full job description first (needed for salary fallback)
@@ -94,7 +98,7 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
     // Extract salary (if available on detail page)
     // Format: <div class="jobsearch-services-text"><span>Salary Status&nbsp;</span> <small>20K-25K</small></div>
     let salaryText: string | undefined;
-    
+
     // Look for salary in the job services section with careerfy-money icon
     const salaryServiceElement = $("li:has(.careerfy-money) .jobsearch-services-text");
     if (salaryServiceElement.length > 0) {
@@ -115,7 +119,7 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
         }
       }
     }
-    
+
     // Fallback: Also check if salary is mentioned in the description
     if (!salaryText && description) {
       // Look for salary patterns like "Rs. 20000", "NPRs 20000", "20,000", etc.
@@ -124,7 +128,7 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
         /([\d,]+(?:\s*-\s*[\d,]+)?)\s*(?:Rs\.?|NPRs?|NPR)\s*(?:per\s*(?:month|year|annum|annually))?/i,
         /salary[:\s]+([\d,]+(?:\s*-\s*[\d,]+)?)/i,
       ];
-      
+
       for (const pattern of salaryPatterns) {
         const match = description.match(pattern);
         if (match && match[1]) {
@@ -136,14 +140,16 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
 
     // Extract job type (if available on detail page)
     let jobType: string | undefined;
-    const jobTypeElement = $(".careerfy-joblisting-plain-status, .jobsearch-joblisting-plain-status");
+    const jobTypeElement = $(
+      ".careerfy-joblisting-plain-status, .jobsearch-joblisting-plain-status",
+    );
     if (jobTypeElement.length > 0) {
       jobType = jobTypeElement.text().trim() || undefined;
     }
 
     // Extract requirements/specifications (usually in the description, but try to separate if possible)
     let requirements: string | undefined;
-    
+
     // Try to find a separate requirements section
     const requirementsElement = $(".jobsearch-requirements, .job-requirements, .qualifications");
     if (requirementsElement.length > 0) {
@@ -161,12 +167,12 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
     // Extract additional details (experience, qualifications, etc.)
     const experienceElement = $(".jobsearch-services-text:has(.careerfy-briefcase) small");
     const qualificationsElement = $(".jobsearch-services-text:has(.careerfy-degree-cap) small");
-    
+
     // If we have experience info, add it to requirements if not already there
     if (experienceElement.length > 0 && !requirements?.includes("Experience")) {
       const experience = experienceElement.text().trim();
       if (experience) {
-        requirements = requirements 
+        requirements = requirements
           ? `${requirements}\n\nExperience: ${experience}`
           : `Experience: ${experience}`;
       }
@@ -184,8 +190,8 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
     // Determine if it's an internship
     const lowerTitle = title.toLowerCase();
     const lowerJobType = jobType?.toLowerCase() || "";
-    const isInternship = 
-      lowerTitle.includes("intern") || 
+    const isInternship =
+      lowerTitle.includes("intern") ||
       lowerTitle.includes("internship") ||
       lowerJobType.includes("intern");
 
@@ -212,4 +218,3 @@ export async function scrapeJobsDynamicsDetail(url: string): Promise<JobData | n
     return null;
   }
 }
-

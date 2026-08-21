@@ -11,7 +11,6 @@ export async function scrapeMeroCareerList(url: string) {
       link: ["h4 a", "a[href*='/job']"],
       nextPage: [".pagination a[href*='page']", "a.next", "a[rel='next']"],
     },
-    BASE_URL
+    BASE_URL,
   );
 }
-

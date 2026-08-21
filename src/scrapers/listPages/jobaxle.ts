@@ -92,17 +92,13 @@ export async function scrapeJobAxleList(url: string): Promise<{
     // Fetch all pages
     do {
       try {
-        const response = await axios.get<JobAxleResponse>(
-          `${API_BASE}?page=${currentPage}`,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            },
-            timeout: 15000,
-          }
-        );
+        const response = await axios.get<JobAxleResponse>(`${API_BASE}?page=${currentPage}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          },
+          timeout: 15000,
+        });
 
         if (
           !response.data?.success ||
@@ -118,7 +114,7 @@ export async function scrapeJobAxleList(url: string): Promise<{
 
         totalPages = response.data.data.totalPages || 1;
         console.log(
-          `    📄 Page ${currentPage}/${totalPages}: Fetched ${jobs.length} jobs (total: ${allJobs.length})`
+          `    📄 Page ${currentPage}/${totalPages}: Fetched ${jobs.length} jobs (total: ${allJobs.length})`,
         );
 
         currentPage++;
@@ -128,9 +124,7 @@ export async function scrapeJobAxleList(url: string): Promise<{
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
       } catch (error: any) {
-        console.error(
-          `    ❌ Error fetching page ${currentPage}: ${error.message}`
-        );
+        console.error(`    ❌ Error fetching page ${currentPage}: ${error.message}`);
         break;
       }
     } while (currentPage <= totalPages);
@@ -152,4 +146,3 @@ export async function scrapeJobAxleList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

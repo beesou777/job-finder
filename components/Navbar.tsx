@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, X } from "lucide-react";
+import { Menu, Search, X, UserRound } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { data: session } = useSession();
 
   const isActive = (path: string) => pathname === path;
 
@@ -30,18 +32,21 @@ export function Navbar() {
     <nav className="sticky top-0 z-50 w-full bg-zinc-950 px-2 py-3 md:px-5">
       <div className="mx-auto max-w-[1840px] rounded-2xl border border-white/5 bg-zinc-950/95 px-4 shadow-2xl shadow-black/40 backdrop-blur">
         <div className="flex h-14 items-center justify-between gap-4">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="flex shrink-0 items-center gap-3 text-xl font-black tracking-tight text-white"
           >
-            <span>kamkhoj</span>
+            <span>
+              <span className="text-white">kam</span>
+              <span className="text-primary">khoj</span>
+            </span>
           </Link>
 
           <div className="hidden md:flex items-center justify-center flex-1 px-8">
             <div className="flex items-center gap-1">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
-                
+
                 return (
                   <Link
                     key={link.href}
@@ -61,6 +66,13 @@ export function Navbar() {
 
           <div className="hidden md:flex items-center gap-2 shrink-0">
             <Link
+              href={session ? "/dashboard" : "/login"}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-xs font-bold text-zinc-200 hover:border-primary hover:text-primary"
+            >
+              <UserRound className="h-4 w-4" />
+              {session ? "Dashboard" : "Log in"}
+            </Link>
+            <Link
               href="/jobs"
               className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-zinc-300 hover:border-primary hover:bg-primary hover:text-zinc-950"
               aria-label="Search jobs"
@@ -68,7 +80,7 @@ export function Navbar() {
               <Search className="h-4 w-4" />
             </Link>
             <Link
-              href="/interview-practice"
+              href="/dashboard/interview-practice"
               className="rounded-full border border-primary bg-primary px-5 py-2.5 text-xs font-black uppercase tracking-[0.18em] text-zinc-950 transition-colors hover:bg-white"
             >
               Interview practice
@@ -81,11 +93,7 @@ export function Navbar() {
             className="md:hidden rounded-md p-2 text-zinc-200 transition-colors hover:bg-white/10"
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
@@ -95,7 +103,7 @@ export function Navbar() {
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => {
                 const active = isActive(link.href);
-                
+
                 return (
                   <Link
                     key={link.href}
@@ -113,7 +121,7 @@ export function Navbar() {
               })}
               <div className="px-4 pt-2">
                 <Link
-                  href="/interview-practice"
+                  href="/dashboard/interview-practice"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex w-full items-center justify-center rounded-full bg-primary py-3 text-sm font-black uppercase tracking-[0.16em] text-zinc-950 transition-colors hover:bg-white"
                 >
@@ -127,4 +135,3 @@ export function Navbar() {
     </nav>
   );
 }
-

@@ -16,7 +16,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slugParts = params.slug.split("-");
   const id = slugParts[slugParts.length - 1];
-  
+
   if (!id) {
     return { title: "Job Not Found | kamkhoj" };
   }
@@ -43,14 +43,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function RemoteJobPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function RemoteJobPage({ params }: { params: { slug: string } }) {
   const slugParts = params.slug.split("-");
   const id = slugParts[slugParts.length - 1];
-  
+
   if (!id) {
     notFound();
   }
@@ -65,49 +61,49 @@ export default async function RemoteJobPage({
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": [
+    itemListElement: [
       {
         "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://www.kamkhoj.com"
+        position: 1,
+        name: "Home",
+        item: "https://www.kamkhoj.com",
       },
       {
         "@type": "ListItem",
-        "position": 2,
-        "name": "Remote Jobs",
-        "item": "https://www.kamkhoj.com/remote-jobs"
+        position: 2,
+        name: "Remote Jobs",
+        item: "https://www.kamkhoj.com/remote-jobs",
       },
       {
         "@type": "ListItem",
-        "position": 3,
-        "name": job.jobTitle,
-        "item": `https://www.kamkhoj.com/remote-jobs/${params.slug}`
-      }
-    ]
+        position: 3,
+        name: job.jobTitle,
+        item: `https://www.kamkhoj.com/remote-jobs/${params.slug}`,
+      },
+    ],
   };
 
   // Job Posting Schema
   const jobPostingSchema = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
-    "title": job.jobTitle,
-    "description": job.description || job.jobTitle,
-    "datePosted": job.createdAt,
-    "hiringOrganization": {
+    title: job.jobTitle,
+    description: job.description || job.jobTitle,
+    datePosted: job.createdAt,
+    hiringOrganization: {
       "@type": "Organization",
-      "name": job.companyName,
-      "logo": job.companyImage
+      name: job.companyName,
+      logo: job.companyImage,
     },
-    "jobLocation": {
+    jobLocation: {
       "@type": "Place",
-      "address": {
+      address: {
         "@type": "PostalAddress",
-        "addressLocality": job.region || job.candidateLocation || "Remote",
-        "addressCountry": "Global"
-      }
+        addressLocality: job.region || job.candidateLocation || "Remote",
+        addressCountry: "Global",
+      },
     },
-    "url": job.applyNowLink
+    url: job.applyNowLink,
   };
 
   return (
@@ -122,20 +118,29 @@ export default async function RemoteJobPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
       />
-      
+
       <div className="min-h-screen bg-[#070708] pb-12 text-zinc-100">
         <div className="sticky top-0 z-10 border-b border-white/10 bg-[#09090a]/90 backdrop-blur-xl">
           <div className="container mx-auto px-4 py-4">
             <nav className="flex items-center text-sm font-bold text-zinc-500 mb-2">
-              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
+              <Link href="/" className="hover:text-primary transition-colors">
+                Home
+              </Link>
               <span className="mx-2">/</span>
-              <Link href="/remote-jobs" className="hover:text-primary transition-colors">Remote Jobs</Link>
+              <Link href="/remote-jobs" className="hover:text-primary transition-colors">
+                Remote Jobs
+              </Link>
               <span className="mx-2">/</span>
               <span className="text-zinc-200 truncate max-w-[200px]">{job.jobTitle}</span>
             </nav>
-            
+
             <div className="mt-4">
-              <Button variant="ghost" size="sm" asChild className="-ml-2 p-0 text-primary hover:bg-transparent hover:text-zinc-50 hover:underline">
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="-ml-2 p-0 text-primary hover:bg-transparent hover:text-zinc-50 hover:underline"
+              >
                 <Link href="/remote-jobs" className="flex items-center">
                   <ChevronLeft className="h-4 w-4 mr-1" />
                   Back to Remote Jobs
@@ -146,7 +151,7 @@ export default async function RemoteJobPage({
         </div>
 
         <div className="container mx-auto px-4 mt-8">
-             <RemoteJobDetail job={job} />
+          <RemoteJobDetail job={job} />
         </div>
       </div>
     </>

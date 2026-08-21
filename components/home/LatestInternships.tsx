@@ -87,8 +87,8 @@ export function LatestInternships() {
               Entry-level openings with source links.
             </h2>
             <p className="text-lg text-zinc-400 max-w-2xl">
-              Discover internships and early-career roles, then verify
-              requirements and application steps on the original source.
+              Discover internships and early-career roles, then verify requirements and application
+              steps on the original source.
             </p>
           </div>
           <Link href="/internships">

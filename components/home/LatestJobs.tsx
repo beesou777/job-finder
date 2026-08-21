@@ -85,8 +85,8 @@ export function LatestJobs() {
               Fresh vacancies, designed for fast scanning.
             </h2>
             <p className="text-lg text-zinc-400 max-w-2xl">
-              Browse recent vacancies and open the source page to verify the
-              final application instructions before you apply.
+              Browse recent vacancies and open the source page to verify the final application
+              instructions before you apply.
             </p>
           </div>
           <Link href="/jobs">

@@ -13,7 +13,7 @@ interface JobsListProps extends GetJobsOptions {
 export async function JobsList({ page, ...options }: JobsListProps) {
   const ITEMS_PER_PAGE = 12;
   const offset = (page - 1) * ITEMS_PER_PAGE;
-  
+
   const { jobs, total } = await getJobs({
     ...options,
     limit: ITEMS_PER_PAGE,
@@ -33,12 +33,12 @@ export async function JobsList({ page, ...options }: JobsListProps) {
           <div className="flex gap-3 justify-center">
             <Link href="/jobs">
               <Button
-              size="lg"
-              className="rounded-full border border-primary bg-primary px-7 text-zinc-950 hover:bg-white font-black"
-            >
-              View All Jobs
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
+                size="lg"
+                className="rounded-full border border-primary bg-primary px-7 text-zinc-950 hover:bg-white font-black"
+              >
+                View All Jobs
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
             </Link>
           </div>
         </div>
@@ -54,9 +54,7 @@ export async function JobsList({ page, ...options }: JobsListProps) {
         <p className="text-sm font-semibold text-zinc-400">
           Showing job leads from public Nepali sources
         </p>
-        <p className="text-sm font-bold text-white">
-          {total.toLocaleString()} results
-        </p>
+        <p className="text-sm font-bold text-white">{total.toLocaleString()} results</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
         {jobs.map((job) => (

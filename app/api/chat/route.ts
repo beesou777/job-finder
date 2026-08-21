@@ -1,5 +1,11 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { generateText, convertToModelMessages, createUIMessageStream, createUIMessageStreamResponse, type UIMessage } from "ai";
+import {
+  generateText,
+  convertToModelMessages,
+  createUIMessageStream,
+  createUIMessageStreamResponse,
+  type UIMessage,
+} from "ai";
 import { searchAllJobs, searchSimilarJobs, getJobSearchSchema } from "@/server/services/job-search";
 import { parseJobQuery } from "@/server/services/parse-query";
 import { checkRateLimit, getClientIP, RATE_LIMIT_RETRY_AFTER } from "@/server/services/rate-limit";
@@ -11,7 +17,10 @@ const VALID_JOB_TYPES = ["full-time", "part-time", "contract", "remote", "hybrid
 const VALID_TYPES = ["job", "internship", "all"];
 
 /** Extract search params from AI JSON response. Falls back to parseJobQuery if invalid. */
-function extractSearchParams(aiText: string, userQuery: string): { search: string; location?: string; jobType?: string; type: string } {
+function extractSearchParams(
+  aiText: string,
+  userQuery: string,
+): { search: string; location?: string; jobType?: string; type: string } {
   const start = aiText.indexOf("{");
   const end = aiText.lastIndexOf("}");
   if (start >= 0 && end > start) {
@@ -22,7 +31,9 @@ function extractSearchParams(aiText: string, userQuery: string): { search: strin
         return {
           search,
           location: parsed.location ? String(parsed.location).trim() || undefined : undefined,
-          jobType: VALID_JOB_TYPES.includes(String(parsed.jobType || "")) ? String(parsed.jobType) : undefined,
+          jobType: VALID_JOB_TYPES.includes(String(parsed.jobType || ""))
+            ? String(parsed.jobType)
+            : undefined,
           type: VALID_TYPES.includes(String(parsed.type || "")) ? String(parsed.type) : "all",
         };
       }
@@ -67,9 +78,7 @@ function getModel() {
   if (!openRouterKey) return null;
   const openrouter = createOpenRouter({ apiKey: openRouterKey });
   // Default: DeepSeek R1 Chimera (free, supports tools). Fallbacks: llama-3.2-3b, gemma-2-9b
-  const modelId =
-    process.env.OPENROUTER_MODEL ||
-    "tngtech/deepseek-r1t-chimera:free";
+  const modelId = process.env.OPENROUTER_MODEL || "tngtech/deepseek-r1t-chimera:free";
   return openrouter(modelId);
 }
 
@@ -82,7 +91,7 @@ export async function POST(req: Request) {
         error: "Limit reached: 5 searches per day. Try again tomorrow.",
         retryAfter: RATE_LIMIT_RETRY_AFTER,
       }),
-      { status: 429, headers: { "Content-Type": "application/json" } }
+      { status: 429, headers: { "Content-Type": "application/json" } },
     );
   }
 
@@ -99,7 +108,8 @@ export async function POST(req: Request) {
 
   const lastUser = [...messages].reverse().find((m) => m.role === "user");
   const userQuery =
-    (lastUser?.parts?.find((p: { type?: string }) => p.type === "text") as { text?: string })?.text ?? "";
+    (lastUser?.parts?.find((p: { type?: string }) => p.type === "text") as { text?: string })
+      ?.text ?? "";
 
   let result;
   let useDefaultMode = useDefaultModeFromStart;
@@ -162,7 +172,12 @@ export async function POST(req: Request) {
       applyUrl: j.applyUrl,
     })),
   };
-  console.log("[AI Chat] DB result:", { found: output.found, similar: isSimilar, defaultMode: useDefaultMode, titles: output.jobs.map((j) => j.title) });
+  console.log("[AI Chat] DB result:", {
+    found: output.found,
+    similar: isSimilar,
+    defaultMode: useDefaultMode,
+    titles: output.jobs.map((j) => j.title),
+  });
 
   return aiStreamResponse(params, output, remaining, isSimilar, useDefaultMode);
 }
@@ -170,10 +185,24 @@ export async function POST(req: Request) {
 /** Stream response with intro + job cards for useChat compatibility */
 function aiStreamResponse(
   params: { search: string; location?: string; jobType?: string; type: string },
-  output: { found: number; jobs: Array<{ id: string; title: string; company: string | null; location: string | null; jobType: string | null; salaryText?: string; source: string; category: string | null; description: string | null; applyUrl: string }> },
+  output: {
+    found: number;
+    jobs: Array<{
+      id: string;
+      title: string;
+      company: string | null;
+      location: string | null;
+      jobType: string | null;
+      salaryText?: string;
+      source: string;
+      category: string | null;
+      description: string | null;
+      applyUrl: string;
+    }>;
+  },
   remaining: number,
   isSimilar = false,
-  defaultMode = false
+  defaultMode = false,
 ): Response {
   const msgId = `msg-${Date.now()}`;
   const toolCallId = `call-${Date.now()}`;

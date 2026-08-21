@@ -7,28 +7,36 @@ const BASE_URL = "https://www.jobsnepal.com";
 /**
  * Extract text from a list item containing an icon
  */
-function extractFromListItem($: cheerio.CheerioAPI, container: cheerio.Cheerio<any>, iconClass: string): string | undefined {
+function extractFromListItem(
+  $: cheerio.CheerioAPI,
+  container: cheerio.Cheerio<any>,
+  iconClass: string,
+): string | undefined {
   // Find all list items and check which one contains the icon
   const listItems = $(container).find("ul.list-none li, ul li");
-  
+
   for (let i = 0; i < listItems.length; i++) {
     const listItem = $(listItems[i]);
     const hasIcon = listItem.find(`.${iconClass}`).length > 0;
-    
+
     if (hasIcon) {
       // Extract text from div or p, but exclude icon text
       const text = listItem.find("div, p").not("i").text().trim();
       return text || undefined;
     }
   }
-  
+
   return undefined;
 }
 
 /**
  * Map JobsNepal HTML card to JobData
  */
-function mapCardToJobData($: cheerio.CheerioAPI, card: cheerio.Cheerio<any>, baseUrl: string): JobData | null {
+function mapCardToJobData(
+  $: cheerio.CheerioAPI,
+  card: cheerio.Cheerio<any>,
+  baseUrl: string,
+): JobData | null {
   try {
     // Extract title and apply URL from h2.job-title a
     const titleLink = $(card).find("h2.job-title a").first();
@@ -43,8 +51,8 @@ function mapCardToJobData($: cheerio.CheerioAPI, card: cheerio.Cheerio<any>, bas
     const fullApplyUrl = applyUrl.startsWith("http")
       ? applyUrl
       : applyUrl.startsWith("/")
-      ? `${baseUrl}${applyUrl}`
-      : `${baseUrl}/${applyUrl}`;
+        ? `${baseUrl}${applyUrl}`
+        : `${baseUrl}/${applyUrl}`;
 
     // Extract company (icon-briefcase3)
     // Try to get from p.mb-0 first (more specific)
@@ -53,11 +61,13 @@ function mapCardToJobData($: cheerio.CheerioAPI, card: cheerio.Cheerio<any>, bas
     companyListItems.each((_, li) => {
       const $li = $(li);
       if ($li.find(".icon-briefcase3").length > 0) {
-        companyText = $li.find("p.mb-0").first().text().trim() || $li.find("div").not("i").first().text().trim();
+        companyText =
+          $li.find("p.mb-0").first().text().trim() ||
+          $li.find("div").not("i").first().text().trim();
         return false; // break
       }
     });
-    
+
     // Fallback to extractFromListItem if not found
     if (!companyText) {
       companyText = extractFromListItem($, card, "icon-briefcase3");
@@ -115,7 +125,7 @@ export async function scrapeJobsNepalList(url: string): Promise<{
 
     // Find all job cards
     const cards = $(".card-inner");
-    
+
     cards.each((_, card) => {
       const jobData = mapCardToJobData($, $(card), BASE_URL);
       if (jobData) {
@@ -133,7 +143,7 @@ export async function scrapeJobsNepalList(url: string): Promise<{
       const text = $(el).text().trim();
       return text === "Next" || text === "»";
     });
-    
+
     if (nextLinks.length > 0 && !nextLinks.first().hasClass("disabled")) {
       const nextLink = nextLinks.first().attr("href");
       if (nextLink) {
@@ -141,15 +151,15 @@ export async function scrapeJobsNepalList(url: string): Promise<{
         nextPageUrl = nextLink.startsWith("http")
           ? nextLink
           : nextLink.startsWith("/")
-          ? `${BASE_URL}${nextLink}`
-          : `${BASE_URL}/${nextLink}`;
+            ? `${BASE_URL}${nextLink}`
+            : `${BASE_URL}/${nextLink}`;
       }
     } else {
       // Fallback: Try to extract page number from current URL
       try {
         const urlObj = new URL(url);
         const currentPage = parseInt(urlObj.searchParams.get("page") || "1");
-        
+
         // Check if pagination controls exist and try next page
         const paginationLinks = $("a[href*='page']");
         if (paginationLinks.length > 0) {

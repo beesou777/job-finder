@@ -27,15 +27,19 @@ interface JobCardProps {
 }
 
 export function JobCard({ job }: JobCardProps) {
-  const postedDate = job.postedAt ? new Date(job.postedAt) : (job.createdAt ? new Date(job.createdAt) : new Date());
+  const postedDate = job.postedAt
+    ? new Date(job.postedAt)
+    : job.createdAt
+      ? new Date(job.createdAt)
+      : new Date();
   const daysAgo = Math.floor((Date.now() - postedDate.getTime()) / (1000 * 60 * 60 * 24));
 
   // Calculate days left until deadline/expiration
   const getDaysLeft = () => {
     if (!job.deadline && !job.expiresAt) return null;
-    
+
     let deadlineDate: Date | null = null;
-    
+
     // Try to parse deadline string first
     if (job.deadline) {
       deadlineDate = new Date(job.deadline);
@@ -43,20 +47,20 @@ export function JobCard({ job }: JobCardProps) {
         deadlineDate = null;
       }
     }
-    
+
     // Fall back to expiresAt if deadline parsing failed
     if (!deadlineDate && job.expiresAt) {
       deadlineDate = new Date(job.expiresAt);
     }
-    
+
     if (!deadlineDate || isNaN(deadlineDate.getTime())) {
       return null;
     }
-    
+
     const now = new Date();
     const diffTime = deadlineDate.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
+
     return diffDays;
   };
 
@@ -101,10 +105,13 @@ export function JobCard({ job }: JobCardProps) {
 
         <div className="min-w-0">
           <CardTitle className="mb-2 line-clamp-2 text-xl font-black leading-tight text-zinc-100">
-              {job.title}
+            {job.title}
           </CardTitle>
           {job.location && (
-            <Link href={`/jobs/${slugify(job.location)}`} className="inline-flex items-center gap-2 text-base font-semibold text-zinc-300 hover:text-primary">
+            <Link
+              href={`/jobs/${slugify(job.location)}`}
+              className="inline-flex items-center gap-2 text-base font-semibold text-zinc-300 hover:text-primary"
+            >
               <MapPin className="h-4 w-4 text-zinc-500" />
               {job.location}
             </Link>
@@ -124,19 +131,29 @@ export function JobCard({ job }: JobCardProps) {
         <div className="mt-auto flex flex-wrap items-center gap-2">
           {(job.deadline || daysLeft !== null) && (
             <Badge className="max-w-full rounded-full border border-white/25 bg-transparent px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-zinc-300 hover:bg-transparent">
-              <Calendar className={`w-3.5 h-3.5 flex-shrink-0 ${
-                daysLeft !== null && daysLeft <= 3 
-                  ? "text-red-500" 
-                  : daysLeft !== null && daysLeft <= 7 
-                  ? "text-amber-500" 
-                  : "text-gray-500"
-              }`} />
+              <Calendar
+                className={`w-3.5 h-3.5 flex-shrink-0 ${
+                  daysLeft !== null && daysLeft <= 3
+                    ? "text-red-500"
+                    : daysLeft !== null && daysLeft <= 7
+                      ? "text-amber-500"
+                      : "text-gray-500"
+                }`}
+              />
               <span className="truncate">
-                {daysLeft !== null ? (
-                  daysLeft < 0 ? "Expired" : daysLeft === 0 ? "Expires today" : daysLeft === 1 ? "1 day left" : daysLeft <= 7 ? `${daysLeft} days left` : `${daysLeft} days left`
-                ) : (
-                  job.deadline ? job.deadline : "Deadline: Soon"
-                )}
+                {daysLeft !== null
+                  ? daysLeft < 0
+                    ? "Expired"
+                    : daysLeft === 0
+                      ? "Expires today"
+                      : daysLeft === 1
+                        ? "1 day left"
+                        : daysLeft <= 7
+                          ? `${daysLeft} days left`
+                          : `${daysLeft} days left`
+                  : job.deadline
+                    ? job.deadline
+                    : "Deadline: Soon"}
               </span>
             </Badge>
           )}
@@ -154,13 +171,15 @@ export function JobCard({ job }: JobCardProps) {
                   : `/jobs?search=${encodeURIComponent(String(job.category))}`
               }
             >
-            <Badge className="max-w-full rounded-full border border-white/25 bg-transparent px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-zinc-300 hover:bg-transparent">
-              <span className="truncate block">
-                {typeof job.category === 'object' && job.category !== null && 'name' in job.category 
-                  ? (job.category as { name: string }).name 
-                  : String(job.category)}
-              </span>
-            </Badge>
+              <Badge className="max-w-full rounded-full border border-white/25 bg-transparent px-3 py-1.5 font-mono text-[10px] font-black uppercase tracking-[0.14em] text-zinc-300 hover:bg-transparent">
+                <span className="truncate block">
+                  {typeof job.category === "object" &&
+                  job.category !== null &&
+                  "name" in job.category
+                    ? (job.category as { name: string }).name
+                    : String(job.category)}
+                </span>
+              </Badge>
             </Link>
           )}
           <span className="ml-auto inline-flex items-center gap-1.5 whitespace-nowrap text-xs font-black text-zinc-400">
@@ -188,4 +207,3 @@ export function JobCard({ job }: JobCardProps) {
     </Card>
   );
 }
-

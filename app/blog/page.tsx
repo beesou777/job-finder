@@ -42,16 +42,15 @@ export default function BlogPage() {
             Career blog for job seekers in Nepal
           </h1>
           <p className="text-lg leading-8 text-zinc-400">
-            Practical advice on resumes, interviews, job search strategy,
-            internships, remote roles, and navigating Nepali job portals.
+            Practical advice on resumes, interviews, job search strategy, internships, remote roles,
+            and navigating Nepali job portals.
           </p>
         </div>
 
         <div className="mb-10 rounded-xl border border-white/10 bg-[#18181a] p-6 text-sm leading-7 text-zinc-300">
-          Articles on this page are kept to the guides KamKhoj considers most
-          useful for job seekers. Content that is too short, too promotional,
-          or due for a rewrite is kept out of the main blog index until it is
-          improved.
+          Articles on this page are kept to the guides KamKhoj considers most useful for job
+          seekers. Content that is too short, too promotional, or due for a rewrite is kept out of
+          the main blog index until it is improved.
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -64,9 +63,7 @@ export default function BlogPage() {
                       {post.category}
                     </span>
                   </div>
-                  <h2 className="text-xl font-black mb-3 text-white line-clamp-2">
-                    {post.title}
-                  </h2>
+                  <h2 className="text-xl font-black mb-3 text-white line-clamp-2">{post.title}</h2>
                   <p className="text-zinc-400 mb-4 line-clamp-3 text-sm leading-6">
                     {post.description}
                   </p>
@@ -81,7 +78,9 @@ export default function BlogPage() {
                         })}
                       </span>
                     </div>
-                    <span>{post.readTime} · {post.wordCount} words</span>
+                    <span>
+                      {post.readTime} · {post.wordCount} words
+                    </span>
                   </div>
                   <div className="mt-4 flex items-center text-primary font-bold text-sm">
                     Read more
@@ -98,8 +97,8 @@ export default function BlogPage() {
             Ready to search current vacancies?
           </h2>
           <p className="text-zinc-400 mb-6 max-w-2xl">
-            Browse active job listings, internships, and remote roles from Nepali
-            sources, then apply through the original posting.
+            Browse active job listings, internships, and remote roles from Nepali sources, then
+            apply through the original posting.
           </p>
           <Link href="/jobs">
             <button className="rounded-full bg-primary px-6 py-3 font-black text-zinc-950 hover:bg-white transition-colors">

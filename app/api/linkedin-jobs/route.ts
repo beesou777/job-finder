@@ -21,11 +21,20 @@ export async function GET(request: NextRequest) {
       limit,
       offset,
     });
-    const response = NextResponse.json({ success: true, data: { jobs: result.jobs, filters: result.filters }, total: result.total, limit, offset });
+    const response = NextResponse.json({
+      success: true,
+      data: { jobs: result.jobs, filters: result.filters },
+      total: result.total,
+      limit,
+      offset,
+    });
     response.headers.set("Cache-Control", "public, s-maxage=600, stale-while-revalidate=1800");
     return response;
   } catch (error: any) {
     console.error("Error fetching LinkedIn jobs:", error?.message || error);
-    return NextResponse.json({ success: false, error: "Failed to fetch LinkedIn jobs" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch LinkedIn jobs" },
+      { status: 500 },
+    );
   }
 }

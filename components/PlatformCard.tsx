@@ -28,7 +28,9 @@ export function PlatformCard({ name, website, logoUrl, shortDescription }: Platf
             {logoUrl ? (
               <img src={logoUrl} alt={`${name} logo`} className="w-8 h-8 object-contain" />
             ) : (
-              <span className="text-lg font-black text-zinc-400 group-hover:text-primary transition-colors">{initials}</span>
+              <span className="text-lg font-black text-zinc-400 group-hover:text-primary transition-colors">
+                {initials}
+              </span>
             )}
           </div>
           <div className="flex-1 min-w-0">
@@ -39,9 +41,7 @@ export function PlatformCard({ name, website, logoUrl, shortDescription }: Platf
               <ExternalLink className="w-3.5 h-3.5 text-zinc-500 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             {shortDescription && (
-              <p className="text-sm text-zinc-400 line-clamp-2 leading-6">
-                {shortDescription}
-              </p>
+              <p className="text-sm text-zinc-400 line-clamp-2 leading-6">{shortDescription}</p>
             )}
           </div>
         </CardContent>

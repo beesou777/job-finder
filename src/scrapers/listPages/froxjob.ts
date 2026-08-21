@@ -27,13 +27,13 @@ export async function scrapeFroxjobList(url: string): Promise<{
       // Expired jobs show: "left" (no number before it)
       // Active jobs show: "7 days left", "30 days left", etc.
       const jobInfoText = $(element).find(".search-result-info").text() || "";
-      
+
       // Check if "left" exists in the text
       if (jobInfoText.includes("left")) {
         // Check if there's a number before "left" (pattern: "X days left" or "X day left")
         const daysLeftPattern = /\d+\s*(?:day|days)?\s*left/i;
         const hasDaysLeft = daysLeftPattern.test(jobInfoText);
-        
+
         // Skip expired jobs (those with just "left" without a number)
         if (!hasDaysLeft) {
           // Job is expired (shows "left" but no number), skip it
@@ -42,9 +42,7 @@ export async function scrapeFroxjobList(url: string): Promise<{
       }
 
       // Try to find detail link from title link or details button
-      const titleLink = $(element)
-        .find("h3.search-result-data-designation a")
-        .attr("href");
+      const titleLink = $(element).find("h3.search-result-data-designation a").attr("href");
       const detailsLink = $(element).find("a.btn-details").attr("href");
 
       // Prefer details link, fallback to title link
@@ -55,9 +53,9 @@ export async function scrapeFroxjobList(url: string): Promise<{
         const fullUrl = link.startsWith("http")
           ? link
           : link.startsWith("/")
-          ? `${BASE_URL}${link}`
-          : `${BASE_URL}/${link}`;
-        
+            ? `${BASE_URL}${link}`
+            : `${BASE_URL}/${link}`;
+
         if (!detailUrls.includes(fullUrl)) {
           detailUrls.push(fullUrl);
         }
@@ -74,18 +72,15 @@ export async function scrapeFroxjobList(url: string): Promise<{
     paginationLinks.each((_, element) => {
       const text = $(element).text().trim();
       const href = $(element).attr("href");
-      
+
       // Check if it's a next page link
-      if (
-        (text.includes("Next") || text.includes("»") || text === ">>") &&
-        href
-      ) {
+      if ((text.includes("Next") || text.includes("»") || text === ">>") && href) {
         hasMore = true;
         nextPageUrl = href.startsWith("http")
           ? href
           : href.startsWith("/")
-          ? `${BASE_URL}${href}`
-          : `${BASE_URL}/${href}`;
+            ? `${BASE_URL}${href}`
+            : `${BASE_URL}/${href}`;
       }
     });
 
@@ -93,7 +88,7 @@ export async function scrapeFroxjobList(url: string): Promise<{
     if (!hasMore && detailUrls.length > 0) {
       const urlObj = new URL(url);
       const currentPage = parseInt(urlObj.searchParams.get("page") || "1");
-      
+
       // If we found jobs, there might be more pages
       // Try to determine if there are more pages by checking if pagination shows a higher page
       const pageNumbers: number[] = [];

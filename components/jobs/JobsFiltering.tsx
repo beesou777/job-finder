@@ -16,13 +16,13 @@ interface JobsFilteringProps {
   searchPlaceholder?: string;
 }
 
-export function JobsFiltering({ 
-  categories, 
-  jobTypes, 
-  locations, 
+export function JobsFiltering({
+  categories,
+  jobTypes,
+  locations,
   basePath = "/jobs",
   title,
-  searchPlaceholder = "Search jobs by title, company, or category..."
+  searchPlaceholder = "Search jobs by title, company, or category...",
 }: JobsFilteringProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -74,18 +74,18 @@ export function JobsFiltering({
             Search openings
           </p>
           <h1 className="text-3xl font-black leading-tight tracking-tight text-white md:text-5xl">
-            {title || (selectedCategoryName
-              ? `${selectedCategoryName} Jobs`
-              : (
+            {title ||
+              (selectedCategoryName ? (
+                `${selectedCategoryName} Jobs`
+              ) : (
                 <>
                   Find verified job leads with <span className="text-primary">kamkhoj</span>
                 </>
               ))}
           </h1>
           <p className="mt-4 text-base leading-7 text-zinc-400">
-            Filter by title, company, category, location, deadline, and work
-            arrangement. Open the original source before applying to confirm
-            salary, eligibility, and instructions.
+            Filter by title, company, category, location, deadline, and work arrangement. Open the
+            original source before applying to confirm salary, eligibility, and instructions.
           </p>
         </div>
 
@@ -103,7 +103,7 @@ export function JobsFiltering({
               </form>
 
               <div className="flex gap-2 w-full md:w-auto">
-                <Button 
+                <Button
                   onClick={() => updateParams({ search: searchValue || null })}
                   className="h-12 rounded-xl bg-primary px-6 font-black text-zinc-950 shadow-sm hover:bg-white flex-1 md:flex-none"
                 >
@@ -126,95 +126,95 @@ export function JobsFiltering({
             </div>
 
             {filtersOpen && (
-            <div className="dark-panel-grid rounded-2xl border border-white/10 bg-zinc-950 p-4 shadow-2xl shadow-black/30">
-              <div className="mb-4 flex items-start justify-between gap-4">
-                <div>
-                  <h2 className="text-lg font-black text-white">Refine your search</h2>
-                  <p className="mt-1 text-sm text-zinc-500">
-                    Choose the details that matter, then close this card.
-                  </p>
+              <div className="dark-panel-grid rounded-2xl border border-white/10 bg-zinc-950 p-4 shadow-2xl shadow-black/30">
+                <div className="mb-4 flex items-start justify-between gap-4">
+                  <div>
+                    <h2 className="text-lg font-black text-white">Refine your search</h2>
+                    <p className="mt-1 text-sm text-zinc-500">
+                      Choose the details that matter, then close this card.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setFiltersOpen(false)}
+                    className="rounded-full border border-white/10 p-2 text-zinc-400 hover:border-primary hover:text-primary"
+                    aria-label="Close filters"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setFiltersOpen(false)}
-                  className="rounded-full border border-white/10 p-2 text-zinc-400 hover:border-primary hover:text-primary"
-                  aria-label="Close filters"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              </div>
 
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
-                <FilterSelect
-                  label="Category"
-                  value={selectedCategory || ""}
-                  onChange={(value) => updateParams({ category: value || null })}
-                  options={[
-                    { value: "", label: "All categories" },
-                    ...categories.map((category: any) => ({
-                      value: category.id,
-                      label: category.name,
-                    })),
-                  ]}
-                />
-                <FilterSelect
-                  label="Location"
-                  value={selectedLocation || ""}
-                  onChange={(value) => updateParams({ location: value || null })}
-                  options={[
-                    { value: "", label: "All locations" },
-                    ...locations.map((loc: any) => ({
-                      value: loc.value,
-                      label: loc.label,
-                    })),
-                  ]}
-                />
-                <FilterSelect
-                  label="Date posted"
-                  value={selectedUrgency || ""}
-                  onChange={(value) => updateParams({ urgency: value || null })}
-                  options={[
-                    { value: "", label: "Any time" },
-                    { value: "today", label: "Today" },
-                    { value: "3days", label: "Last 3 days" },
-                    { value: "7days", label: "Last 7 days" },
-                    { value: "30days", label: "Last 30 days" },
-                  ]}
-                />
-                <FilterSelect
-                  label="Work type"
-                  value={selectedJobType || ""}
-                  onChange={(value) => updateParams({ jobType: value || null })}
-                  options={[
-                    { value: "", label: "Any work type" },
-                    ...jobTypes.map((type: any) => ({
-                      value: type.value,
-                      label: type.label,
-                    })),
-                  ]}
-                />
-              </div>
+                <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
+                  <FilterSelect
+                    label="Category"
+                    value={selectedCategory || ""}
+                    onChange={(value) => updateParams({ category: value || null })}
+                    options={[
+                      { value: "", label: "All categories" },
+                      ...categories.map((category: any) => ({
+                        value: category.id,
+                        label: category.name,
+                      })),
+                    ]}
+                  />
+                  <FilterSelect
+                    label="Location"
+                    value={selectedLocation || ""}
+                    onChange={(value) => updateParams({ location: value || null })}
+                    options={[
+                      { value: "", label: "All locations" },
+                      ...locations.map((loc: any) => ({
+                        value: loc.value,
+                        label: loc.label,
+                      })),
+                    ]}
+                  />
+                  <FilterSelect
+                    label="Date posted"
+                    value={selectedUrgency || ""}
+                    onChange={(value) => updateParams({ urgency: value || null })}
+                    options={[
+                      { value: "", label: "Any time" },
+                      { value: "today", label: "Today" },
+                      { value: "3days", label: "Last 3 days" },
+                      { value: "7days", label: "Last 7 days" },
+                      { value: "30days", label: "Last 30 days" },
+                    ]}
+                  />
+                  <FilterSelect
+                    label="Work type"
+                    value={selectedJobType || ""}
+                    onChange={(value) => updateParams({ jobType: value || null })}
+                    options={[
+                      { value: "", label: "Any work type" },
+                      ...jobTypes.map((type: any) => ({
+                        value: type.value,
+                        label: type.label,
+                      })),
+                    ]}
+                  />
+                </div>
 
-              <div className="mt-4 flex flex-wrap gap-3">
-                <Button
-                  type="button"
-                  onClick={() => setFiltersOpen(false)}
-                  className="rounded-full bg-primary px-5 font-black text-zinc-950 hover:bg-white"
-                >
-                  Done
-                </Button>
-                <Button
-                  type="button"
-                  onClick={() => {
-                    setSearchValue("");
-                    router.push(basePath);
-                  }}
-                  className="rounded-full border border-white/10 bg-transparent px-5 font-black text-zinc-300 hover:bg-white/10 hover:text-white"
-                >
-                  Clear all
-                </Button>
+                <div className="mt-4 flex flex-wrap gap-3">
+                  <Button
+                    type="button"
+                    onClick={() => setFiltersOpen(false)}
+                    className="rounded-full bg-primary px-5 font-black text-zinc-950 hover:bg-white"
+                  >
+                    Done
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setSearchValue("");
+                      router.push(basePath);
+                    }}
+                    className="rounded-full border border-white/10 bg-transparent px-5 font-black text-zinc-300 hover:bg-white/10 hover:text-white"
+                  >
+                    Clear all
+                  </Button>
+                </div>
               </div>
-            </div>
             )}
 
             {/* <div className="hidden md:grid grid-cols-3 gap-3">
@@ -263,13 +263,20 @@ export function JobsFiltering({
             </div> */}
           </div>
 
-          {(selectedCategory || selectedJobType || selectedLocation || selectedUrgency || paramsSnapshot.get("search")) && (
+          {(selectedCategory ||
+            selectedJobType ||
+            selectedLocation ||
+            selectedUrgency ||
+            paramsSnapshot.get("search")) && (
             <div className="flex flex-wrap gap-2 items-center pt-2 border-t border-white/10">
               <span className="text-sm text-zinc-500 font-bold mr-1">Active filters:</span>
               {selectedCategory && (
                 <Badge className="gap-1.5 rounded-full border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
                   {selectedCategoryName}
-                  <button onClick={() => removeFilter("category")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("category")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
@@ -277,7 +284,10 @@ export function JobsFiltering({
               {selectedJobType && (
                 <Badge className="gap-1.5 rounded-full border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
                   {selectedJobType}
-                  <button onClick={() => removeFilter("jobType")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("jobType")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
@@ -285,7 +295,10 @@ export function JobsFiltering({
               {selectedLocation && (
                 <Badge className="gap-1.5 rounded-full border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
                   {selectedLocation}
-                  <button onClick={() => removeFilter("location")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("location")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
@@ -293,7 +306,10 @@ export function JobsFiltering({
               {selectedUrgency && (
                 <Badge className="gap-1.5 rounded-full border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
                   {selectedUrgency}
-                  <button onClick={() => removeFilter("urgency")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("urgency")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
@@ -301,7 +317,10 @@ export function JobsFiltering({
               {paramsSnapshot.get("search") && (
                 <Badge className="gap-1.5 rounded-full border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
                   {paramsSnapshot.get("search")}
-                  <button onClick={() => removeFilter("search")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("search")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>

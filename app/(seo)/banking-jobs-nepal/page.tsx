@@ -8,11 +8,11 @@ export async function generateMetadata() {
   const robots = await getLandingPageRobots(config);
   return {
     ...generateCollectionMetadata({
-  path: "/banking-jobs-nepal",
-  title: config.title,
-  description: config.description,
-  keywords: ["banking jobs nepal", "bank vacancy nepal", "finance jobs nepal"],
-}),
+      path: "/banking-jobs-nepal",
+      title: config.title,
+      description: config.description,
+      keywords: ["banking jobs nepal", "bank vacancy nepal", "finance jobs nepal"],
+    }),
     robots,
   };
 }

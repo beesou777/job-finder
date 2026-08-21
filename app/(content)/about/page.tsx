@@ -20,12 +20,10 @@ export default function AboutPage() {
             <p className="mb-3 font-mono text-sm font-black uppercase tracking-[0.18em] text-primary">
               About KamKhoj
             </p>
-            <h1 className="text-4xl md:text-5xl font-black text-white mb-4">
-              About KamKhoj
-            </h1>
+            <h1 className="text-4xl md:text-5xl font-black text-white mb-4">About KamKhoj</h1>
             <p className="text-lg text-zinc-400 leading-relaxed">
-              KamKhoj is a Nepal job search engine that helps job seekers discover
-              vacancies and internships from multiple Nepali job portals in one place.
+              KamKhoj is a Nepal job search engine that helps job seekers discover vacancies and
+              internships from multiple Nepali job portals in one place.
             </p>
           </div>
         </div>
@@ -41,16 +39,15 @@ export default function AboutPage() {
               </h2>
               <div className="space-y-4 text-zinc-300 leading-relaxed">
                 <p>
-                  KamKhoj collects publicly available job listing information from
-                  job portals and career pages, then organizes it for search by title,
-                  company, category, location, job type, and skill. Each job links
-                  back to the original source for application and final verification.
+                  KamKhoj collects publicly available job listing information from job portals and
+                  career pages, then organizes it for search by title, company, category, location,
+                  job type, and skill. Each job links back to the original source for application
+                  and final verification.
                 </p>
                 <p>
-                  KamKhoj is not a recruitment agency and does not claim ownership of
-                  third-party job postings. The goal is discovery: making it faster
-                  for people in Nepal to find relevant opportunities without visiting
-                  many portals separately.
+                  KamKhoj is not a recruitment agency and does not claim ownership of third-party
+                  job postings. The goal is discovery: making it faster for people in Nepal to find
+                  relevant opportunities without visiting many portals separately.
                 </p>
               </div>
             </CardContent>
@@ -58,9 +55,21 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
-              { icon: Search, title: "Search-first", text: "Built around job discovery across portals, cities, categories, and skills." },
-              { icon: ShieldCheck, title: "Source-aware", text: "Applications and final details stay with the original job source." },
-              { icon: CheckCircle2, title: "Free to use", text: "Candidates can search without account requirements or paywalls." },
+              {
+                icon: Search,
+                title: "Search-first",
+                text: "Built around job discovery across portals, cities, categories, and skills.",
+              },
+              {
+                icon: ShieldCheck,
+                title: "Source-aware",
+                text: "Applications and final details stay with the original job source.",
+              },
+              {
+                icon: CheckCircle2,
+                title: "Free to use",
+                text: "Candidates can search without account requirements or paywalls.",
+              },
             ].map((item) => (
               <Card key={item.title} className="border-white/10 bg-[#18181a] text-white">
                 <CardContent className="p-6">
@@ -80,15 +89,30 @@ export default function AboutPage() {
               </h2>
               <ul className="space-y-3 text-zinc-300">
                 <li>Job listings are shown with original source attribution where available.</li>
-                <li>KamKhoj prioritizes active listings and removes or de-emphasizes expired jobs where expiry data is available.</li>
-                <li>Career articles are written for Nepal job seekers and should be reviewed when market details change.</li>
-                <li>Users should verify salary, deadline, eligibility, and application instructions on the original source before applying.</li>
+                <li>
+                  KamKhoj prioritizes active listings and removes or de-emphasizes expired jobs
+                  where expiry data is available.
+                </li>
+                <li>
+                  Career articles are written for Nepal job seekers and should be reviewed when
+                  market details change.
+                </li>
+                <li>
+                  Users should verify salary, deadline, eligibility, and application instructions on
+                  the original source before applying.
+                </li>
               </ul>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href="/how-kamkhoj-works" className="text-primary font-semibold hover:underline">
+                <Link
+                  href="/how-kamkhoj-works"
+                  className="text-primary font-semibold hover:underline"
+                >
                   How KamKhoj works
                 </Link>
-                <Link href="/editorial-policy" className="text-primary font-semibold hover:underline">
+                <Link
+                  href="/editorial-policy"
+                  className="text-primary font-semibold hover:underline"
+                >
                   Read editorial policy
                 </Link>
                 <Link href="/contact" className="text-primary font-semibold hover:underline">
@@ -105,12 +129,15 @@ export default function AboutPage() {
                 Contact
               </h2>
               <p className="text-zinc-300 leading-relaxed">
-                For corrections, source-removal requests, feedback, or partnership
-                questions, contact the maintainer through LinkedIn:
-                {" "}
-                <a href="https://www.linkedin.com/in/beesou-shah/" className="text-primary font-semibold hover:underline">
+                For corrections, source-removal requests, feedback, or partnership questions,
+                contact the maintainer through LinkedIn:{" "}
+                <a
+                  href="https://www.linkedin.com/in/beesou-shah/"
+                  className="text-primary font-semibold hover:underline"
+                >
                   Bishwa Shah
-                </a>.
+                </a>
+                .
               </p>
             </CardContent>
           </Card>

@@ -25,10 +25,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function JobsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function JobsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

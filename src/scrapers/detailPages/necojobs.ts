@@ -10,4 +10,3 @@ export async function scrapeNecojobsDetail(url: string): Promise<JobData | null>
   // This function is not used but kept for compatibility
   return null;
 }
-

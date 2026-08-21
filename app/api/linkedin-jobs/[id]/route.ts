@@ -2,12 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { LinkedInJob } from "@/server/db/entities/LinkedInJob";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const dataSource = await getDataSource();
     const linkedInJobRepository = dataSource.getRepository(LinkedInJob);
@@ -22,7 +19,7 @@ export async function GET(
           success: false,
           error: "Job not found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -50,7 +47,7 @@ export async function GET(
         success: false,
         error: error?.message || "Failed to fetch LinkedIn job",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

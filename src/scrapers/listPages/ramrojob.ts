@@ -112,18 +112,14 @@ export async function scrapeRamroJobList(url: string): Promise<{
     // Fetch all pages
     do {
       try {
-        const response = await axios.get<RamroJobAPIResponse>(
-          `${API_BASE}?page=${currentPage}`,
-          {
-            headers: {
-              "Accept": "application/json",
-              "Content-Type": "application/json",
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-            },
-            timeout: 15000,
-          }
-        );
+        const response = await axios.get<RamroJobAPIResponse>(`${API_BASE}?page=${currentPage}`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          },
+          timeout: 15000,
+        });
 
         if (response.data?.data && Array.isArray(response.data.data)) {
           // Filter out expired jobs and map to JobData
@@ -134,12 +130,14 @@ export async function scrapeRamroJobList(url: string): Promise<{
             const deadlineDate = new Date(job.deadline);
             return deadlineDate > now; // Only include jobs where deadline is in the future
           });
-          
+
           const expiredCount = totalJobs - validJobs.length;
           if (expiredCount > 0) {
-            console.log(`[RamroJob] Filtered out ${expiredCount} expired job(s) on page ${currentPage}`);
+            console.log(
+              `[RamroJob] Filtered out ${expiredCount} expired job(s) on page ${currentPage}`,
+            );
           }
-          
+
           const jobs = validJobs.map(mapToJobData);
           allJobs.push(...jobs);
 
@@ -147,9 +145,7 @@ export async function scrapeRamroJobList(url: string): Promise<{
           lastPage = response.data.last_page || 1;
           currentPage = response.data.current_page || currentPage;
 
-          console.log(
-            `[RamroJob] Fetched page ${currentPage}/${lastPage}, ${jobs.length} jobs`
-          );
+          console.log(`[RamroJob] Fetched page ${currentPage}/${lastPage}, ${jobs.length} jobs`);
         } else {
           console.warn(`[RamroJob] No data in response for page ${currentPage}`);
           break;
@@ -162,10 +158,7 @@ export async function scrapeRamroJobList(url: string): Promise<{
 
         currentPage++;
       } catch (pageError: any) {
-        console.error(
-          `[RamroJob] Error fetching page ${currentPage}:`,
-          pageError.message
-        );
+        console.error(`[RamroJob] Error fetching page ${currentPage}:`, pageError.message);
         break;
       }
     } while (currentPage <= lastPage);

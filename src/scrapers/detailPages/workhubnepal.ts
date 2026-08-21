@@ -11,4 +11,3 @@ export async function scrapeWorkHubNepalDetail(url: string): Promise<JobData | n
   // If individual detail scraping is needed in the future, implement it here
   return null;
 }
-

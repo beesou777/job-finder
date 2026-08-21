@@ -12,14 +12,9 @@ export interface FetchOptions {
  */
 export async function fetchPage(
   url: string,
-  options: FetchOptions = {}
+  options: FetchOptions = {},
 ): Promise<{ data: string; status: number } | null> {
-  const {
-    retries = 3,
-    delay = 0,
-    timeout = 15000,
-    headers = {},
-  } = options;
+  const { retries = 3, delay = 0, timeout = 15000, headers = {} } = options;
 
   // Random delay between 300-1200ms to avoid rate limiting
   const randomDelay = delay || Math.floor(Math.random() * 900) + 300;
@@ -28,12 +23,11 @@ export async function fetchPage(
   const defaultHeaders = {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "Accept":
-      "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
-    "Referer": getDomain(url),
-    "Connection": "keep-alive",
+    Referer: getDomain(url),
+    Connection: "keep-alive",
     "Upgrade-Insecure-Requests": "1",
     ...headers,
   };
@@ -101,4 +95,3 @@ function getDomain(url: string): string {
     return "";
   }
 }
-

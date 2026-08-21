@@ -1,5 +1,3 @@
-
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowDown, ArrowUp, Activity, Database } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -27,8 +25,14 @@ interface OverviewProps {
 const DeltaBadge = ({ value }: { value: number }) => {
   const isPositive = value >= 0;
   return (
-    <div className={`flex items-center text-[10px] font-bold px-1.5 py-0.5 rounded-full ${isPositive ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-      {isPositive ? <ArrowUp className="h-2 w-2 mr-0.5" /> : <ArrowDown className="h-2 w-2 mr-0.5" />}
+    <div
+      className={`flex items-center text-[10px] font-bold px-1.5 py-0.5 rounded-full ${isPositive ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
+    >
+      {isPositive ? (
+        <ArrowUp className="h-2 w-2 mr-0.5" />
+      ) : (
+        <ArrowDown className="h-2 w-2 mr-0.5" />
+      )}
       {Math.abs(value)}%
     </div>
   );
@@ -54,9 +58,7 @@ export function AnalyticsOverview({ data, isLoading }: OverviewProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{data.totalOpenJobs ?? data.activeJobs}</div>
-          <p className="text-xs text-muted-foreground mt-1">
-            Active jobs currently available
-          </p>
+          <p className="text-xs text-muted-foreground mt-1">Active jobs currently available</p>
         </CardContent>
       </Card>
 
@@ -67,9 +69,7 @@ export function AnalyticsOverview({ data, isLoading }: OverviewProps) {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{data.newThisWeek ?? data.jobsLast7Days.value}</div>
-          <p className="text-xs text-muted-foreground mt-1">
-            Jobs posted this week
-          </p>
+          <p className="text-xs text-muted-foreground mt-1">Jobs posted this week</p>
         </CardContent>
       </Card>
 
@@ -115,8 +115,15 @@ export function AnalyticsOverview({ data, isLoading }: OverviewProps) {
           <div className="text-2xl font-bold">{data.jobsToday.value}</div>
           <p className="text-xs text-muted-foreground mt-1">Jobs synced since midnight</p>
           <div className="mt-4 flex items-center gap-2">
-             <Badge variant="secondary" className="text-[9px] py-0 bg-blue-50 text-blue-700 border-blue-100">Live Sync</Badge>
-             <span className="text-[9px] text-muted-foreground">NPT: {new Date().toLocaleTimeString()}</span>
+            <Badge
+              variant="secondary"
+              className="text-[9px] py-0 bg-blue-50 text-blue-700 border-blue-100"
+            >
+              Live Sync
+            </Badge>
+            <span className="text-[9px] text-muted-foreground">
+              NPT: {new Date().toLocaleTimeString()}
+            </span>
           </div>
         </CardContent>
       </Card>

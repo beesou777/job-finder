@@ -83,10 +83,7 @@ function formatJobDescription(description?: string) {
     return "<p>No job description available. Open the original source to confirm the latest role details.</p>";
   }
 
-  const preview =
-    plainText.length > 1400
-      ? `${plainText.slice(0, 1400).trimEnd()}...`
-      : plainText;
+  const preview = plainText.length > 1400 ? `${plainText.slice(0, 1400).trimEnd()}...` : plainText;
 
   return preview
     .split(/\n{2,}/)
@@ -174,9 +171,7 @@ export function RemoteJobDetail({ job }: RemoteJobDetailProps) {
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </Button>
-              <div className="text-center text-xs font-medium text-zinc-500">
-                {postedDate}
-              </div>
+              <div className="text-center text-xs font-medium text-zinc-500">{postedDate}</div>
             </div>
           </div>
 
@@ -242,8 +237,8 @@ export function RemoteJobDetail({ job }: RemoteJobDetailProps) {
                 dangerouslySetInnerHTML={{ __html: descriptionHtml }}
               />
               <p className="mt-4 text-sm text-zinc-500">
-                This preview is shortened. Open the original source for the full
-                description and the latest application instructions.
+                This preview is shortened. Open the original source for the full description and the
+                latest application instructions.
               </p>
             </CardContent>
           </Card>
@@ -285,9 +280,7 @@ export function RemoteJobDetail({ job }: RemoteJobDetailProps) {
                     {job.companyId.description}
                   </p>
                 ) : (
-                  <p className="text-sm italic text-zinc-500">
-                    No company description available.
-                  </p>
+                  <p className="text-sm italic text-zinc-500">No company description available.</p>
                 )}
 
                 {job.companyId?.industries && job.companyId.industries.length > 0 && (

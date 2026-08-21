@@ -20,10 +20,7 @@ export async function sourceRequest<T>(
   };
   metrics.set(source, state);
   for (let attempt = 0; attempt <= retries; attempt++) {
-    const wait = Math.max(
-      0,
-      minDelayMs - (Date.now() - (lastRequestAt.get(source) || 0)),
-    );
+    const wait = Math.max(0, minDelayMs - (Date.now() - (lastRequestAt.get(source) || 0)));
     if (wait) await new Promise((resolve) => setTimeout(resolve, wait));
     lastRequestAt.set(source, Date.now());
     state.requests++;
@@ -50,9 +47,7 @@ export function getSourceMetrics() {
       source,
       {
         ...value,
-        averageMs: value.requests
-          ? Math.round(value.totalMs / value.requests)
-          : 0,
+        averageMs: value.requests ? Math.round(value.totalMs / value.requests) : 0,
       },
     ]),
   );

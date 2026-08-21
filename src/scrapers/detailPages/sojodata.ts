@@ -9,7 +9,8 @@ export async function scrapeSojoDataDetail(url: string): Promise<JobData | null>
   // The list scraper already returns pre-fetched jobs with all data
   // This function is kept for compatibility but shouldn't be called
   // If needed, we could fetch individual job details from the API here
-  console.warn(`[SojoData] Detail scraper called for ${url}, but data should come from list scraper`);
+  console.warn(
+    `[SojoData] Detail scraper called for ${url}, but data should come from list scraper`,
+  );
   return null;
 }
-

@@ -13,8 +13,7 @@ export async function scrapeJobAxleDetail(url: string): Promise<JobData | null> 
   try {
     const response = await axios.get(url, {
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
       },
       timeout: 15000,
     });
@@ -90,4 +89,3 @@ export async function scrapeJobAxleDetail(url: string): Promise<JobData | null> 
     return null;
   }
 }
-

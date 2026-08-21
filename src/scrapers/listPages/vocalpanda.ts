@@ -46,7 +46,14 @@ interface VocalPandaResponse {
     job_list?: VocalPandaJob[];
   };
   success?: boolean;
-  data?: VocalPandaJob[] | { jobs?: VocalPandaJob[]; results?: VocalPandaJob[]; items?: VocalPandaJob[]; response?: { job_list?: VocalPandaJob[]; count?: number } };
+  data?:
+    | VocalPandaJob[]
+    | {
+        jobs?: VocalPandaJob[];
+        results?: VocalPandaJob[];
+        items?: VocalPandaJob[];
+        response?: { job_list?: VocalPandaJob[]; count?: number };
+      };
   jobs?: VocalPandaJob[];
   results?: VocalPandaJob[];
   items?: VocalPandaJob[];
@@ -67,7 +74,7 @@ function mapToJobData(job: VocalPandaJob): JobData {
   let applyUrl: string;
   if (job.slug) {
     // Remove leading slash if present and ensure proper format
-    const slug = job.slug.startsWith('/') ? job.slug.slice(1) : job.slug;
+    const slug = job.slug.startsWith("/") ? job.slug.slice(1) : job.slug;
     applyUrl = `${BASE_URL}/${slug}`;
   } else if (job.apply_url) {
     applyUrl = job.apply_url.startsWith("http") ? job.apply_url : `${BASE_URL}${job.apply_url}`;
@@ -76,7 +83,8 @@ function mapToJobData(job: VocalPandaJob): JobData {
   } else if (job.job_id) {
     // Construct slug from job_title and job_id
     const jobId = job.job_id;
-    const title = (job.job_title || "").toLowerCase()
+    const title = (job.job_title || "")
+      .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
     applyUrl = `${BASE_URL}/${title}-${jobId}`;
@@ -167,7 +175,11 @@ function mapToJobData(job: VocalPandaJob): JobData {
     category: category || undefined,
     type,
     source: "vocalpanda",
-    description: job.job_description ? cleanHtml(job.job_description) : (job.description ? cleanHtml(job.description) : undefined),
+    description: job.job_description
+      ? cleanHtml(job.job_description)
+      : job.description
+        ? cleanHtml(job.description)
+        : undefined,
     requirements: job.requirements ? cleanHtml(job.requirements) : undefined,
   };
 }
@@ -212,29 +224,27 @@ export async function scrapeVocalPandaList(url: string): Promise<{
 
         console.log(`    🔍 Making POST request to ${API_BASE}...`);
         console.log(`    📤 Request body:`, JSON.stringify(requestBody, null, 2));
-        
-        const response = await axios.post<VocalPandaResponse>(
-          API_BASE,
-          requestBody,
-          {
-            headers: {
-              "Content-Type": "application/json",
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-              "Accept": "application/json",
-            },
-            timeout: 15000,
-          }
-        );
+
+        const response = await axios.post<VocalPandaResponse>(API_BASE, requestBody, {
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            Accept: "application/json",
+          },
+          timeout: 15000,
+        });
 
         console.log(`    ✅ API Response received (status: ${response.status})`);
         console.log(`    📥 Response structure:`, Object.keys(response.data || {}));
-        console.log(`    📥 Response data sample:`, JSON.stringify(response.data).substring(0, 500));
+        console.log(
+          `    📥 Response data sample:`,
+          JSON.stringify(response.data).substring(0, 500),
+        );
 
         // Handle different response structures
         // Primary structure: response.data.response.job_list (based on actual API response)
         let jobs: VocalPandaJob[] = [];
-        
+
         // Check for response.response.job_list (actual structure)
         if (response.data?.response?.job_list) {
           jobs = response.data.response.job_list;
@@ -246,9 +256,15 @@ export async function scrapeVocalPandaList(url: string): Promise<{
           jobs = response.data;
           console.log(`    ✅ Found jobs in root array: ${jobs.length}`);
         } else if (response.data?.data) {
-          if (typeof response.data.data === 'object' && !Array.isArray(response.data.data) && response.data.data.response?.job_list) {
+          if (
+            typeof response.data.data === "object" &&
+            !Array.isArray(response.data.data) &&
+            response.data.data.response?.job_list
+          ) {
             jobs = response.data.data.response.job_list;
-            console.log(`    ✅ Found jobs in response.data.data.response.job_list: ${jobs.length}`);
+            console.log(
+              `    ✅ Found jobs in response.data.data.response.job_list: ${jobs.length}`,
+            );
           } else if (Array.isArray(response.data.data)) {
             jobs = response.data.data;
             console.log(`    ✅ Found jobs in response.data.data (array): ${jobs.length}`);
@@ -262,7 +278,10 @@ export async function scrapeVocalPandaList(url: string): Promise<{
             jobs = response.data.data.items;
             console.log(`    ✅ Found jobs in response.data.data.items: ${jobs.length}`);
           } else {
-            console.log(`    ⚠️  response.data.data exists but no jobs array found. Keys:`, Object.keys(response.data.data || {}));
+            console.log(
+              `    ⚠️  response.data.data exists but no jobs array found. Keys:`,
+              Object.keys(response.data.data || {}),
+            );
           }
         } else if (response.data?.jobs) {
           jobs = response.data.jobs;
@@ -274,8 +293,14 @@ export async function scrapeVocalPandaList(url: string): Promise<{
           jobs = response.data.items;
           console.log(`    ✅ Found jobs in response.data.items: ${jobs.length}`);
         } else {
-          console.log(`    ⚠️  No jobs found in expected locations. Full response keys:`, Object.keys(response.data || {}));
-          console.log(`    📋 Full response:`, JSON.stringify(response.data, null, 2).substring(0, 1000));
+          console.log(
+            `    ⚠️  No jobs found in expected locations. Full response keys:`,
+            Object.keys(response.data || {}),
+          );
+          console.log(
+            `    📋 Full response:`,
+            JSON.stringify(response.data, null, 2).substring(0, 1000),
+          );
         }
 
         if (!jobs || jobs.length === 0) {
@@ -288,16 +313,16 @@ export async function scrapeVocalPandaList(url: string): Promise<{
 
         // Determine pagination
         // Check count in response.response.count (actual structure)
-        const totalCount = response.data?.response?.count || 
-                          response.data?.count || 
-                          response.data?.total || 
-                          jobs.length;
-        totalPages = response.data?.totalPages || 
-                     response.data?.total_pages || 
-                     Math.ceil(totalCount / 100);
+        const totalCount =
+          response.data?.response?.count ||
+          response.data?.count ||
+          response.data?.total ||
+          jobs.length;
+        totalPages =
+          response.data?.totalPages || response.data?.total_pages || Math.ceil(totalCount / 100);
 
         console.log(
-          `    📄 Page ${currentPage}/${totalPages}: Fetched ${jobs.length} jobs (total: ${allJobs.length})`
+          `    📄 Page ${currentPage}/${totalPages}: Fetched ${jobs.length} jobs (total: ${allJobs.length})`,
         );
 
         hasMore = currentPage < totalPages && jobs.length === 100;
@@ -308,9 +333,7 @@ export async function scrapeVocalPandaList(url: string): Promise<{
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
       } catch (error: any) {
-        console.error(
-          `    ❌ Error fetching page ${currentPage}: ${error.message}`
-        );
+        console.error(`    ❌ Error fetching page ${currentPage}: ${error.message}`);
         if (error.response) {
           console.error(`    Response status: ${error.response.status}`);
           console.error(`    Response data:`, error.response.data);
@@ -340,4 +363,3 @@ export async function scrapeVocalPandaList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

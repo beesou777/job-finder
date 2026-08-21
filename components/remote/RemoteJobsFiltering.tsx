@@ -92,53 +92,89 @@ export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
             </Button>
           </form>
 
-          {(searchParams.get("q")) && (
+          {searchParams.get("q") && (
             <div className="flex flex-wrap gap-2 items-center pt-2 border-t border-gray-100">
               <span className="text-sm text-zinc-500 font-bold mr-1">Active filters:</span>
               {selectedCountry && (
-                <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+                <Badge
+                  variant="secondary"
+                  className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200"
+                >
                   {selectedCountry}
-                  <button onClick={() => removeFilter("country")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("country")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
               )}
-               {selectedExperience && (
-                <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+              {selectedExperience && (
+                <Badge
+                  variant="secondary"
+                  className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200"
+                >
                   {selectedExperience}
-                  <button onClick={() => removeFilter("experience")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("experience")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
               )}
               {selectedFunction && (
-                <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+                <Badge
+                  variant="secondary"
+                  className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200"
+                >
                   {selectedFunction}
-                  <button onClick={() => removeFilter("function")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("function")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
               )}
               {selectedLocation && (
-                <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+                <Badge
+                  variant="secondary"
+                  className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200"
+                >
                   {selectedLocation}
-                  <button onClick={() => removeFilter("location")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("location")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
               )}
               {selectedType && (
-                <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+                <Badge
+                  variant="secondary"
+                  className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200"
+                >
                   {selectedType}
-                  <button onClick={() => removeFilter("type")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("type")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>
               )}
               {searchParams.get("q") && (
-                <Badge variant="secondary" className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200">
+                <Badge
+                  variant="secondary"
+                  className="gap-1.5 px-3 py-1.5 bg-blue-100 text-blue-700 border-blue-200"
+                >
                   {searchParams.get("q")}
-                  <button onClick={() => removeFilter("q")} className="ml-0.5 hover:text-blue-900 transition-colors">
+                  <button
+                    onClick={() => removeFilter("q")}
+                    className="ml-0.5 hover:text-blue-900 transition-colors"
+                  >
                     <X className="h-3.5 w-3.5" />
                   </button>
                 </Badge>

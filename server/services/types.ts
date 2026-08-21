@@ -12,4 +12,3 @@ export const JobSchema = z.object({
 });
 
 export type JobResult = z.infer<typeof JobSchema>;
-

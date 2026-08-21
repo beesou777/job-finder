@@ -70,7 +70,7 @@ export function RemoteJobCard({ job }: RemoteJobCardProps) {
             <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-zinc-500" />
             <span className="truncate">{location}</span>
           </Badge>
-          
+
           {job.salary && job.salary !== "N/A" && (
             <Badge className="text-xs px-3 py-1.5 bg-primary/10 text-primary border border-primary/20 font-semibold rounded-full flex items-center gap-1.5">
               <span>{job.salary}</span>
@@ -92,14 +92,15 @@ export function RemoteJobCard({ job }: RemoteJobCardProps) {
 
         <div className="flex flex-wrap gap-1.5 mb-4">
           {job.tags?.slice(0, 3).map((tag, idx) => (
-            <span key={idx} className="text-[11px] px-2 py-0.5 bg-white/5 text-zinc-400 rounded-full border border-white/10">
+            <span
+              key={idx}
+              className="text-[11px] px-2 py-0.5 bg-white/5 text-zinc-400 rounded-full border border-white/10"
+            >
               {tag}
             </span>
           ))}
           {job.tags && job.tags.length > 3 && (
-            <span className="text-[11px] px-2 py-0.5 text-zinc-500">
-              +{job.tags.length - 3}
-            </span>
+            <span className="text-[11px] px-2 py-0.5 text-zinc-500">+{job.tags.length - 3}</span>
           )}
         </div>
 

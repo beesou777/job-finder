@@ -1,6 +1,10 @@
 import { getDataSource } from "@/lib/db";
 import { CanonicalCompany } from "@/server/db/entities/CanonicalCompany";
-import { CompanyEnrichment, MatchConfidence, ExternalSource } from "@/server/db/entities/CompanyEnrichment";
+import {
+  CompanyEnrichment,
+  MatchConfidence,
+  ExternalSource,
+} from "@/server/db/entities/CompanyEnrichment";
 import { compareTwoStrings } from "string-similarity";
 
 export interface ExternalCompanyData {
@@ -29,13 +33,16 @@ export interface MatchResult {
  */
 function normalizeCompanyName(name: string): string {
   if (!name) return "";
-  
+
   return name
     .toLowerCase()
     .trim()
     .replace(/[^\w\s]/g, "") // Remove punctuation
     .replace(/\s+/g, " ") // Normalize whitespace
-    .replace(/\b(pvt|pvt\.|private|limited|ltd|ltd\.|inc|inc\.|incorporated|corp|corp\.|corporation)\b/gi, "") // Remove common suffixes
+    .replace(
+      /\b(pvt|pvt\.|private|limited|ltd|ltd\.|inc|inc\.|incorporated|corp|corp\.|corporation)\b/gi,
+      "",
+    ) // Remove common suffixes
     .trim();
 }
 
@@ -44,7 +51,7 @@ function normalizeCompanyName(name: string): string {
  */
 function extractDomain(url: string | null | undefined): string | null {
   if (!url) return null;
-  
+
   try {
     const urlObj = new URL(url.startsWith("http") ? url : `https://${url}`);
     return urlObj.hostname.replace(/^www\./, "").toLowerCase();
@@ -58,14 +65,12 @@ function extractDomain(url: string | null | undefined): string | null {
 /**
  * Match external company data to existing CanonicalCompany
  */
-export async function matchCompany(
-  externalData: ExternalCompanyData
-): Promise<MatchResult> {
+export async function matchCompany(externalData: ExternalCompanyData): Promise<MatchResult> {
   const dataSource = await getDataSource();
   const companyRepository = dataSource.getRepository(CanonicalCompany);
-  
+
   const normalizedName = normalizeCompanyName(externalData.name);
-  
+
   // Strategy 1: Exact domain match (highest confidence)
   if (externalData.website) {
     const domain = extractDomain(externalData.website);
@@ -73,7 +78,7 @@ export async function matchCompany(
       const domainMatch = await companyRepository.findOne({
         where: { domain },
       });
-      
+
       if (domainMatch) {
         return {
           company: domainMatch,
@@ -85,13 +90,11 @@ export async function matchCompany(
       }
     }
   }
-  
+
   // Strategy 2: Exact normalized name match
   const allCompanies = await companyRepository.find();
-  const exactMatch = allCompanies.find(
-    (c) => normalizeCompanyName(c.name) === normalizedName
-  );
-  
+  const exactMatch = allCompanies.find((c) => normalizeCompanyName(c.name) === normalizedName);
+
   if (exactMatch) {
     return {
       company: exactMatch,
@@ -101,36 +104,36 @@ export async function matchCompany(
       shouldCreateNew: false,
     };
   }
-  
+
   // Strategy 3: Fuzzy name matching (using string-similarity)
   let bestMatch: CanonicalCompany | null = null;
   let bestSimilarity = 0;
-  
+
   for (const company of allCompanies) {
     const normalizedCompanyName = normalizeCompanyName(company.name);
     const similarity = compareTwoStrings(normalizedName, normalizedCompanyName);
-    
+
     // Also check aliases
     let aliasSimilarity = 0;
     if (company.aliases && company.aliases.length > 0) {
       aliasSimilarity = Math.max(
         ...company.aliases.map((alias) =>
-          compareTwoStrings(normalizedName, normalizeCompanyName(alias))
-        )
+          compareTwoStrings(normalizedName, normalizeCompanyName(alias)),
+        ),
       );
     }
-    
+
     const maxSimilarity = Math.max(similarity, aliasSimilarity);
-    
+
     if (maxSimilarity > bestSimilarity) {
       bestSimilarity = maxSimilarity;
       bestMatch = company;
     }
   }
-  
+
   // Convert similarity (0-1) to percentage (0-100)
   const similarityPercent = bestSimilarity * 100;
-  
+
   if (bestMatch && similarityPercent >= 94) {
     // 94-100% = HIGH confidence, auto-link
     return {
@@ -150,7 +153,7 @@ export async function matchCompany(
       shouldCreateNew: false,
     };
   }
-  
+
   // No match found - create new lead company
   return {
     company: null,
@@ -166,24 +169,24 @@ export async function matchCompany(
  */
 export async function findOrCreateCompany(
   externalData: ExternalCompanyData,
-  matchResult: MatchResult
+  matchResult: MatchResult,
 ): Promise<CanonicalCompany> {
   const dataSource = await getDataSource();
   const companyRepository = dataSource.getRepository(CanonicalCompany);
-  
+
   if (matchResult.company) {
     // Update aliases if name is different
     const normalizedExternalName = normalizeCompanyName(externalData.name);
     const normalizedCompanyName = normalizeCompanyName(matchResult.company.name);
-    
-    if (normalizedExternalName !== normalizedCompanyName && !matchResult.company.aliases.includes(externalData.name)) {
-      matchResult.company.aliases = [
-        ...(matchResult.company.aliases || []),
-        externalData.name,
-      ];
+
+    if (
+      normalizedExternalName !== normalizedCompanyName &&
+      !matchResult.company.aliases.includes(externalData.name)
+    ) {
+      matchResult.company.aliases = [...(matchResult.company.aliases || []), externalData.name];
       await companyRepository.save(matchResult.company);
     }
-    
+
     // Update domain if not set
     if (!matchResult.company.domain && externalData.website) {
       const domain = extractDomain(externalData.website);
@@ -192,10 +195,10 @@ export async function findOrCreateCompany(
         await companyRepository.save(matchResult.company);
       }
     }
-    
+
     return matchResult.company;
   }
-  
+
   // Create new company
   const domain = extractDomain(externalData.website || null);
   const newCompany = companyRepository.create({
@@ -204,7 +207,6 @@ export async function findOrCreateCompany(
     aliases: [],
     isVerified: false,
   });
-  
+
   return await companyRepository.save(newCompany);
 }
-

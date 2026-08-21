@@ -50,10 +50,17 @@ const loadMarketInsights = unstable_cache(
       if (posted >= weekAgo) newThisWeek += 1;
       if (expires > now && expires <= soon) expiringSoon += 1;
       if (row.type === "internship" || row.jobType === "internship") internships += 1;
-      if (["remote", "hybrid"].includes(String(row.jobType).toLowerCase()) || /remote/i.test(location)) remoteJobs += 1;
+      if (
+        ["remote", "hybrid"].includes(String(row.jobType).toLowerCase()) ||
+        /remote/i.test(location)
+      )
+        remoteJobs += 1;
     }
 
-    const top = (map: Map<string, number>) => Array.from(map, ([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count).slice(0, 8);
+    const top = (map: Map<string, number>) =>
+      Array.from(map, ([name, count]) => ({ name, count }))
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 8);
     return {
       generatedAt: new Date().toISOString(),
       sampleSize: rows.length,
@@ -64,11 +71,12 @@ const loadMarketInsights = unstable_cache(
       internships,
       categories: top(categories),
       locations: top(locations),
-      methodology: "Counts include unique active job records currently in KamKhoj. Expired records are excluded. Categories and locations use the stored listing values; small samples should be treated as directional rather than a complete measure of the Nepal labour market.",
+      methodology:
+        "Counts include unique active job records currently in KamKhoj. Expired records are excluded. Categories and locations use the stored listing values; small samples should be treated as directional rather than a complete measure of the Nepal labour market.",
     };
   },
   ["market-insights-current"],
-  { revalidate: 900 }
+  { revalidate: 900 },
 );
 
 export function getMarketInsights() {

@@ -63,9 +63,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error("Scraping error:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to scrape jobs" },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: "Failed to scrape jobs" }, { status: 500 });
   }
 }

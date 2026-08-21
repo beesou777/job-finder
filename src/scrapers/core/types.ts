@@ -26,7 +26,9 @@ function collapseRepeatedText(value?: string): string | undefined {
   const words = normalized.split(" ");
   if (words.length >= 2 && words.length % 2 === 0) {
     const half = words.length / 2;
-    if (words.slice(0, half).join(" ").toLowerCase() === words.slice(half).join(" ").toLowerCase()) {
+    if (
+      words.slice(0, half).join(" ").toLowerCase() === words.slice(half).join(" ").toLowerCase()
+    ) {
       normalized = words.slice(0, half).join(" ");
     }
   }
@@ -65,7 +67,7 @@ export function calculateExpirationDate(deadline?: string, createdAt?: Date): Da
       return parsed;
     }
   }
-  
+
   return undefined;
 }
 
@@ -84,7 +86,7 @@ function parseDeadline(deadline: string): Date | null {
         return expirationDate;
       }
     }
-    
+
     // Try "X days from now" pattern
     const daysFromNowMatch = deadline.match(/(\d+)\s*(?:day|days)\s+from\s+now/i);
     if (daysFromNowMatch) {
@@ -95,9 +97,11 @@ function parseDeadline(deadline: string): Date | null {
         return expirationDate;
       }
     }
-    
+
     // Try date format with "days from now" (e.g., "30-January-2026 (19 days from now)")
-    const dateWithDaysMatch = deadline.match(/(\d{1,2}[-/]\w+[-/]\d{4})\s*\((\d+)\s*(?:day|days)\s*from\s*now\)/i);
+    const dateWithDaysMatch = deadline.match(
+      /(\d{1,2}[-/]\w+[-/]\d{4})\s*\((\d+)\s*(?:day|days)\s*from\s*now\)/i,
+    );
     if (dateWithDaysMatch) {
       const days = parseInt(dateWithDaysMatch[2]);
       if (!isNaN(days)) {
@@ -106,13 +110,13 @@ function parseDeadline(deadline: string): Date | null {
         return expirationDate;
       }
     }
-    
+
     // Try common date formats
     const date = new Date(deadline);
     if (!isNaN(date.getTime())) {
       return date;
     }
-    
+
     // Try parsing "DD/MM/YYYY" or "MM/DD/YYYY"
     const parts = deadline.split(/[\/\-]/);
     if (parts.length === 3) {
@@ -126,29 +130,19 @@ function parseDeadline(deadline: string): Date | null {
   } catch {
     // Ignore parsing errors
   }
-  
+
   return null;
 }
 
 /**
  * Detect if a job is an internship based on title, URL, or category
  */
-export function detectJobType(
-  title: string,
-  url: string,
-  category?: string
-): "job" | "internship" {
+export function detectJobType(title: string, url: string, category?: string): "job" | "internship" {
   const lowerTitle = title.toLowerCase();
   const lowerUrl = url.toLowerCase();
   const lowerCategory = category?.toLowerCase() || "";
 
-  const internshipKeywords = [
-    "intern",
-    "internship",
-    "trainee",
-    "traineeship",
-    "apprentice",
-  ];
+  const internshipKeywords = ["intern", "internship", "trainee", "traineeship", "apprentice"];
 
   const hasInternshipKeyword =
     internshipKeywords.some((keyword) => lowerTitle.includes(keyword)) ||
@@ -157,4 +151,3 @@ export function detectJobType(
 
   return hasInternshipKeyword ? "internship" : "job";
 }
-

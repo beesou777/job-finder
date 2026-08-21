@@ -1,53 +1,46 @@
 import axios from "axios";
-import * as cheerio from "cheerio";
 import { JobResult, JobSchema } from "@/server/services/types";
 
+type KumariApiJob = {
+  id: number;
+  job_title: string;
+  job_location?: string;
+  job_url?: string;
+  company_name?: string;
+  days_left?: string;
+};
 export async function scrapeKumariJob(): Promise<JobResult[]> {
   try {
-    const { data } = await axios.get("https://kumarijob.com", {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-      },
-      timeout: 10000,
-    });
-
-    const $ = cheerio.load(data);
-    const jobs: JobResult[] = [];
-
-    $(".job-post, .vacancy-card").each((_, element) => {
-      try {
-        const title = $(element).find(".job-title, h3, h4").text().trim();
-        const company = $(element).find(".company, .employer-name").text().trim() || "Not specified";
-        const location = $(element).find(".location, .address").text().trim() || "Kathmandu";
-        const relativeUrl = $(element).find("a").first().attr("href");
-        const url = relativeUrl
-          ? relativeUrl.startsWith("http")
-            ? relativeUrl
-            : `https://kumarijob.com${relativeUrl}`
-          : "";
-
-        if (title && url) {
-          const result = JobSchema.safeParse({
-            title,
-            company,
-            location,
-            url,
-            source: "kumarijob",
-          });
-
-          if (result.success) {
-            jobs.push(result.data);
-          }
-        }
-      } catch (err) {
-        console.error("Error parsing job item:", err);
-      }
-    });
-
-    console.log(`✅ KumariJob: Scraped ${jobs.length} jobs`);
-    return jobs;
+    const items: KumariApiJob[] = [];
+    let lastPage = 1;
+    for (let page = 1; page <= Math.min(lastPage, 100); page++) {
+      const response = await axios.get(`https://www.kumarijob.com/search_mobile?page=${page}`, {
+        headers: { Accept: "application/json", "User-Agent": "Mozilla/5.0" },
+        timeout: 15000,
+      });
+      const payload = response.data;
+      const pageItems: KumariApiJob[] = Array.isArray(payload) ? payload : payload?.data || [];
+      items.push(...pageItems);
+      lastPage = Number(payload?.meta?.last_page || page);
+      if (page >= lastPage || !pageItems.length) break;
+    }
+    const active = items.filter(
+      (item) =>
+        item.job_title && item.job_url && (!item.days_left || !/^0\s*days?/i.test(item.days_left)),
+    );
+    return active.map((item) =>
+      JobSchema.parse({
+        title: item.job_title.trim(),
+        company: item.company_name?.trim() || "Not specified",
+        location: item.job_location?.trim() || "Kathmandu",
+        url: item.job_url!.startsWith("http")
+          ? item.job_url
+          : `https://www.kumarijob.com${item.job_url}`,
+        source: "kumarijob",
+      }),
+    );
   } catch (error) {
-    console.error("❌ KumariJob scraping failed:", error);
+    console.error("❌ KumariJob API scraping failed:", error);
     return [];
   }
 }

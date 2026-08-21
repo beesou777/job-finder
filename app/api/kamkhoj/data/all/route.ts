@@ -16,28 +16,55 @@ export async function GET(request: NextRequest) {
     const now = new Date();
 
     const repository = (await getDataSource()).getRepository(Job);
-    let query = repository.createQueryBuilder("job")
+    let query = repository
+      .createQueryBuilder("job")
       .leftJoin("job.category", "category")
       .select([
-        "job.id", "job.title", "job.company", "job.location", "job.applyUrl",
-        "job.type", "job.postedAt", "job.expiresAt", "job.salaryText",
-        "job.jobType", "job.source", "job.lastVerifiedAt",
-        "category.id", "category.name", "category.slug",
+        "job.id",
+        "job.title",
+        "job.company",
+        "job.location",
+        "job.applyUrl",
+        "job.type",
+        "job.postedAt",
+        "job.expiresAt",
+        "job.salaryText",
+        "job.jobType",
+        "job.source",
+        "job.lastVerifiedAt",
+        "category.id",
+        "category.name",
+        "category.slug",
       ])
       .where("job.isActive = true")
       .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
 
     if (source) query = query.andWhere("job.source = :source", { source });
-    if (type === "job" || type === "internship") query = query.andWhere("job.type = :type", { type });
+    if (type === "job" || type === "internship")
+      query = query.andWhere("job.type = :type", { type });
 
-    const rows = await query.orderBy("job.postedAt", "DESC", "NULLS LAST").skip(offset).take(limit + 1).getMany();
+    const rows = await query
+      .orderBy("job.postedAt", "DESC", "NULLS LAST")
+      .skip(offset)
+      .take(limit + 1)
+      .getMany();
     const hasMore = rows.length > limit;
     const jobs = rows.slice(0, limit);
-    const response = NextResponse.json({ success: true, count: jobs.length, limit, offset, hasMore, data: jobs });
+    const response = NextResponse.json({
+      success: true,
+      count: jobs.length,
+      limit,
+      offset,
+      hasMore,
+      data: jobs,
+    });
     response.headers.set("Cache-Control", "public, s-maxage=1800, stale-while-revalidate=3600");
     return response;
   } catch (error: any) {
     console.error("Error fetching job data:", error?.message || error);
-    return NextResponse.json({ success: false, error: "Failed to fetch job data" }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch job data" },
+      { status: 500 },
+    );
   }
 }

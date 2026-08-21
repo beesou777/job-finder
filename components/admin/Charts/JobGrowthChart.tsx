@@ -1,5 +1,12 @@
-
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+} from "recharts";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { format } from "date-fns";
 
@@ -8,7 +15,8 @@ interface GrowthChartProps {
 }
 
 export function JobGrowthChart({ data }: GrowthChartProps) {
-  if (!data?.length) return <div className="text-center p-8 text-muted-foreground">No data available</div>;
+  if (!data?.length)
+    return <div className="text-center p-8 text-muted-foreground">No data available</div>;
 
   const formattedData = data.map((item) => ({
     date: format(new Date(item.date), "MMM d"),
@@ -28,16 +36,16 @@ export function JobGrowthChart({ data }: GrowthChartProps) {
             <AreaChart data={formattedData}>
               <defs>
                 <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <XAxis 
-                dataKey="date" 
-                stroke="#888888" 
-                fontSize={12} 
-                tickLine={false} 
-                axisLine={false} 
+              <XAxis
+                dataKey="date"
+                stroke="#888888"
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
               />
               <YAxis
                 stroke="#888888"
@@ -47,11 +55,22 @@ export function JobGrowthChart({ data }: GrowthChartProps) {
                 tickFormatter={(value) => `${value}`}
               />
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-              <Tooltip 
-                contentStyle={{ borderRadius: "8px", border: "none", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }}
+              <Tooltip
+                contentStyle={{
+                  borderRadius: "8px",
+                  border: "none",
+                  boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                }}
                 labelFormatter={(label, payload) => payload[0]?.payload.fullDate || label}
               />
-              <Area type="monotone" dataKey="count" stroke="#8884d8" fillOpacity={1} fill="url(#colorCount)" strokeWidth={2} />
+              <Area
+                type="monotone"
+                dataKey="count"
+                stroke="#8884d8"
+                fillOpacity={1}
+                fill="url(#colorCount)"
+                strokeWidth={2}
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>

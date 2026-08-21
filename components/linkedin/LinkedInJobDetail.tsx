@@ -41,10 +41,7 @@ function buildDescriptionPreview(description?: string) {
     return [];
   }
 
-  const preview =
-    plainText.length > 1400
-      ? `${plainText.slice(0, 1400).trimEnd()}...`
-      : plainText;
+  const preview = plainText.length > 1400 ? `${plainText.slice(0, 1400).trimEnd()}...` : plainText;
 
   return preview
     .split(/\n{2,}/)
@@ -68,9 +65,7 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
   if (!job) {
     return (
       <Card className="border border-white/10 bg-[#1b1b1d]">
-        <CardContent className="py-12 pt-6 text-center text-red-500">
-          Job not found.
-        </CardContent>
+        <CardContent className="py-12 pt-6 text-center text-red-500">Job not found.</CardContent>
       </Card>
     );
   }
@@ -99,9 +94,7 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
       <CardContent className="pt-6">
         <div className="mb-4 flex items-start justify-between">
           <div className="flex-1">
-            <h2 className="mb-2 text-2xl font-black text-zinc-50">
-              {job.title}
-            </h2>
+            <h2 className="mb-2 text-2xl font-black text-zinc-50">{job.title}</h2>
             {job.company && (
               <div className="mb-2 flex items-center text-lg text-zinc-400">
                 <Building2 className="mr-2 h-5 w-5" />
@@ -175,14 +168,9 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
 
         <div className="border-t border-white/10 pt-6">
           <div className="mb-4">
-            <h3 className="mb-3 text-lg font-black text-zinc-50">
-              Description Preview
-            </h3>
+            <h3 className="mb-3 text-lg font-black text-zinc-50">Description Preview</h3>
             {descriptionPreview.length > 0 ? (
-              <div
-                className="space-y-3 text-zinc-300"
-                style={{ lineHeight: "1.7" }}
-              >
+              <div className="space-y-3 text-zinc-300" style={{ lineHeight: "1.7" }}>
                 {descriptionPreview.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
@@ -191,22 +179,18 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
               <p className="italic text-zinc-500">No description available.</p>
             )}
             <p className="mt-4 text-sm text-zinc-500">
-              This preview is shortened. Open LinkedIn or the apply link for the
-              full description and latest job details.
+              This preview is shortened. Open LinkedIn or the apply link for the full description
+              and latest job details.
             </p>
           </div>
 
           {job.insights && Object.keys(job.insights).length > 0 && (
             <div className="mt-6 border-t border-white/10 pt-6">
-              <h3 className="mb-3 text-lg font-black text-zinc-50">
-                Job Insights
-              </h3>
+              <h3 className="mb-3 text-lg font-black text-zinc-50">Job Insights</h3>
               <div className="space-y-2">
                 {Object.entries(job.insights).map(([key, value]) => (
                   <div key={key} className="flex">
-                    <span className="w-32 font-medium text-zinc-300">
-                      {key}:
-                    </span>
+                    <span className="w-32 font-medium text-zinc-300">{key}:</span>
                     <span className="text-zinc-500">{String(value)}</span>
                   </div>
                 ))}

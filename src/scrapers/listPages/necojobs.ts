@@ -88,9 +88,9 @@ function cleanHtml(html: string): string {
 function formatSalary(
   minSalary: { currency?: string; salary?: string; salaryRange?: string | null } | undefined,
   maxSalary: { currency?: string; salary?: string; salaryRange?: string | null } | undefined,
-  isNegotiable: boolean = false
+  isNegotiable: boolean = false,
 ): string | undefined {
-  if (isNegotiable && (!minSalary?.salary && !maxSalary?.salary)) {
+  if (isNegotiable && !minSalary?.salary && !maxSalary?.salary) {
     return "Negotiable";
   }
 
@@ -115,20 +115,7 @@ function formatSalary(
 function mapToJobData(job: NecojobsJob): JobData {
   // Construct apply URL using category slug format: category/category-slug/job-slug
   // This ensures each job has a unique URL while maintaining the category format
-  let applyUrl: string;
-  if (job.categorySlug && job.slug) {
-    // Use category/categoryslug/job-slug format for uniqueness
-    applyUrl = `${BASE_URL}/category/${job.categorySlug}/${job.slug}`;
-  } else if (job.categorySlug) {
-    // Fallback: use category slug with job ID if slug not available
-    applyUrl = `${BASE_URL}/category/${job.categorySlug}/${job._id}`;
-  } else if (job.slug) {
-    // Fallback: use job slug if category slug not available
-    applyUrl = `${BASE_URL}/job/${job.slug}`;
-  } else {
-    // Last resort: use job ID
-    applyUrl = `${BASE_URL}/job/${job._id}`;
-  }
+  let applyUrl = `${BASE_URL}/job/${job.slug}`;
 
   // Format deadline from jobEndDate
   let deadline: string | undefined;
@@ -145,24 +132,17 @@ function mapToJobData(job: NecojobsJob): JobData {
 
   // Get location from jobLocation array
   const location =
-    job.jobLocation && job.jobLocation.length > 0
-      ? job.jobLocation[0].location
-      : undefined;
+    job.jobLocation && job.jobLocation.length > 0 ? job.jobLocation[0].location : undefined;
 
   // Format salary
-  const salaryText = formatSalary(
-    job.minimumSalary,
-    job.maximumSalary,
-    job.isSalaryNegotiable
-  );
+  const salaryText = formatSalary(job.minimumSalary, job.maximumSalary, job.isSalaryNegotiable);
 
   // Format job type (availableFor like "Full Time", "Part Time")
   const jobType = job.availableFor || undefined;
 
   // Determine if it's an internship based on jobLevel or category
   const isInternship =
-    job.jobLevel?.toLowerCase().includes("intern") ||
-    job.category?.toLowerCase().includes("intern")
+    job.jobLevel?.toLowerCase().includes("intern") || job.category?.toLowerCase().includes("intern")
       ? "internship"
       : "job";
 
@@ -203,30 +183,22 @@ async function fetchAllJobs(): Promise<JobData[]> {
         skip: skip,
       };
 
-      const response = await axios.post<NecojobsFilterResponse>(
-        JOB_FILTER_API,
-        payload,
-        {
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-          },
-          timeout: 15000,
-        }
-      );
+      const response = await axios.post<NecojobsFilterResponse>(JOB_FILTER_API, payload, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        timeout: 15000,
+      });
 
-      if (
-        response.data?.results?.jobs &&
-        Array.isArray(response.data.results.jobs)
-      ) {
+      if (response.data?.results?.jobs && Array.isArray(response.data.results.jobs)) {
         const fetchedJobs = response.data.results.jobs;
         const mappedJobs = fetchedJobs.map(mapToJobData);
         jobs.push(...mappedJobs);
 
         console.log(
-          `[Necojobs] Fetched page ${skip}, ${mappedJobs.length} jobs (total: ${jobs.length})`
+          `[Necojobs] Fetched page ${skip}, ${mappedJobs.length} jobs (total: ${jobs.length})`,
         );
 
         // Check if there are more pages
@@ -248,22 +220,14 @@ async function fetchAllJobs(): Promise<JobData[]> {
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
       } else {
-        console.warn(
-          `[Necojobs] No jobs in response for page ${skip}`
-        );
+        console.warn(`[Necojobs] No jobs in response for page ${skip}`);
         hasMore = false;
       }
     } catch (error: any) {
-      console.error(
-        `[Necojobs] Error fetching page ${skip}:`,
-        error.message
-      );
+      console.error(`[Necojobs] Error fetching page ${skip}:`, error.message);
       // If it's a validation error, log the specific errors
       if (error.response?.data?.errors) {
-        console.error(
-          `[Necojobs] Validation errors:`,
-          error.response.data.errors
-        );
+        console.error(`[Necojobs] Validation errors:`, error.response.data.errors);
       }
       hasMore = false;
     }
@@ -285,7 +249,7 @@ export async function scrapeNecojobsList(url: string): Promise<{
 }> {
   try {
     console.log(`[Necojobs] Fetching all jobs...`);
-    
+
     // Fetch all jobs with pagination
     const allJobs = await fetchAllJobs();
 
@@ -294,9 +258,7 @@ export async function scrapeNecojobsList(url: string): Promise<{
       return { detailUrls: [], hasMore: false };
     }
 
-    console.log(
-      `✅ Necojobs: Fetched ${allJobs.length} jobs from API`
-    );
+    console.log(`✅ Necojobs: Fetched ${allJobs.length} jobs from API`);
 
     // Return detail URLs for compatibility (though we already have the jobs)
     const detailUrls = allJobs.map((job) => job.applyUrl);
@@ -311,4 +273,3 @@ export async function scrapeNecojobsList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

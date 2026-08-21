@@ -1,8 +1,8 @@
 /**
  * Career Page Monitoring Service
- * 
+ *
  * Monitors career pages for changes and updates hiring intent signals
- * 
+ *
  * Phase 6: Career Page Monitoring (Bonus)
  */
 
@@ -28,7 +28,7 @@ export interface CareerPageCheckResult {
  * and HTML parsing (e.g., Cheerio, Puppeteer for JS-rendered pages)
  */
 export async function checkCareerPage(
-  enrichment: CompanyEnrichment
+  enrichment: CompanyEnrichment,
 ): Promise<CareerPageCheckResult> {
   const result: CareerPageCheckResult = {
     enrichmentId: enrichment.id,
@@ -38,17 +38,17 @@ export async function checkCareerPage(
     hasChanges: false,
     lastCheckedAt: new Date(),
   };
-  
+
   if (!enrichment.careerPageUrl) {
     result.error = "No career page URL";
     return result;
   }
-  
+
   try {
     // TODO: Implement actual HTTP request and HTML parsing
     // This would use fetch/axios + cheerio or puppeteer
     // For now, we'll just mark it as checked
-    
+
     // Example structure:
     // const response = await fetch(enrichment.careerPageUrl);
     // const html = await response.text();
@@ -57,17 +57,18 @@ export async function checkCareerPage(
     // result.jobCount = jobCount;
     // result.hasCareerPage = true;
     // result.hasChanges = jobCount !== enrichment.jobsLast30Days; // Simple comparison
-    
+
     // For now, just update the lastCheckedAt timestamp
     const dataSource = await getDataSource();
     const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
-    
+
     enrichment.lastCheckedAt = new Date();
     await enrichmentRepository.save(enrichment);
-    
+
     result.hasCareerPage = enrichment.hasCareerPage;
-    result.error = "Career page checking not yet implemented - requires HTTP client and HTML parser";
-    
+    result.error =
+      "Career page checking not yet implemented - requires HTTP client and HTML parser";
+
     return result;
   } catch (error: any) {
     result.error = error?.message || "Unknown error";
@@ -77,7 +78,7 @@ export async function checkCareerPage(
 
 /**
  * Monitor all career pages (scheduled job)
- * 
+ *
  * This should be run periodically (e.g., daily via cron or scheduled job)
  */
 export async function monitorAllCareerPages(): Promise<{
@@ -88,27 +89,27 @@ export async function monitorAllCareerPages(): Promise<{
 }> {
   const dataSource = await getDataSource();
   const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
-  
+
   // Get all enrichments with career pages
   const enrichments = await enrichmentRepository.find({
     where: { hasCareerPage: true },
     relations: ["company"],
   });
-  
+
   const results: CareerPageCheckResult[] = [];
   let withChanges = 0;
   let errors = 0;
-  
+
   for (const enrichment of enrichments) {
     try {
       const result = await checkCareerPage(enrichment);
       results.push(result);
-      
+
       if (result.error) {
         errors++;
       } else if (result.hasChanges) {
         withChanges++;
-        
+
         // Recalculate intent score if changes detected
         await updateIntentScore(enrichment, "career_page_monitoring");
       }
@@ -125,7 +126,7 @@ export async function monitorAllCareerPages(): Promise<{
       });
     }
   }
-  
+
   return {
     checked: results.length,
     withChanges,
@@ -145,7 +146,7 @@ export async function monitorHighIntentCareerPages(): Promise<{
 }> {
   const dataSource = await getDataSource();
   const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
-  
+
   // Get high-intent companies with career pages
   const enrichments = await enrichmentRepository.find({
     where: {
@@ -154,16 +155,16 @@ export async function monitorHighIntentCareerPages(): Promise<{
     },
     relations: ["company"],
   });
-  
+
   const results: CareerPageCheckResult[] = [];
   let withChanges = 0;
   let errors = 0;
-  
+
   for (const enrichment of enrichments) {
     try {
       const result = await checkCareerPage(enrichment);
       results.push(result);
-      
+
       if (result.error) {
         errors++;
       } else if (result.hasChanges) {
@@ -183,7 +184,7 @@ export async function monitorHighIntentCareerPages(): Promise<{
       });
     }
   }
-  
+
   return {
     checked: results.length,
     withChanges,
@@ -191,4 +192,3 @@ export async function monitorHighIntentCareerPages(): Promise<{
     results,
   };
 }
-

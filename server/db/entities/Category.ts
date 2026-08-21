@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, Index, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  Index,
+  OneToMany,
+} from "typeorm";
 import { Job } from "./Job";
 
 @Entity("categories")
@@ -19,4 +26,3 @@ export class Category {
   @OneToMany(() => Job, (job) => job.category)
   jobs: Job[];
 }
-

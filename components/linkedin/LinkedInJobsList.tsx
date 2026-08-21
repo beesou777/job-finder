@@ -106,7 +106,7 @@ export function LinkedInJobsList({
 
       {total > ITEMS_PER_PAGE && (
         <div className="col-span-full mt-6">
-          <LinkedInPagination 
+          <LinkedInPagination
             currentPage={page}
             totalPages={Math.ceil(total / ITEMS_PER_PAGE)}
             totalItems={total}

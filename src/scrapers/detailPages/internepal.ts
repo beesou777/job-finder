@@ -15,10 +15,10 @@ export async function scrapeInternNepalDetail(url: string): Promise<JobData | nu
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
         "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
+        Connection: "keep-alive",
         "Upgrade-Insecure-Requests": "1",
       },
       timeout: 20000,
@@ -27,21 +27,17 @@ export async function scrapeInternNepalDetail(url: string): Promise<JobData | nu
     const $ = cheerio.load(response.data);
 
     // Extract title
-    const title = $("h1.card_title_20").first().text().trim() || 
-                  $("h1").first().text().trim() ||
-                  $("title").text().trim();
+    const title =
+      $("h1.card_title_20").first().text().trim() ||
+      $("h1").first().text().trim() ||
+      $("title").text().trim();
 
     if (!title) {
       return null;
     }
 
     // Extract company
-    const company = $(".company_info_box .company_info")
-      .first()
-      .find("span")
-      .first()
-      .text()
-      .trim();
+    const company = $(".company_info_box .company_info").first().find("span").first().text().trim();
 
     // Extract location
     const locationParts: string[] = [];
@@ -62,15 +58,19 @@ export async function scrapeInternNepalDetail(url: string): Promise<JobData | nu
     const location = locationParts.join(", ") || undefined;
 
     // Extract description
-    const description = $("p.card_description").first().text().trim() ||
-                        $("[class*='description']").first().text().trim() ||
-                        $("main").first().text().trim();
+    const description =
+      $("p.card_description").first().text().trim() ||
+      $("[class*='description']").first().text().trim() ||
+      $("main").first().text().trim();
 
     // Extract salary
     let salaryText: string | undefined;
     $(".work_description").each((i, el) => {
       const titleText = $(el).find(".work_description_title span").text().trim();
-      if (titleText && (titleText.toLowerCase().includes("salary") || titleText.toLowerCase().includes("stipend"))) {
+      if (
+        titleText &&
+        (titleText.toLowerCase().includes("salary") || titleText.toLowerCase().includes("stipend"))
+      ) {
         const salaryContent = $(el).find(".work_description_content span").text().trim();
         if (salaryContent) {
           if (salaryContent.toLowerCase().includes("negotiable")) {
@@ -121,9 +121,17 @@ export async function scrapeInternNepalDetail(url: string): Promise<JobData | nu
     let category: string | undefined;
     if (title.toLowerCase().includes("marketing")) {
       category = "Marketing";
-    } else if (title.toLowerCase().includes("design") || title.toLowerCase().includes("ui") || title.toLowerCase().includes("ux")) {
+    } else if (
+      title.toLowerCase().includes("design") ||
+      title.toLowerCase().includes("ui") ||
+      title.toLowerCase().includes("ux")
+    ) {
       category = "Design";
-    } else if (title.toLowerCase().includes("developer") || title.toLowerCase().includes("react") || title.toLowerCase().includes("js")) {
+    } else if (
+      title.toLowerCase().includes("developer") ||
+      title.toLowerCase().includes("react") ||
+      title.toLowerCase().includes("js")
+    ) {
       category = "IT & Software";
     } else if (title.toLowerCase().includes("sales")) {
       category = "Sales";
@@ -143,7 +151,10 @@ export async function scrapeInternNepalDetail(url: string): Promise<JobData | nu
 
     // Determine type
     const isInternship = badges.some((b) => b.toLowerCase().includes("internship"));
-    const type = isInternship || url.includes("internship") ? "internship" : detectJobType(title, url, category);
+    const type =
+      isInternship || url.includes("internship")
+        ? "internship"
+        : detectJobType(title, url, category);
 
     return {
       title,
@@ -163,4 +174,3 @@ export async function scrapeInternNepalDetail(url: string): Promise<JobData | nu
     return null;
   }
 }
-

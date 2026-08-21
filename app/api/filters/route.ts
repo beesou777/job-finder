@@ -3,13 +3,13 @@ import { getDataSource } from "@/lib/db";
 import { Job, JobTypeEnum } from "@/server/db/entities/Job";
 
 // Mark route as dynamic to prevent static generation
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   try {
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
-    
+
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get("type"); // Filter by job type if provided
     const now = new Date();
@@ -72,10 +72,10 @@ export async function GET(request: NextRequest) {
 
     // Convert to array and sort by count
     const normalizedJobTypes = Array.from(jobTypeMap.entries())
-      .map(([value, count]) => ({ 
-        value, 
-        label: jobTypeLabels[value] || value, 
-        count 
+      .map(([value, count]) => ({
+        value,
+        label: jobTypeLabels[value] || value,
+        count,
       }))
       .sort((a, b) => b.count - a.count);
 
@@ -96,12 +96,12 @@ export async function GET(request: NextRequest) {
   } catch (error: any) {
     console.error("Error fetching filters:", error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: "Failed to fetch filters",
         details: process.env.NODE_ENV === "development" ? error?.message : undefined,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

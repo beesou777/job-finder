@@ -13,7 +13,7 @@ const footerLinks = [
   { href: "/post-job", label: "Post a job" },
   { href: "/contact", label: "Contact" },
   { href: "/tools/salary-calculator-nepal", label: "Salary calculator" },
-  { href: "/interview-practice", label: "Interview practice" },
+  { href: "/dashboard/interview-practice", label: "Interview practice" },
 ];
 
 const searchLinks = [
@@ -45,8 +45,8 @@ export function Footer() {
           <div>
             <p className="text-lg font-medium text-zinc-200">Ready to search smarter?</p>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-500">
-              KamKhoj keeps the job search focused: discover public listings,
-              compare the important details, and continue at the original source.
+              KamKhoj keeps the job search focused: discover public listings, compare the important
+              details, and continue at the original source.
             </p>
           </div>
           <Link
@@ -70,8 +70,8 @@ export function Footer() {
         <div className="grid gap-8 py-8 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr]">
           <div>
             <p className="max-w-sm text-sm leading-6 text-zinc-400">
-              Nepal job discovery for vacancies, internships, remote roles, and
-              practical career routes. Applications continue at the original source.
+              Nepal job discovery for vacancies, internships, remote roles, and practical career
+              routes. Applications continue at the original source.
             </p>
           </div>
 
@@ -109,7 +109,9 @@ function FooterGroup({
             key={link.href}
             href={link.href}
             className={`text-sm transition-colors ${
-              muted ? "text-zinc-500 hover:text-white" : "font-bold text-zinc-300 hover:text-primary"
+              muted
+                ? "text-zinc-500 hover:text-white"
+                : "font-bold text-zinc-300 hover:text-primary"
             }`}
           >
             {link.label}

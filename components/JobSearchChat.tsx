@@ -5,7 +5,16 @@ import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MessageCircle, Send, Loader2, Sparkles, ExternalLink, MapPin, Building2, DollarSign } from "lucide-react";
+import {
+  MessageCircle,
+  Send,
+  Loader2,
+  Sparkles,
+  ExternalLink,
+  MapPin,
+  Building2,
+  DollarSign,
+} from "lucide-react";
 import { addUtmParams } from "@/lib/utils";
 
 const SUGGESTIONS = [
@@ -50,12 +59,21 @@ function isToolPart(part: MessagePart): part is ToolInvocationPart {
 function getJobsFromPart(part: unknown): JobResult[] {
   const p = part as Record<string, unknown>;
   const output = p?.output ?? p?.result;
-  if (output && typeof output === "object" && "jobs" in output && Array.isArray((output as { jobs: unknown }).jobs)) {
+  if (
+    output &&
+    typeof output === "object" &&
+    "jobs" in output &&
+    Array.isArray((output as { jobs: unknown }).jobs)
+  ) {
     const jobs = (output as { jobs: JobResult[] }).jobs;
-    return jobs.filter((j): j is JobResult => j && typeof j === "object" && "title" in j && "applyUrl" in j);
+    return jobs.filter(
+      (j): j is JobResult => j && typeof j === "object" && "title" in j && "applyUrl" in j,
+    );
   }
   if (Array.isArray(output)) {
-    return output.filter((j): j is JobResult => j && typeof j === "object" && "title" in j && "applyUrl" in j);
+    return output.filter(
+      (j): j is JobResult => j && typeof j === "object" && "title" in j && "applyUrl" in j,
+    );
   }
   return [];
 }
@@ -91,13 +109,25 @@ function AssistantMessageContent({
   const prevMsg = msgIdx > 0 ? messages[msgIdx - 1] : null;
   const lastUserMessage = prevMsg?.role === "user" ? prevMsg : null;
   const userQuery = lastUserMessage
-    ? String((lastUserMessage.parts ?? []).filter((x: unknown) => (x as { type?: string }).type === "text").map((x: unknown) => (x as { text?: string }).text).join("") || "")
+    ? String(
+        (lastUserMessage.parts ?? [])
+          .filter((x: unknown) => (x as { type?: string }).type === "text")
+          .map((x: unknown) => (x as { text?: string }).text)
+          .join("") || "",
+      )
     : "";
 
   const text = textParts.join(" ");
-  const hasJobPhrase = /here are|i found|found \d+ job|these (jobs|matches)|jobs (i )?found|matches for you|no jobs found|didn't find|try (different|broadening)/i.test(text);
-  const userSearchedJobs = /job|developer|engineer|analyst|intern|marketing|designer|manager|remote|full.?time|part.?time|kathmandu|react|node/i.test(userQuery);
-  const seemsLikeJobReply = hasJobPhrase || (text.length < 120 && userSearchedJobs && allJobs.length === 0);
+  const hasJobPhrase =
+    /here are|i found|found \d+ job|these (jobs|matches)|jobs (i )?found|matches for you|no jobs found|didn't find|try (different|broadening)/i.test(
+      text,
+    );
+  const userSearchedJobs =
+    /job|developer|engineer|analyst|intern|marketing|designer|manager|remote|full.?time|part.?time|kathmandu|react|node/i.test(
+      userQuery,
+    );
+  const seemsLikeJobReply =
+    hasJobPhrase || (text.length < 120 && userSearchedJobs && allJobs.length === 0);
 
   useEffect(() => {
     if (
@@ -111,7 +141,7 @@ function AssistantMessageContent({
     fetchedFor.current.add(message.id);
     fetch(`/api/chat/search?q=${encodeURIComponent(userQuery)}`)
       .then((r) => r.json())
-      .then((data:any) => {
+      .then((data: any) => {
         if (data.jobs?.length) setFallbackJobs(data.jobs);
       })
       .catch(() => {});
@@ -179,9 +209,7 @@ function JobCard({ job }: { job: JobResult }) {
               <span>{job.salaryText}</span>
             </p>
           )}
-          {descSnippet && (
-            <p className="mt-2 text-xs text-zinc-500 line-clamp-2">{descSnippet}</p>
-          )}
+          {descSnippet && <p className="mt-2 text-xs text-zinc-500 line-clamp-2">{descSnippet}</p>}
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
           <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-zinc-400 border border-white/10">
@@ -214,10 +242,21 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
     if (lastAssistant?.parts?.length) {
       console.log("[AI Chat] Assistant response:", {
         parts: lastAssistant.parts.map((p: unknown) => {
-          const x = p as { type?: string; text?: string; toolName?: string; output?: unknown; result?: unknown };
+          const x = p as {
+            type?: string;
+            text?: string;
+            toolName?: string;
+            output?: unknown;
+            result?: unknown;
+          };
           if (x.type === "text") return { type: "text", text: x.text?.slice(0, 150) };
           const jobs = getJobsFromPart(p);
-          return { type: "tool", toolName: x.toolName, jobCount: jobs.length, titles: jobs.map((j) => j.title) };
+          return {
+            type: "tool",
+            toolName: x.toolName,
+            jobCount: jobs.length,
+            titles: jobs.map((j) => j.title),
+          };
         }),
       });
     }
@@ -332,8 +371,16 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
             className="flex-1 border-white/10 bg-black text-zinc-100 placeholder:text-zinc-600"
             disabled={isLoading}
           />
-          <Button type="submit" disabled={isLoading} className="bg-primary text-zinc-950 hover:bg-white">
-            {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="bg-primary text-zinc-950 hover:bg-white"
+          >
+            {isLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Send className="h-4 w-4" />
+            )}
           </Button>
         </div>
       </form>
@@ -341,11 +388,7 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
   );
 
   if (embedded) {
-    return (
-      <div className="flex flex-col h-full min-h-0">
-        {content}
-      </div>
-    );
+    return <div className="flex flex-col h-full min-h-0">{content}</div>;
   }
 
   return (

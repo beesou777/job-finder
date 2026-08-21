@@ -17,4 +17,3 @@ export async function scrapeKumariJobDetail(url: string) {
 
   return scrapeDetailPage(url, selectors, "kumarijob");
 }
-

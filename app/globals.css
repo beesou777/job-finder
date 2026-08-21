@@ -71,30 +71,36 @@
   .hero-grid {
     background-image:
       radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.13) 1px, transparent 0),
-      radial-gradient(circle at 50% 18%, rgba(184, 244, 96, 0.1), transparent 34%),
-      #09090b;
-    background-size: 34px 34px, auto, auto;
+      radial-gradient(circle at 50% 18%, rgba(184, 244, 96, 0.1), transparent 34%), #09090b;
+    background-size:
+      34px 34px,
+      auto,
+      auto;
   }
 
   .dark-panel-grid {
-    background-image:
-      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.1) 1px, transparent 0);
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 0
+    );
     background-size: 28px 28px;
   }
-  
+
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
-  
+
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0px);
     }
     50% {
       transform: translateY(-20px);
     }
   }
-  
+
   .animate-shimmer {
     animation: shimmer 2s linear infinite;
     background: linear-gradient(
@@ -105,7 +111,7 @@
     );
     background-size: 200% 100%;
   }
-  
+
   @keyframes shimmer {
     0% {
       background-position: -200% 0;
@@ -114,17 +120,17 @@
       background-position: 200% 0;
     }
   }
-  
+
   .glass-effect {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
-  
+
   .shadow-glow {
     box-shadow: 0 0 20px rgba(184, 244, 96, 0.22);
   }
-  
+
   .shadow-glow-lg {
     box-shadow: 0 0 40px rgba(184, 244, 96, 0.18);
   }
@@ -156,4 +162,3 @@
     }
   }
 }
-

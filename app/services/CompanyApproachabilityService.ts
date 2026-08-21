@@ -131,7 +131,7 @@ async function loadCompanyData(): Promise<Map<string, CompanyFromJSON[]>> {
  */
 export async function getCompanyApproachability(
   companyName: string,
-  companyDomain: string | null
+  companyDomain: string | null,
 ): Promise<ApproachabilityData> {
   // 1. Check Database First
   try {
@@ -139,10 +139,13 @@ export async function getCompanyApproachability(
     const enrichmentRepo = dataSource.getRepository(CompanyEnrichment);
 
     // Exact match or domain match in DB
-    const enrichment = await enrichmentRepo.createQueryBuilder("enrichment")
+    const enrichment = await enrichmentRepo
+      .createQueryBuilder("enrichment")
       .leftJoinAndSelect("enrichment.company", "company")
       .where("LOWER(company.name) = LOWER(:name)", { name: companyName })
-      .orWhere(companyDomain ? "LOWER(enrichment.website) LIKE LOWER(:domain)" : "1=0", { domain: `%${companyDomain}%` })
+      .orWhere(companyDomain ? "LOWER(enrichment.website) LIKE LOWER(:domain)" : "1=0", {
+        domain: `%${companyDomain}%`,
+      })
       .getOne();
 
     if (enrichment) {
@@ -173,9 +176,8 @@ export async function getCompanyApproachability(
       // Match by normalized name
       if (companyNormalizedName === normalizedName && normalizedName !== "") {
         // Filter out LinkedIn URLs from website
-        const website = company.website && !company.website.includes('linkedin.com')
-          ? company.website
-          : null;
+        const website =
+          company.website && !company.website.includes("linkedin.com") ? company.website : null;
 
         return {
           isKnownCompany: true,
@@ -192,7 +194,7 @@ export async function getCompanyApproachability(
         const companyDomainNormalized = extractDomain(company.website);
         if (companyDomainNormalized && companyDomainNormalized === companyDomain) {
           // Only return if it's not a LinkedIn URL
-          if (!company.website.includes('linkedin.com')) {
+          if (!company.website.includes("linkedin.com")) {
             return {
               isKnownCompany: true,
               hasContactInfo: !!(company.email || company.phoneNumber),
@@ -217,7 +219,7 @@ export async function getCompanyApproachability(
  * Batch check approachability for multiple companies
  */
 export async function batchGetApproachability(
-  companies: Array<{ name: string; domain: string | null }>
+  companies: Array<{ name: string; domain: string | null }>,
 ): Promise<Map<string, ApproachabilityData>> {
   const results = new Map<string, ApproachabilityData>();
 

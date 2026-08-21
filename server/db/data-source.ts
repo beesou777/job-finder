@@ -35,7 +35,7 @@ const ALL_ENTITIES = [
   CanonicalCompany,
   CompanyEnrichment,
   HiringIntentScoreHistory,
-  LinkedInJob
+  LinkedInJob,
 ];
 
 function createDataSource(): DataSource {
@@ -131,14 +131,12 @@ export async function getDataSource() {
             console.log(`📊 Database has ${tables.length} tables`);
 
             // Check if required tables exist (updated to match actual entity names)
-            const requiredTables = ['jobs', 'users', 'categories'];
+            const requiredTables = ["jobs", "users", "categories"];
             const existingTableNames = tables.map((t: string) => t.toLowerCase());
-            const missingTables = requiredTables.filter(
-              req => !existingTableNames.includes(req)
-            );
+            const missingTables = requiredTables.filter((req) => !existingTableNames.includes(req));
 
             if (missingTables.length > 0) {
-              console.warn(`⚠️  Missing tables: ${missingTables.join(', ')}`);
+              console.warn(`⚠️  Missing tables: ${missingTables.join(", ")}`);
             }
             await queryRunner.release();
           } catch (checkError) {
@@ -170,6 +168,5 @@ export const AppDataSource = {
   },
   async initialize() {
     return getDataSource();
-  }
+  },
 } as any;
-

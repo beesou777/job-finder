@@ -11,8 +11,8 @@ export const dynamic = "force-dynamic";
  */
 export async function POST(request: NextRequest) {
   try {
-    const body:any = await request.json();
-    
+    const body: any = await request.json();
+
     // Check if it's a single company or batch
     if (body.name) {
       // Single company
@@ -27,9 +27,12 @@ export async function POST(request: NextRequest) {
         keywordMatches: body.keywordMatches || [],
         source: body.source ? (body.source as ExternalSource) : ExternalSource.MANUAL,
       };
-      
-      const enrichment = await enrichCompany(externalData, externalData.source || ExternalSource.MANUAL);
-      
+
+      const enrichment = await enrichCompany(
+        externalData,
+        externalData.source || ExternalSource.MANUAL,
+      );
+
       return NextResponse.json({
         success: true,
         enrichment: {
@@ -46,7 +49,7 @@ export async function POST(request: NextRequest) {
       // Batch companies
       const companies = Array.isArray(body.companies) ? body.companies : body;
       const source = (body.source as ExternalSource) || ExternalSource.MANUAL;
-      
+
       const externalDataArray: ExternalCompanyData[] = companies.map((c: any) => ({
         name: c.name || c.company_name,
         website: c.website || c.websitelink || null,
@@ -58,9 +61,9 @@ export async function POST(request: NextRequest) {
         keywordMatches: c.keywordMatches || [],
         source: source,
       }));
-      
+
       const result = await batchEnrichCompanies(externalDataArray, source);
-      
+
       return NextResponse.json({
         success: true,
         result,
@@ -68,15 +71,11 @@ export async function POST(request: NextRequest) {
     } else {
       return NextResponse.json(
         { error: "Invalid request body. Expected 'name' (single) or array of companies (batch)" },
-        { status: 400 }
+        { status: 400 },
       );
     }
   } catch (error: any) {
     console.error("Error enriching company:", error);
-    return NextResponse.json(
-      { error: error?.message || "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error?.message || "Internal server error" }, { status: 500 });
   }
 }
-

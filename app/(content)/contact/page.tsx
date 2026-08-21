@@ -19,8 +19,8 @@ export default function ContactPage() {
         </p>
         <h1 className="text-4xl font-black text-white mb-4">Contact KamKhoj</h1>
         <p className="text-lg text-zinc-400 mb-8">
-          Use this page for corrections, source questions, removal requests, employer
-          feedback, and partnership inquiries.
+          Use this page for corrections, source questions, removal requests, employer feedback, and
+          partnership inquiries.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-[#18181a] border border-white/10 rounded-xl p-6">
@@ -29,7 +29,10 @@ export default function ContactPage() {
             <p className="text-zinc-300 mb-4">
               Contact Bishwa Shah through LinkedIn for KamKhoj requests.
             </p>
-            <a href="https://www.linkedin.com/in/beesou-shah/" className="text-primary font-semibold hover:underline">
+            <a
+              href="https://www.linkedin.com/in/beesou-shah/"
+              className="text-primary font-semibold hover:underline"
+            >
               LinkedIn profile
             </a>
           </div>
@@ -37,22 +40,24 @@ export default function ContactPage() {
             <ShieldCheck className="w-6 h-6 text-primary mb-4" />
             <h2 className="text-xl font-black text-white mb-2">Listing Corrections</h2>
             <p className="text-zinc-300">
-              Include the job title, company, source URL, issue, and requested change.
-              KamKhoj will review source-related requests as soon as practical.
+              Include the job title, company, source URL, issue, and requested change. KamKhoj will
+              review source-related requests as soon as practical.
             </p>
           </div>
         </div>
         <div className="mt-6 rounded-xl border border-primary/30 bg-primary/5 p-6">
           <h2 className="text-xl font-black text-white mb-2">What to include in a report</h2>
           <p className="text-zinc-300 leading-7">
-            Send the exact job title, company, KamKhoj URL, original source URL,
-            and the correction you are requesting. For removal requests, explain
-            your relationship to the listing or employer. This helps the maintainer
-            verify the issue quickly.
+            Send the exact job title, company, KamKhoj URL, original source URL, and the correction
+            you are requesting. For removal requests, explain your relationship to the listing or
+            employer. This helps the maintainer verify the issue quickly.
           </p>
         </div>
         <div className="mt-8">
-          <Link href="/how-kamkhoj-works" className="mr-6 text-primary font-semibold hover:underline">
+          <Link
+            href="/how-kamkhoj-works"
+            className="mr-6 text-primary font-semibold hover:underline"
+          >
             How KamKhoj works
           </Link>
           <Link href="/editorial-policy" className="text-primary font-semibold hover:underline">

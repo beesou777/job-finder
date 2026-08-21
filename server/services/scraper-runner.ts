@@ -10,7 +10,7 @@ export async function runAllScrapers(): Promise<JobResult[]> {
   console.log("🚀 Starting job scraping...");
   console.log("⚠️  Note: If you see 0 jobs, the site structure may have changed.");
   console.log("    You may need to update the CSS selectors in the scraper files.\n");
-  
+
   const results: JobResult[] = [];
 
   // Run all scrapers in parallel for better performance
@@ -30,20 +30,28 @@ export async function runAllScrapers(): Promise<JobResult[]> {
       results.push(...result.value);
     } else {
       const scraperNames = [
-        "MeroJob", "KantipurJob", "JobsNepal", "MeroCareer", 
-        "RamroJob", "KumariJob"
+        "MeroJob",
+        "KantipurJob",
+        "JobsNepal",
+        "MeroCareer",
+        "RamroJob",
+        "KumariJob",
       ];
       // Only log if it's a real error (not just 0 jobs)
       if (result.reason?.code !== "ENOTFOUND") {
-        console.error(`❌ ${scraperNames[index]} failed:`, result.reason?.message || "Unknown error");
+        console.error(
+          `❌ ${scraperNames[index]} failed:`,
+          result.reason?.message || "Unknown error",
+        );
       }
     }
   });
 
   console.log(`\n✅ Total jobs scraped: ${results.length}`);
   if (results.length === 0) {
-    console.log("💡 Tip: Check the actual website HTML structure and update selectors in server/scrapers/legacy/");
+    console.log(
+      "💡 Tip: Check the actual website HTML structure and update selectors in server/scrapers/legacy/",
+    );
   }
   return results;
 }
-

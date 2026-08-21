@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, Index, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Index,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import { Category } from "./Category";
 
 export enum JobTypeEnum {
@@ -130,4 +139,3 @@ export class Job {
   @UpdateDateColumn()
   updatedAt: Date;
 }
-

@@ -3,10 +3,7 @@ import { getDataSource } from "@/lib/db";
 import { Job } from "@/server/db/entities/Job";
 import { addUtmParams } from "@/lib/utils";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);

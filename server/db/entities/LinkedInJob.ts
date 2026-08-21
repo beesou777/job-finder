@@ -41,4 +41,3 @@ export class LinkedInJob {
   @Index()
   created_at: Date;
 }
-

@@ -17,8 +17,8 @@ export function HomeHero() {
               Your <span className="text-primary">Nepal job search</span> starts here.
             </h1>
             <p className="mt-8 max-w-3xl text-lg font-semibold leading-8 text-zinc-300 md:text-2xl">
-              Search fresh vacancies from Nepali job sources, compare the
-              details that matter, and apply through the original posting.
+              Search fresh vacancies from Nepali job sources, compare the details that matter, and
+              apply through the original posting.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4">

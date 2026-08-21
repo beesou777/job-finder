@@ -109,9 +109,9 @@ function formatSalary(
   minSalary: number | null,
   maxSalary: number | null,
   salaryMode: string,
-  isNegotiable: boolean
+  isNegotiable: boolean,
 ): string | undefined {
-  if (isNegotiable && (!minSalary && !maxSalary)) {
+  if (isNegotiable && !minSalary && !maxSalary) {
     return "Negotiable";
   }
 
@@ -149,16 +149,14 @@ function mapToJobData(job: VritJobsJob): JobData {
 
   // Get location from address array or company location
   const location =
-    job.address && job.address.length > 0
-      ? job.address[0].name
-      : job.company.location || "Nepal";
+    job.address && job.address.length > 0 ? job.address[0].name : job.company.location || "Nepal";
 
   // Format salary
   const salaryText = formatSalary(
     job.min_salary,
     job.max_salary,
     job.salary_mode,
-    job.is_negotiable
+    job.is_negotiable,
   );
 
   // Format job type (timing.name like "Full Time", "Part Time")
@@ -192,25 +190,22 @@ function mapToJobData(job: VritJobsJob): JobData {
 /**
  * Fetch jobs for a specific level
  */
-async function fetchJobsForLevel(
-  level: number,
-  levelName: string
-): Promise<JobData[]> {
+async function fetchJobsForLevel(level: number, levelName: string): Promise<JobData[]> {
   const jobs: JobData[] = [];
   let currentPage = 1;
-  let nextUrl: string | null = `${API_BASE}?is_public=true&page=${currentPage}&search=&size=30&level=${level}`;
+  let nextUrl: string | null =
+    `${API_BASE}?is_public=true&page=${currentPage}&search=&size=30&level=${level}`;
 
   while (nextUrl) {
     try {
-      const response = await axios.get<VritJobsAPIResponse>(nextUrl, {
+      const response = (await axios.get<VritJobsAPIResponse>(nextUrl, {
         headers: {
-          "Accept": "application/json",
+          Accept: "application/json",
           "Content-Type": "application/json",
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
         },
         timeout: 15000,
-      }) as any
+      })) as any;
 
       if (response.data?.results && Array.isArray(response.data.results)) {
         // Filter out expired jobs and map to JobData
@@ -224,14 +219,16 @@ async function fetchJobsForLevel(
 
         const expiredCount = totalJobs - validJobs.length;
         if (expiredCount > 0) {
-          console.log(`[VritJobs ${levelName}] Filtered out ${expiredCount} expired job(s) on page ${currentPage}`);
+          console.log(
+            `[VritJobs ${levelName}] Filtered out ${expiredCount} expired job(s) on page ${currentPage}`,
+          );
         }
 
         const mappedJobs = validJobs.map(mapToJobData);
         jobs.push(...mappedJobs);
 
         console.log(
-          `[VritJobs ${levelName}] Fetched page ${currentPage}, ${mappedJobs.length} jobs (total: ${jobs.length})`
+          `[VritJobs ${levelName}] Fetched page ${currentPage}, ${mappedJobs.length} jobs (total: ${jobs.length})`,
         );
 
         // Get next page URL from API response
@@ -249,7 +246,7 @@ async function fetchJobsForLevel(
     } catch (pageError: any) {
       console.error(
         `[VritJobs ${levelName}] Error fetching page ${currentPage}:`,
-        pageError.message
+        pageError.message,
       );
       break;
     }
@@ -271,7 +268,7 @@ export async function scrapeVritJobsList(url: string): Promise<{
 }> {
   try {
     const allJobs: JobData[] = [];
-    
+
     // Fetch jobs for all levels
     const levels = [
       { id: 2, name: "Entry level" },
@@ -281,11 +278,11 @@ export async function scrapeVritJobsList(url: string): Promise<{
     ];
 
     console.log(`[VritJobs] Fetching jobs for all levels...`);
-    
+
     // Fetch all levels in parallel for better performance
     const levelPromises = levels.map((level) => fetchJobsForLevel(level.id, level.name));
     const levelResults = await Promise.all(levelPromises);
-    
+
     // Combine all jobs
     for (const levelJobs of levelResults) {
       allJobs.push(...levelJobs);
@@ -306,4 +303,3 @@ export async function scrapeVritJobsList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

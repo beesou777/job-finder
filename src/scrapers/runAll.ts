@@ -45,7 +45,14 @@ import { getSourceMetrics, sourceRequest } from "./core/request-control";
 export interface ScraperConfig {
   baseUrl: string;
   source: string;
-  listScraper: (url: string) => Promise<{ detailUrls: string[]; hasMore: boolean; nextPageUrl?: string; preFetchedJobs?: JobData[] }>;
+  listScraper: (
+    url: string,
+  ) => Promise<{
+    detailUrls: string[];
+    hasMore: boolean;
+    nextPageUrl?: string;
+    preFetchedJobs?: JobData[];
+  }>;
   detailScraper: (url: string) => Promise<JobData | null>;
   maxPages?: number;
   maxJobs?: number;
@@ -86,8 +93,8 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     listScraper: scrapeKumariJobList,
     detailScraper: scrapeKumariJobDetail,
     listingUrls: ["https://www.kumarijob.com/search?page=1"],
-    maxPages: 50, // Will fetch all pages automatically
-    maxJobs: 500,
+    maxPages: 100, // Will fetch all pages automatically
+    maxJobs: 1000,
   },
   {
     baseUrl: "https://kantipurjob.com",
@@ -112,10 +119,7 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     source: "internsathi",
     listScraper: scrapeInternSathiList,
     detailScraper: scrapeInternSathiDetail,
-    listingUrls: [
-      "https://internsathi.com/internships",
-      "https://internsathi.com/jobs",
-    ],
+    listingUrls: ["https://internsathi.com/internships", "https://internsathi.com/jobs"],
     maxPages: 3,
     maxJobs: 30,
   },
@@ -178,7 +182,9 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     source: "jobsdynamics",
     listScraper: scrapeJobsDynamicsList,
     detailScraper: scrapeJobsDynamicsDetail,
-    listingUrls: ["https://jobsdynamics.com/jobs-listing/?ajax_filter=true&job_page=1&per-page=1000&sort-by=recent&posted=all"], // HTML endpoint
+    listingUrls: [
+      "https://jobsdynamics.com/jobs-listing/?ajax_filter=true&job_page=1&per-page=1000&sort-by=recent&posted=all",
+    ], // HTML endpoint
     maxPages: 50, // Will fetch all pages automatically
     maxJobs: 500,
   },
@@ -187,7 +193,9 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     source: "merorojgari",
     listScraper: scrapeMerorojgariList,
     detailScraper: scrapeMerorojgariDetail,
-    listingUrls: ["https://merorojgari.com/?feed=job_feed&job_types=fresher%2Cfull-time%2Cinternship%2Cpart-time&paged=1"], // RSS feed
+    listingUrls: [
+      "https://merorojgari.com/?feed=job_feed&job_types=fresher%2Cfull-time%2Cinternship%2Cpart-time&paged=1",
+    ], // RSS feed
     maxPages: 50, // Will fetch all pages automatically via RSS
     maxJobs: 500,
   },
@@ -219,9 +227,7 @@ const SCRAPER_CONFIGS: ScraperConfig[] = [
     source: "froxjob",
     listScraper: scrapeFroxjobList,
     detailScraper: scrapeFroxjobDetail,
-    listingUrls: [
-      "https://froxjob.com/search/result?keywords=&cityzone=&page=1",
-    ],
+    listingUrls: ["https://froxjob.com/search/result?keywords=&cityzone=&page=1"],
     maxPages: 50, // Will fetch all pages automatically
     maxJobs: 500,
   },
@@ -260,9 +266,14 @@ function hasUsefulDescription(job: JobData) {
   return Boolean(job.description && job.description.replace(/\s+/g, " ").trim().length >= 160);
 }
 
-async function enrichIncompletePrefetchedJobs(config: ScraperConfig, jobs: JobData[]): Promise<JobData[]> {
+async function enrichIncompletePrefetchedJobs(
+  config: ScraperConfig,
+  jobs: JobData[],
+): Promise<JobData[]> {
   const requestedLimit = Number.parseInt(process.env.SCRAPER_DETAIL_ENRICH_LIMIT || "20", 10);
-  const enrichmentLimit = Number.isFinite(requestedLimit) ? Math.min(50, Math.max(0, requestedLimit)) : 20;
+  const enrichmentLimit = Number.isFinite(requestedLimit)
+    ? Math.min(50, Math.max(0, requestedLimit))
+    : 20;
   let attempts = 0;
   const enriched: JobData[] = [];
 
@@ -292,7 +303,8 @@ async function enrichIncompletePrefetchedJobs(config: ScraperConfig, jobs: JobDa
     enriched.push(job);
   }
 
-  if (attempts > 0) console.log(`  Attempted detail enrichment for ${attempts} incomplete ${config.source} jobs`);
+  if (attempts > 0)
+    console.log(`  Attempted detail enrichment for ${attempts} incomplete ${config.source} jobs`);
   return enriched;
 }
 
@@ -312,20 +324,23 @@ export async function runAllScrapers(): Promise<JobData[]> {
 
       // Step 1: Get listing URLs (use provided or discover)
       let listUrls: string[] = [];
-      
+
       if (config.listingUrls && config.listingUrls.length > 0) {
         listUrls = config.listingUrls;
         console.log(`  📄 Using provided listing URLs: ${listUrls.length}`);
       } else {
         console.log(`  🔍 Discovering routes for ${config.baseUrl}...`);
         const routes = await discoverJobRoutes(config.baseUrl);
-        
+
         if (routes.length === 0) {
           console.log(`  ⚠️  No routes found for ${config.baseUrl}`);
           continue;
         }
-        
-        listUrls = routes.filter((r) => r.type === "list").slice(0, 3).map(r => r.url);
+
+        listUrls = routes
+          .filter((r) => r.type === "list")
+          .slice(0, 3)
+          .map((r) => r.url);
       }
 
       // Step 2: Scrape list pages and collect detail URLs
@@ -334,21 +349,27 @@ export async function runAllScrapers(): Promise<JobData[]> {
 
       for (const listUrl of listUrls) {
         console.log(`  📄 Scraping list page: ${listUrl}`);
-        
+
         let currentUrl: string | undefined = listUrl;
         let pageCount = 0;
 
         while (currentUrl && pageCount < (config.maxPages || 5)) {
           try {
-            const listResult = await sourceRequest(config.source, () => config.listScraper(currentUrl!));
-            
+            const listResult = await sourceRequest(config.source, () =>
+              config.listScraper(currentUrl!),
+            );
+
             // Check if this scraper returned pre-fetched jobs (Intern Sathi GraphQL, JobsNepal, etc.)
             if (listResult.preFetchedJobs && listResult.preFetchedJobs.length > 0) {
               preFetchedJobs.push(...listResult.preFetchedJobs);
-              console.log(`    ✅ Fetched ${listResult.preFetchedJobs.length} jobs directly from list page (total: ${preFetchedJobs.length})`);
+              console.log(
+                `    ✅ Fetched ${listResult.preFetchedJobs.length} jobs directly from list page (total: ${preFetchedJobs.length})`,
+              );
             } else {
               listResult.detailUrls.forEach((url) => detailUrls.add(url));
-              console.log(`    ✅ Found ${listResult.detailUrls.length} job links (total: ${detailUrls.size})`);
+              console.log(
+                `    ✅ Found ${listResult.detailUrls.length} job links (total: ${detailUrls.size})`,
+              );
             }
 
             if (!listResult.hasMore || !listResult.nextPageUrl) {
@@ -369,7 +390,7 @@ export async function runAllScrapers(): Promise<JobData[]> {
         // Jobs already fetched from list page API or HTML
         console.log(`  ⚡ Using pre-fetched jobs from list page (${preFetchedJobs.length} jobs)`);
         const selectedJobs = preFetchedJobs.slice(0, config.maxJobs || 50);
-        allJobs.push(...await enrichIncompletePrefetchedJobs(config, selectedJobs));
+        allJobs.push(...(await enrichIncompletePrefetchedJobs(config, selectedJobs)));
       } else if (detailUrls.size > 0) {
         // Other sites: Scrape detail pages
         console.log(`  🔍 Scraping ${detailUrls.size} detail pages...`);
@@ -377,8 +398,10 @@ export async function runAllScrapers(): Promise<JobData[]> {
 
         for (const detailUrl of detailUrlsArray) {
           try {
-            const jobData = await sourceRequest(config.source, () => config.detailScraper(detailUrl));
-            
+            const jobData = await sourceRequest(config.source, () =>
+              config.detailScraper(detailUrl),
+            );
+
             if (jobData) {
               allJobs.push(jobData);
             }
@@ -391,8 +414,9 @@ export async function runAllScrapers(): Promise<JobData[]> {
         continue;
       }
 
-      console.log(`  ✅ ${config.source}: Scraped ${allJobs.filter(j => j.source === config.source).length} jobs`);
-
+      console.log(
+        `  ✅ ${config.source}: Scraped ${allJobs.filter((j) => j.source === config.source).length} jobs`,
+      );
     } catch (error: any) {
       console.error(`❌ Error processing ${config.source}:`, error.message);
     }
@@ -417,7 +441,7 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
 
   const jobs: JobData[] = [];
   const preFetchedJobs: JobData[] = [];
-  
+
   // Get listing URLs
   let listUrls: string[] = [];
   if (config.listingUrls && config.listingUrls.length > 0) {
@@ -426,7 +450,10 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
   } else {
     console.log(`  🔍 Discovering routes for ${config.baseUrl}...`);
     const routes = await discoverJobRoutes(config.baseUrl);
-    listUrls = routes.filter((r) => r.type === "list").slice(0, 2).map(r => r.url);
+    listUrls = routes
+      .filter((r) => r.type === "list")
+      .slice(0, 2)
+      .map((r) => r.url);
   }
 
   // Collect detail URLs and pre-fetched jobs
@@ -435,21 +462,27 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
   // Scrape list pages with pagination support
   for (const listUrl of listUrls) {
     console.log(`  📄 Scraping list page: ${listUrl}`);
-    
+
     let currentUrl: string | undefined = listUrl;
     let pageCount = 0;
 
     while (currentUrl && pageCount < (config.maxPages || 5)) {
       try {
-        const listResult = await sourceRequest(config.source, () => config.listScraper(currentUrl!));
-        
+        const listResult = await sourceRequest(config.source, () =>
+          config.listScraper(currentUrl!),
+        );
+
         // Check if this scraper returned pre-fetched jobs (API-based scrapers)
         if (listResult.preFetchedJobs && listResult.preFetchedJobs.length > 0) {
           preFetchedJobs.push(...listResult.preFetchedJobs);
-          console.log(`    ✅ Fetched ${listResult.preFetchedJobs.length} jobs directly from list page (total: ${preFetchedJobs.length})`);
+          console.log(
+            `    ✅ Fetched ${listResult.preFetchedJobs.length} jobs directly from list page (total: ${preFetchedJobs.length})`,
+          );
         } else {
           listResult.detailUrls.forEach((url) => detailUrls.add(url));
-          console.log(`    ✅ Found ${listResult.detailUrls.length} job links (total: ${detailUrls.size})`);
+          console.log(
+            `    ✅ Found ${listResult.detailUrls.length} job links (total: ${detailUrls.size})`,
+          );
         }
 
         if (!listResult.hasMore || !listResult.nextPageUrl) {
@@ -469,7 +502,7 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
   if (preFetchedJobs.length > 0) {
     console.log(`  ⚡ Using pre-fetched jobs from list page (${preFetchedJobs.length} jobs)`);
     const selectedJobs = preFetchedJobs.slice(0, config.maxJobs || 500);
-    jobs.push(...await enrichIncompletePrefetchedJobs(config, selectedJobs));
+    jobs.push(...(await enrichIncompletePrefetchedJobs(config, selectedJobs)));
   } else if (detailUrls.size > 0) {
     console.log(`  🔍 Scraping ${detailUrls.size} detail pages...`);
     const detailUrlsArray = Array.from(detailUrls).slice(0, config.maxJobs || 50);
@@ -492,4 +525,3 @@ export async function scrapeSource(source: string): Promise<JobData[]> {
 
   return jobs;
 }
-

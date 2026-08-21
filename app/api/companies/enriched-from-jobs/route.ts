@@ -98,7 +98,7 @@ function normalizeCompanyName(name: string): string {
  */
 function findMatchingCompany(
   jobCompanyName: string,
-  jsonCompanies: JsonCompany[]
+  jsonCompanies: JsonCompany[],
 ): { company: JsonCompany; confidence: number; source: string } | null {
   const normalizedJobName = normalizeCompanyName(jobCompanyName);
   let bestMatch: JsonCompany | null = null;
@@ -110,15 +110,15 @@ function findMatchingCompany(
     if (!jsonName) continue;
 
     const normalizedJsonName = normalizeCompanyName(jsonName);
-    
+
     // Calculate similarity
     const similarity = compareTwoStrings(normalizedJobName, normalizedJsonName);
-    
+
     // If similarity is higher than 90% (0.9) and better than previous match
     if (similarity >= 0.9 && similarity > bestConfidence) {
       bestMatch = jsonCompany;
       bestConfidence = similarity;
-      
+
       // Determine source file from _source field or structure
       const source = (jsonCompany as any)._source || "";
       if (source.includes("ramrojob")) {
@@ -194,17 +194,13 @@ export async function GET(request: NextRequest) {
     for (const [companyName, jobs] of companyJobMap.entries()) {
       // Find matching company from JSON
       const match = findMatchingCompany(companyName, jsonCompanies);
-      
+
       if (match) {
         const jsonCompany = match.company;
-        
+
         // Count jobs in last 7 and 30 days
-        const jobsLast7Days = jobs.filter(
-          (j) => j.postedAt && j.postedAt >= sevenDaysAgo
-        ).length;
-        const jobsLast30Days = jobs.filter(
-          (j) => j.postedAt && j.postedAt >= thirtyDaysAgo
-        ).length;
+        const jobsLast7Days = jobs.filter((j) => j.postedAt && j.postedAt >= sevenDaysAgo).length;
+        const jobsLast30Days = jobs.filter((j) => j.postedAt && j.postedAt >= thirtyDaysAgo).length;
 
         // Get latest job
         const latestJob = jobs[0]; // Already sorted by postedAt DESC
@@ -212,8 +208,8 @@ export async function GET(request: NextRequest) {
         // Calculate intent score based on job activity
         const intentScore = Math.round(
           jobsLast7Days * 10 + // Weight recent jobs more
-          jobsLast30Days * 3 +
-          jobs.length * 1
+            jobsLast30Days * 3 +
+            jobs.length * 1,
         );
 
         enrichedCompanies.push({
@@ -244,17 +240,14 @@ export async function GET(request: NextRequest) {
     });
 
     // Disable caching in development
-    response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-    response.headers.set('Pragma', 'no-cache');
-    response.headers.set('Expires', '0');
-    response.headers.set('Surrogate-Control', 'no-store');
+    response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
+    response.headers.set("Surrogate-Control", "no-store");
 
     return response;
   } catch (error: any) {
     console.error("Error fetching enriched companies from jobs:", error);
-    return NextResponse.json(
-      { error: error?.message || "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error?.message || "Internal server error" }, { status: 500 });
   }
 }

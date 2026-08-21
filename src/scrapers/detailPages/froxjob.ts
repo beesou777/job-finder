@@ -70,32 +70,13 @@ export async function scrapeFroxjobDetail(url: string): Promise<JobData | null> 
       ".company-info",
     ]);
 
-    const location = findText([
-      ".location",
-      "[class*='location']",
-      ".job-location",
-      ".cityzone",
-    ]);
+    const location = findText([".location", "[class*='location']", ".job-location", ".cityzone"]);
 
-    const salaryText = findText([
-      ".salary",
-      "[class*='salary']",
-      ".job-salary",
-      ".compensation",
-    ]);
+    const salaryText = findText([".salary", "[class*='salary']", ".job-salary", ".compensation"]);
 
-    const jobType = findText([
-      ".job-type",
-      "[class*='job-type']",
-      ".type",
-      ".employment-type",
-    ]);
+    const jobType = findText([".job-type", "[class*='job-type']", ".type", ".employment-type"]);
 
-    const category = findText([
-      ".category",
-      "[class*='category']",
-      ".job-category",
-    ]);
+    const category = findText([".category", "[class*='category']", ".job-category"]);
 
     const description = findText([
       ".description",
@@ -135,7 +116,7 @@ export async function scrapeFroxjobDetail(url: string): Promise<JobData | null> 
     // Method 2: Search entire page text for "days left" or "days from now" patterns
     if (!expiresAt) {
       const pageText = $.text();
-      
+
       // Try "X days left" pattern
       let daysLeftMatch = pageText.match(/(\d+)\s*(?:day|days)\s*left/i);
       if (daysLeftMatch) {
@@ -143,10 +124,12 @@ export async function scrapeFroxjobDetail(url: string): Promise<JobData | null> 
         const parsedDate = parseDaysLeft(deadline);
         if (parsedDate) {
           expiresAt = parsedDate;
-          console.log(`[Froxjob] Found deadline in page text: "${deadline}" → Expires: ${parsedDate.toISOString()}`);
+          console.log(
+            `[Froxjob] Found deadline in page text: "${deadline}" → Expires: ${parsedDate.toISOString()}`,
+          );
         }
       }
-      
+
       // Try "X days from now" pattern (e.g., "19 days from now")
       if (!expiresAt) {
         const daysFromNowMatch = pageText.match(/(\d+)\s*(?:day|days)\s+from\s+now/i);
@@ -157,14 +140,18 @@ export async function scrapeFroxjobDetail(url: string): Promise<JobData | null> 
             expirationDate.setDate(expirationDate.getDate() + days);
             expiresAt = expirationDate;
             deadline = daysFromNowMatch[0];
-            console.log(`[Froxjob] Found "days from now": "${deadline}" → Expires: ${expiresAt.toISOString()}`);
+            console.log(
+              `[Froxjob] Found "days from now": "${deadline}" → Expires: ${expiresAt.toISOString()}`,
+            );
           }
         }
       }
-      
+
       // Try date format with "days from now" (e.g., "30-January-2026 (19 days from now)")
       if (!expiresAt) {
-        const dateWithDaysMatch = pageText.match(/(\d{1,2}[-/]\w+[-/]\d{4})\s*\((\d+)\s*(?:day|days)\s*from\s*now\)/i);
+        const dateWithDaysMatch = pageText.match(
+          /(\d{1,2}[-/]\w+[-/]\d{4})\s*\((\d+)\s*(?:day|days)\s*from\s*now\)/i,
+        );
         if (dateWithDaysMatch) {
           const days = parseInt(dateWithDaysMatch[2]);
           if (!isNaN(days)) {
@@ -172,7 +159,9 @@ export async function scrapeFroxjobDetail(url: string): Promise<JobData | null> 
             expirationDate.setDate(expirationDate.getDate() + days);
             expiresAt = expirationDate;
             deadline = dateWithDaysMatch[0];
-            console.log(`[Froxjob] Found date with days: "${deadline}" → Expires: ${expiresAt.toISOString()}`);
+            console.log(
+              `[Froxjob] Found date with days: "${deadline}" → Expires: ${expiresAt.toISOString()}`,
+            );
           }
         }
       }
@@ -188,7 +177,11 @@ export async function scrapeFroxjobDetail(url: string): Promise<JobData | null> 
         "[class*='expir']",
       ]);
       // Only use if it doesn't contain "Exp:" (which is experience, not expiration)
-      if (standardDeadline && !standardDeadline.includes("Exp:") && !standardDeadline.match(/exp:\s*\d+/i)) {
+      if (
+        standardDeadline &&
+        !standardDeadline.includes("Exp:") &&
+        !standardDeadline.match(/exp:\s*\d+/i)
+      ) {
         deadline = standardDeadline;
         // Try to parse it
         const parsedDate = parseDaysLeft(deadline);
@@ -200,11 +193,15 @@ export async function scrapeFroxjobDetail(url: string): Promise<JobData | null> 
 
     // Calculate expiration date if not already calculated
     if (!expiresAt) {
-      console.log(`[Froxjob] No deadline found, using calculateExpirationDate with deadline: "${deadline}"`);
+      console.log(
+        `[Froxjob] No deadline found, using calculateExpirationDate with deadline: "${deadline}"`,
+      );
       expiresAt = calculateExpirationDate(deadline);
-      console.log(expiresAt
-        ? `[Froxjob] Expiration calculated: ${expiresAt.toISOString()}`
-        : "[Froxjob] No confirmed expiration date found");
+      console.log(
+        expiresAt
+          ? `[Froxjob] Expiration calculated: ${expiresAt.toISOString()}`
+          : "[Froxjob] No confirmed expiration date found",
+      );
     }
 
     // Use the detail page URL as apply URL

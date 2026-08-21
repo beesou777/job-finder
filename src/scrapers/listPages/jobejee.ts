@@ -51,9 +51,9 @@ function slugify(title: string): string {
   return title
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, '') // Remove special characters
-    .replace(/[\s_-]+/g, '-') // Replace spaces, underscores, and multiple hyphens with single hyphen
-    .replace(/^-+|-+$/g, ''); // Remove leading/trailing hyphens
+    .replace(/[^\w\s-]/g, "") // Remove special characters
+    .replace(/[\s_-]+/g, "-") // Replace spaces, underscores, and multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
 }
 
 /**
@@ -152,13 +152,12 @@ async function fetchAllJobs(): Promise<JobData[]> {
         payload,
         {
           headers: {
-            "Accept": "application/json",
+            Accept: "application/json",
             "Content-Type": "application/json",
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
           },
           timeout: 15000,
-        }
+        },
       );
 
       if (response.data?.data && Array.isArray(response.data.data)) {
@@ -167,7 +166,7 @@ async function fetchAllJobs(): Promise<JobData[]> {
         jobs.push(...mappedJobs);
 
         console.log(
-          `[Jobejee] Fetched page ${page}, ${mappedJobs.length} jobs (total: ${jobs.length})`
+          `[Jobejee] Fetched page ${page}, ${mappedJobs.length} jobs (total: ${jobs.length})`,
         );
 
         // Check if there are more pages
@@ -188,10 +187,7 @@ async function fetchAllJobs(): Promise<JobData[]> {
         hasMore = false;
       }
     } catch (error: any) {
-      console.error(
-        `[Jobejee] Error fetching page ${page}:`,
-        error.message
-      );
+      console.error(`[Jobejee] Error fetching page ${page}:`, error.message);
       if (error.response?.data) {
         console.error(`[Jobejee] Response data:`, error.response.data);
       }
@@ -215,7 +211,7 @@ export async function scrapeJobejeeList(url: string): Promise<{
 }> {
   try {
     console.log(`[Jobejee] Fetching all jobs...`);
-    
+
     // Fetch all jobs with pagination
     const allJobs = await fetchAllJobs();
 
@@ -224,9 +220,7 @@ export async function scrapeJobejeeList(url: string): Promise<{
       return { detailUrls: [], hasMore: false };
     }
 
-    console.log(
-      `✅ Jobejee: Fetched ${allJobs.length} jobs from API`
-    );
+    console.log(`✅ Jobejee: Fetched ${allJobs.length} jobs from API`);
 
     // Return detail URLs for compatibility (though we already have the jobs)
     const detailUrls = allJobs.map((job) => job.applyUrl);
@@ -241,4 +235,3 @@ export async function scrapeJobejeeList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

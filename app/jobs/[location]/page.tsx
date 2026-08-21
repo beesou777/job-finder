@@ -10,7 +10,16 @@ import { getDataSource } from "@/lib/db";
 import { Job } from "@/server/db/entities/Job";
 import { addUtmParams } from "@/lib/utils";
 
-const knownLocations = ["kathmandu", "pokhara", "lalitpur", "bhaktapur", "butwal", "biratnagar", "chitwan", "remote"];
+const knownLocations = [
+  "kathmandu",
+  "pokhara",
+  "lalitpur",
+  "bhaktapur",
+  "butwal",
+  "biratnagar",
+  "chitwan",
+  "remote",
+];
 
 export const revalidate = 300;
 
@@ -32,7 +41,11 @@ export async function generateMetadata({
     path: `/jobs/${params.location}`,
     title: `Jobs in ${locationName}, Nepal | Latest Vacancies | KamKhoj`,
     description: `Find latest jobs in ${locationName}, Nepal. Browse vacancies by company, category, skills, and source from major Nepali job portals.`,
-    keywords: [`jobs in ${locationName.toLowerCase()}`, `${locationName.toLowerCase()} jobs nepal`, "vacancy in nepal"],
+    keywords: [
+      `jobs in ${locationName.toLowerCase()}`,
+      `${locationName.toLowerCase()} jobs nepal`,
+      "vacancy in nepal",
+    ],
   });
   return {
     ...metadata,
@@ -62,9 +75,13 @@ export default async function LocationSlugPage({
       <section className="border-b border-white/10 bg-[radial-gradient(circle_at_80%_0%,rgba(184,244,96,0.12),transparent_32%)]">
         <div className="container mx-auto px-4 py-12 md:py-16">
           <nav className="mb-8 text-sm font-bold text-zinc-500" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-primary">Home</Link>
+            <Link href="/" className="hover:text-primary">
+              Home
+            </Link>
             <span className="mx-2">/</span>
-            <Link href="/jobs" className="hover:text-primary">Jobs</Link>
+            <Link href="/jobs" className="hover:text-primary">
+              Jobs
+            </Link>
             <span className="mx-2">/</span>
             <span className="text-zinc-200">{locationName}</span>
           </nav>
@@ -75,8 +92,8 @@ export default async function LocationSlugPage({
             Jobs in {locationName}, Nepal
           </h1>
           <p className="text-lg text-zinc-400 max-w-3xl leading-8">
-            Browse current job vacancies in {locationName}. Compare companies, categories,
-            sources, and deadlines from Nepali job portals in one place.
+            Browse current job vacancies in {locationName}. Compare companies, categories, sources,
+            and deadlines from Nepali job portals in one place.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {[

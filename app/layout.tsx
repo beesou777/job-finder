@@ -2,11 +2,8 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
 import { Providers } from "@/components/Providers";
-import { GlobalChatWidget } from "@/components/GlobalChatWidget";
-import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
+import { AppChrome } from "@/components/AppChrome";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
@@ -60,8 +57,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "KamKhoj | Nepal Job Search",
-    description:
-      "Browse Nepal jobs, internships, and practical career resources.",
+    description: "Browse Nepal jobs, internships, and practical career resources.",
     images: [DEFAULT_OG_IMAGE],
   },
   alternates: {
@@ -84,10 +80,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="theme-color" content="#09090b" />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=5"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="google-adsense-account" content="ca-pub-7656502769250843" />
       </head>
       <body className={manrope.className}>
@@ -150,11 +143,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <Providers>
-          <Navbar />
-          <main className="min-h-screen bg-zinc-950">{children}</main>
-          <Footer />
-          <GlobalChatWidget />
-          <PWAInstallPrompt />
+          <AppChrome>{children}</AppChrome>
         </Providers>
       </body>
     </html>

@@ -90,11 +90,13 @@ export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteri
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Companies</SelectItem>
-              {companies.filter((item) => item.value).map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.value} ({item.count})
-                </SelectItem>
-              ))}
+              {companies
+                .filter((item) => item.value)
+                .map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.value} ({item.count})
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
 
@@ -107,11 +109,13 @@ export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteri
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Locations</SelectItem>
-              {places.filter((item) => item.value).map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.value} ({item.count})
-                </SelectItem>
-              ))}
+              {places
+                .filter((item) => item.value)
+                .map((item) => (
+                  <SelectItem key={item.value} value={item.value}>
+                    {item.value} ({item.count})
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
 
@@ -131,7 +135,10 @@ export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteri
             </SelectContent>
           </Select>
 
-          {(selectedCompany || selectedPlace || selectedDatePosted || paramsSnapshot.get("search")) && (
+          {(selectedCompany ||
+            selectedPlace ||
+            selectedDatePosted ||
+            paramsSnapshot.get("search")) && (
             <Button
               onClick={() => {
                 router.push("/linkedin-jobs");
@@ -145,37 +152,64 @@ export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteri
           )}
         </div>
 
-        {(selectedCompany || selectedPlace || selectedDatePosted || paramsSnapshot.get("search")) && (
+        {(selectedCompany ||
+          selectedPlace ||
+          selectedDatePosted ||
+          paramsSnapshot.get("search")) && (
           <div className="flex flex-wrap gap-2 items-center pt-2 border-t border-white/10">
             <span className="text-sm text-zinc-500 font-medium mr-1">Active filters:</span>
             {selectedCompany && (
-              <Badge variant="secondary" className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
+              <Badge
+                variant="secondary"
+                className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary"
+              >
                 Company: {selectedCompany}
-                <button onClick={() => removeFilter("company")} className="ml-0.5 hover:text-zinc-50 transition-colors">
+                <button
+                  onClick={() => removeFilter("company")}
+                  className="ml-0.5 hover:text-zinc-50 transition-colors"
+                >
                   <X className="h-3.5 w-3.5" />
                 </button>
               </Badge>
             )}
             {selectedPlace && (
-              <Badge variant="secondary" className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
+              <Badge
+                variant="secondary"
+                className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary"
+              >
                 Location: {selectedPlace}
-                <button onClick={() => removeFilter("place")} className="ml-0.5 hover:text-zinc-50 transition-colors">
+                <button
+                  onClick={() => removeFilter("place")}
+                  className="ml-0.5 hover:text-zinc-50 transition-colors"
+                >
                   <X className="h-3.5 w-3.5" />
                 </button>
               </Badge>
             )}
             {selectedDatePosted && (
-              <Badge variant="secondary" className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
+              <Badge
+                variant="secondary"
+                className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary"
+              >
                 Date: {selectedDatePosted}
-                <button onClick={() => removeFilter("datePosted")} className="ml-0.5 hover:text-zinc-50 transition-colors">
+                <button
+                  onClick={() => removeFilter("datePosted")}
+                  className="ml-0.5 hover:text-zinc-50 transition-colors"
+                >
                   <X className="h-3.5 w-3.5" />
                 </button>
               </Badge>
             )}
             {paramsSnapshot.get("search") && (
-              <Badge variant="secondary" className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary">
+              <Badge
+                variant="secondary"
+                className="gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-primary"
+              >
                 {paramsSnapshot.get("search")}
-                <button onClick={() => removeFilter("search")} className="ml-0.5 hover:text-zinc-50 transition-colors">
+                <button
+                  onClick={() => removeFilter("search")}
+                  className="ml-0.5 hover:text-zinc-50 transition-colors"
+                >
                   <X className="h-3.5 w-3.5" />
                 </button>
               </Badge>

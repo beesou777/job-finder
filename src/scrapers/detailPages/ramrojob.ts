@@ -21,16 +21,13 @@ export async function scrapeRamroJobDetail(url: string): Promise<JobData | null>
 
     // Try to fetch from API first
     try {
-      const response = await axios.get(
-        `${BASE_URL}/api/jobs/${slug}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-          },
-          timeout: 10000,
-        }
-      );
+      const response = await axios.get(`${BASE_URL}/api/jobs/${slug}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        timeout: 10000,
+      });
 
       // If API returns data, map it
       if (response.data?.data) {
@@ -51,13 +48,19 @@ export async function scrapeRamroJobDetail(url: string): Promise<JobData | null>
     });
 
     const $ = cheerio.load(data);
-    
+
     const title = $("h1, .job-title, .title").first().text().trim();
-    const company = $(".company-name, .organization-name, [class*='company']").first().text().trim();
+    const company = $(".company-name, .organization-name, [class*='company']")
+      .first()
+      .text()
+      .trim();
     const location = $(".location, .city, [class*='location']").first().text().trim();
     const salaryText = $(".salary, [class*='salary']").first().text().trim();
     const deadline = $(".deadline, [class*='deadline']").first().text().trim();
-    const description = $(".job-description, .description, [class*='description']").first().text().trim();
+    const description = $(".job-description, .description, [class*='description']")
+      .first()
+      .text()
+      .trim();
     const requirements = $(".requirements, [class*='requirement']").first().text().trim();
     const category = $(".category, [class*='category']").first().text().trim();
 
@@ -66,8 +69,7 @@ export async function scrapeRamroJobDetail(url: string): Promise<JobData | null>
     }
 
     const isInternship =
-      title.toLowerCase().includes("intern") ||
-      title.toLowerCase().includes("internship");
+      title.toLowerCase().includes("intern") || title.toLowerCase().includes("internship");
 
     return {
       title,
@@ -93,7 +95,7 @@ export async function scrapeRamroJobDetail(url: string): Promise<JobData | null>
  */
 function mapApiResponseToJobData(job: any, url: string): JobData {
   const location = job.organization?.city || job.organization?.district || "Nepal";
-  
+
   const cleanHtml = (html: string): string => {
     if (!html) return "";
     try {
@@ -130,4 +132,3 @@ function mapApiResponseToJobData(job: any, url: string): JobData {
     source: "ramrojob",
   };
 }
-

@@ -43,9 +43,6 @@ export async function GET(request: NextRequest) {
     return response;
   } catch (error: unknown) {
     console.error("[chat/search] Error:", error);
-    return NextResponse.json(
-      { jobs: [], error: "Search failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ jobs: [], error: "Search failed" }, { status: 500 });
   }
 }

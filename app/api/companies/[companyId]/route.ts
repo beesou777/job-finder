@@ -9,10 +9,7 @@ export const dynamic = "force-dynamic";
  * GET /api/companies/[companyId]
  * Get company enrichment details
  */
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { companyId: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { companyId: string } }) {
   try {
     const dataSource = await getDataSource();
     const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
@@ -23,7 +20,13 @@ export async function GET(
       relations: ["company"],
     });
 
-    let scoreHistory: Array<{ score: number; level: string; signalBreakdown?: unknown; trigger?: string; recordedAt: Date }> = [];
+    let scoreHistory: Array<{
+      score: number;
+      level: string;
+      signalBreakdown?: unknown;
+      trigger?: string;
+      recordedAt: Date;
+    }> = [];
     if (enrichment) {
       const history = await historyRepository.find({
         where: { enrichmentId: enrichment.id },
@@ -37,14 +40,11 @@ export async function GET(
         recordedAt: h.recordedAt,
       }));
     }
-    
+
     if (!enrichment) {
-      return NextResponse.json(
-        { error: "Company enrichment not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Company enrichment not found" }, { status: 404 });
     }
-    
+
     return NextResponse.json({
       success: true,
       data: {
@@ -98,10 +98,7 @@ export async function GET(
     });
   } catch (error: any) {
     console.error("Error fetching company enrichment:", error);
-    return NextResponse.json(
-      { error: error?.message || "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error?.message || "Internal server error" }, { status: 500 });
   }
 }
 
@@ -109,46 +106,40 @@ export async function GET(
  * PATCH /api/companies/[companyId]
  * Update company enrichment (e.g., sales notes, pitch target flag)
  */
-export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { companyId: string } }
-) {
+export async function PATCH(request: NextRequest, { params }: { params: { companyId: string } }) {
   try {
     const dataSource = await getDataSource();
     const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
-    
-    const body:any = await request.json();
-    
+
+    const body: any = await request.json();
+
     const enrichment = await enrichmentRepository.findOne({
       where: { companyId: params.companyId },
     });
-    
+
     if (!enrichment) {
-      return NextResponse.json(
-        { error: "Company enrichment not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ error: "Company enrichment not found" }, { status: 404 });
     }
-    
+
     // Update allowed fields
     if (body.salesNotes !== undefined) {
       enrichment.salesNotes = body.salesNotes;
     }
-    
+
     if (body.isPitchTarget !== undefined) {
       enrichment.isPitchTarget = body.isPitchTarget;
     }
-    
+
     if (body.email !== undefined) {
       enrichment.email = body.email;
     }
-    
+
     if (body.phoneNumber !== undefined) {
       enrichment.phoneNumber = body.phoneNumber;
     }
-    
+
     await enrichmentRepository.save(enrichment);
-    
+
     return NextResponse.json({
       success: true,
       data: {
@@ -162,9 +153,6 @@ export async function PATCH(
     });
   } catch (error: any) {
     console.error("Error updating company enrichment:", error);
-    return NextResponse.json(
-      { error: error?.message || "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error?.message || "Internal server error" }, { status: 500 });
   }
 }

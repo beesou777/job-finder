@@ -19,7 +19,8 @@ export async function scrapeMeroCareer(): Promise<JobResult[]> {
         let title = $(element).find(".job-title, h3, h4").text().trim();
         // Remove "Browse Jobs :" or "Browse Jobs:" prefix if present
         title = title.replace(/^Browse Jobs\s*:\s*/i, "").trim();
-        const company = $(element).find(".company-name, .employer").text().trim() || "Not specified";
+        const company =
+          $(element).find(".company-name, .employer").text().trim() || "Not specified";
         const location = $(element).find(".location, .address").text().trim() || "Kathmandu";
         const relativeUrl = $(element).find("a").first().attr("href");
         const url = relativeUrl

@@ -43,7 +43,7 @@ export interface CompanyMatchResult {
  */
 async function matchCompanyAgainstPlatform(
   normalized: NormalizedCompany,
-  platformJobs: Job[]
+  platformJobs: Job[],
 ): Promise<{
   matched: boolean;
   matchedJobs: Array<{ id: string; title: string; source: string }>;
@@ -52,7 +52,7 @@ async function matchCompanyAgainstPlatform(
 
   for (const job of platformJobs) {
     const jobNormalizedName = normalizeCompanyName(job.company);
-    
+
     // Strategy 1: Exact normalized name match
     if (jobNormalizedName === normalized.normalizedName && normalized.normalizedName !== "") {
       matchedJobs.push({
@@ -62,17 +62,18 @@ async function matchCompanyAgainstPlatform(
       });
       continue;
     }
-    
+
     // Strategy 2: Domain match (if we have domain from LinkedIn)
     if (normalized.domain) {
       // Platform jobs don't have company domains directly, but we could check
       // if we add domain extraction from applyUrl in the future
     }
-    
+
     // Strategy 3: Fuzzy matching (high similarity threshold)
     if (normalized.normalizedName && jobNormalizedName) {
       const similarity = calculateSimilarity(normalized.normalizedName, jobNormalizedName);
-      if (similarity >= 0.85) { // 85% similarity threshold
+      if (similarity >= 0.85) {
+        // 85% similarity threshold
         matchedJobs.push({
           id: job.id,
           title: job.title,
@@ -94,15 +95,15 @@ async function matchCompanyAgainstPlatform(
 function calculateSimilarity(str1: string, str2: string): number {
   if (!str1 || !str2) return 0;
   if (str1 === str2) return 1;
-  
-  const words1 = new Set(str1.split(/\s+/).filter(w => w.length > 2));
-  const words2 = new Set(str2.split(/\s+/).filter(w => w.length > 2));
-  
+
+  const words1 = new Set(str1.split(/\s+/).filter((w) => w.length > 2));
+  const words2 = new Set(str2.split(/\s+/).filter((w) => w.length > 2));
+
   if (words1.size === 0 || words2.size === 0) return 0;
-  
-  const intersection = new Set([...words1].filter(x => words2.has(x)));
+
+  const intersection = new Set([...words1].filter((x) => words2.has(x)));
   const union = new Set([...words1, ...words2]);
-  
+
   return intersection.size / union.size;
 }
 
@@ -128,24 +129,27 @@ export async function findOpportunityGaps(): Promise<CompanyMatchResult[]> {
   });
 
   // Group LinkedIn jobs by normalized company
-  const companyMap = new Map<string, {
-    originalName: string;
-    normalizedName: string;
-    domain: string | null;
-    linkedInJobs: typeof linkedInJobs;
-  }>();
+  const companyMap = new Map<
+    string,
+    {
+      originalName: string;
+      normalizedName: string;
+      domain: string | null;
+      linkedInJobs: typeof linkedInJobs;
+    }
+  >();
 
   for (const linkedInJob of linkedInJobs) {
     if (!linkedInJob.company) continue;
-    
+
     const normalized = normalizeLinkedInCompany(
       linkedInJob.company,
       linkedInJob.company_link,
-      linkedInJob.apply_link
+      linkedInJob.apply_link,
     );
 
     const key = normalized.normalizedName || normalized.originalName.toLowerCase();
-    
+
     if (!companyMap.has(key)) {
       companyMap.set(key, {
         originalName: normalized.originalName,
@@ -154,7 +158,7 @@ export async function findOpportunityGaps(): Promise<CompanyMatchResult[]> {
         linkedInJobs: [],
       });
     }
-    
+
     companyMap.get(key)!.linkedInJobs.push(linkedInJob);
   }
 
@@ -174,11 +178,9 @@ export async function findOpportunityGaps(): Promise<CompanyMatchResult[]> {
       company: companyData.originalName,
       normalizedName: companyData.normalizedName,
       domain: companyData.domain,
-      status: matchResult.matched
-        ? MatchStatus.ALREADY_ON_PLATFORM
-        : MatchStatus.NOT_ON_PLATFORM,
+      status: matchResult.matched ? MatchStatus.ALREADY_ON_PLATFORM : MatchStatus.NOT_ON_PLATFORM,
       matchedPlatformJobs: matchResult.matchedJobs,
-      linkedInJobs: companyData.linkedInJobs.map(job => ({
+      linkedInJobs: companyData.linkedInJobs.map((job) => ({
         id: job.id,
         job_id: job.job_id,
         title: job.title,

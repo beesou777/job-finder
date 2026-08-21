@@ -11,4 +11,3 @@ export async function scrapeMerorojgariDetail(url: string): Promise<JobData | nu
   // If individual detail scraping is needed in the future, implement it here
   return null;
 }
-

@@ -24,8 +24,14 @@ export async function GET(request: NextRequest) {
       offset,
     });
 
-    const response = NextResponse.json({ success: true, data: result.jobs, total: result.total, limit, offset });
-    response.headers.set("Cache-Control", "public, s-maxage=600, stale-while-revalidate=1800");
+    const response = NextResponse.json({
+      success: true,
+      data: result.jobs,
+      total: result.total,
+      limit,
+      offset,
+    });
+    response.headers.set("Cache-Control", "no-store, max-age=0");
     return response;
   } catch (error: any) {
     console.error("Error fetching jobs:", error?.message || error);

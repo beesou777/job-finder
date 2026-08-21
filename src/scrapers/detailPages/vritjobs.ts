@@ -23,7 +23,9 @@ export async function scrapeVritJobsDetail(url: string): Promise<JobData | null>
       // The API endpoint structure might be different for individual jobs
       // We'll try to fetch from the jobs list API and filter by id
       // For now, return null since list scraper already fetches all data
-      console.log(`[VritJobs] Detail scraper called for job ID ${jobId}, but data already available from list API`);
+      console.log(
+        `[VritJobs] Detail scraper called for job ID ${jobId}, but data already available from list API`,
+      );
       return null;
     } catch (apiError: any) {
       console.log(`[VritJobs] API failed for job ID ${jobId}`);
@@ -34,4 +36,3 @@ export async function scrapeVritJobsDetail(url: string): Promise<JobData | null>
     return null;
   }
 }
-

@@ -104,11 +104,10 @@ export async function scrapeInternSathiDetail(url: string): Promise<JobData | nu
           {
             headers: {
               "Content-Type": "application/json",
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             },
             timeout: 15000,
-          }
+          },
         );
 
         if (response.data?.data?.getJobs?.result) {
@@ -118,7 +117,7 @@ export async function scrapeInternSathiDetail(url: string): Promise<JobData | nu
               j.slug === identifier ||
               j.jobId === identifier ||
               url.includes(j.slug) ||
-              url.includes(j.jobId)
+              url.includes(j.jobId),
           );
 
           if (job) {
@@ -146,10 +145,12 @@ function mapToJobData(job: InternSathiJob, applyUrl: string): JobData {
   // Format salary
   let salaryText: string | undefined;
   if (job.salaryMin && job.salaryMax) {
-    const salaryType = job.salaryType === "MONTHLY" ? "per month" : job.salaryType?.toLowerCase() || "";
+    const salaryType =
+      job.salaryType === "MONTHLY" ? "per month" : job.salaryType?.toLowerCase() || "";
     salaryText = `Rs. ${job.salaryMin.toLocaleString()} - ${job.salaryMax.toLocaleString()} ${salaryType}`;
   } else if (job.salaryMin) {
-    const salaryType = job.salaryType === "MONTHLY" ? "per month" : job.salaryType?.toLowerCase() || "";
+    const salaryType =
+      job.salaryType === "MONTHLY" ? "per month" : job.salaryType?.toLowerCase() || "";
     salaryText = `Rs. ${job.salaryMin.toLocaleString()} ${salaryType}`;
   }
 
@@ -206,8 +207,7 @@ async function scrapeFromHTML(url: string): Promise<JobData | null> {
   try {
     const response = await axios.get(url, {
       headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
       },
       timeout: 15000,
     });

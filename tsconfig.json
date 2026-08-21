@@ -35,6 +35,12 @@
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "Node"
+    }
+  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",

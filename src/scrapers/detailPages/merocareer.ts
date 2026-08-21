@@ -17,4 +17,3 @@ export async function scrapeMeroCareerDetail(url: string) {
 
   return scrapeDetailPage(url, selectors, "merocareer");
 }
-

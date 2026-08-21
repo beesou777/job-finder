@@ -25,10 +25,10 @@ export async function scrapeInternNepalList(url: string): Promise<{
       headers: {
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
         "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
+        Connection: "keep-alive",
         "Upgrade-Insecure-Requests": "1",
       },
       timeout: 20000,
@@ -68,22 +68,20 @@ export async function scrapeInternNepalList(url: string): Promise<{
 
         // Extract location
         const locationParts: string[] = [];
-        $job
-          .find(".company_info_box .company_info")
-          .each((i, el) => {
-            const icon = $(el).find("img").attr("alt");
-            if (icon && icon.includes("location")) {
-              const locationText = $(el).find("span").first().text().trim();
-              const locationExtra = $(el).find("span").eq(1).text().trim();
-              if (locationText) {
-                if (locationExtra && locationExtra !== "()") {
-                  locationParts.push(`${locationText} (${locationExtra.replace(/[()]/g, "")})`);
-                } else {
-                  locationParts.push(locationText);
-                }
+        $job.find(".company_info_box .company_info").each((i, el) => {
+          const icon = $(el).find("img").attr("alt");
+          if (icon && icon.includes("location")) {
+            const locationText = $(el).find("span").first().text().trim();
+            const locationExtra = $(el).find("span").eq(1).text().trim();
+            if (locationText) {
+              if (locationExtra && locationExtra !== "()") {
+                locationParts.push(`${locationText} (${locationExtra.replace(/[()]/g, "")})`);
+              } else {
+                locationParts.push(locationText);
               }
             }
-          });
+          }
+        });
         const location = locationParts.join(", ") || undefined;
 
         // Extract description
@@ -102,7 +100,11 @@ export async function scrapeInternNepalList(url: string): Promise<{
         let salaryText: string | undefined;
         $job.find(".work_description").each((i, el) => {
           const titleText = $(el).find(".work_description_title span").text().trim();
-          if (titleText && (titleText.toLowerCase().includes("salary") || titleText.toLowerCase().includes("stipend"))) {
+          if (
+            titleText &&
+            (titleText.toLowerCase().includes("salary") ||
+              titleText.toLowerCase().includes("stipend"))
+          ) {
             const salaryContent = $(el).find(".work_description_content span").text().trim();
             if (salaryContent) {
               // Format salary (e.g., "15,000 -20,000" or "negotiable" or "10,000")
@@ -111,7 +113,10 @@ export async function scrapeInternNepalList(url: string): Promise<{
               } else {
                 // Clean up spacing in ranges like "15,000 -20,000"
                 salaryText = salaryContent.replace(/\s*-\s*/g, " - ").trim();
-                if (!salaryText.includes("Rs.") && !salaryText.toLowerCase().includes("negotiable")) {
+                if (
+                  !salaryText.includes("Rs.") &&
+                  !salaryText.toLowerCase().includes("negotiable")
+                ) {
                   salaryText = `Rs. ${salaryText}`;
                 }
               }
@@ -172,9 +177,17 @@ export async function scrapeInternNepalList(url: string): Promise<{
         let category: string | undefined;
         if (title.toLowerCase().includes("marketing")) {
           category = "Marketing";
-        } else if (title.toLowerCase().includes("design") || title.toLowerCase().includes("ui") || title.toLowerCase().includes("ux")) {
+        } else if (
+          title.toLowerCase().includes("design") ||
+          title.toLowerCase().includes("ui") ||
+          title.toLowerCase().includes("ux")
+        ) {
           category = "Design";
-        } else if (title.toLowerCase().includes("developer") || title.toLowerCase().includes("react") || title.toLowerCase().includes("js")) {
+        } else if (
+          title.toLowerCase().includes("developer") ||
+          title.toLowerCase().includes("react") ||
+          title.toLowerCase().includes("js")
+        ) {
           category = "IT & Software";
         } else if (title.toLowerCase().includes("sales")) {
           category = "Sales";
@@ -196,7 +209,7 @@ export async function scrapeInternNepalList(url: string): Promise<{
         let type: "job" | "internship" = "job";
         const urlObj = new URL(url);
         const urlType = urlObj.searchParams.get("type");
-        
+
         if (urlType === "internship") {
           type = "internship";
         } else if (urlType === "job" || urlType === "fresher-job" || urlType === "freelance") {
@@ -233,10 +246,13 @@ export async function scrapeInternNepalList(url: string): Promise<{
     });
 
     // Check for pagination (look for next page link)
-    const nextPageLink = $('a[href*="vacancy-list"]').filter((i, el) => {
-      const text = $(el).text().toLowerCase();
-      return text.includes("next") || text.includes(">");
-    }).first().attr("href");
+    const nextPageLink = $('a[href*="vacancy-list"]')
+      .filter((i, el) => {
+        const text = $(el).text().toLowerCase();
+        return text.includes("next") || text.includes(">");
+      })
+      .first()
+      .attr("href");
 
     let nextPageUrl: string | undefined;
     if (nextPageLink) {
@@ -264,4 +280,3 @@ export async function scrapeInternNepalList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

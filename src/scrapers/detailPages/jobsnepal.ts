@@ -17,4 +17,3 @@ export async function scrapeJobsNepalDetail(url: string) {
 
   return scrapeDetailPage(url, selectors, "jobsnepal");
 }
-

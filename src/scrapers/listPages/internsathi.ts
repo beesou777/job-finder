@@ -79,22 +79,17 @@ const GRAPHQL_QUERY = `
  */
 function mapToJobData(job: InternSathiJob): JobData {
   // Construct apply URL
-  const applyUrl = `${BASE_URL}/jobs/${job.slug}`
-;
+  const applyUrl = `${BASE_URL}/jobs/${job.slug}`;
 
   // Format salary
   let salaryText: string | undefined;
   if (job.salaryMin && job.salaryMax) {
     const salaryType =
-      job.salaryType === "MONTHLY"
-        ? "per month"
-        : job.salaryType?.toLowerCase() || "";
+      job.salaryType === "MONTHLY" ? "per month" : job.salaryType?.toLowerCase() || "";
     salaryText = `Rs. ${job.salaryMin.toLocaleString()} - ${job.salaryMax.toLocaleString()} ${salaryType}`;
   } else if (job.salaryMin) {
     const salaryType =
-      job.salaryType === "MONTHLY"
-        ? "per month"
-        : job.salaryType?.toLowerCase() || "";
+      job.salaryType === "MONTHLY" ? "per month" : job.salaryType?.toLowerCase() || "";
     salaryText = `Rs. ${job.salaryMin.toLocaleString()} ${salaryType}`;
   }
 
@@ -147,9 +142,7 @@ function mapToJobData(job: InternSathiJob): JobData {
 /**
  * Helper function to fetch jobs for a specific opportunity type
  */
-async function fetchJobsByType(
-  opportunityType: "INTERNSHIP" | "JOB"
-): Promise<{
+async function fetchJobsByType(opportunityType: "INTERNSHIP" | "JOB"): Promise<{
   jobs: InternSathiJob[];
   hasMore: boolean;
   nextPage: number | null;
@@ -178,11 +171,10 @@ async function fetchJobsByType(
     {
       headers: {
         "Content-Type": "application/json",
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
       },
       timeout: 15000,
-    }
+    },
   );
 
   if (!response.data?.data?.getJobs?.result) {
@@ -196,9 +188,7 @@ async function fetchJobsByType(
   }
 
   const getJobsData = response.data.data.getJobs;
-  const hasMore =
-    getJobsData.nextPage !== null &&
-    getJobsData.currentPage < getJobsData.lastPage;
+  const hasMore = getJobsData.nextPage !== null && getJobsData.currentPage < getJobsData.lastPage;
 
   return {
     jobs: getJobsData.result,
@@ -223,7 +213,7 @@ export async function scrapeInternSathiList(url: string): Promise<{
   try {
     // First API call for JOB type
     const jobData = await fetchJobsByType("JOB");
-    
+
     // Second API call for INTERNSHIP type
     const internshipData = await fetchJobsByType("INTERNSHIP");
 

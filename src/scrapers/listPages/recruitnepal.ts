@@ -86,14 +86,18 @@ function cleanHtml(html: string): string {
 /**
  * Format salary from expected_salary array
  */
-function formatSalary(salaryArray: Array<{ value: number; inclusive: boolean }> | undefined): string {
+function formatSalary(
+  salaryArray: Array<{ value: number; inclusive: boolean }> | undefined,
+): string {
   if (!salaryArray || salaryArray.length === 0) {
     return "Negotiable";
   }
 
   if (salaryArray.length === 1) {
     const salary = salaryArray[0];
-    return salary.inclusive ? `Up to ${salary.value.toLocaleString()}` : `${salary.value.toLocaleString()}+`;
+    return salary.inclusive
+      ? `Up to ${salary.value.toLocaleString()}`
+      : `${salary.value.toLocaleString()}+`;
   }
 
   const minSalary = salaryArray.find((s) => s.inclusive)?.value;
@@ -135,14 +139,14 @@ function mapToJobData(vacancy: RecruitNepalVacancy): JobData {
   const location = vacancy.location || undefined;
 
   // Get job type from employment_type array
-  const jobType = vacancy.employment_type && vacancy.employment_type.length > 0
-    ? vacancy.employment_type.join(", ")
-    : undefined;
+  const jobType =
+    vacancy.employment_type && vacancy.employment_type.length > 0
+      ? vacancy.employment_type.join(", ")
+      : undefined;
 
   // Get category from tags or level
-  const category = vacancy.tags && vacancy.tags.length > 0
-    ? vacancy.tags[0]
-    : vacancy.level || undefined;
+  const category =
+    vacancy.tags && vacancy.tags.length > 0 ? vacancy.tags[0] : vacancy.level || undefined;
 
   // Detect if it's an internship
   const isInternship =
@@ -158,9 +162,10 @@ function mapToJobData(vacancy: RecruitNepalVacancy): JobData {
   }
 
   // Get skills as requirements
-  const requirements = vacancy.skills_required && vacancy.skills_required.length > 0
-    ? vacancy.skills_required.join(", ")
-    : undefined;
+  const requirements =
+    vacancy.skills_required && vacancy.skills_required.length > 0
+      ? vacancy.skills_required.join(", ")
+      : undefined;
 
   return {
     title: vacancy.title,
@@ -204,11 +209,10 @@ export async function scrapeRecruitNepalList(url: string): Promise<{
           {
             headers: {
               "Content-Type": "application/json",
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+              "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
             },
             timeout: 15000,
-          }
+          },
         );
 
         if (!response.data?.data || response.data.data.length === 0) {
@@ -242,24 +246,18 @@ export async function scrapeRecruitNepalList(url: string): Promise<{
         const fetchedPage = response.data.pagination?.page || currentPage;
 
         console.log(
-          `    📄 Page ${fetchedPage}/${totalPages}: Found ${jobs.length} unique jobs from ${response.data.data.length} questions (total: ${allJobs.length})`
+          `    📄 Page ${fetchedPage}/${totalPages}: Found ${jobs.length} unique jobs from ${response.data.data.length} questions (total: ${allJobs.length})`,
         );
 
         // Check if there's a next page
         const nextPage = response.data.pagination?.nextPage;
-        if (
-          fetchedPage >= totalPages ||
-          !nextPage ||
-          currentPage >= maxPages
-        ) {
+        if (fetchedPage >= totalPages || !nextPage || currentPage >= maxPages) {
           break;
         }
 
         currentPage = nextPage;
       } catch (error: any) {
-        console.error(
-          `    ❌ Error fetching page ${currentPage}: ${error.message}`
-        );
+        console.error(`    ❌ Error fetching page ${currentPage}: ${error.message}`);
         break;
       }
 
@@ -284,4 +282,3 @@ export async function scrapeRecruitNepalList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

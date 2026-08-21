@@ -2,10 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getDataSource } from "@/lib/db";
 import { Job } from "@/server/db/entities/Job";
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
@@ -15,10 +12,7 @@ export async function GET(
     });
 
     if (!job) {
-      return NextResponse.json(
-        { success: false, error: "Job not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: "Job not found" }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -27,17 +21,11 @@ export async function GET(
     });
   } catch (error) {
     console.error("Error fetching job:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch job" },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: "Failed to fetch job" }, { status: 500 });
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const dataSource = await getDataSource();
     const jobRepository = dataSource.getRepository(Job);
@@ -45,10 +33,7 @@ export async function DELETE(
     const result = await jobRepository.delete(params.id);
 
     if (result.affected === 0) {
-      return NextResponse.json(
-        { success: false, error: "Job not found" },
-        { status: 404 }
-      );
+      return NextResponse.json({ success: false, error: "Job not found" }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -57,9 +42,6 @@ export async function DELETE(
     });
   } catch (error) {
     console.error("Error deleting job:", error);
-    return NextResponse.json(
-      { success: false, error: "Failed to delete job" },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: "Failed to delete job" }, { status: 500 });
   }
 }

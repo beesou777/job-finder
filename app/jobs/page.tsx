@@ -5,7 +5,7 @@ import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { getCategories } from "@/server/services/data-fetching";
 import { absoluteUrl } from "@/lib/site";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export function generateMetadata({
   searchParams,
@@ -23,11 +23,11 @@ export function generateMetadata({
   const page = parseInt(searchParams.page || "1", 10);
   const hasActiveFilters = Boolean(
     searchParams.search ||
-      searchParams.category ||
-      searchParams.jobType ||
-      searchParams.location ||
-      searchParams.urgency ||
-      (searchParams.type && searchParams.type !== "job")
+    searchParams.category ||
+    searchParams.jobType ||
+    searchParams.location ||
+    searchParams.urgency ||
+    (searchParams.type && searchParams.type !== "job"),
   );
   const shouldNoIndex = hasActiveFilters || page > 1;
 
@@ -45,19 +45,19 @@ export function generateMetadata({
 export default async function JobsPage({
   searchParams,
 }: {
-  searchParams: { 
-    search?: string; 
-    category?: string; 
-    type?: string; 
-    jobType?: string; 
-    location?: string; 
-    urgency?: string; 
-    page?: string; 
+  searchParams: {
+    search?: string;
+    category?: string;
+    type?: string;
+    jobType?: string;
+    location?: string;
+    urgency?: string;
+    page?: string;
   };
 }) {
   const page = parseInt(searchParams.page || "1");
   const categories = await getCategories({ limit: 100 });
-  
+
   // Static filters for now (can be dynamic later)
   const jobTypes = [
     { value: "full-time", label: "Full-time", count: 0 },
@@ -90,18 +90,11 @@ export default async function JobsPage({
 
   return (
     <div className="min-h-screen bg-zinc-950">
-      <JobsFiltering 
-        categories={categories}
-        jobTypes={jobTypes}
-        locations={locations}
-      />
-      
+      <JobsFiltering categories={categories} jobTypes={jobTypes} locations={locations} />
+
       <div className="container mx-auto px-4 py-8">
         <Suspense key={JSON.stringify(searchParams)} fallback={<JobsSkeleton />}>
-          <JobsList 
-            page={page}
-            {...filterOptions}
-          />
+          <JobsList page={page} {...filterOptions} />
         </Suspense>
       </div>
     </div>

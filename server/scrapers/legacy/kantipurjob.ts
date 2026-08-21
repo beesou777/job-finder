@@ -17,7 +17,8 @@ export async function scrapeKantipurJob(): Promise<JobResult[]> {
     $(".job-list-item, .job-item").each((_, element) => {
       try {
         const title = $(element).find(".job-title, h3, h4").text().trim();
-        const company = $(element).find(".company, .employer-name").text().trim() || "Not specified";
+        const company =
+          $(element).find(".company, .employer-name").text().trim() || "Not specified";
         const location = $(element).find(".location, .job-location").text().trim() || "Nepal";
         const relativeUrl = $(element).find("a").attr("href");
         const url = relativeUrl

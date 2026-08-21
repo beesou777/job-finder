@@ -10,7 +10,6 @@ export async function scrapeKantipurJobList(url: string) {
       link: ["a[href*='/job']", "a[href*='/vacancy']", "a"],
       nextPage: ["a[rel='next']", "a[href*='page']"],
     },
-    BASE_URL
+    BASE_URL,
   );
 }
-

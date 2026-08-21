@@ -4,7 +4,6 @@ import { compare } from "bcryptjs";
 import { getDataSource } from "@/lib/db";
 import { User } from "@/server/db/entities/User";
 
-
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
@@ -31,10 +30,7 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          const isPasswordValid = await compare(
-            credentials.password,
-            user.password
-          );
+          const isPasswordValid = await compare(credentials.password, user.password);
 
           if (!isPasswordValid) {
             return null;
@@ -44,6 +40,7 @@ export const authOptions: NextAuthOptions = {
             id: user.id.toString(),
             email: user.email,
             role: user.role,
+            name: user.email.split("@")[0],
           };
         } catch (error) {
           console.error("Auth error:", error);
@@ -61,6 +58,7 @@ export const authOptions: NextAuthOptions = {
     },
     async session({ session, token }) {
       if (session.user) {
+        session.user.id = token.sub;
         session.user.role = token.role as string;
       }
       return session;
@@ -73,4 +71,3 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
 };
-

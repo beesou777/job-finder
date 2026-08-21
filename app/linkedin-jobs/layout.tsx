@@ -15,17 +15,11 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: "LinkedIn Jobs - Find Your Next Opportunity | kamkhoj",
-    description:
-      "Discover thousands of LinkedIn job opportunities from top companies in Nepal.",
+    description: "Discover thousands of LinkedIn job opportunities from top companies in Nepal.",
     type: "website",
   },
 };
 
-export default function LinkedInJobsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function LinkedInJobsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
-

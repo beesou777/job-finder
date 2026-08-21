@@ -9,10 +9,10 @@ export const dynamic = "force-dynamic";
  */
 function arrayToCSV(data: any[]): string {
   if (data.length === 0) return "";
-  
+
   const headers = Object.keys(data[0]);
   const csvRows = [headers.join(",")];
-  
+
   for (const row of data) {
     const values = headers.map((header) => {
       const value = row[header];
@@ -27,7 +27,7 @@ function arrayToCSV(data: any[]): string {
     });
     csvRows.push(values.join(","));
   }
-  
+
   return csvRows.join("\n");
 }
 
@@ -39,19 +39,19 @@ export async function GET(request: NextRequest) {
   try {
     const dataSource = await getDataSource();
     const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
-    
+
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get("type") || "high-intent"; // high-intent, contacts, pitch-targets, all
     const format = searchParams.get("format") || "csv"; // csv or json
     const minLevel = searchParams.get("minLevel") as HiringIntentLevel | null;
     const minScore = searchParams.get("minScore") ? parseInt(searchParams.get("minScore")!) : null;
     const search = searchParams.get("search") || null; // Company name search
-    
+
     let query = enrichmentRepository
       .createQueryBuilder("enrichment")
       .leftJoinAndSelect("enrichment.company", "company")
       .where("1=1");
-    
+
     switch (type) {
       case "high-intent":
         query = query
@@ -76,25 +76,32 @@ export async function GET(request: NextRequest) {
           .andWhere("enrichment.intentLevel IN ('HIGH', 'VERY_HIGH')")
           .orderBy("enrichment.intentScore", "DESC");
     }
-    
+
     if (minLevel) {
-      const levels = [HiringIntentLevel.LOW, HiringIntentLevel.MEDIUM, HiringIntentLevel.HIGH, HiringIntentLevel.VERY_HIGH];
+      const levels = [
+        HiringIntentLevel.LOW,
+        HiringIntentLevel.MEDIUM,
+        HiringIntentLevel.HIGH,
+        HiringIntentLevel.VERY_HIGH,
+      ];
       const minIndex = levels.indexOf(minLevel);
       if (minIndex >= 0) {
-        query = query.andWhere(`enrichment.intentLevel IN ('${levels.slice(minIndex).join("','")}')`);
+        query = query.andWhere(
+          `enrichment.intentLevel IN ('${levels.slice(minIndex).join("','")}')`,
+        );
       }
     }
-    
+
     if (minScore !== null) {
       query = query.andWhere("enrichment.intentScore >= :minScore", { minScore });
     }
-    
+
     if (search) {
       query = query.andWhere("company.name ILIKE :search", { search: `%${search}%` });
     }
-    
+
     const enrichments = await query.getMany();
-    
+
     // If JSON format is requested, return companies with email, phone, and website
     if (format === "json") {
       // Filter to only companies that have at least email, phone, or website
@@ -120,14 +127,14 @@ export async function GET(request: NextRequest) {
         },
       });
     }
-    
+
     // Format data for CSV
     const csvData = enrichments.map((e) => ({
       "Company Name": e.company.name,
-      "Domain": e.company.domain || "",
-      "Email": e.email || "",
+      Domain: e.company.domain || "",
+      Email: e.email || "",
       "Phone Number": e.phoneNumber || "",
-      "Website": e.website || "",
+      Website: e.website || "",
       "Career Page URL": e.careerPageUrl || "",
       "Intent Score": e.intentScore,
       "Intent Level": e.intentLevel,
@@ -135,7 +142,7 @@ export async function GET(request: NextRequest) {
       "Jobs (Last 30 Days)": e.jobsLast30Days,
       "Unique Categories": e.uniqueJobCategories,
       "Has Career Page": e.hasCareerPage ? "Yes" : "No",
-      "Keywords": e.keywordMatches?.join("; ") || "",
+      Keywords: e.keywordMatches?.join("; ") || "",
       "External Status": e.externalStatus || "",
       "Match Confidence": e.matchConfidence || "",
       "Is Pitch Target": e.isPitchTarget ? "Yes" : "No",
@@ -143,9 +150,9 @@ export async function GET(request: NextRequest) {
       "Last Verified": e.lastVerifiedAt ? e.lastVerifiedAt.toISOString() : "",
       "Updated At": e.updatedAt.toISOString(),
     }));
-    
+
     const csv = arrayToCSV(csvData);
-    
+
     // Return CSV file
     return new NextResponse(csv, {
       status: 200,
@@ -156,10 +163,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error: any) {
     console.error("Error exporting companies:", error);
-    return NextResponse.json(
-      { error: error?.message || "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: error?.message || "Internal server error" }, { status: 500 });
   }
 }
-

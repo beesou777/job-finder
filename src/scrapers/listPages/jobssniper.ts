@@ -49,7 +49,7 @@ function formatSalary(
   initialSalary: number | null,
   maximumSalary: number | null,
   currency: string,
-  salaryAmount: number | null
+  salaryAmount: number | null,
 ): string | undefined {
   if (salaryType === "Negotiable") {
     return "Negotiable";
@@ -105,7 +105,7 @@ function mapToJobData(job: JobSniperJob, jobType: "fulltime" | "parttime" | "int
     job.initial_salary,
     job.maximum_salary,
     job.salary_currency || "NPR",
-    job.salary_amount
+    job.salary_amount,
   );
 
   // Format deadline
@@ -122,12 +122,13 @@ function mapToJobData(job: JobSniperJob, jobType: "fulltime" | "parttime" | "int
   }
 
   // Determine if it's an internship based on endpoint or job data
-  const isInternship = jobType === "internship" 
-    ? "internship"
-    : job.kind_of_jobs?.toLowerCase().includes("intern") ||
-      job.title_of_job?.toLowerCase().includes("intern")
+  const isInternship =
+    jobType === "internship"
       ? "internship"
-      : "job";
+      : job.kind_of_jobs?.toLowerCase().includes("intern") ||
+          job.title_of_job?.toLowerCase().includes("intern")
+        ? "internship"
+        : "job";
 
   // Calculate expiration date
   const expiresAt = job.deadline
@@ -153,7 +154,7 @@ function mapToJobData(job: JobSniperJob, jobType: "fulltime" | "parttime" | "int
  * Fetch jobs from a specific JobSniper endpoint with pagination
  */
 async function fetchJobsFromEndpoint(
-  endpoint: "fulltime" | "parttime" | "internship"
+  endpoint: "fulltime" | "parttime" | "internship",
 ): Promise<JobData[]> {
   const allJobs: JobData[] = [];
   let currentPage = 1;
@@ -164,40 +165,34 @@ async function fetchJobsFromEndpoint(
 
   while (hasMore && currentPage <= maxPages) {
     try {
-      const response = await axios.get<JobSniperResponse>(
-        `${API_BASE}/${endpoint}`,
-        {
-          params: {
-            page: currentPage,
-          },
-          headers: {
-            "Accept": "application/json",
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-          },
-          timeout: 15000,
-        }
-      );
+      const response = await axios.get<JobSniperResponse>(`${API_BASE}/${endpoint}`, {
+        params: {
+          page: currentPage,
+        },
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        timeout: 15000,
+      });
 
       if (response.data?.results && Array.isArray(response.data.results)) {
         const fetchedJobs = response.data.results;
 
         // Filter out expired or unpublished jobs
         const activeJobs = fetchedJobs.filter(
-          (job) => job.published && job.approved && !job.expired
+          (job) => job.published && job.approved && !job.expired,
         );
 
         const mappedJobs = activeJobs.map((job) => mapToJobData(job, endpoint));
         allJobs.push(...mappedJobs);
 
         console.log(
-          `[JobSniper] Fetched ${endpoint} page ${currentPage}, ${mappedJobs.length} active jobs (total: ${allJobs.length})`
+          `[JobSniper] Fetched ${endpoint} page ${currentPage}, ${mappedJobs.length} active jobs (total: ${allJobs.length})`,
         );
 
         // Check if there are more pages
-        const totalPages = Math.ceil(
-          response.data.count / response.data.countItemsOnPage
-        );
+        const totalPages = Math.ceil(response.data.count / response.data.countItemsOnPage);
 
         if (currentPage < totalPages && response.data.next) {
           currentPage++;
@@ -211,16 +206,11 @@ async function fetchJobsFromEndpoint(
           await new Promise((resolve) => setTimeout(resolve, 500));
         }
       } else {
-        console.warn(
-          `[JobSniper] No jobs in response for ${endpoint} page ${currentPage}`
-        );
+        console.warn(`[JobSniper] No jobs in response for ${endpoint} page ${currentPage}`);
         hasMore = false;
       }
     } catch (error: any) {
-      console.error(
-        `[JobSniper] Error fetching ${endpoint} page ${currentPage}:`,
-        error.message
-      );
+      console.error(`[JobSniper] Error fetching ${endpoint} page ${currentPage}:`, error.message);
       hasMore = false;
     }
   }
@@ -262,24 +252,17 @@ export async function scrapeJobSniperList(url: string): Promise<{
 
     // Fetch internship jobs (only if endpoint has data)
     try {
-      const internshipResponse = await axios.get<JobSniperResponse>(
-        `${API_BASE}/internship`,
-        {
-          params: { page: 1 },
-          headers: {
-            "Accept": "application/json",
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-          },
-          timeout: 15000,
-        }
-      );
+      const internshipResponse = await axios.get<JobSniperResponse>(`${API_BASE}/internship`, {
+        params: { page: 1 },
+        headers: {
+          Accept: "application/json",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        },
+        timeout: 15000,
+      });
 
       // Only fetch internships if there's data (count > 0)
-      if (
-        internshipResponse.data?.count &&
-        internshipResponse.data.count > 0
-      ) {
+      if (internshipResponse.data?.count && internshipResponse.data.count > 0) {
         const internshipJobs = await fetchJobsFromEndpoint("internship");
         allJobs.push(...internshipJobs);
         console.log(`[JobSniper] Internship: ${internshipJobs.length} jobs`);
@@ -287,9 +270,7 @@ export async function scrapeJobSniperList(url: string): Promise<{
         console.log(`[JobSniper] No internships found, skipping...`);
       }
     } catch (error: any) {
-      console.warn(
-        `[JobSniper] Error checking internship endpoint: ${error.message}`
-      );
+      console.warn(`[JobSniper] Error checking internship endpoint: ${error.message}`);
       // Continue even if internship endpoint fails
     }
 
@@ -298,9 +279,7 @@ export async function scrapeJobSniperList(url: string): Promise<{
       return { detailUrls: [], hasMore: false };
     }
 
-    console.log(
-      `✅ JobSniper: Fetched ${allJobs.length} total jobs from API`
-    );
+    console.log(`✅ JobSniper: Fetched ${allJobs.length} total jobs from API`);
 
     // Return detail URLs for compatibility (though we already have the jobs)
     const detailUrls = allJobs.map((job) => job.applyUrl);
@@ -315,4 +294,3 @@ export async function scrapeJobSniperList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

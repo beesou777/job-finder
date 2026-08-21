@@ -27,9 +27,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
           <h4 className="text-lg font-black mt-3 mb-2 text-white" {...props} />
         ),
         // Customize paragraph
-        p: ({ node, ...props }) => (
-          <p className="mb-4 text-zinc-300 leading-relaxed" {...props} />
-        ),
+        p: ({ node, ...props }) => <p className="mb-4 text-zinc-300 leading-relaxed" {...props} />,
         // Customize links
         a: ({ node, href, ...props }) => {
           // Check if it's an internal link
@@ -60,9 +58,7 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
         ol: ({ node, ...props }) => (
           <ol className="list-decimal list-inside mb-4 space-y-2 text-zinc-300" {...props} />
         ),
-        li: ({ node, ...props }) => (
-          <li className="ml-4" {...props} />
-        ),
+        li: ({ node, ...props }) => <li className="ml-4" {...props} />,
         // Customize code blocks
         code: ({ node, className, ...props }: any) => {
           const isInline = !className;
@@ -86,21 +82,14 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
           />
         ),
         // Customize horizontal rule
-        hr: ({ node, ...props }) => (
-          <hr className="my-6 border-white/10" {...props} />
-        ),
+        hr: ({ node, ...props }) => <hr className="my-6 border-white/10" {...props} />,
         // Customize strong/bold
-        strong: ({ node, ...props }) => (
-          <strong className="font-bold text-white" {...props} />
-        ),
+        strong: ({ node, ...props }) => <strong className="font-bold text-white" {...props} />,
         // Customize emphasis/italic
-        em: ({ node, ...props }) => (
-          <em className="italic text-zinc-300" {...props} />
-        ),
+        em: ({ node, ...props }) => <em className="italic text-zinc-300" {...props} />,
       }}
     >
       {content}
     </ReactMarkdown>
   );
 }
-

@@ -24,10 +24,6 @@ export const metadata: Metadata = {
   },
 };
 
-export default function InternshipsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function InternshipsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

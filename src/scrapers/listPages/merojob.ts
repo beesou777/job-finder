@@ -93,9 +93,7 @@ function cleanHtml(html: string): string {
  */
 function mapToJobData(job: MeroJob): JobData {
   // Construct apply URL
-  const applyUrl = job.absolute_url
-    ? `${BASE_URL}${job.absolute_url}`
-    : `${BASE_URL}/${job.slug}`;
+  const applyUrl = job.absolute_url ? `${BASE_URL}${job.absolute_url}` : `${BASE_URL}/${job.slug}`;
 
   // Format salary
   let salaryText: string | undefined;
@@ -130,14 +128,14 @@ function mapToJobData(job: MeroJob): JobData {
   }
 
   // Get job type from available_for array
-  const jobType = job.available_for && job.available_for.length > 0 
-    ? job.available_for.join(", ") 
-    : undefined;
+  const jobType =
+    job.available_for && job.available_for.length > 0 ? job.available_for.join(", ") : undefined;
 
   // Get category from categories array
-  const category = job.categories && job.categories.length > 0
-    ? job.categories[0]
-    : job.client?.industry || undefined;
+  const category =
+    job.categories && job.categories.length > 0
+      ? job.categories[0]
+      : job.client?.industry || undefined;
 
   // Detect if it's an internship
   const isInternship =
@@ -194,8 +192,7 @@ export async function scrapeMeroJobList(url: string): Promise<{
         const response: { data: MeroJobResponse } = await axios.get<MeroJobResponse>(currentUrl, {
           headers: {
             "Content-Type": "application/json",
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
           },
           timeout: 15000,
         });
@@ -216,7 +213,7 @@ export async function scrapeMeroJobList(url: string): Promise<{
 
         pageCount++;
         console.log(
-          `    📄 Page ${pageCount}: Fetched ${jobs.length} jobs (total: ${allJobs.length}${totalCount ? `/${totalCount}` : ''})`
+          `    📄 Page ${pageCount}: Fetched ${jobs.length} jobs (total: ${allJobs.length}${totalCount ? `/${totalCount}` : ""})`,
         );
 
         // Check if we've fetched all jobs
@@ -236,9 +233,7 @@ export async function scrapeMeroJobList(url: string): Promise<{
         // Add small delay between requests
         await new Promise((resolve) => setTimeout(resolve, 500));
       } catch (error: any) {
-        console.error(
-          `    ❌ Error fetching page ${pageCount + 1}: ${error.message}`
-        );
+        console.error(`    ❌ Error fetching page ${pageCount + 1}: ${error.message}`);
         break;
       }
     }
@@ -260,4 +255,3 @@ export async function scrapeMeroJobList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

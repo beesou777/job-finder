@@ -8,6 +8,8 @@ export interface JobSearchParams {
   jobType?: string;
   type?: "job" | "internship" | "all";
   limit?: number;
+  offset?: number;
+  matchAny?: boolean;
 }
 
 export interface JobSearchResult {
@@ -34,9 +36,14 @@ export interface JobSearchResult {
 function buildSearchConditions(
   search: string,
   prefix: string,
-  useOr = false
+  useOr = false,
 ): { sql: string; params: Record<string, string> } {
-  const terms = search.trim().split(/\s+/).filter(Boolean);
+  const terms = search.includes("|")
+    ? search
+        .split("|")
+        .map((term) => term.trim())
+        .filter(Boolean)
+    : search.trim().split(/\s+/).filter(Boolean);
   if (terms.length === 0) return { sql: "1=1", params: {} };
   const joinOp = useOr ? " OR " : " AND ";
 
@@ -49,7 +56,7 @@ function buildSearchConditions(
     const matchConditions = terms
       .map(
         (_, i) =>
-          `(job.title ILIKE :term${i} OR category.name ILIKE :term${i} OR job.company ILIKE :term${i} OR job.description ILIKE :term${i} OR job.requirements ILIKE :term${i})`
+          `(job.title ILIKE :term${i} OR category.name ILIKE :term${i} OR job.categoryOld ILIKE :term${i} OR job.company ILIKE :term${i} OR job.location ILIKE :term${i} OR job.description ILIKE :term${i} OR job.requirements ILIKE :term${i})`,
       )
       .join(joinOp);
     return {
@@ -60,7 +67,7 @@ function buildSearchConditions(
   const conditions = terms
     .map(
       (_, i) =>
-        `(lj.title ILIKE :term${i} OR lj.company ILIKE :term${i} OR lj.place ILIKE :term${i} OR lj.description ILIKE :term${i})`
+        `(lj.title ILIKE :term${i} OR lj.company ILIKE :term${i} OR lj.place ILIKE :term${i} OR lj.description ILIKE :term${i})`,
     )
     .join(joinOp);
   const titleMatch = terms.map((_, i) => `lj.title ILIKE :term${i}`).join(" OR ");
@@ -77,8 +84,9 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
   const dataSource = await getDataSource();
   const jobRepository = dataSource.getRepository(Job);
 
-  const { search, location, jobType, type = "job", limit = 10 } = params;
+  const { search, location, jobType, type = "job", limit = 10, matchAny = false } = params;
   const now = new Date();
+  const postedSince = new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000);
 
   let query = jobRepository
     .createQueryBuilder("job")
@@ -94,12 +102,17 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
     query = query.andWhere("job.jobType = :jobType", { jobType });
   }
   if (location) {
-    query = query.andWhere("job.location ILIKE :location", { location: `%${location}%` });
+    query = query.andWhere("job.location ILIKE :location", {
+      location: `%${location}%`,
+    });
   }
   if (search?.trim()) {
-    const { sql, params } = buildSearchConditions(search, "job");
+    const { sql, params } = buildSearchConditions(search, "job", matchAny);
     query = query.andWhere(sql, params);
-    query = query.addSelect(`CASE WHEN job.title ILIKE :rankSearch THEN 0 WHEN category.name ILIKE :rankSearch THEN 1 ELSE 2 END`, "relevance");
+    query = query.addSelect(
+      `CASE WHEN job.title ILIKE :rankSearch THEN 0 WHEN category.name ILIKE :rankSearch THEN 1 ELSE 2 END`,
+      "relevance",
+    );
     query = query.setParameter("rankSearch", `%${search.trim()}%`);
   }
 
@@ -133,20 +146,31 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
  * Thinks like a human - searches descriptions, titles, requirements.
  */
 export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchResult[]> {
-  const { search, location, jobType, type = "all", limit = 12 } = params;
-  const perSource = Math.ceil(limit / 2);
+  const {
+    search,
+    location,
+    jobType,
+    type = "all",
+    limit = 12,
+    offset = 0,
+    matchAny = false,
+  } = params;
+  const perSource = Math.ceil((limit + offset) / 2);
 
   const dataSource = await getDataSource();
   const jobRepo = dataSource.getRepository(Job);
   const linkedInRepo = dataSource.getRepository(LinkedInJob);
   const now = new Date();
+  const linkedinSince = new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000);
+  const postedSince = new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000);
 
   // 1. Nepal jobs + internships (both if type is "all")
   let jobsQuery = jobRepo
     .createQueryBuilder("job")
     .leftJoinAndSelect("job.category", "category")
     .where("job.isActive = true")
-    .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+    .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+    .andWhere("job.postedAt >= :postedSince", { postedSince });
 
   if (type !== "all") {
     jobsQuery = jobsQuery.andWhere("job.type = :type", { type });
@@ -155,19 +179,26 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
     jobsQuery = jobsQuery.andWhere("job.jobType = :jobType", { jobType });
   }
   if (location) {
-    jobsQuery = jobsQuery.andWhere("job.location ILIKE :location", { location: `%${location}%` });
+    jobsQuery = jobsQuery.andWhere("job.location ILIKE :location", {
+      location: `%${location}%`,
+    });
   }
   if (search?.trim()) {
-    const { sql, params } = buildSearchConditions(search, "job");
+    const { sql, params } = buildSearchConditions(search, "job", matchAny);
     jobsQuery = jobsQuery.andWhere(sql, params);
-    jobsQuery = jobsQuery.addSelect(`CASE WHEN job.title ILIKE :jobRankSearch THEN 0 WHEN category.name ILIKE :jobRankSearch THEN 1 ELSE 2 END`, "relevance");
+    jobsQuery = jobsQuery.addSelect(
+      `CASE WHEN job.title ILIKE :jobRankSearch THEN 0 WHEN category.name ILIKE :jobRankSearch THEN 1 ELSE 2 END`,
+      "relevance",
+    );
     jobsQuery = jobsQuery.setParameter("jobRankSearch", `%${search.trim()}%`);
   }
 
   // 2. LinkedIn jobs
-  let linkedInQuery = linkedInRepo.createQueryBuilder("lj");
+  let linkedInQuery = linkedInRepo.createQueryBuilder("lj").where("lj.job_date >= :linkedinSince", {
+    linkedinSince,
+  });
   if (search?.trim()) {
-    const { sql, params } = buildSearchConditions(search, "linkedin");
+    const { sql, params } = buildSearchConditions(search, "linkedin", matchAny);
     linkedInQuery = linkedInQuery.andWhere(sql, params);
   }
   if (location) {
@@ -182,30 +213,66 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
       .addOrderBy("job.postedAt", "DESC", "NULLS LAST")
       .take(perSource)
       .getMany(),
-    linkedInQuery
-      .orderBy("lj.job_date", "DESC", "NULLS LAST")
-      .take(perSource)
-      .getMany(),
+    linkedInQuery.orderBy("lj.job_date", "DESC", "NULLS LAST").take(perSource).getMany(),
   ]);
+
+  // Local scraped jobs are the primary source. If the stricter combined query
+  // misses them, retry the local table independently with OR keyword matching
+  // before accepting LinkedIn-only results.
+  if (nepalJobs.length === 0 && search?.trim()) {
+    const { sql, params } = buildSearchConditions(search, "job", true);
+    let localFallback = jobRepo
+      .createQueryBuilder("job")
+      .leftJoinAndSelect("job.category", "category")
+      .where("job.isActive = true")
+      .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+      .andWhere("job.postedAt >= :postedSince", { postedSince })
+      .andWhere(sql, params);
+    if (type !== "all") localFallback = localFallback.andWhere("job.type = :type", { type });
+    if (jobType)
+      localFallback = localFallback.andWhere("job.jobType = :jobType", {
+        jobType,
+      });
+    if (location)
+      localFallback = localFallback.andWhere("job.location ILIKE :location", {
+        location: `%${location}%`,
+      });
+    nepalJobs = await localFallback
+      .orderBy("job.postedAt", "DESC", "NULLS LAST")
+      .take(perSource)
+      .getMany();
+  }
 
   if (nepalJobs.length === 0 && linkedInJobs.length === 0 && search?.trim()) {
     const terms = search.trim().split(/\s+/).filter(Boolean);
     if (terms.length >= 2) {
       const fallbackSearch = terms.slice(0, 3).join(" ");
       const { sql: jobSql, params: jobParams } = buildSearchConditions(fallbackSearch, "job", true);
-      const { sql: liSql, params: liParams } = buildSearchConditions(fallbackSearch, "linkedin", true);
+      const { sql: liSql, params: liParams } = buildSearchConditions(
+        fallbackSearch,
+        "linkedin",
+        true,
+      );
       let fallbackJobsQ = jobRepo
         .createQueryBuilder("job")
         .leftJoinAndSelect("job.category", "category")
         .where("job.isActive = true")
         .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+        .andWhere("job.postedAt >= :postedSince", { postedSince })
         .andWhere(jobSql, jobParams);
       let fallbackLiQ = linkedInRepo.createQueryBuilder("lj").andWhere(liSql, liParams);
       if (type !== "all") fallbackJobsQ = fallbackJobsQ.andWhere("job.type = :type", { type });
-      if (jobType) fallbackJobsQ = fallbackJobsQ.andWhere("job.jobType = :jobType", { jobType });
+      if (jobType)
+        fallbackJobsQ = fallbackJobsQ.andWhere("job.jobType = :jobType", {
+          jobType,
+        });
       if (location) {
-        fallbackJobsQ = fallbackJobsQ.andWhere("job.location ILIKE :location", { location: `%${location}%` });
-        fallbackLiQ = fallbackLiQ.andWhere("lj.place ILIKE :location", { location: `%${location}%` });
+        fallbackJobsQ = fallbackJobsQ.andWhere("job.location ILIKE :location", {
+          location: `%${location}%`,
+        });
+        fallbackLiQ = fallbackLiQ.andWhere("lj.place ILIKE :location", {
+          location: `%${location}%`,
+        });
       }
       [nepalJobs, linkedInJobs] = await Promise.all([
         fallbackJobsQ.orderBy("job.postedAt", "DESC", "NULLS LAST").take(perSource).getMany(),
@@ -247,7 +314,9 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
     })),
   ];
 
-  return results.slice(0, limit);
+  // Keep locally scraped KamKhoj jobs ahead of LinkedIn jobs. Pagination is
+  // applied after this ordering so LinkedIn results never jump ahead.
+  return results.slice(offset, offset + limit);
 }
 
 /**
@@ -272,7 +341,10 @@ export async function getJobSearchSchema(): Promise<{
 }> {
   const dataSource = await getDataSource();
   const categoryRepo = dataSource.getRepository(Category);
-  const categories = await categoryRepo.find({ select: ["name"], order: { name: "ASC" } });
+  const categories = await categoryRepo.find({
+    select: ["name"],
+    order: { name: "ASC" },
+  });
   const categoryNames = categories.map((c) => c.name).filter(Boolean);
 
   const schema = `DATABASE SCHEMA (PostgreSQL):

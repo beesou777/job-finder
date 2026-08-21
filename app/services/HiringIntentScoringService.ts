@@ -43,46 +43,49 @@ export interface ScoreBreakdown {
 /**
  * Calculate hiring intent score from enrichment data
  */
-export function calculateIntentScore(
-  enrichment: CompanyEnrichment
-): ScoreBreakdown {
+export function calculateIntentScore(enrichment: CompanyEnrichment): ScoreBreakdown {
   let careerPage = 0;
   if (enrichment.hasCareerPage) {
     careerPage = SIGNAL_WEIGHTS.CAREER_PAGE;
   }
-  
+
   const keywordMatches = Math.min(
     (enrichment.keywordMatches?.length || 0) * SIGNAL_WEIGHTS.KEYWORD_MATCH,
-    30 // Cap at 3 keywords
+    30, // Cap at 3 keywords
   );
-  
+
   let externalStatus = 0;
   if (enrichment.externalStatus === "ACTIVE") {
     externalStatus = SIGNAL_WEIGHTS.ACTIVE_STATUS;
   }
-  
+
   // Jobs in last 7 days (max 40 points)
   const jobsLast7Days = Math.min(
     enrichment.jobsLast7Days * (SIGNAL_WEIGHTS.JOBS_LAST_7_DAYS / 3), // 3 jobs = 40 points
-    SIGNAL_WEIGHTS.JOBS_LAST_7_DAYS
+    SIGNAL_WEIGHTS.JOBS_LAST_7_DAYS,
   );
-  
+
   // Jobs in last 30 days (max 20 points, but don't double-count 7-day jobs)
   const jobsLast30Days = Math.min(
-    Math.max(0, enrichment.jobsLast30Days - enrichment.jobsLast7Days) * (SIGNAL_WEIGHTS.JOBS_LAST_30_DAYS / 5),
-    SIGNAL_WEIGHTS.JOBS_LAST_30_DAYS
+    Math.max(0, enrichment.jobsLast30Days - enrichment.jobsLast7Days) *
+      (SIGNAL_WEIGHTS.JOBS_LAST_30_DAYS / 5),
+    SIGNAL_WEIGHTS.JOBS_LAST_30_DAYS,
   );
-  
+
   // Multiple categories bonus
-  const uniqueCategories = enrichment.uniqueJobCategories > 1 
-    ? SIGNAL_WEIGHTS.MULTIPLE_CATEGORIES 
-    : 0;
-  
+  const uniqueCategories =
+    enrichment.uniqueJobCategories > 1 ? SIGNAL_WEIGHTS.MULTIPLE_CATEGORIES : 0;
+
   const total = Math.min(
-    careerPage + keywordMatches + externalStatus + jobsLast7Days + jobsLast30Days + uniqueCategories,
-    MAX_SCORE
+    careerPage +
+      keywordMatches +
+      externalStatus +
+      jobsLast7Days +
+      jobsLast30Days +
+      uniqueCategories,
+    MAX_SCORE,
   );
-  
+
   return {
     careerPage,
     keywordMatches,
@@ -99,7 +102,7 @@ export function calculateIntentScore(
  */
 export async function calculateJobActivitySignals(
   companyId: string,
-  companyName: string
+  companyName: string,
 ): Promise<{
   jobsLast7Days: number;
   jobsLast30Days: number;
@@ -107,11 +110,11 @@ export async function calculateJobActivitySignals(
 }> {
   const dataSource = await getDataSource();
   const jobRepository = dataSource.getRepository(Job);
-  
+
   const now = new Date();
   const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-  
+
   // Count jobs by company name (since Job.company is a string)
   const jobsLast7Days = await jobRepository
     .createQueryBuilder("job")
@@ -121,7 +124,7 @@ export async function calculateJobActivitySignals(
     .andWhere("job.postedAt >= :sevenDaysAgo", { sevenDaysAgo })
     .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
     .getCount();
-  
+
   const jobsLast30Days = await jobRepository
     .createQueryBuilder("job")
     .where("LOWER(TRIM(job.company)) = LOWER(TRIM(:companyName))", {
@@ -130,7 +133,7 @@ export async function calculateJobActivitySignals(
     .andWhere("job.postedAt >= :thirtyDaysAgo", { thirtyDaysAgo })
     .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
     .getCount();
-  
+
   // Count unique categories
   const uniqueCategories = await jobRepository
     .createQueryBuilder("job")
@@ -142,9 +145,9 @@ export async function calculateJobActivitySignals(
     .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
     .andWhere("job.categoryId IS NOT NULL")
     .getRawOne();
-  
+
   const uniqueJobCategories = parseInt(uniqueCategories?.count || "0", 10);
-  
+
   return {
     jobsLast7Days,
     jobsLast30Days,
@@ -157,12 +160,12 @@ export async function calculateJobActivitySignals(
  */
 export async function updateIntentScore(
   enrichment: CompanyEnrichment,
-  trigger: string = "manual"
+  trigger: string = "manual",
 ): Promise<{ enrichment: CompanyEnrichment; breakdown: ScoreBreakdown }> {
   const dataSource = await getDataSource();
   const enrichmentRepository = dataSource.getRepository(CompanyEnrichment);
   const historyRepository = dataSource.getRepository(HiringIntentScoreHistory);
-  
+
   // Load company if not loaded
   if (!enrichment.company) {
     const { CanonicalCompany } = await import("@/server/db/entities/CanonicalCompany");
@@ -172,33 +175,33 @@ export async function updateIntentScore(
       enrichment.company = company;
     }
   }
-  
+
   if (!enrichment.company) {
     throw new Error(`Company not found for enrichment ${enrichment.id}`);
   }
-  
+
   // Calculate job activity signals
   const jobActivity = await calculateJobActivitySignals(
     enrichment.companyId,
-    enrichment.company.name
+    enrichment.company.name,
   );
-  
+
   // Update enrichment with job activity
   enrichment.jobsLast7Days = jobActivity.jobsLast7Days;
   enrichment.jobsLast30Days = jobActivity.jobsLast30Days;
   enrichment.uniqueJobCategories = jobActivity.uniqueJobCategories;
-  
+
   // Calculate score
   const breakdown = calculateIntentScore(enrichment);
   const oldScore = enrichment.intentScore;
   const oldLevel = enrichment.intentLevel;
-  
+
   enrichment.intentScore = breakdown.total;
   enrichment.intentLevel = getIntentLevel(breakdown.total);
-  
+
   // Save enrichment
   await enrichmentRepository.save(enrichment);
-  
+
   // Record history if score changed
   if (oldScore !== breakdown.total || oldLevel !== enrichment.intentLevel) {
     const history = historyRepository.create({
@@ -215,10 +218,9 @@ export async function updateIntentScore(
       },
       trigger,
     });
-    
+
     await historyRepository.save(history);
   }
-  
+
   return { enrichment, breakdown };
 }
-

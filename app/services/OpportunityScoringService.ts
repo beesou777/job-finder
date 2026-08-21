@@ -51,14 +51,14 @@ function isNepalLocation(place: string | null): boolean {
     "janakpur",
     "nepalgunj",
   ];
-  return nepalKeywords.some(keyword => lowerPlace.includes(keyword));
+  return nepalKeywords.some((keyword) => lowerPlace.includes(keyword));
 }
 
 /**
  * Calculate opportunity score for a company
  */
 export async function calculateOpportunityScore(
-  matchResult: CompanyMatchResult
+  matchResult: CompanyMatchResult,
 ): Promise<OpportunityScore> {
   let score = 0;
   const reasons: string[] = [];
@@ -79,7 +79,7 @@ export async function calculateOpportunityScore(
   const sevenDaysAgo = new Date();
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-  const recentJobs = matchResult.linkedInJobs.filter(job => {
+  const recentJobs = matchResult.linkedInJobs.filter((job) => {
     if (!job.job_date) return false;
     const jobDate = job.job_date instanceof Date ? job.job_date : new Date(job.job_date);
     return !isNaN(jobDate.getTime()) && jobDate >= sevenDaysAgo;
@@ -98,9 +98,7 @@ export async function calculateOpportunityScore(
   }
 
   // Signal 5: Job location = Nepal (+10)
-  const nepalJobs = matchResult.linkedInJobs.filter(
-    job => isNepalLocation(job.place)
-  );
+  const nepalJobs = matchResult.linkedInJobs.filter((job) => isNepalLocation(job.place));
 
   const hasNepalLocation = nepalJobs.length > 0;
   if (hasNepalLocation) {
@@ -122,25 +120,22 @@ export async function calculateOpportunityScore(
 
   // Get last job date
   const jobDates = matchResult.linkedInJobs
-    .map(job => job.job_date)
-    .filter(date => date !== null)
-    .map(date => date instanceof Date ? date : new Date(date as string))
-    .filter(date => !isNaN(date.getTime())) // Filter out invalid dates
+    .map((job) => job.job_date)
+    .filter((date) => date !== null)
+    .map((date) => (date instanceof Date ? date : new Date(date as string)))
+    .filter((date) => !isNaN(date.getTime())) // Filter out invalid dates
     .sort((a, b) => b.getTime() - a.getTime());
 
   const lastJobDate = jobDates.length > 0 ? jobDates[0] : null;
 
   // Get approachability data from DB or JSON files
-  const approachability = await getCompanyApproachability(
-    matchResult.company,
-    matchResult.domain
-  );
+  const approachability = await getCompanyApproachability(matchResult.company, matchResult.domain);
 
   // Integrate approachability score if available (from DB)
   if (approachability.score !== undefined) {
     // We weight the approachability score (0-100) highly
     // and combine it with LinkedIn signals
-    score = (score * 0.4) + (approachability.score * 0.6);
+    score = score * 0.4 + approachability.score * 0.6;
     reasons.push(`Enhanced approachability score: ${approachability.score} (weighted)`);
   } else if (approachability.hasContactInfo) {
     score += 15;
@@ -180,11 +175,9 @@ export async function calculateOpportunityScore(
  * Score all companies from match results
  */
 export async function scoreAllOpportunities(
-  matchResults: CompanyMatchResult[]
+  matchResults: CompanyMatchResult[],
 ): Promise<OpportunityScore[]> {
-  const scores = await Promise.all(
-    matchResults.map(calculateOpportunityScore)
-  );
+  const scores = await Promise.all(matchResults.map(calculateOpportunityScore));
 
   return scores.sort((a, b) => {
     // Sort by: NOT_ON_PLATFORM first, then by score descending
@@ -204,21 +197,21 @@ export function filterOpportunities(
     level?: OpportunityLevel | OpportunityLevel[];
     status?: MatchStatus;
     minScore?: number;
-  }
+  },
 ): OpportunityScore[] {
   let filtered = [...opportunities];
 
   if (options.status) {
-    filtered = filtered.filter(opp => opp.status === options.status);
+    filtered = filtered.filter((opp) => opp.status === options.status);
   }
 
   if (options.level) {
     const levels = Array.isArray(options.level) ? options.level : [options.level];
-    filtered = filtered.filter(opp => levels.includes(opp.level));
+    filtered = filtered.filter((opp) => levels.includes(opp.level));
   }
 
   if (options.minScore !== undefined) {
-    filtered = filtered.filter(opp => opp.score >= options.minScore!);
+    filtered = filtered.filter((opp) => opp.score >= options.minScore!);
   }
 
   return filtered;

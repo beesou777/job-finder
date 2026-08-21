@@ -17,7 +17,8 @@ export async function scrapeJobsNepal(): Promise<JobResult[]> {
     $(".job-listing, .job-post, article").each((_, element) => {
       try {
         const title = $(element).find(".job-title, h2, h3").text().trim();
-        const company = $(element).find(".company-name, .employer").text().trim() || "Not specified";
+        const company =
+          $(element).find(".company-name, .employer").text().trim() || "Not specified";
         const location = $(element).find(".location, .job-location").text().trim() || "Nepal";
         const relativeUrl = $(element).find("a").first().attr("href");
         const url = relativeUrl

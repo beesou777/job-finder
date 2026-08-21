@@ -2,7 +2,11 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLinkedInJobDetails } from "@/server/services/data-fetching";
 import { LinkedInJobDetail } from "@/components/linkedin/LinkedInJobDetail";
-import { generateLinkedInJobMetadata, generateBreadcrumbSchema, generateLinkedInJobPostingSchema } from "@/lib/seo";
+import {
+  generateLinkedInJobMetadata,
+  generateBreadcrumbSchema,
+  generateLinkedInJobPostingSchema,
+} from "@/lib/seo";
 import Script from "next/script";
 import Link from "next/link";
 import { ChevronLeft, Home } from "lucide-react";
@@ -40,11 +44,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function LinkedInJobPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function LinkedInJobPage({ params }: { params: { slug: string } }) {
   const slugParts = params.slug.split("-");
   const id = parseInt(slugParts[slugParts.length - 1]);
   if (isNaN(id)) {
@@ -87,7 +87,7 @@ export default async function LinkedInJobPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
       />
-      
+
       <div className="min-h-screen bg-[#070708] pb-12 text-zinc-100">
         {/* Navigation / Breadcrumbs */}
         <div className="bg-[#09090a]/90 border-b border-white/10 mb-6 backdrop-blur-xl">
@@ -106,9 +106,14 @@ export default async function LinkedInJobPage({
                 {job.title}
               </span>
             </nav>
-            
+
             <div className="mt-4">
-              <Button variant="ghost" size="sm" asChild className="rounded-full border border-primary bg-transparent font-black text-primary transition-colors hover:bg-primary hover:text-zinc-950">
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="rounded-full border border-primary bg-transparent font-black text-primary transition-colors hover:bg-primary hover:text-zinc-950"
+              >
                 <Link href="/linkedin-jobs" className="flex items-center">
                   <ChevronLeft className="h-4 w-4 mr-1" />
                   Back to LinkedIn Jobs

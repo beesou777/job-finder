@@ -5,12 +5,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Target, 
-  Building2, 
-  TrendingUp, 
-  Calendar, 
-  MapPin, 
+import {
+  Target,
+  Building2,
+  TrendingUp,
+  Calendar,
+  MapPin,
   ExternalLink,
   Search,
   Filter,
@@ -19,7 +19,7 @@ import {
   MessageSquare,
   CheckCircle2,
   XCircle,
-  AlertCircle
+  AlertCircle,
 } from "lucide-react";
 
 interface OpportunityScore {
@@ -121,7 +121,7 @@ export function OpportunitiesView() {
     // Apply client-side search filter
     if (filter.search) {
       filtered = filtered.filter((opp) =>
-        opp.company.toLowerCase().includes(filter.search.toLowerCase())
+        opp.company.toLowerCase().includes(filter.search.toLowerCase()),
       );
     }
 
@@ -133,7 +133,7 @@ export function OpportunitiesView() {
 
   const sortOpportunities = (
     opps: OpportunityScore[],
-    sort: "score" | "jobs" | "date"
+    sort: "score" | "jobs" | "date",
   ): OpportunityScore[] => {
     const sorted = [...opps];
     switch (sort) {
@@ -151,20 +151,22 @@ export function OpportunitiesView() {
           if (!a.lastJobDate && !b.lastJobDate) return 0;
           if (!a.lastJobDate) return 1;
           if (!b.lastJobDate) return -1;
-          
+
           // Handle both Date objects and date strings
-          const dateA = a.lastJobDate instanceof Date 
-            ? a.lastJobDate.getTime() 
-            : new Date(a.lastJobDate as string).getTime();
-          const dateB = b.lastJobDate instanceof Date 
-            ? b.lastJobDate.getTime() 
-            : new Date(b.lastJobDate as string).getTime();
-          
+          const dateA =
+            a.lastJobDate instanceof Date
+              ? a.lastJobDate.getTime()
+              : new Date(a.lastJobDate as string).getTime();
+          const dateB =
+            b.lastJobDate instanceof Date
+              ? b.lastJobDate.getTime()
+              : new Date(b.lastJobDate as string).getTime();
+
           // Handle invalid dates
           if (isNaN(dateA) && isNaN(dateB)) return 0;
           if (isNaN(dateA)) return 1;
           if (isNaN(dateB)) return -1;
-          
+
           return dateB - dateA; // Most recent first
         });
       default:
@@ -205,9 +207,9 @@ export function OpportunitiesView() {
   const generatePitchMessage = (opp: OpportunityScore): string => {
     return `Hi ${opp.company} team,
 
-We noticed you're actively hiring on LinkedIn (${opp.linkedInJobCount} active job${opp.linkedInJobCount > 1 ? 's' : ''}) but not reaching candidates through local Nepal-focused platforms like ours.
+We noticed you're actively hiring on LinkedIn (${opp.linkedInJobCount} active job${opp.linkedInJobCount > 1 ? "s" : ""}) but not reaching candidates through local Nepal-focused platforms like ours.
 
-Our platform reaches ${opp.isNepalLocation ? 'thousands of' : ''} qualified candidates in Nepal. Would you be interested in posting your jobs with us?
+Our platform reaches ${opp.isNepalLocation ? "thousands of" : ""} qualified candidates in Nepal. Would you be interested in posting your jobs with us?
 
 Best regards,
 Job Finder Team`;
@@ -215,13 +217,14 @@ Job Finder Team`;
 
   const exportToCSV = () => {
     const csv = [
-      ["Company", "Score", "Level", "Status", "LinkedIn Jobs", "Last Job Date", "Reasons"].join(","),
+      ["Company", "Score", "Level", "Status", "LinkedIn Jobs", "Last Job Date", "Reasons"].join(
+        ",",
+      ),
       ...opportunities.map((opp) => {
         let lastJobDateStr = "";
         if (opp.lastJobDate) {
-          const date = opp.lastJobDate instanceof Date 
-            ? opp.lastJobDate 
-            : new Date(opp.lastJobDate as string);
+          const date =
+            opp.lastJobDate instanceof Date ? opp.lastJobDate : new Date(opp.lastJobDate as string);
           lastJobDateStr = !isNaN(date.getTime()) ? date.toISOString() : "";
         }
         return [
@@ -318,9 +321,7 @@ Job Finder Team`;
               <select
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={filter.status}
-                onChange={(e) =>
-                  setFilter({ ...filter, status: e.target.value as any })
-                }
+                onChange={(e) => setFilter({ ...filter, status: e.target.value as any })}
               >
                 <option value="">All</option>
                 <option value="NOT_ON_PLATFORM">Not on Platform</option>
@@ -332,9 +333,7 @@ Job Finder Team`;
               <select
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={filter.level}
-                onChange={(e) =>
-                  setFilter({ ...filter, level: e.target.value as any })
-                }
+                onChange={(e) => setFilter({ ...filter, level: e.target.value as any })}
               >
                 <option value="">All</option>
                 <option value="VERY_HIGH">Very High</option>
@@ -386,9 +385,7 @@ Job Finder Team`;
       <Card>
         <CardHeader>
           <CardTitle>Opportunities ({opportunities.length})</CardTitle>
-          <CardDescription>
-            Companies ranked by opportunity score
-          </CardDescription>
+          <CardDescription>Companies ranked by opportunity score</CardDescription>
         </CardHeader>
         <CardContent>
           {isLoading ? (
@@ -414,23 +411,28 @@ Job Finder Team`;
                           <Building2 className="w-5 h-5 text-muted-foreground" />
                           <h3 className="font-semibold text-lg">{opp.company}</h3>
                           {getStatusBadge(opp.status)}
-                          <Badge className={getLevelColor(opp.level)}>
-                            {opp.level}
-                          </Badge>
+                          <Badge className={getLevelColor(opp.level)}>{opp.level}</Badge>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3 text-sm">
                           <div className="flex items-center gap-2">
                             <TrendingUp className="w-4 h-4 text-muted-foreground" />
-                            <span>Score: <strong>{opp.score}</strong></span>
+                            <span>
+                              Score: <strong>{opp.score}</strong>
+                            </span>
                           </div>
                           <div className="flex items-center gap-2">
                             <Target className="w-4 h-4 text-muted-foreground" />
-                            <span>{opp.linkedInJobCount} LinkedIn job{opp.linkedInJobCount !== 1 ? 's' : ''}</span>
+                            <span>
+                              {opp.linkedInJobCount} LinkedIn job
+                              {opp.linkedInJobCount !== 1 ? "s" : ""}
+                            </span>
                           </div>
                           {opp.lastJobDate && (
                             <div className="flex items-center gap-2">
                               <Calendar className="w-4 h-4 text-muted-foreground" />
-                              <span>{new Date(opp.lastJobDate as string).toLocaleDateString()}</span>
+                              <span>
+                                {new Date(opp.lastJobDate as string).toLocaleDateString()}
+                              </span>
                             </div>
                           )}
                           {opp.isNepalLocation && (
@@ -446,7 +448,8 @@ Job Finder Team`;
                           </p>
                           {opp.approachability?.hasContactInfo && (
                             <p className="text-sm text-green-600 mt-1">
-                              ✓ Contact info available ({opp.approachability.email || opp.approachability.phoneNumber})
+                              ✓ Contact info available (
+                              {opp.approachability.email || opp.approachability.phoneNumber})
                             </p>
                           )}
                         </div>
@@ -485,11 +488,7 @@ Job Finder Team`;
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle>{selectedCompany.company}</CardTitle>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSelectedCompany(null)}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setSelectedCompany(null)}>
                 Close
               </Button>
             </div>
@@ -509,19 +508,29 @@ Job Finder Team`;
                 <h4 className="font-semibold mb-2">Reasons</h4>
                 <ul className="list-disc list-inside space-y-1">
                   {selectedCompany.reasons.map((reason, idx) => (
-                    <li key={idx} className="text-sm">{reason}</li>
+                    <li key={idx} className="text-sm">
+                      {reason}
+                    </li>
                   ))}
                 </ul>
               </div>
               <div>
                 <h4 className="font-semibold mb-2">LinkedIn Activity</h4>
                 <p className="text-sm mb-3">
-                  {selectedCompany.linkedInJobCount} active job{selectedCompany.linkedInJobCount !== 1 ? 's' : ''}
+                  {selectedCompany.linkedInJobCount} active job
+                  {selectedCompany.linkedInJobCount !== 1 ? "s" : ""}
                   {selectedCompany.lastJobDate && (
-                    <> • Last posted: {new Date(selectedCompany.lastJobDate as string).toLocaleDateString()}</>
+                    <>
+                      {" "}
+                      • Last posted:{" "}
+                      {new Date(selectedCompany.lastJobDate as string).toLocaleDateString()}
+                    </>
                   )}
                   {selectedCompany.hasRecentJobs && (
-                    <> • <span className="text-green-600">Posted in last 7 days</span></>
+                    <>
+                      {" "}
+                      • <span className="text-green-600">Posted in last 7 days</span>
+                    </>
                   )}
                 </p>
                 {selectedCompany.linkedInJobs && selectedCompany.linkedInJobs.length > 0 && (
@@ -564,14 +573,19 @@ Job Finder Team`;
               </div>
               {(() => {
                 // Prefer approachability website, then domain, but exclude LinkedIn URLs
-                const website = selectedCompany.approachability?.website || 
+                const website =
+                  selectedCompany.approachability?.website ||
                   (selectedCompany.domain ? `https://${selectedCompany.domain}` : null);
-                
+
                 // Filter out LinkedIn company URLs
-                if (website && (website.includes('linkedin.com/company') || website.includes('linkedin.com/mycompany'))) {
+                if (
+                  website &&
+                  (website.includes("linkedin.com/company") ||
+                    website.includes("linkedin.com/mycompany"))
+                ) {
                   return null;
                 }
-                
+
                 return website ? (
                   <div>
                     <h4 className="font-semibold mb-2">Website</h4>
@@ -594,14 +608,19 @@ Job Finder Team`;
                     {selectedCompany.approachability.email && (
                       <div className="flex items-center gap-2">
                         <Mail className="w-4 h-4" />
-                        <a href={`mailto:${selectedCompany.approachability.email}`} className="text-blue-600 hover:underline">
+                        <a
+                          href={`mailto:${selectedCompany.approachability.email}`}
+                          className="text-blue-600 hover:underline"
+                        >
                           {selectedCompany.approachability.email}
                         </a>
                       </div>
                     )}
                     {selectedCompany.approachability.phoneNumber && (
                       <div className="flex items-center gap-2">
-                        <span className="text-sm">{selectedCompany.approachability.phoneNumber}</span>
+                        <span className="text-sm">
+                          {selectedCompany.approachability.phoneNumber}
+                        </span>
                       </div>
                     )}
                     {selectedCompany.approachability.source && (

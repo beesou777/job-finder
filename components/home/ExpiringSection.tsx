@@ -40,8 +40,8 @@ function ExpiringSkeleton() {
             <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
-                <div className="h-6 bg-white/10 rounded w-3/4 mb-2 animate-pulse"></div>
-                <div className="h-4 bg-white/10 rounded w-1/2 animate-pulse"></div>
+                  <div className="h-6 bg-white/10 rounded w-3/4 mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-white/10 rounded w-1/2 animate-pulse"></div>
                 </div>
                 <div className="h-6 bg-white/10 rounded w-16 animate-pulse"></div>
               </div>
@@ -81,8 +81,8 @@ export function ExpiringSection({ urgency }: ExpiringSectionProps) {
               Jobs with near deadlines
             </h2>
             <p className="text-base text-zinc-400 max-w-2xl">
-              Prioritize listings that may close soon, then confirm the final
-              deadline on the original job source.
+              Prioritize listings that may close soon, then confirm the final deadline on the
+              original job source.
             </p>
           </div>
           <Link href={`/jobs?urgency=${urgency}`}>
@@ -98,7 +98,7 @@ export function ExpiringSection({ urgency }: ExpiringSectionProps) {
 
         <div className="flex flex-wrap gap-2 mb-8">
           {filters.map((filter) => (
-            <Link 
+            <Link
               key={filter.value}
               href={`/?urgency=${filter.value}`}
               scroll={false}

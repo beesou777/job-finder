@@ -9,7 +9,9 @@ import { titleCaseSlug } from "@/lib/site";
 export const revalidate = 300;
 
 export function generateStaticParams() {
-  return ["react", "python", "javascript", "seo", "accounting", "digital-marketing"].map((skill) => ({ skill }));
+  return ["react", "python", "javascript", "seo", "accounting", "digital-marketing"].map(
+    (skill) => ({ skill }),
+  );
 }
 
 export async function generateMetadata({
@@ -47,7 +49,9 @@ export default function SkillPage({
       <section className="bg-zinc-950 border-b border-white/10">
         <div className="container mx-auto px-4 py-10">
           <nav className="mb-6 text-sm text-zinc-500" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-primary">Home</Link>
+            <Link href="/" className="hover:text-primary">
+              Home
+            </Link>
             <span className="mx-2">/</span>
             <span className="text-zinc-300">{skillName}</span>
           </nav>
@@ -58,8 +62,8 @@ export default function SkillPage({
             {skillName} Jobs in Nepal
           </h1>
           <p className="text-lg text-zinc-400 max-w-3xl">
-            Search Nepal jobs and internships that mention {skillName}. Skill pages help
-            candidates discover roles that may not use the exact same job title.
+            Search Nepal jobs and internships that mention {skillName}. Skill pages help candidates
+            discover roles that may not use the exact same job title.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {[

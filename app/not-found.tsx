@@ -17,19 +17,25 @@ export default function NotFound() {
             This job lead moved or the link is broken.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
-            KamKhoj keeps listings tied to their original sources. If this page
-            is unavailable, start from the latest jobs, remote roles, or
-            internships instead.
+            KamKhoj keeps listings tied to their original sources. If this page is unavailable,
+            start from the latest jobs, remote roles, or internships instead.
           </p>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Button asChild className="h-12 rounded-full bg-primary px-7 font-black text-zinc-950 hover:bg-white">
+            <Button
+              asChild
+              className="h-12 rounded-full bg-primary px-7 font-black text-zinc-950 hover:bg-white"
+            >
               <Link href="/jobs" className="flex items-center gap-2">
                 <Briefcase className="h-5 w-5" />
                 Browse Jobs
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-12 rounded-full border-white/10 bg-transparent px-7 font-black text-zinc-200 hover:bg-white/10 hover:text-white">
+            <Button
+              asChild
+              variant="outline"
+              className="h-12 rounded-full border-white/10 bg-transparent px-7 font-black text-zinc-200 hover:bg-white/10 hover:text-white"
+            >
               <Link href="/" className="flex items-center gap-2">
                 <Home className="h-5 w-5" />
                 Back Home
@@ -62,8 +68,8 @@ export default function NotFound() {
             ))}
           </div>
           <p className="mt-6 text-sm leading-6 text-zinc-500">
-            If you think this page should exist, send the URL from the contact
-            page and we will review it.
+            If you think this page should exist, send the URL from the contact page and we will
+            review it.
           </p>
         </aside>
       </div>

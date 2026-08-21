@@ -22,7 +22,7 @@ export interface DetailPageSelectors {
 export async function scrapeDetailPage(
   url: string,
   selectors: DetailPageSelectors,
-  source: string
+  source: string,
 ): Promise<JobData | null> {
   try {
     const response = await fetchPage(url);
@@ -68,12 +68,17 @@ export async function scrapeDetailPage(
 
     // Find apply URL - try multiple methods
     let applyUrl = findAttr(selectors.applyUrl, "href");
-    
+
     // Check if it's just a fragment (starts with #) or upload-cv link - if so, ignore it
-    if (applyUrl && (applyUrl.startsWith("#") || applyUrl.includes("/upload-cv/") || applyUrl.includes("upload-cv"))) {
+    if (
+      applyUrl &&
+      (applyUrl.startsWith("#") ||
+        applyUrl.includes("/upload-cv/") ||
+        applyUrl.includes("upload-cv"))
+    ) {
       applyUrl = ""; // Treat fragment-only URLs and upload-cv links as no URL found
     }
-    
+
     if (!applyUrl) {
       // Fallback: look for common apply button patterns
       const applySelectors = [
@@ -144,4 +149,3 @@ function getBaseUrl(url: string): string {
     return "";
   }
 }
-

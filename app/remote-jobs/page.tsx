@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export function generateMetadata({
   searchParams,
@@ -31,7 +31,7 @@ export function generateMetadata({
 export default async function RemoteJobsPage({
   searchParams,
 }: {
-  searchParams: { 
+  searchParams: {
     page?: string;
     q?: string;
   };
@@ -48,7 +48,7 @@ export default async function RemoteJobsPage({
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <RemoteJobsFiltering facetCounts={[]} />
-      
+
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between mb-6">
           <div>
@@ -57,8 +57,8 @@ export default async function RemoteJobsPage({
             </p>
             <h1 className="text-4xl font-black tracking-tight text-white">Remote Jobs</h1>
             <p className="mt-3 max-w-2xl text-zinc-400">
-              Browse international remote roles and review company requirements,
-              salary text, region, and experience before opening the detail page.
+              Browse international remote roles and review company requirements, salary text,
+              region, and experience before opening the detail page.
             </p>
           </div>
           <p className="text-sm font-bold text-zinc-300">
@@ -68,7 +68,9 @@ export default async function RemoteJobsPage({
 
         {jobs.length === 0 ? (
           <div className="text-center py-16 rounded-xl border border-white/10 bg-[#18181a]">
-            <p className="text-xl text-zinc-400">No international remote jobs found matching your criteria.</p>
+            <p className="text-xl text-zinc-400">
+              No international remote jobs found matching your criteria.
+            </p>
           </div>
         ) : (
           <>
@@ -80,7 +82,7 @@ export default async function RemoteJobsPage({
 
             {total > ITEMS_PER_PAGE && (
               <div className="mt-8">
-                <RemotePagination 
+                <RemotePagination
                   currentPage={page}
                   totalPages={Math.ceil(total / ITEMS_PER_PAGE)}
                   totalItems={total}

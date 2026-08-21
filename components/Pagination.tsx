@@ -100,7 +100,9 @@ export function Pagination({
                 size="sm"
                 onClick={() => onPageChange(pageNumber)}
                 className={`min-w-[2.5rem] ${
-                  isActive ? "bg-primary text-zinc-950" : "border-white/10 bg-[#18181a] text-zinc-300 hover:bg-white/10 hover:text-white"
+                  isActive
+                    ? "bg-primary text-zinc-950"
+                    : "border-white/10 bg-[#18181a] text-zinc-300 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 {pageNumber}
@@ -123,4 +125,3 @@ export function Pagination({
     </div>
   );
 }
-

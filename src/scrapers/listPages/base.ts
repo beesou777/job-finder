@@ -20,7 +20,7 @@ export interface ListPageResult {
 export async function scrapeListPage(
   url: string,
   selectors: ListPageSelectors,
-  baseUrl: string
+  baseUrl: string,
 ): Promise<ListPageResult> {
   try {
     const response = await fetchPage(url);
@@ -40,24 +40,28 @@ export async function scrapeListPage(
     for (const containerSel of containerSelectors) {
       $(containerSel).each((_, element) => {
         // Try multiple link selectors
-        const linkSelectors = Array.isArray(selectors.link) 
-          ? selectors.link 
-          : [selectors.link];
-        
+        const linkSelectors = Array.isArray(selectors.link) ? selectors.link : [selectors.link];
+
         for (const linkSel of linkSelectors) {
           const link = $(element).find(linkSel).first().attr("href");
-          if (link && (link.includes("/job") || link.includes("/vacancy") || link.includes("/career") || link.includes("/opportunity"))) {
+          if (
+            link &&
+            (link.includes("/job") ||
+              link.includes("/vacancy") ||
+              link.includes("/career") ||
+              link.includes("/opportunity"))
+          ) {
             const fullUrl = link.startsWith("http")
               ? link
               : link.startsWith("/")
-              ? `${baseUrl}${link}`
-              : `${baseUrl}/${link}`;
+                ? `${baseUrl}${link}`
+                : `${baseUrl}/${link}`;
             detailUrls.push(fullUrl);
             break; // Found a link, move to next container
           }
         }
       });
-      
+
       // If we found URLs with this container, stop trying others
       if (detailUrls.length > 0) break;
     }
@@ -78,12 +82,15 @@ export async function scrapeListPage(
       for (const fallbackSel of fallbackSelectors) {
         $(fallbackSel).each((_, element) => {
           const link = $(element).attr("href");
-          if (link && (link.includes("job") || link.includes("vacancy") || link.includes("career"))) {
+          if (
+            link &&
+            (link.includes("job") || link.includes("vacancy") || link.includes("career"))
+          ) {
             const fullUrl = link.startsWith("http")
               ? link
               : link.startsWith("/")
-              ? `${baseUrl}${link}`
-              : `${baseUrl}/${link}`;
+                ? `${baseUrl}${link}`
+                : `${baseUrl}/${link}`;
             if (!detailUrls.includes(fullUrl)) {
               detailUrls.push(fullUrl);
             }
@@ -101,7 +108,7 @@ export async function scrapeListPage(
       const nextPageSelectors = Array.isArray(selectors.nextPage)
         ? selectors.nextPage
         : [selectors.nextPage];
-      
+
       for (const nextSel of nextPageSelectors) {
         const nextLink = $(nextSel).first().attr("href");
         if (nextLink) {
@@ -109,8 +116,8 @@ export async function scrapeListPage(
           nextPageUrl = nextLink.startsWith("http")
             ? nextLink
             : nextLink.startsWith("/")
-            ? `${baseUrl}${nextLink}`
-            : `${baseUrl}/${nextLink}`;
+              ? `${baseUrl}${nextLink}`
+              : `${baseUrl}/${nextLink}`;
           break;
         }
       }
@@ -126,4 +133,3 @@ export async function scrapeListPage(
     return { detailUrls: [], hasMore: false };
   }
 }
-

@@ -25,14 +25,13 @@ export async function scrapeJobsDynamicsList(url: string): Promise<{
       try {
         // Construct URL with pagination
         const apiUrl = `${API_ENDPOINT}?ajax_filter=true&job_page=${currentPage}&per-page=1000&sort-by=recent&posted=all`;
-        
+
         console.log(`[JobsDynamics] Fetching page ${currentPage} from: ${apiUrl}`);
-        
+
         const response = await axios.get(apiUrl, {
           headers: {
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-            "User-Agent":
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
           },
           timeout: 15000,
         });
@@ -43,10 +42,10 @@ export async function scrapeJobsDynamicsList(url: string): Promise<{
         }
 
         const $ = cheerio.load(response.data);
-        
+
         // Find all job containers
         const jobContainers = $(".careerfy-joblisting-plain-wrap");
-        
+
         if (jobContainers.length === 0) {
           console.log(`[JobsDynamics] No jobs found on page ${currentPage}. Stopping.`);
           break;
@@ -58,11 +57,11 @@ export async function scrapeJobsDynamicsList(url: string): Promise<{
         jobContainers.each((_, element) => {
           try {
             const $job = $(element);
-            
+
             // Extract apply URL
             const titleLink = $job.find("h2 a").first();
             let applyUrl = titleLink.attr("href");
-            
+
             if (!applyUrl) {
               return; // Skip if no URL
             }
@@ -82,23 +81,26 @@ export async function scrapeJobsDynamicsList(url: string): Promise<{
 
         // Check for pagination - try multiple selectors
         let hasNextPage = false;
-        
+
         // Method 1: Look for next page link
-        const nextPageLink = $(".pagination a.next, .page-numbers a.next, a[rel='next'], .careerfy-pagination a.next");
+        const nextPageLink = $(
+          ".pagination a.next, .page-numbers a.next, a[rel='next'], .careerfy-pagination a.next",
+        );
         if (nextPageLink.length > 0 && nextPageLink.attr("href")) {
           hasNextPage = true;
         }
-        
+
         // Method 2: Check if there are more page numbers
-        const pageNumbers = $(".pagination a, .page-numbers a, .careerfy-pagination a")
-          .filter((_, el) => {
+        const pageNumbers = $(".pagination a, .page-numbers a, .careerfy-pagination a").filter(
+          (_, el) => {
             const text = $(el).text().trim();
             return /^\d+$/.test(text) && parseInt(text) > currentPage;
-          });
+          },
+        );
         if (pageNumbers.length > 0) {
           hasNextPage = true;
         }
-        
+
         // Method 3: If we got a full page of jobs (close to per-page limit), likely more pages
         if (jobContainers.length >= 30) {
           hasNextPage = true;
@@ -113,14 +115,10 @@ export async function scrapeJobsDynamicsList(url: string): Promise<{
         }
 
         console.log(
-          `[JobsDynamics] Page ${currentPage - 1}: Found ${jobContainers.length} job URLs (total: ${detailUrls.length})`
+          `[JobsDynamics] Page ${currentPage - 1}: Found ${jobContainers.length} job URLs (total: ${detailUrls.length})`,
         );
-
       } catch (error: any) {
-        console.error(
-          `[JobsDynamics] Error fetching page ${currentPage}:`,
-          error.message
-        );
+        console.error(`[JobsDynamics] Error fetching page ${currentPage}:`, error.message);
         if (error.response?.status) {
           console.error(`[JobsDynamics] HTTP Status: ${error.response.status}`);
         }
@@ -133,9 +131,7 @@ export async function scrapeJobsDynamicsList(url: string): Promise<{
       return { detailUrls: [], hasMore: false };
     }
 
-    console.log(
-      `✅ JobsDynamics: Found ${detailUrls.length} job URLs from HTML listings`
-    );
+    console.log(`✅ JobsDynamics: Found ${detailUrls.length} job URLs from HTML listings`);
     console.log(`[JobsDynamics] Detail scraper will fetch full information from each URL`);
 
     return {
@@ -148,4 +144,3 @@ export async function scrapeJobsDynamicsList(url: string): Promise<{
     return { detailUrls: [], hasMore: false };
   }
 }
-

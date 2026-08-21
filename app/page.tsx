@@ -3,11 +3,11 @@ import { HomeHero } from "@/components/home/HomeHero";
 import { ExpiringSection } from "@/components/home/ExpiringSection";
 import { LatestJobs } from "@/components/home/LatestJobs";
 import { LatestInternships } from "@/components/home/LatestInternships";
-import { 
-  FeaturesSection, 
+import {
+  FeaturesSection,
   EditorialStandardsSection,
-  ScrapingInfoSection, 
-  ResourcesSection 
+  ScrapingInfoSection,
+  ResourcesSection,
 } from "@/components/home/HomeStaticSections";
 import { FAQ } from "@/components/FAQ";
 import { MarketSnapshot } from "@/components/home/MarketSnapshot";
@@ -46,8 +46,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "KamKhoj | Find Jobs and Internships in Nepal",
-    description:
-      "Search Nepal jobs and internships and continue to the original source to apply.",
+    description: "Search Nepal jobs and internships and continue to the original source to apply.",
     images: [DEFAULT_OG_IMAGE],
   },
   alternates: {
@@ -58,13 +57,9 @@ export const metadata: Metadata = {
 // Revalidate every 5 min to reduce DB egress (ISR)
 export const revalidate = 300;
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: { urgency?: string };
-}) {
+export default async function Home({ searchParams }: { searchParams: { urgency?: string } }) {
   const urgency = searchParams.urgency || "7days";
-  
+
   // Prefetch first 10 jobs for SEO structured data (SSR)
   const { jobs: latestJobs, total } = await getJobs({ limit: 10, type: "job" });
 
@@ -121,7 +116,7 @@ export default async function Home({
       <ScrapingInfoSection />
       <EditorialStandardsSection />
       <ResourcesSection />
-      
+
       <FAQ />
     </div>
   );

@@ -10,9 +10,7 @@ export interface DiscoveredRoute {
 /**
  * Discover job-related routes on a domain
  */
-export async function discoverJobRoutes(
-  baseUrl: string
-): Promise<DiscoveredRoute[]> {
+export async function discoverJobRoutes(baseUrl: string): Promise<DiscoveredRoute[]> {
   const routes: DiscoveredRoute[] = [];
   const baseDomain = getBaseDomain(baseUrl);
 
@@ -66,7 +64,9 @@ export async function discoverJobRoutes(
 /**
  * Check if a route contains job listings
  */
-async function checkRoute(url: string): Promise<{ type: "list" | "detail"; confidence: number } | null> {
+async function checkRoute(
+  url: string,
+): Promise<{ type: "list" | "detail"; confidence: number } | null> {
   try {
     const response = await fetchPage(url, { retries: 1, timeout: 10000 });
     if (!response) return null;
@@ -92,14 +92,15 @@ async function checkRoute(url: string): Promise<{ type: "list" | "detail"; confi
     // Determine if it's a list page or detail page
     // List pages typically have multiple job cards/items
     // Also check for pagination, multiple links, etc.
-    const hasMultipleItems = $("article").length > 1 || 
-                           $("[class*='job']").length > 3 ||
-                           $("[class*='listing']").length > 3 ||
-                           $("[class*='card']").length > 3;
-    
+    const hasMultipleItems =
+      $("article").length > 1 ||
+      $("[class*='job']").length > 3 ||
+      $("[class*='listing']").length > 3 ||
+      $("[class*='card']").length > 3;
+
     const hasPagination = $(".pagination, [class*='pagination'], a[href*='page']").length > 0;
     const hasMultipleLinks = $("a[href*='job'], a[href*='vacancy']").length > 5;
-    
+
     const isListPage = hasMultipleItems || hasPagination || hasMultipleLinks;
 
     const confidence = Math.min(100, totalIndicators * 10 + (isListPage ? 50 : 0));
@@ -124,4 +125,3 @@ function getBaseDomain(url: string): string {
     return url;
   }
 }
-

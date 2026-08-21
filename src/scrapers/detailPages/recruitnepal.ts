@@ -31,11 +31,17 @@ export async function scrapeRecruitNepalDetail(url: string): Promise<JobData | n
       const $ = cheerio.load(data);
 
       const title = $("h1, .job-title, .title").first().text().trim();
-      const company = $(".company-name, .organization-name, [class*='company']").first().text().trim();
+      const company = $(".company-name, .organization-name, [class*='company']")
+        .first()
+        .text()
+        .trim();
       const location = $(".location, .city, [class*='location']").first().text().trim();
       const salaryText = $(".salary, [class*='salary']").first().text().trim();
       const deadline = $(".deadline, [class*='deadline']").first().text().trim();
-      const description = $(".job-description, .description, [class*='description']").first().text().trim();
+      const description = $(".job-description, .description, [class*='description']")
+        .first()
+        .text()
+        .trim();
 
       if (!title) {
         return null;
@@ -43,8 +49,7 @@ export async function scrapeRecruitNepalDetail(url: string): Promise<JobData | n
 
       // Detect if it's an internship
       const isInternship =
-        title.toLowerCase().includes("intern") ||
-        title.toLowerCase().includes("internship");
+        title.toLowerCase().includes("intern") || title.toLowerCase().includes("internship");
 
       return {
         title,
@@ -66,4 +71,3 @@ export async function scrapeRecruitNepalDetail(url: string): Promise<JobData | n
     return null;
   }
 }
-

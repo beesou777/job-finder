@@ -5,7 +5,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Building2, Mail, Phone, ExternalLink, Download, Search, Target, Zap } from "lucide-react";
+import {
+  TrendingUp,
+  Building2,
+  Mail,
+  Phone,
+  ExternalLink,
+  Download,
+  Search,
+  Target,
+  Zap,
+} from "lucide-react";
 
 interface CompanyEnrichment {
   id?: string;
@@ -47,7 +57,9 @@ export function CompanyEnrichmentView() {
     isPitchTarget: false,
     search: "", // Company name search
   });
-  const [leaderboardType, setLeaderboardType] = useState<"intent" | "jobs7d" | "jobs30d" | "contacts">("intent");
+  const [leaderboardType, setLeaderboardType] = useState<
+    "intent" | "jobs7d" | "jobs30d" | "contacts"
+  >("intent");
 
   useEffect(() => {
     fetchCompanies();
@@ -61,13 +73,13 @@ export function CompanyEnrichmentView() {
       // Add cache-busting timestamp and no-cache headers
       const timestamp = new Date().getTime();
       const res = await fetch(`/api/companies/enriched-from-jobs?t=${timestamp}`, {
-        cache: 'no-store',
+        cache: "no-store",
         headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
         },
       });
-      const data:any = await res.json();
+      const data: any = await res.json();
       console.log(data);
       if (data.success) {
         let filteredData = data.data;
@@ -75,27 +87,23 @@ export function CompanyEnrichmentView() {
         // Apply filters
         if (filter.search) {
           filteredData = filteredData.filter((c: CompanyEnrichment) =>
-            c.companyName.toLowerCase().includes(filter.search.toLowerCase())
+            c.companyName.toLowerCase().includes(filter.search.toLowerCase()),
           );
         }
 
         if (filter.hasContact) {
-          filteredData = filteredData.filter(
-            (c: CompanyEnrichment) => c.email || c.phoneNumber
-          );
+          filteredData = filteredData.filter((c: CompanyEnrichment) => c.email || c.phoneNumber);
         }
 
         if (filter.minScore) {
           const minScoreNum = parseInt(filter.minScore);
           filteredData = filteredData.filter(
-            (c: CompanyEnrichment) => (c.intentScore || 0) >= minScoreNum
+            (c: CompanyEnrichment) => (c.intentScore || 0) >= minScoreNum,
           );
         }
 
         if (filter.isPitchTarget) {
-          filteredData = filteredData.filter(
-            (c: CompanyEnrichment) => c.isPitchTarget === true
-          );
+          filteredData = filteredData.filter((c: CompanyEnrichment) => c.isPitchTarget === true);
         }
 
         setCompanies(filteredData);
@@ -111,22 +119,22 @@ export function CompanyEnrichmentView() {
 
   const fetchLeaderboard = async (type: "intent" | "jobs7d" | "jobs30d" | "contacts") => {
     setIsLoading(true);
-    setError(null); 
+    setError(null);
     try {
       // Add cache-busting timestamp and no-cache headers
       const timestamp = new Date().getTime();
       const res = await fetch(`/api/companies/enriched-from-jobs?t=${timestamp}`, {
-        cache: 'no-store',
+        cache: "no-store",
         headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache',
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
         },
       });
-      const data:any = await res.json();
-      
+      const data: any = await res.json();
+
       if (data.success) {
         let sortedData = [...data.data];
-        
+
         // Sort based on leaderboard type
         switch (type) {
           case "jobs7d":
@@ -145,7 +153,7 @@ export function CompanyEnrichmentView() {
             sortedData.sort((a, b) => (b.jobsCount || 0) - (a.jobsCount || 0));
             break;
         }
-        
+
         setCompanies(sortedData.slice(0, 50));
         setLeaderboardType(type);
       } else {
@@ -196,9 +204,10 @@ export function CompanyEnrichmentView() {
     highIntent: companies.filter((c) => (c.jobsCount || 0) >= 3).length, // 3+ jobs considered high intent
     withContacts: companies.filter((c) => c.email || c.phoneNumber).length,
     pitchTargets: companies.filter((c) => c.isPitchTarget).length,
-    avgScore: companies.length > 0
-      ? Math.round(companies.reduce((sum, c) => sum + (c.jobsCount || 0), 0) / companies.length)
-      : 0,
+    avgScore:
+      companies.length > 0
+        ? Math.round(companies.reduce((sum, c) => sum + (c.jobsCount || 0), 0) / companies.length)
+        : 0,
   };
 
   return (
@@ -219,11 +228,7 @@ export function CompanyEnrichmentView() {
             <Download className="h-4 w-4" />
             Export JSON
           </Button>
-          <Button
-            variant="outline"
-            onClick={() => handleExport("high-intent")}
-            className="gap-2"
-          >
+          <Button variant="outline" onClick={() => handleExport("high-intent")} className="gap-2">
             <Download className="h-4 w-4" />
             Export CSV
           </Button>
@@ -369,7 +374,9 @@ export function CompanyEnrichmentView() {
         <Card>
           <CardContent className="p-12 text-center">
             <p className="text-red-500">Error: {error}</p>
-            <Button onClick={fetchCompanies} className="mt-4">Retry</Button>
+            <Button onClick={fetchCompanies} className="mt-4">
+              Retry
+            </Button>
           </CardContent>
         </Card>
       ) : companies.length === 0 ? (
@@ -381,7 +388,10 @@ export function CompanyEnrichmentView() {
       ) : (
         <div className="space-y-4">
           {companies.map((company) => (
-            <Card key={company.companyName || company.id || Math.random()} className="hover:shadow-lg transition-shadow">
+            <Card
+              key={company.companyName || company.id || Math.random()}
+              className="hover:shadow-lg transition-shadow"
+            >
               <CardContent className="p-6">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
@@ -409,7 +419,7 @@ export function CompanyEnrichmentView() {
                         </Badge>
                       )}
                     </div>
-                    
+
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                       <div className="space-y-2">
                         {company.domain && (
@@ -431,20 +441,24 @@ export function CompanyEnrichmentView() {
                                 {company.latestJobTitle}
                               </a>
                             ) : (
-                              <span className="text-muted-foreground">{company.latestJobTitle}</span>
+                              <span className="text-muted-foreground">
+                                {company.latestJobTitle}
+                              </span>
                             )}
                           </div>
                         )}
                         {company.phoneNumber && (
                           <div className="flex items-center gap-2 text-sm">
                             <Phone className="h-4 w-4 text-blue-600" />
-                            <span className="text-muted-foreground font-medium">{company.phoneNumber}</span>
+                            <span className="text-muted-foreground font-medium">
+                              {company.phoneNumber}
+                            </span>
                           </div>
                         )}
                         {company.email && (
                           <div className="flex items-center gap-2 text-sm">
                             <Mail className="h-4 w-4 text-blue-600" />
-                            <a 
+                            <a
                               href={`mailto:${company.email}`}
                               className="text-blue-600 hover:underline font-medium"
                             >
@@ -456,7 +470,11 @@ export function CompanyEnrichmentView() {
                           <div className="flex items-center gap-2 text-sm">
                             <ExternalLink className="h-4 w-4 text-blue-600" />
                             <a
-                              href={company.website.startsWith("http") ? company.website : `https://${company.website}`}
+                              href={
+                                company.website.startsWith("http")
+                                  ? company.website
+                                  : `https://${company.website}`
+                              }
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:underline font-medium"
@@ -477,7 +495,7 @@ export function CompanyEnrichmentView() {
                           </a>
                         )}
                       </div>
-                      
+
                       <div className="space-y-2">
                         <div className="flex items-center gap-2 text-sm">
                           <span className="font-medium">Jobs (7d):</span>
@@ -490,7 +508,9 @@ export function CompanyEnrichmentView() {
                         {company.uniqueJobCategories && (
                           <div className="flex items-center gap-2 text-sm">
                             <span className="font-medium">Categories:</span>
-                            <span className="text-muted-foreground">{company.uniqueJobCategories}</span>
+                            <span className="text-muted-foreground">
+                              {company.uniqueJobCategories}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -505,4 +525,3 @@ export function CompanyEnrichmentView() {
     </div>
   );
 }
-
