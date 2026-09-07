@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import { KeyboardEvent, useEffect, useState } from "react";
+import { authFetch } from "@/lib/auth-context";
+
 type Pref = {
   preferredRole: string;
   preferredKeywords: string[];
@@ -23,14 +25,19 @@ export default function Preferences() {
   useEffect(() => {
     fetch("/api/me/preferences")
       .then((r) => r.json())
+    authFetch("/api/me/preferences")
+      .then((r) => (r.ok ? r.json() : {}))
       .then(
         (d) =>
           d.preferences &&
+          d?.preferences &&
           setP({
             ...d.preferences,
             preferredKeywords: d.preferences.preferredKeywords || [],
           }),
       );
+      )
+      .catch(() => {});
   }, []);
   function add(raw: string) {
     const value = raw.trim().replace(/,$/, "");
@@ -52,6 +59,7 @@ export default function Preferences() {
   }
   async function save() {
     await fetch("/api/me/preferences", {
+    await authFetch("/api/me/preferences", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(p),

@@ -29,13 +29,42 @@ const AuthContext = createContext<AuthContextType>({
   update: async () => {},
 });
 
+export function getAuthToken(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("token");
+}
+
+export function getAuthHeaders(customHeaders?: HeadersInit): HeadersInit {
+  const token = getAuthToken();
+  const headers = new Headers(customHeaders || {});
+  if (token && !headers.has("Authorization")) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+  return headers;
+}
+
+export async function authFetch(url: string, init: RequestInit = {}): Promise<Response> {
+  const token = getAuthToken();
+  const headers = new Headers(init.headers || {});
+  if (token && !headers.has("Authorization")) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+  return fetch(url, {
+    ...init,
+    headers,
+  });
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [status, setStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
 
   const fetchSession = useCallback(async () => {
+  const fetchSession = useCallback(async (explicitToken?: string) => {
     try {
       const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const token =
+        explicitToken || (typeof window !== "undefined" ? localStorage.getItem("token") : null);
       if (!token) {
         setSession(null);
         setStatus("unauthenticated");
@@ -67,6 +96,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     fetchSession();
+
+    const handleAuthChange = (e?: Event) => {
+      const custom = e as CustomEvent;
+      if (custom?.detail?.token && custom?.detail?.user) {
+        setSession({ user: custom.detail.user });
+        setStatus("authenticated");
+      } else {
+        fetchSession();
+      }
+    };
+
+    window.addEventListener("auth-state-change", handleAuthChange);
+    window.addEventListener("storage", handleAuthChange);
+    return () => {
+      window.removeEventListener("auth-state-change", handleAuthChange);
+      window.removeEventListener("storage", handleAuthChange);
+    };
   }, [fetchSession]);
 
   const signIn = async (_provider?: string, options?: any) => {
@@ -82,19 +128,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       const data: any = await res.json();
       if (!res.ok || !data.access_token) {
+      const token = data.accessToken || data.access_token || data.token;
+      if (!res.ok || !token) {
         return { error: data.message || "Invalid email or password" };
       }
 
       localStorage.setItem("token", data.access_token);
       document.cookie = "token=" + data.access_token + "; path=/; max-age=604800; SameSite=Lax";
+      localStorage.setItem("token", token);
+      document.cookie = "token=" + token + "; path=/; max-age=604800; SameSite=Lax";
 
       const user = data.user || {
         id: data.sub,
+        id: data.sub || data.id,
         email: options?.email,
         name: options?.email?.split("@")[0],
+        name: data.name || options?.email?.split("@")[0],
       };
+
+      // Immediately update local React state synchronously
       setSession({ user });
       setStatus("authenticated");
+
+      if (typeof window !== "undefined") {
+        window.dispatchEvent(
+          new CustomEvent("auth-state-change", {
+            detail: { token, user },
+          }),
+        );
+      }
+
+      // Verify in background
+      fetchSession(token);
 
       return { error: undefined };
     } catch (err: any) {
@@ -106,6 +171,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (typeof window !== "undefined") {
       localStorage.removeItem("token");
       document.cookie = "token=; path=/; max-age=0; SameSite=Lax";
+      window.dispatchEvent(new CustomEvent("auth-state-change"));
     }
     setSession(null);
     setStatus("unauthenticated");
@@ -125,7 +191,10 @@ export function useSession() {
   const context = useContext(AuthContext);
   return {
     data: context.data,
+    session: context.data,
     status: context.status,
+    signIn: context.signIn,
+    signOut: context.signOut,
     update: context.update,
   };
 }
@@ -142,14 +211,22 @@ export async function signIn(_provider?: string, options?: any) {
     });
 
     const data: any = await res.json();
-    console.log("Sign in response data:", data);
     if (!res.ok || !data.accessToken) {
+    const token = data.accessToken || data.access_token || data.token;
+    if (!res.ok || !token) {
       return { error: data.message || "Invalid email or password" };
     }
 
     if (typeof window !== "undefined") {
       localStorage.setItem("token", data.accessToken);
       document.cookie = "token=" + data.accessToken + "; path=/; max-age=604800; SameSite=Lax";
+      localStorage.setItem("token", token);
+      document.cookie = "token=" + token + "; path=/; max-age=604800; SameSite=Lax";
+      window.dispatchEvent(
+        new CustomEvent("auth-state-change", {
+          detail: { token, user: data.user },
+        }),
+      );
     }
 
     return { error: undefined };
@@ -162,6 +239,7 @@ export async function signOut(options?: { callbackUrl?: string }) {
   if (typeof window !== "undefined") {
     localStorage.removeItem("token");
     document.cookie = "token=; path=/; max-age=0; SameSite=Lax";
+    window.dispatchEvent(new CustomEvent("auth-state-change"));
     if (options?.callbackUrl) {
       window.location.href = options.callbackUrl;
     }

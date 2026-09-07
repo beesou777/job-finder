@@ -11,14 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "knip": "knip --reporter compact",
-    "typeorm": "typeorm-ts-node-commonjs",
-    "init-admin": "tsx scripts/init-admin.ts",
-    "scrape": "tsx scripts/run-scraper.ts",
-    "migration:generate": "node_modules/.bin/typeorm-ts-node-commonjs.cmd migration:generate migrations/AutoMigration -d scripts/data-source.ts",
-    "migration:run": "node_modules/.bin/typeorm-ts-node-commonjs.cmd migration:run -d scripts/data-source.ts",
-    "migration:revert": "node_modules/.bin/typeorm-ts-node-commonjs.cmd migration:revert -d scripts/data-source.ts",
-    "migrate": "yarn migration:run",
-    "seed-categories": "tsx scripts/seed-categories.ts"
+    "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.66",

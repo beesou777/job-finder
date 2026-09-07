@@ -4,6 +4,17 @@ import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
 import { useSession } from "@/lib/auth-context";
 import { Bookmark, ChevronLeft, ChevronRight, Sparkles, Briefcase, MapPin } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useSession, authFetch } from "@/lib/auth-context";
+import {
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  Briefcase,
+  MapPin,
+  Loader2,
+} from "lucide-react";
 import { CvUploadCard } from "@/components/CvUploadCard";
 
 type Job = {
@@ -19,6 +30,7 @@ type Job = {
 };
 
 export default function Overview() {
+  const router = useRouter();
   const { status } = useSession();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [saved, setSaved] = useState<string[]>([]);
@@ -35,14 +47,25 @@ export default function Overview() {
     skills: string[];
   } | null>(null);
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login?callbackUrl=/dashboard");
+    }
+  }, [status, router]);
+
   const fetchJobs = useCallback(() => {
     if (status !== "authenticated") return;
     setLoading(true);
     Promise.all([
       fetch(`/api/me/jobs?page=${page}&pageSize=10&mode=${activeMode}`, {
+      authFetch(`/api/me/jobs?page=${page}&pageSize=10&mode=${activeMode}`, {
         cache: "no-store",
       }).then((r) => r.json()),
       fetch("/api/me/saved-jobs", { cache: "no-store" }).then((r) => r.json()),
+      }).then((r) => (r.ok ? r.json() : { jobs: [], total: 0 })),
+      authFetch("/api/me/saved-jobs", { cache: "no-store" }).then((r) =>
+        r.ok ? r.json() : { jobs: [] },
+      ),
     ])
       .then(([a, b]) => {
         setJobs(a.jobs || []);
@@ -63,11 +86,22 @@ export default function Overview() {
     fetchJobs();
   }, [fetchJobs]);
 
+  if (status === "loading") {
+    return (
+      <main className="mx-auto max-w-6xl p-5 md:p-10">
+        <div className="flex min-h-[50vh] items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </main>
+    );
+  }
+
   if (status !== "authenticated") return null;
 
   async function toggle(job: Job) {
     const active = saved.includes(job.id);
     await fetch("/api/me/saved-jobs", {
+    await authFetch("/api/me/saved-jobs", {
       method: active ? "DELETE" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: job.id, job }),

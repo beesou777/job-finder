@@ -80,7 +80,6 @@ export function CompanyEnrichmentView() {
         },
       });
       const data: any = await res.json();
-      console.log(data);
       if (data.success) {
         let filteredData = data.data;
 

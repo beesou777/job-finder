@@ -12,6 +12,7 @@ import {
   Briefcase,
   CheckCircle2,
 } from "lucide-react";
+import { authFetch } from "@/lib/auth-context";
 
 export interface CvData {
   url: string;
@@ -49,6 +50,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
     try {
       setLoading(true);
       const res = await fetch("/api/me/cv", { cache: "no-store" });
+      const res = await authFetch("/api/me/cv", { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         if (data.hasCv && data.cv) {
@@ -88,6 +90,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
       }, 1200);
 
       const res = await fetch("/api/me/cv", {
+      const res = await authFetch("/api/me/cv", {
         method: "POST",
         body: formData,
       });
@@ -126,6 +129,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
     try {
       setIsDeleting(true);
       const res = await fetch("/api/me/cv", { method: "DELETE" });
+      const res = await authFetch("/api/me/cv", { method: "DELETE" });
       if (res.ok) {
         setCv(null);
         onCvChanged?.();

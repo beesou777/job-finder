@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { signIn } from "@/lib/auth-context";
+import { useSession } from "@/lib/auth-context";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthShell } from "@/components/AuthShell";
@@ -8,6 +9,7 @@ import { Loader2 } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { signIn } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -25,7 +27,6 @@ export default function LoginPage() {
         password,
         redirect: false,
       });
-      console.log("Sign in result:", result);
       if (result?.error) {
         setError("Invalid email or password.");
         setIsLoading(false);
