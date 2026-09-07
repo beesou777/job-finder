@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Bookmark, Trash2 } from "lucide-react";
 import { authFetch } from "@/lib/auth-context";
@@ -12,19 +11,18 @@ type Job = {
   applyUrl: string;
   source: string;
 };
+
 export default function SavedJobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
+
   useEffect(() => {
-    fetch("/api/me/saved-jobs", { cache: "no-store" })
-      .then((r) => r.json())
-      .then((d) => setJobs((d.jobs || []).filter((x: Job) => typeof x !== "string")));
     authFetch("/api/me/saved-jobs", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : { jobs: [] }))
-      .then((d) => setJobs((d.jobs || []).filter((x: Job) => typeof x !== "string")))
+      .then((d: any) => setJobs((d?.jobs || []).filter((x: Job) => typeof x !== "string")))
       .catch(() => setJobs([]));
   }, []);
+
   async function remove(id: string) {
-    await fetch("/api/me/saved-jobs", {
     await authFetch("/api/me/saved-jobs", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -32,6 +30,7 @@ export default function SavedJobs() {
     });
     setJobs((current) => current.filter((job) => job.id !== id));
   }
+
   return (
     <main className="mx-auto max-w-5xl p-5 md:p-10">
       <div className="flex items-end justify-between">

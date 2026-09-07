@@ -11,6 +11,7 @@ type Pref = {
   preferredWorkMode: string;
   emailAlerts: boolean;
 };
+
 export default function Preferences() {
   const [p, setP] = useState<Pref>({
     preferredRole: "",
@@ -22,43 +23,43 @@ export default function Preferences() {
   });
   const [input, setInput] = useState("");
   const [saved, setSaved] = useState(false);
+
   useEffect(() => {
-    fetch("/api/me/preferences")
-      .then((r) => r.json())
     authFetch("/api/me/preferences")
       .then((r) => (r.ok ? r.json() : {}))
       .then(
-        (d) =>
-          d.preferences &&
+        (d: any) =>
           d?.preferences &&
           setP({
             ...d.preferences,
             preferredKeywords: d.preferences.preferredKeywords || [],
           }),
-      );
       )
       .catch(() => {});
   }, []);
+
   function add(raw: string) {
     const value = raw.trim().replace(/,$/, "");
     if (value && !p.preferredKeywords.some((x) => x.toLowerCase() === value.toLowerCase()))
       setP({ ...p, preferredKeywords: [...p.preferredKeywords, value] });
     setInput("");
   }
+
   function key(e: KeyboardEvent<HTMLInputElement>) {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       add(input);
     }
   }
+
   function remove(value: string) {
     setP({
       ...p,
       preferredKeywords: p.preferredKeywords.filter((x) => x !== value),
     });
   }
+
   async function save() {
-    await fetch("/api/me/preferences", {
     await authFetch("/api/me/preferences", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -66,6 +67,7 @@ export default function Preferences() {
     });
     setSaved(true);
   }
+
   return (
     <main className="mx-auto max-w-3xl p-5 md:p-10">
       <h1 className="mt-8 text-4xl font-black text-white">What should we look for?</h1>
@@ -138,6 +140,7 @@ export default function Preferences() {
     </main>
   );
 }
+
 function Field({
   label,
   value,
@@ -161,6 +164,7 @@ function Field({
     </label>
   );
 }
+
 function Select({
   label,
   value,

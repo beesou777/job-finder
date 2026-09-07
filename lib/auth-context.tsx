@@ -15,6 +15,7 @@ export interface Session {
 
 interface AuthContextType {
   data: Session | null;
+  session: Session | null;
   status: "loading" | "authenticated" | "unauthenticated";
   signIn: (provider?: string, options?: any) => Promise<{ error?: string }>;
   signOut: (options?: { callbackUrl?: string }) => Promise<void>;
@@ -23,6 +24,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>({
   data: null,
+  session: null,
   status: "loading",
   signIn: async () => ({}),
   signOut: async () => {},
@@ -38,7 +40,7 @@ export function getAuthHeaders(customHeaders?: HeadersInit): HeadersInit {
   const token = getAuthToken();
   const headers = new Headers(customHeaders || {});
   if (token && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${token}`);
+    headers.set("Authorization", "Bearer " + token);
   }
   return headers;
 }
@@ -47,7 +49,7 @@ export async function authFetch(url: string, init: RequestInit = {}): Promise<Re
   const token = getAuthToken();
   const headers = new Headers(init.headers || {});
   if (token && !headers.has("Authorization")) {
-    headers.set("Authorization", `Bearer ${token}`);
+    headers.set("Authorization", "Bearer " + token);
   }
   return fetch(url, {
     ...init,
@@ -59,10 +61,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [status, setStatus] = useState<"loading" | "authenticated" | "unauthenticated">("loading");
 
-  const fetchSession = useCallback(async () => {
   const fetchSession = useCallback(async (explicitToken?: string) => {
     try {
-      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
       const token =
         explicitToken || (typeof window !== "undefined" ? localStorage.getItem("token") : null);
       if (!token) {
@@ -127,26 +127,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
 
       const data: any = await res.json();
-      if (!res.ok || !data.access_token) {
       const token = data.accessToken || data.access_token || data.token;
       if (!res.ok || !token) {
         return { error: data.message || "Invalid email or password" };
       }
 
-      localStorage.setItem("token", data.access_token);
-      document.cookie = "token=" + data.access_token + "; path=/; max-age=604800; SameSite=Lax";
       localStorage.setItem("token", token);
       document.cookie = "token=" + token + "; path=/; max-age=604800; SameSite=Lax";
 
       const user = data.user || {
-        id: data.sub,
         id: data.sub || data.id,
         email: options?.email,
-        name: options?.email?.split("@")[0],
         name: data.name || options?.email?.split("@")[0],
       };
 
-      // Immediately update local React state synchronously
       setSession({ user });
       setStatus("authenticated");
 
@@ -158,7 +152,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         );
       }
 
-      // Verify in background
       fetchSession(token);
 
       return { error: undefined };
@@ -181,7 +174,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ data: session, status, signIn, signOut, update: fetchSession }}>
+    <AuthContext.Provider
+      value={{
+        data: session,
+        session,
+        status,
+        signIn,
+        signOut,
+        update: fetchSession,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -191,7 +193,7 @@ export function useSession() {
   const context = useContext(AuthContext);
   return {
     data: context.data,
-    session: context.data,
+    session: context.session,
     status: context.status,
     signIn: context.signIn,
     signOut: context.signOut,
@@ -211,15 +213,12 @@ export async function signIn(_provider?: string, options?: any) {
     });
 
     const data: any = await res.json();
-    if (!res.ok || !data.accessToken) {
     const token = data.accessToken || data.access_token || data.token;
     if (!res.ok || !token) {
       return { error: data.message || "Invalid email or password" };
     }
 
     if (typeof window !== "undefined") {
-      localStorage.setItem("token", data.accessToken);
-      document.cookie = "token=" + data.accessToken + "; path=/; max-age=604800; SameSite=Lax";
       localStorage.setItem("token", token);
       document.cookie = "token=" + token + "; path=/; max-age=604800; SameSite=Lax";
       window.dispatchEvent(

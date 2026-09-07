@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
-import { useSession } from "@/lib/auth-context";
-import { Bookmark, ChevronLeft, ChevronRight, Sparkles, Briefcase, MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession, authFetch } from "@/lib/auth-context";
 import {
@@ -39,7 +37,6 @@ export default function Overview() {
   const [hasNext, setHasNext] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeMode, setActiveMode] = useState<"all" | "cv" | "preferences">("all");
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [cvData, setCvData] = useState<{
     url: string | null;
     filename: string | null;
@@ -57,17 +54,14 @@ export default function Overview() {
     if (status !== "authenticated") return;
     setLoading(true);
     Promise.all([
-      fetch(`/api/me/jobs?page=${page}&pageSize=10&mode=${activeMode}`, {
       authFetch(`/api/me/jobs?page=${page}&pageSize=10&mode=${activeMode}`, {
         cache: "no-store",
-      }).then((r) => r.json()),
-      fetch("/api/me/saved-jobs", { cache: "no-store" }).then((r) => r.json()),
       }).then((r) => (r.ok ? r.json() : { jobs: [], total: 0 })),
       authFetch("/api/me/saved-jobs", { cache: "no-store" }).then((r) =>
         r.ok ? r.json() : { jobs: [] },
       ),
     ])
-      .then(([a, b]) => {
+      .then(([a, b]: [any, any]) => {
         setJobs(a.jobs || []);
         setTotal(a.total || 0);
         setHasNext(Boolean(a.hasNextPage));
@@ -80,7 +74,7 @@ export default function Overview() {
       })
       .catch((err) => console.error("Error loading jobs:", err))
       .finally(() => setLoading(false));
-  }, [status, page, activeMode, refreshTrigger]);
+  }, [status, page, activeMode]);
 
   useEffect(() => {
     fetchJobs();
@@ -100,7 +94,6 @@ export default function Overview() {
 
   async function toggle(job: Job) {
     const active = saved.includes(job.id);
-    await fetch("/api/me/saved-jobs", {
     await authFetch("/api/me/saved-jobs", {
       method: active ? "DELETE" : "POST",
       headers: { "Content-Type": "application/json" },
@@ -111,7 +104,7 @@ export default function Overview() {
 
   function handleCvChanged() {
     setPage(1);
-    setRefreshTrigger((prev) => prev + 1);
+    fetchJobs();
   }
 
   return (

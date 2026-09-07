@@ -49,7 +49,6 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
   async function fetchCv() {
     try {
       setLoading(true);
-      const res = await fetch("/api/me/cv", { cache: "no-store" });
       const res = await authFetch("/api/me/cv", { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
@@ -77,6 +76,16 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
       return;
     }
 
+    // Supported formats check
+    const validExtensions = [".pdf", ".docx", ".doc", ".txt", ".md", ".png", ".jpg", ".jpeg"];
+    const fileExt = "." + file.name.split(".").pop()?.toLowerCase();
+    if (!validExtensions.includes(fileExt)) {
+      setError(
+        `Unsupported file type (${fileExt}). Please upload PDF, DOCX, DOC, TXT, MD, or an image.`,
+      );
+      return;
+    }
+
     try {
       setIsUploading(true);
       setUploadStatus("Uploading to Cloudflare R2...");
@@ -89,7 +98,6 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
         setUploadStatus("Analyzing CV & extracting skills with Gemini AI...");
       }, 1200);
 
-      const res = await fetch("/api/me/cv", {
       const res = await authFetch("/api/me/cv", {
         method: "POST",
         body: formData,
@@ -128,7 +136,6 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
     if (!confirm("Are you sure you want to delete your uploaded CV?")) return;
     try {
       setIsDeleting(true);
-      const res = await fetch("/api/me/cv", { method: "DELETE" });
       const res = await authFetch("/api/me/cv", { method: "DELETE" });
       if (res.ok) {
         setCv(null);
