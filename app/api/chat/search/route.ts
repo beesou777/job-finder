@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { searchAllJobs } from "@/server/services/job-search";
+import { searchAllJobs, searchSimilarJobs } from "@/server/services/job-search";
 
 export const dynamic = "force-dynamic";
 
@@ -19,13 +19,34 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ jobs: [], error: "Search query required" }, { status: 400 });
     }
 
-    const jobs = await searchAllJobs({
+    let jobs = await searchAllJobs({
       search: search.trim(),
       location,
       jobType,
       type,
       limit: 10,
     });
+
+    if (jobs.length === 0) {
+      jobs = await searchSimilarJobs({
+        search: search.trim(),
+        location,
+        jobType,
+        type,
+        limit: 10,
+      });
+    }
+
+    if (jobs.length === 0 && search.trim().includes(" ")) {
+      jobs = await searchAllJobs({
+        search: search.trim(),
+        location,
+        jobType,
+        type,
+        limit: 10,
+        matchAny: true,
+      });
+    }
 
     const response = NextResponse.json({
       jobs: jobs.map((j) => ({

@@ -47,32 +47,122 @@ function buildSearchConditions(
   if (terms.length === 0) return { sql: "1=1", params: {} };
   const joinOp = useOr ? " OR " : " AND ";
 
-  const params: Record<string, string> = {};
-  terms.forEach((term, i) => {
-    params[`term${i}`] = `%${term}%`;
+  const aliasGroups = [
+    ["frontend", "front end", "front-end"],
+    ["backend", "back end", "back-end"],
+    ["fullstack", "full stack", "full-stack"],
+    ["mern stack", "mern-stack", "mernstack"],
+  ];
+  const variants = terms.map((term) => {
+    const normalized = term.toLowerCase().replace(/\s+/g, " ").trim();
+    const values = new Set([normalized]);
+    for (const group of aliasGroups) {
+      for (const alias of group) {
+        if (!normalized.includes(alias)) continue;
+        for (const replacement of group) {
+          values.add(normalized.replace(alias, replacement));
+        }
+      }
+    }
+    return [...values];
   });
 
-  if (prefix === "job") {
-    const matchConditions = terms
-      .map(
-        (_, i) =>
-          `(job.title ILIKE :term${i} OR category.name ILIKE :term${i} OR job.categoryOld ILIKE :term${i} OR job.company ILIKE :term${i} OR job.location ILIKE :term${i} OR job.description ILIKE :term${i} OR job.requirements ILIKE :term${i})`,
+  const params: Record<string, string> = {};
+  variants.forEach((termVariants, termIndex) => {
+    termVariants.forEach((variant, variantIndex) => {
+      params[`term${termIndex}_${variantIndex}`] = `%${variant}%`;
+    });
+  });
+
+  const matchColumns = (columns: string[], termIndex: number) =>
+    variants[termIndex]
+      .flatMap((_, variantIndex) =>
+        columns.map((column) => `${column} ILIKE :term${termIndex}_${variantIndex}`),
       )
-      .join(joinOp);
+      .join(" OR ");
+
+  if (prefix === "job") {
+    const columns = [
+      "job.title",
+      "category.name",
+      "job.categoryOld",
+      "job.company",
+      "job.location",
+      "job.description",
+      "job.requirements",
+    ];
+    const matchConditions = terms.map((_, i) => `(${matchColumns(columns, i)})`).join(joinOp);
     return {
       sql: `(${matchConditions})`,
       params,
     };
   }
-  const conditions = terms
-    .map(
-      (_, i) =>
-        `(lj.title ILIKE :term${i} OR lj.company ILIKE :term${i} OR lj.place ILIKE :term${i} OR lj.description ILIKE :term${i})`,
-    )
-    .join(joinOp);
-  const titleMatch = terms.map((_, i) => `lj.title ILIKE :term${i}`).join(" OR ");
+  const columns = ["lj.title", "lj.company", "lj.place", "lj.description"];
+  const conditions = terms.map((_, i) => `(${matchColumns(columns, i)})`).join(joinOp);
+  if (useOr) {
+    return {
+      sql: `(${conditions})`,
+      params,
+    };
+  }
+  const titleMatch = terms.map((_, i) => `(${matchColumns(["lj.title"], i)})`).join(" OR ");
   return {
     sql: `(${conditions}) AND (${titleMatch})`,
+    params,
+  };
+}
+
+/**
+ * Builds smart location conditions for jobs and LinkedIn tables.
+ * Strips redundant country names (Nepal/NP), handles comma-separated cities,
+ * and matches remote opportunities.
+ */
+export function buildLocationConditions(
+  location: string | undefined | null,
+  prefix: "job" | "lj",
+): { sql: string; params: Record<string, string> } | null {
+  if (!location || !location.trim()) return null;
+
+  const terms = location
+    .split(/[,/|;]+/)
+    .map((t) => t.trim())
+    .filter((t) => {
+      const lower = t.toLowerCase();
+      return lower && lower !== "nepal" && lower !== "np";
+    });
+
+  if (terms.length === 0) return null;
+
+  const params: Record<string, string> = {};
+  const col = prefix === "job" ? "job.location" : "lj.place";
+
+  const valleyAliases: Record<string, string[]> = {
+    lalitpur: ["lalitpur", "patan", "kathmandu", "kathmandu valley"],
+    kathmandu: ["kathmandu", "lalitpur", "kathmandu valley"],
+    bhaktapur: ["bhaktapur", "kathmandu", "lalitpur", "kathmandu valley"],
+  };
+
+  const conditions: string[] = [];
+  terms.forEach((term, termIdx) => {
+    const lower = term.toLowerCase();
+    const aliases = valleyAliases[lower] || [term];
+    aliases.forEach((alias, aliasIdx) => {
+      const paramName = `${prefix}Loc_${termIdx}_${aliasIdx}`;
+      params[paramName] = `%${alias}%`;
+      conditions.push(`${col} ILIKE :${paramName}`);
+    });
+  });
+
+  // Always include remote jobs
+  if (prefix === "job") {
+    conditions.push("job.location ILIKE '%remote%'");
+    conditions.push("job.jobType ILIKE '%remote%'");
+  } else {
+    conditions.push("lj.place ILIKE '%remote%'");
+  }
+
+  return {
+    sql: `(${conditions.join(" OR ")})`,
     params,
   };
 }
@@ -86,13 +176,16 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
 
   const { search, location, jobType, type = "job", limit = 10, matchAny = false } = params;
   const now = new Date();
-  const postedSince = new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000);
+  const recentNullSince = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
 
   let query = jobRepository
     .createQueryBuilder("job")
     .leftJoinAndSelect("job.category", "category")
     .where("job.isActive = true")
-    .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now });
+    .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+    .andWhere("(job.expiresAt IS NOT NULL OR job.createdAt >= :recentNullSince)", {
+      recentNullSince,
+    });
 
   if (type !== "all") {
     query = query.andWhere("job.type = :type", { type });
@@ -102,9 +195,8 @@ export async function searchJobs(params: JobSearchParams): Promise<JobSearchResu
     query = query.andWhere("job.jobType = :jobType", { jobType });
   }
   if (location) {
-    query = query.andWhere("job.location ILIKE :location", {
-      location: `%${location}%`,
-    });
+    const locCond = buildLocationConditions(location, "job");
+    if (locCond) query = query.andWhere(locCond.sql, locCond.params);
   }
   if (search?.trim()) {
     const { sql, params } = buildSearchConditions(search, "job", matchAny);
@@ -155,22 +247,46 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
     offset = 0,
     matchAny = false,
   } = params;
-  const perSource = Math.ceil((limit + offset) / 2);
+  // We merge local jobs first and LinkedIn jobs second. Each source must therefore
+  // provide enough candidates to cover the requested combined page; splitting the
+  // limit in half caused valid matches from either source to be silently omitted.
+  const perSource = limit + offset;
 
   const dataSource = await getDataSource();
   const jobRepo = dataSource.getRepository(Job);
   const linkedInRepo = dataSource.getRepository(LinkedInJob);
   const now = new Date();
-  const linkedinSince = new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000);
-  const postedSince = new Date(now.getTime() - 4 * 24 * 60 * 60 * 1000);
+  const linkedinSince = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
+  const recentNullSince = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+  const jobLocCondition = location ? buildLocationConditions(location, "job") : null;
+  const liLocCondition = location ? buildLocationConditions(location, "lj") : null;
 
   // 1. Nepal jobs + internships (both if type is "all")
   let jobsQuery = jobRepo
     .createQueryBuilder("job")
     .leftJoinAndSelect("job.category", "category")
+    .select([
+      "job.id",
+      "job.title",
+      "job.company",
+      "job.location",
+      "job.applyUrl",
+      "job.type",
+      "job.jobType",
+      "job.salaryText",
+      "job.source",
+      "job.expiresAt",
+      "job.postedAt",
+      "job.createdAt",
+      "category.id",
+      "category.name",
+    ])
     .where("job.isActive = true")
     .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-    .andWhere("job.postedAt >= :postedSince", { postedSince });
+    .andWhere("(job.expiresAt IS NOT NULL OR job.createdAt >= :recentNullSince)", {
+      recentNullSince,
+    });
 
   if (type !== "all") {
     jobsQuery = jobsQuery.andWhere("job.type = :type", { type });
@@ -178,10 +294,8 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
   if (jobType) {
     jobsQuery = jobsQuery.andWhere("job.jobType = :jobType", { jobType });
   }
-  if (location) {
-    jobsQuery = jobsQuery.andWhere("job.location ILIKE :location", {
-      location: `%${location}%`,
-    });
+  if (jobLocCondition) {
+    jobsQuery = jobsQuery.andWhere(jobLocCondition.sql, jobLocCondition.params);
   }
   if (search?.trim()) {
     const { sql, params } = buildSearchConditions(search, "job", matchAny);
@@ -194,16 +308,51 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
   }
 
   // 2. LinkedIn jobs
-  let linkedInQuery = linkedInRepo.createQueryBuilder("lj").where("lj.job_date >= :linkedinSince", {
-    linkedinSince,
-  });
+  let linkedInQuery = linkedInRepo
+    .createQueryBuilder("lj")
+    .select([
+      "lj.id",
+      "lj.title",
+      "lj.company",
+      "lj.place",
+      "lj.apply_link",
+      "lj.job_link",
+      "lj.job_date",
+    ])
+    .where("lj.job_date >= :linkedinSince", { linkedinSince });
   if (search?.trim()) {
     const { sql, params } = buildSearchConditions(search, "linkedin", matchAny);
     linkedInQuery = linkedInQuery.andWhere(sql, params);
   }
-  if (location) {
-    linkedInQuery = linkedInQuery.andWhere("lj.place ILIKE :location", {
-      location: `%${location}%`,
+  if (liLocCondition) {
+    linkedInQuery = linkedInQuery.andWhere(liLocCondition.sql, liLocCondition.params);
+  }
+  if (jobType) {
+    const jt = jobType.toLowerCase();
+    if (jt === "remote") {
+      linkedInQuery = linkedInQuery.andWhere(
+        "(lj.place ILIKE :remoteP OR lj.description ILIKE :remoteP OR lj.title ILIKE :remoteP)",
+        { remoteP: "%remote%" },
+      );
+    } else if (jt === "hybrid") {
+      linkedInQuery = linkedInQuery.andWhere(
+        "(lj.place ILIKE :hybridP OR lj.description ILIKE :hybridP)",
+        { hybridP: "%hybrid%" },
+      );
+    } else if (jt === "onsite") {
+      linkedInQuery = linkedInQuery.andWhere("lj.place ILIKE :onsiteP", {
+        onsiteP: "%on-site%",
+      });
+    }
+  }
+  if (type === "internship") {
+    linkedInQuery = linkedInQuery.andWhere(
+      "(lj.title ILIKE :internP OR lj.description ILIKE :internP)",
+      { internP: "%intern%" },
+    );
+  } else if (type === "job") {
+    linkedInQuery = linkedInQuery.andWhere("lj.title NOT ILIKE :internP", {
+      internP: "%intern%",
     });
   }
 
@@ -216,6 +365,34 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
     linkedInQuery.orderBy("lj.job_date", "DESC", "NULLS LAST").take(perSource).getMany(),
   ]);
 
+  // If strict 3-day window has 0 LinkedIn jobs, relax window to 30 days
+  if (linkedInJobs.length === 0) {
+    const extendedSince = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    let relaxedLiQuery = linkedInRepo
+      .createQueryBuilder("lj")
+      .select([
+        "lj.id",
+        "lj.title",
+        "lj.company",
+        "lj.place",
+        "lj.apply_link",
+        "lj.job_link",
+        "lj.job_date",
+      ])
+      .where("lj.job_date >= :extendedSince", { extendedSince });
+    if (search?.trim()) {
+      const { sql, params } = buildSearchConditions(search, "linkedin", matchAny);
+      relaxedLiQuery = relaxedLiQuery.andWhere(sql, params);
+    }
+    if (liLocCondition) {
+      relaxedLiQuery = relaxedLiQuery.andWhere(liLocCondition.sql, liLocCondition.params);
+    }
+    linkedInJobs = await relaxedLiQuery
+      .orderBy("lj.job_date", "DESC", "NULLS LAST")
+      .take(perSource)
+      .getMany();
+  }
+
   // Local scraped jobs are the primary source. If the stricter combined query
   // misses them, retry the local table independently with OR keyword matching
   // before accepting LinkedIn-only results.
@@ -224,19 +401,35 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
     let localFallback = jobRepo
       .createQueryBuilder("job")
       .leftJoinAndSelect("job.category", "category")
+      .select([
+        "job.id",
+        "job.title",
+        "job.company",
+        "job.location",
+        "job.applyUrl",
+        "job.type",
+        "job.jobType",
+        "job.salaryText",
+        "job.source",
+        "job.expiresAt",
+        "job.postedAt",
+        "job.createdAt",
+        "category.id",
+        "category.name",
+      ])
       .where("job.isActive = true")
       .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-      .andWhere("job.postedAt >= :postedSince", { postedSince })
+      .andWhere("(job.expiresAt IS NOT NULL OR job.createdAt >= :recentNullSince)", {
+        recentNullSince,
+      })
       .andWhere(sql, params);
     if (type !== "all") localFallback = localFallback.andWhere("job.type = :type", { type });
     if (jobType)
       localFallback = localFallback.andWhere("job.jobType = :jobType", {
         jobType,
       });
-    if (location)
-      localFallback = localFallback.andWhere("job.location ILIKE :location", {
-        location: `%${location}%`,
-      });
+    if (jobLocCondition)
+      localFallback = localFallback.andWhere(jobLocCondition.sql, jobLocCondition.params);
     nepalJobs = await localFallback
       .orderBy("job.postedAt", "DESC", "NULLS LAST")
       .take(perSource)
@@ -256,23 +449,79 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
       let fallbackJobsQ = jobRepo
         .createQueryBuilder("job")
         .leftJoinAndSelect("job.category", "category")
+        .select([
+          "job.id",
+          "job.title",
+          "job.company",
+          "job.location",
+          "job.applyUrl",
+          "job.type",
+          "job.jobType",
+          "job.salaryText",
+          "job.source",
+          "job.expiresAt",
+          "job.postedAt",
+          "job.createdAt",
+          "category.id",
+          "category.name",
+        ])
         .where("job.isActive = true")
         .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
-        .andWhere("job.postedAt >= :postedSince", { postedSince })
+        .andWhere("(job.expiresAt IS NOT NULL OR job.createdAt >= :recentNullSince)", {
+          recentNullSince,
+        })
         .andWhere(jobSql, jobParams);
-      let fallbackLiQ = linkedInRepo.createQueryBuilder("lj").andWhere(liSql, liParams);
+      let fallbackLiQ = linkedInRepo
+        .createQueryBuilder("lj")
+        .select([
+          "lj.id",
+          "lj.title",
+          "lj.company",
+          "lj.place",
+          "lj.apply_link",
+          "lj.job_link",
+          "lj.job_date",
+        ])
+        .where("lj.job_date >= :linkedinSince", { linkedinSince })
+        .andWhere(liSql, liParams);
       if (type !== "all") fallbackJobsQ = fallbackJobsQ.andWhere("job.type = :type", { type });
       if (jobType)
         fallbackJobsQ = fallbackJobsQ.andWhere("job.jobType = :jobType", {
           jobType,
         });
-      if (location) {
-        fallbackJobsQ = fallbackJobsQ.andWhere("job.location ILIKE :location", {
-          location: `%${location}%`,
+      if (jobType) {
+        const jt = jobType.toLowerCase();
+        if (jt === "remote") {
+          fallbackLiQ = fallbackLiQ.andWhere(
+            "(lj.place ILIKE :fallbackRemoteP OR lj.description ILIKE :fallbackRemoteP OR lj.title ILIKE :fallbackRemoteP)",
+            { fallbackRemoteP: "%remote%" },
+          );
+        } else if (jt === "hybrid") {
+          fallbackLiQ = fallbackLiQ.andWhere(
+            "(lj.place ILIKE :fallbackHybridP OR lj.description ILIKE :fallbackHybridP)",
+            { fallbackHybridP: "%hybrid%" },
+          );
+        } else if (jt === "onsite") {
+          fallbackLiQ = fallbackLiQ.andWhere("lj.place ILIKE :fallbackOnsiteP", {
+            fallbackOnsiteP: "%on-site%",
+          });
+        }
+      }
+      if (type === "internship") {
+        fallbackLiQ = fallbackLiQ.andWhere(
+          "(lj.title ILIKE :fallbackInternP OR lj.description ILIKE :fallbackInternP)",
+          { fallbackInternP: "%intern%" },
+        );
+      } else if (type === "job") {
+        fallbackLiQ = fallbackLiQ.andWhere("lj.title NOT ILIKE :fallbackInternP", {
+          fallbackInternP: "%intern%",
         });
-        fallbackLiQ = fallbackLiQ.andWhere("lj.place ILIKE :location", {
-          location: `%${location}%`,
-        });
+      }
+      if (jobLocCondition) {
+        fallbackJobsQ = fallbackJobsQ.andWhere(jobLocCondition.sql, jobLocCondition.params);
+      }
+      if (liLocCondition) {
+        fallbackLiQ = fallbackLiQ.andWhere(liLocCondition.sql, liLocCondition.params);
       }
       [nepalJobs, linkedInJobs] = await Promise.all([
         fallbackJobsQ.orderBy("job.postedAt", "DESC", "NULLS LAST").take(perSource).getMany(),
@@ -317,6 +566,85 @@ export async function searchAllJobs(params: JobSearchParams): Promise<JobSearchR
   // Keep locally scraped KamKhoj jobs ahead of LinkedIn jobs. Pagination is
   // applied after this ordering so LinkedIn results never jump ahead.
   return results.slice(offset, offset + limit);
+}
+
+/** Count all exact preference matches without applying a result cap. */
+export async function countAllJobs(params: JobSearchParams): Promise<number> {
+  const { search, location, jobType, type = "all", matchAny = false } = params;
+  const dataSource = await getDataSource();
+  const now = new Date();
+  const linkedinSince = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
+  const recentNullSince = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+  const jobLoc = location ? buildLocationConditions(location, "job") : null;
+  const liLoc = location ? buildLocationConditions(location, "lj") : null;
+
+  let jobsQuery = dataSource
+    .getRepository(Job)
+    .createQueryBuilder("job")
+    .leftJoin("job.category", "category")
+    .where("job.isActive = true")
+    .andWhere("(job.expiresAt IS NULL OR job.expiresAt > :now)", { now })
+    .andWhere("(job.expiresAt IS NOT NULL OR job.createdAt >= :recentNullSince)", {
+      recentNullSince,
+    });
+
+  if (type !== "all") jobsQuery = jobsQuery.andWhere("job.type = :type", { type });
+  if (jobType) jobsQuery = jobsQuery.andWhere("job.jobType = :jobType", { jobType });
+  if (jobLoc) {
+    jobsQuery = jobsQuery.andWhere(jobLoc.sql, jobLoc.params);
+  }
+  if (search?.trim()) {
+    const condition = buildSearchConditions(search, "job", matchAny);
+    jobsQuery = jobsQuery.andWhere(condition.sql, condition.params);
+  }
+
+  let linkedInQuery = dataSource
+    .getRepository(LinkedInJob)
+    .createQueryBuilder("lj")
+    .where("lj.job_date >= :linkedinSince", { linkedinSince });
+
+  if (search?.trim()) {
+    const condition = buildSearchConditions(search, "linkedin", matchAny);
+    linkedInQuery = linkedInQuery.andWhere(condition.sql, condition.params);
+  }
+  if (liLoc) {
+    linkedInQuery = linkedInQuery.andWhere(liLoc.sql, liLoc.params);
+  }
+  if (jobType) {
+    const jt = jobType.toLowerCase();
+    if (jt === "remote") {
+      linkedInQuery = linkedInQuery.andWhere(
+        "(lj.place ILIKE :countRemoteP OR lj.description ILIKE :countRemoteP OR lj.title ILIKE :countRemoteP)",
+        { countRemoteP: "%remote%" },
+      );
+    } else if (jt === "hybrid") {
+      linkedInQuery = linkedInQuery.andWhere(
+        "(lj.place ILIKE :countHybridP OR lj.description ILIKE :countHybridP)",
+        { countHybridP: "%hybrid%" },
+      );
+    } else if (jt === "onsite") {
+      linkedInQuery = linkedInQuery.andWhere("lj.place ILIKE :countOnsiteP", {
+        countOnsiteP: "%on-site%",
+      });
+    }
+  }
+  if (type === "internship") {
+    linkedInQuery = linkedInQuery.andWhere(
+      "(lj.title ILIKE :countInternP OR lj.description ILIKE :countInternP)",
+      { countInternP: "%intern%" },
+    );
+  } else if (type === "job") {
+    linkedInQuery = linkedInQuery.andWhere("lj.title NOT ILIKE :countInternP", {
+      countInternP: "%intern%",
+    });
+  }
+
+  const [localTotal, linkedInTotal] = await Promise.all([
+    jobsQuery.getCount(),
+    linkedInQuery.getCount(),
+  ]);
+  return localTotal + linkedInTotal;
 }
 
 /**

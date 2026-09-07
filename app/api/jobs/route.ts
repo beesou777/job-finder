@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       limit,
       offset,
     });
-    response.headers.set("Cache-Control", "no-store, max-age=0");
+    response.headers.set("Cache-Control", "public, s-maxage=30, stale-while-revalidate=60");
     return response;
   } catch (error: any) {
     console.error("Error fetching jobs:", error?.message || error);

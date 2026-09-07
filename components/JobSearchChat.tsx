@@ -33,6 +33,7 @@ interface JobResult {
   applyUrl: string;
   source: string;
   type?: string;
+  jobType?: string | null;
   description?: string | null;
   salaryText?: string;
 }
@@ -53,27 +54,44 @@ interface TextPart {
 type MessagePart = TextPart | ToolInvocationPart;
 
 function isToolPart(part: MessagePart): part is ToolInvocationPart {
-  return "toolName" in part || (typeof part.type === "string" && part.type.startsWith("tool-"));
+  return (
+    "toolName" in part ||
+    (typeof part.type === "string" &&
+      (part.type.startsWith("tool-") || part.type === "dynamic-tool"))
+  );
 }
 
 function getJobsFromPart(part: unknown): JobResult[] {
+  if (!part || typeof part !== "object") return [];
   const p = part as Record<string, unknown>;
-  const output = p?.output ?? p?.result;
-  if (
-    output &&
-    typeof output === "object" &&
-    "jobs" in output &&
-    Array.isArray((output as { jobs: unknown }).jobs)
-  ) {
-    const jobs = (output as { jobs: JobResult[] }).jobs;
-    return jobs.filter(
-      (j): j is JobResult => j && typeof j === "object" && "title" in j && "applyUrl" in j,
-    );
-  }
-  if (Array.isArray(output)) {
-    return output.filter(
-      (j): j is JobResult => j && typeof j === "object" && "title" in j && "applyUrl" in j,
-    );
+
+  const candidates = [
+    p.output,
+    p.result,
+    (p.toolInvocation as Record<string, unknown>)?.output,
+    (p.toolInvocation as Record<string, unknown>)?.result,
+    p.data,
+    p.jobs,
+  ];
+
+  for (const candidate of candidates) {
+    if (!candidate) continue;
+    if (Array.isArray(candidate)) {
+      const valid = candidate.filter((j): j is JobResult =>
+        Boolean(j && typeof j === "object" && "title" in j),
+      );
+      if (valid.length > 0) return valid;
+    }
+    if (
+      typeof candidate === "object" &&
+      "jobs" in candidate &&
+      Array.isArray((candidate as { jobs: unknown[] }).jobs)
+    ) {
+      const valid = (candidate as { jobs: unknown[] }).jobs.filter((j): j is JobResult =>
+        Boolean(j && typeof j === "object" && "title" in j),
+      );
+      if (valid.length > 0) return valid;
+    }
   }
   return [];
 }
@@ -113,31 +131,21 @@ function AssistantMessageContent({
         (lastUserMessage.parts ?? [])
           .filter((x: unknown) => (x as { type?: string }).type === "text")
           .map((x: unknown) => (x as { text?: string }).text)
-          .join("") || "",
+          .join("") ||
+          (lastUserMessage as unknown as { content?: string })?.content ||
+          "",
       )
     : "";
-
-  const text = textParts.join(" ");
-  const hasJobPhrase =
-    /here are|i found|found \d+ job|these (jobs|matches)|jobs (i )?found|matches for you|no jobs found|didn't find|try (different|broadening)/i.test(
-      text,
-    );
-  const userSearchedJobs =
-    /job|developer|engineer|analyst|intern|marketing|designer|manager|remote|full.?time|part.?time|kathmandu|react|node/i.test(
-      userQuery,
-    );
-  const seemsLikeJobReply =
-    hasJobPhrase || (text.length < 120 && userSearchedJobs && allJobs.length === 0);
 
   useEffect(() => {
     if (
       allJobs.length > 0 ||
       !userQuery.trim() ||
       userQuery.trim().length < 2 ||
-      !seemsLikeJobReply ||
       fetchedFor.current.has(message.id)
     )
       return;
+
     fetchedFor.current.add(message.id);
     fetch(`/api/chat/search?q=${encodeURIComponent(userQuery)}`)
       .then((r) => r.json())
@@ -145,7 +153,7 @@ function AssistantMessageContent({
         if (data.jobs?.length) setFallbackJobs(data.jobs);
       })
       .catch(() => {});
-  }, [message.id, allJobs.length, userQuery, seemsLikeJobReply]);
+  }, [message.id, allJobs.length, userQuery]);
 
   const jobsToShow = allJobs.length > 0 ? allJobs : (fallbackJobs ?? []);
 
@@ -157,11 +165,11 @@ function AssistantMessageContent({
         </div>
       ))}
       {jobsToShow.length > 0 && (
-        <div className="space-y-3 w-full mt-2">
-          <p className="text-xs font-medium text-zinc-500">
+        <div className="space-y-3 w-full max-w-full mt-2 min-w-0">
+          <p className="text-xs font-semibold text-zinc-400">
             {jobsToShow.length} job{jobsToShow.length !== 1 ? "s" : ""} found
           </p>
-          <div className="space-y-2.5">
+          <div className="space-y-2.5 w-full max-w-full min-w-0">
             {jobsToShow.slice(0, 8).map((job) => (
               <JobCard key={job.id} job={job} />
             ))}
@@ -173,8 +181,7 @@ function AssistantMessageContent({
 }
 
 function JobCard({ job }: { job: JobResult }) {
-  if (!job.applyUrl) return null;
-  const applyUrl = addUtmParams(job.applyUrl, job.source, job.id);
+  const applyUrl = job.applyUrl ? addUtmParams(job.applyUrl, job.source, job.id) : "#";
   const descSnippet = job.description
     ? job.description.replace(/\s+/g, " ").slice(0, 150) + (job.description.length > 150 ? "…" : "")
     : null;
@@ -184,38 +191,54 @@ function JobCard({ job }: { job: JobResult }) {
       href={applyUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="block p-4 rounded-xl border border-white/10 bg-[#1b1b1d] hover:border-primary/60 transition-all text-left group"
+      className="block p-3.5 sm:p-4 rounded-xl border border-white/10 bg-[#1b1b1d] hover:border-primary/60 hover:bg-[#202024] transition-all text-left group w-full max-w-full box-border"
     >
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start justify-between gap-2.5 min-w-0">
         <div className="min-w-0 flex-1">
-          <p className="font-semibold text-zinc-50 group-hover:text-primary line-clamp-2">
+          <p className="font-semibold text-zinc-100 group-hover:text-primary line-clamp-2 leading-snug break-words">
             {job.title}
           </p>
           {job.company && (
-            <p className="flex items-center gap-1.5 mt-1 text-sm text-zinc-400">
-              <Building2 className="h-3.5 w-3.5 shrink-0" />
+            <p className="flex items-center gap-1.5 mt-1.5 text-sm text-zinc-400 min-w-0">
+              <Building2 className="h-3.5 w-3.5 shrink-0 text-zinc-500" />
               <span className="truncate">{job.company}</span>
             </p>
           )}
-          {job.location && (
-            <p className="flex items-center gap-1.5 mt-0.5 text-xs text-zinc-500">
-              <MapPin className="h-3 w-3 shrink-0" />
-              <span className="truncate">{job.location}</span>
+          <div className="flex flex-wrap items-center gap-1.5 mt-2">
+            {job.location && (
+              <span className="inline-flex items-center gap-1 text-xs text-zinc-400 max-w-full min-w-0">
+                <MapPin className="h-3 w-3 shrink-0 text-zinc-500" />
+                <span className="truncate">{job.location}</span>
+              </span>
+            )}
+            {job.jobType && (
+              <span className="text-[11px] px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/10 capitalize shrink-0">
+                {job.jobType}
+              </span>
+            )}
+            {job.type === "internship" && (
+              <span className="text-[11px] px-2 py-0.5 rounded-md bg-primary/15 text-primary border border-primary/25 font-medium shrink-0">
+                Internship
+              </span>
+            )}
+            {job.salaryText && (
+              <span className="inline-flex items-center gap-0.5 text-xs text-primary font-medium shrink-0">
+                <DollarSign className="h-3 w-3 shrink-0" />
+                <span>{job.salaryText}</span>
+              </span>
+            )}
+          </div>
+          {descSnippet && (
+            <p className="mt-2 text-xs text-zinc-500 line-clamp-2 leading-relaxed break-words">
+              {descSnippet}
             </p>
           )}
-          {job.salaryText && (
-            <p className="flex items-center gap-1.5 mt-0.5 text-xs text-primary">
-              <DollarSign className="h-3 w-3 shrink-0" />
-              <span>{job.salaryText}</span>
-            </p>
-          )}
-          {descSnippet && <p className="mt-2 text-xs text-zinc-500 line-clamp-2">{descSnippet}</p>}
         </div>
-        <div className="flex flex-col items-end gap-1 shrink-0">
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-zinc-400 border border-white/10">
+        <div className="flex flex-col items-end gap-2 shrink-0">
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-zinc-400 border border-white/10 shrink-0">
             {job.source}
           </span>
-          <span className="flex items-center gap-1 text-xs font-bold text-primary group-hover:underline">
+          <span className="flex items-center gap-1 text-xs font-bold text-primary group-hover:underline shrink-0">
             Apply
             <ExternalLink className="h-3.5 w-3.5" />
           </span>
@@ -231,6 +254,7 @@ interface JobSearchChatProps {
 
 export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
   const [input, setInput] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { messages, sendMessage, status, error } = useChat({
     transport: new DefaultChatTransport({ api: "/api/chat" }),
   });
@@ -238,45 +262,45 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
   const isLoading = status !== "ready";
 
   useEffect(() => {
-    const lastAssistant = [...messages].reverse().find((m) => m.role === "assistant");
-    if (lastAssistant?.parts?.length) {
-      console.log("[AI Chat] Assistant response:", {
-        parts: lastAssistant.parts.map((p: unknown) => {
-          const x = p as {
-            type?: string;
-            text?: string;
-            toolName?: string;
-            output?: unknown;
-            result?: unknown;
-          };
-          if (x.type === "text") return { type: "text", text: x.text?.slice(0, 150) };
-          const jobs = getJobsFromPart(p);
-          return {
-            type: "tool",
-            toolName: x.toolName,
-            jobCount: jobs.length,
-            titles: jobs.map((j) => j.title),
-          };
-        }),
-      });
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    if (!input) {
+      textarea.style.height = "44px";
+      return;
     }
-  }, [messages]);
+    textarea.style.height = "auto";
+    const nextHeight = Math.min(Math.max(textarea.scrollHeight, 44), 140);
+    textarea.style.height = `${nextHeight}px`;
+  }, [input]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     if (input.trim() && !isLoading) {
       sendMessage({ text: input.trim() });
       setInput("");
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "44px";
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit();
     }
   };
 
   const handleSuggestionClick = (suggestion: string) => {
     setInput(suggestion);
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
   };
 
   const content = (
     <>
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-3.5 sm:p-4 space-y-4 min-h-0 [scrollbar-width:thin]">
         {messages.length === 0 && (
           <div className="space-y-4">
             <div className="flex gap-3">
@@ -285,7 +309,8 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
               </div>
               <div className="rounded-2xl rounded-tl-none bg-white/5 px-4 py-3 text-sm text-zinc-300">
                 Hi! I search across <strong>Nepal jobs</strong>, <strong>internships</strong>, and{" "}
-                <strong>LinkedIn</strong>. Tell me what you want role, skills, location, job type.
+                <strong>LinkedIn</strong> using Gemini AI. Tell me what role, skills, location, or
+                job type you are looking for!
               </div>
             </div>
             <p className="text-xs text-zinc-500 font-medium pl-11">Try:</p>
@@ -311,7 +336,7 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
         {messages.map((message, msgIdx) => (
           <div
             key={message.id}
-            className={`flex gap-3 ${message.role === "user" ? "flex-row-reverse" : ""}`}
+            className={`flex gap-3 max-w-full ${message.role === "user" ? "flex-row-reverse" : ""}`}
           >
             <div
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
@@ -325,21 +350,23 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
               )}
             </div>
             <div
-              className={`rounded-2xl px-4 py-3 text-sm max-w-[95%] w-full ${
+              className={`rounded-2xl px-4 py-3 text-sm min-w-0 ${
                 message.role === "user"
-                  ? "rounded-tr-none bg-primary text-zinc-950"
-                  : "rounded-tl-none bg-white/5 text-zinc-300"
+                  ? "max-w-[85%] rounded-tr-none bg-primary text-zinc-950 break-words"
+                  : "flex-1 rounded-tl-none bg-white/5 text-zinc-300"
               }`}
             >
               {message.role === "user" ? (
-                <div className="whitespace-pre-wrap">
+                <div className="whitespace-pre-wrap break-words">
                   {(message.parts ?? [])
                     .filter((p) => p.type === "text")
                     .map((p) => (p as TextPart).text)
-                    .join("") || ""}
+                    .join("") ||
+                    (message as unknown as { content?: string })?.content ||
+                    ""}
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-3 min-w-0">
                   <AssistantMessageContent
                     message={message}
                     messages={messages}
@@ -362,19 +389,24 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
           </div>
         )}
       </div>
-      <form onSubmit={handleSubmit} className="p-4 border-t border-white/10 shrink-0">
-        <div className="flex gap-2">
-          <Input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="E.g., Frontend dev with React, remote..."
-            className="flex-1 border-white/10 bg-black text-zinc-100 placeholder:text-zinc-600"
-            disabled={isLoading}
-          />
+      <form onSubmit={handleSubmit} className="p-3 border-t border-white/10 shrink-0 bg-[#141416]">
+        <div className="flex items-end gap-2">
+          <div className="relative flex-1">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Search jobs, skills, or ask questions..."
+              disabled={isLoading}
+              rows={1}
+              className="w-full resize-none rounded-xl border border-white/10 bg-black/60 px-3.5 py-[11px] text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-primary/60 focus:outline-none disabled:opacity-50 transition-[border-color] leading-5 min-h-[44px] max-h-[140px] overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            />
+          </div>
           <Button
             type="submit"
-            disabled={isLoading}
-            className="bg-primary text-zinc-950 hover:bg-white"
+            disabled={isLoading || !input.trim()}
+            className="h-[44px] w-[44px] p-0 flex items-center justify-center rounded-xl bg-primary text-zinc-950 hover:bg-white transition-all disabled:opacity-40 shrink-0 self-end"
           >
             {isLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -383,6 +415,15 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
             )}
           </Button>
         </div>
+        <p className="text-[11px] text-zinc-500 mt-1.5 pl-1">
+          Press{" "}
+          <kbd className="px-1 py-0.5 rounded bg-white/10 text-zinc-400 text-[10px]">Enter</kbd> to
+          search,{" "}
+          <kbd className="px-1 py-0.5 rounded bg-white/10 text-zinc-400 text-[10px]">
+            Shift + Enter
+          </kbd>{" "}
+          for new line
+        </p>
       </form>
     </>
   );

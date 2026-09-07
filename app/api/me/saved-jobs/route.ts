@@ -8,7 +8,10 @@ export const revalidate = 0;
 async function current() {
   const s = await getServerSession(authOptions);
   if (!s?.user?.id) return null;
-  return (await getDataSource()).getRepository(User).findOneBy({ id: Number(s.user.id) });
+  return (await getDataSource()).getRepository(User).findOne({
+    select: ["id", "savedJobIds"],
+    where: { id: Number(s.user.id) },
+  });
 }
 export async function GET() {
   const u = await current();

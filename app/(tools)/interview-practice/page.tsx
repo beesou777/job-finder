@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -16,10 +16,6 @@ type Question = {
 export default function InterviewPracticePage() {
   const { status } = useSession();
   const router = useRouter();
-  if (status === "unauthenticated")
-    router.replace("/login?callbackUrl=/dashboard/interview-practice");
-  if (status !== "authenticated")
-    return <main className="min-h-[70vh] p-10 text-zinc-400">Checking your account…</main>;
   const [role, setRole] = useState("");
   const [position, setPosition] = useState("");
   const [experience, setExperience] = useState("fresher");
@@ -34,6 +30,13 @@ export default function InterviewPracticePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<any>(null);
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/login?callbackUrl=/dashboard/interview-practice");
+    }
+  }, [router, status]);
+  if (status !== "authenticated")
+    return <main className="min-h-[70vh] p-10 text-zinc-400">Checking your account…</main>;
   const current = questions[index];
   function setLevel(value: keyof typeof ranges) {
     setDifficulty(value);

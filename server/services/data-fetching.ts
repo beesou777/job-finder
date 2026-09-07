@@ -216,7 +216,7 @@ async function getJobsUncached(options: GetJobsOptions = {}) {
   return { jobs, total };
 }
 
-/** Fetch live jobs so expiry and active status are always current. */
+/** Cache public job results briefly; scraper runs invalidate the jobs tag. */
 export async function getJobs(options: GetJobsOptions = {}) {
   const allowedUrgencies = new Set(["today", "3days", "7days", "30days"]);
   const allowedTypes = new Set(["job", "internship"]);
@@ -234,7 +234,21 @@ export async function getJobs(options: GetJobsOptions = {}) {
         : undefined,
     jobType: options.jobType?.trim().slice(0, 30) || undefined,
   };
-  return getJobsUncached(normalizedOptions);
+  const key = [
+    "jobs-v3",
+    String(normalizedOptions.limit),
+    String(normalizedOptions.offset),
+    String(normalizedOptions.type ?? ""),
+    String(normalizedOptions.search ?? ""),
+    String(normalizedOptions.categoryId ?? ""),
+    String(normalizedOptions.location ?? ""),
+    String(normalizedOptions.jobType ?? ""),
+    String(normalizedOptions.urgency ?? ""),
+  ];
+  return unstable_cache(() => getJobsUncached(normalizedOptions), key, {
+    revalidate: 30,
+    tags: ["jobs"],
+  })();
 }
 
 async function getStatsUncached() {

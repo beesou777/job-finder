@@ -5,7 +5,7 @@
 
 const store = new Map<string, number[]>();
 const WINDOW_MS = 24 * 60 * 60 * 1000; // 24 hours
-const MAX_REQUESTS = 5;
+const MAX_REQUESTS = process.env.NODE_ENV === "production" ? 30 : 500;
 
 function cleanup() {
   const now = Date.now();
@@ -17,6 +17,17 @@ function cleanup() {
 }
 
 export function checkRateLimit(identifier: string): { allowed: boolean; remaining: number } {
+  // Allow unlimited/high searches for localhost or dev
+  if (
+    process.env.NODE_ENV !== "production" ||
+    identifier === "127.0.0.1" ||
+    identifier === "::1" ||
+    identifier === "localhost" ||
+    identifier === "unknown"
+  ) {
+    return { allowed: true, remaining: 500 };
+  }
+
   cleanup();
   const now = Date.now();
   const timestamps = store.get(identifier) ?? [];

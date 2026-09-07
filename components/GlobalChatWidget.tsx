@@ -25,7 +25,7 @@ export function GlobalChatWidget() {
           onClick={() => setIsOpen(false)}
           aria-hidden="true"
         />
-        <div className="fixed inset-0 z-50 flex flex-col border border-white/10 bg-[#111113] shadow-2xl animate-in slide-in-from-right duration-300 md:inset-auto md:left-auto md:right-4 md:top-4 md:bottom-4 md:w-[420px] md:max-w-[95vw] md:h-[calc(100dvh-2rem)] md:min-h-[600px] md:rounded-2xl">
+        <div className="fixed inset-0 z-50 flex flex-col border border-white/10 bg-[#111113] shadow-2xl animate-in slide-in-from-right duration-300 md:inset-auto md:left-auto md:right-4 md:top-4 md:bottom-4 md:w-[420px] md:max-w-[95vw] md:h-[calc(100dvh-2rem)] md:min-h-[600px] md:rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 bg-[#111113] shrink-0">
             <h2 className="font-black text-zinc-50">AI Job Search</h2>
             <button
@@ -36,7 +36,7 @@ export function GlobalChatWidget() {
               <X className="h-5 w-5" />
             </button>
           </div>
-          <div className="flex-1 min-h-0 overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-hidden flex flex-col">
             <JobSearchChat embedded />
           </div>
         </div>
