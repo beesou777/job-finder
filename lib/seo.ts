@@ -5,43 +5,6 @@ import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, absoluteUrl } from "./site";
 const BASE_URL = SITE_URL;
 
 /**
- * Generate metadata for job detail pages
- */
-export function generateJobMetadata(job: {
-  title: string;
-  company?: string | null;
-  location?: string | null;
-  description?: string | null;
-  deadline?: string | null;
-  id: string;
-}): Metadata {
-  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` - ${job.location}` : ""} | ${SITE_NAME}`;
-  const description = job.description
-    ? `${job.description.substring(0, 120)}...`
-    : `Apply for ${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` in ${job.location}` : ""}. Job opportunity in Nepal.${job.deadline ? ` Deadline: ${job.deadline}.` : ""}`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title: `${job.title}${job.company ? ` at ${job.company}` : ""}`,
-      description: `Job opportunity${job.location ? ` in ${job.location}` : " in Nepal"}`,
-      type: "article",
-      url: `${BASE_URL}/jobs/${job.id}`,
-      images: [{ url: DEFAULT_OG_IMAGE }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${job.title}${job.company ? ` at ${job.company}` : ""}`,
-      description: `Job opportunity${job.location ? ` in ${job.location}` : " in Nepal"}`,
-    },
-    alternates: {
-      canonical: `${BASE_URL}/jobs/${job.id}`,
-    },
-  };
-}
-
-/**
  * Generate metadata for LinkedIn job detail pages
  */
 export function generateLinkedInJobMetadata(job: {
@@ -261,45 +224,6 @@ export function generateLinkedInJobPostingSchema(job: {
   };
 }
 
-/**
- * Generate Organization structured data
- */
-export function generateOrganizationSchema() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: BASE_URL,
-    logo: `${BASE_URL}/kamkhoj.png`,
-    description: "KamKhoj is a Nepal job search and career resource website.",
-    sameAs: [
-      // Add social media URLs when available
-      // "https://www.facebook.com/kamkhoj",
-      // "https://www.linkedin.com/company/kamkhoj",
-    ],
-  };
-}
-
-/**
- * Generate WebSite structured data with search action
- */
-export function generateWebSiteSchema() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: SITE_NAME,
-    description: "KamKhoj helps job seekers discover Nepal vacancies and career resources.",
-    url: BASE_URL,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${BASE_URL}/jobs?search={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
-  };
-}
 
 /**
  * Generate FAQPage structured data
@@ -346,60 +270,6 @@ export function generateCollectionMetadata(input: {
     alternates: {
       canonical: absoluteUrl(input.path),
     },
-  };
-}
-
-/**
- * Generate CollectionPage structured data for job aggregator
- */
-export function generateCollectionPageSchema(totalItems: number) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: "KamKhoj job search collection",
-    description: `Browse ${totalItems}+ listings organized for Nepal job discovery and continue to the original source to verify final details.`,
-    url: BASE_URL,
-    mainEntity: {
-      "@type": "ItemList",
-      numberOfItems: totalItems,
-      itemListElement: {
-        "@type": "ListItem",
-        position: 1,
-        name: "Curated job discovery",
-        description: "Listings organized for easier comparison by Nepal job seekers",
-      },
-    },
-    about: {
-      "@type": "Thing",
-      name: "Nepal job search",
-      description: "Job discovery and career-resource content for Nepal job seekers",
-    },
-  };
-}
-
-/**
- * Generate ItemList structured data for job aggregator homepage
- */
-export function generateJobAggregatorSchema(jobs: Array<{ id: string; title: string; company?: string | null }>) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: "KamKhoj job listings",
-    description: "Listings organized for KamKhoj users",
-    numberOfItems: jobs.length,
-    itemListElement: jobs.map((job, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "JobPosting",
-        identifier: job.id,
-        title: job.title,
-        hiringOrganization: {
-          "@type": "Organization",
-          name: job.company || "Company",
-        },
-      },
-    })),
   };
 }
 

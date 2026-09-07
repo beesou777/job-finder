@@ -228,8 +228,6 @@ export const seoLandingPages: Record<string, SeoLandingPageConfig> = {
   },
 };
 
-export const landingPageSlugs = Object.keys(seoLandingPages);
-
 /** Keep thin/empty landing pages out of search indexes while preserving discovery links. */
 export async function getLandingPageRobots(config: SeoLandingPageConfig): Promise<Metadata["robots"]> {
   try {

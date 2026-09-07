@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-export const MIN_BLOG_WORD_COUNT = 350;
+const MIN_BLOG_WORD_COUNT = 350;
 
 export interface BlogPost {
   slug: string;
@@ -38,7 +38,7 @@ function shouldIndexPost(
 /**
  * Get all blog post slugs
  */
-export function getAllBlogSlugs(): string[] {
+function getAllBlogSlugs(): string[] {
   try {
     if (!fs.existsSync(blogDirectory)) {
       return [];
@@ -91,7 +91,7 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
 /**
  * Get all blog posts sorted by date (newest first)
  */
-export function getAllBlogPosts(options?: { includeNoIndex?: boolean }): BlogPost[] {
+function getAllBlogPosts(options?: { includeNoIndex?: boolean }): BlogPost[] {
   const slugs = getAllBlogSlugs();
   const posts = slugs
     .map((slug) => getBlogPostBySlug(slug))
@@ -110,9 +110,6 @@ export function getVisibleBlogPosts(): BlogPost[] {
   return getAllBlogPosts();
 }
 
-export function getAllBlogPostsForAdmin(): BlogPost[] {
-  return getAllBlogPosts({ includeNoIndex: true });
-}
 
 /**
  * Get related blog posts (excluding current slug)
@@ -124,24 +121,4 @@ export function getRelatedPosts(currentSlug: string, limit: number = 3): BlogPos
     .slice(0, limit);
 }
 
-export function getRecentVisibleBlogPosts(limit: number = 3): BlogPost[] {
-  return getAllBlogPosts().slice(0, limit);
-}
-
-/**
- * Get all blog posts including hidden/noindex entries.
- */
-export function getAllBlogPostsIncludingHidden(): BlogPost[] {
-  const slugs = getAllBlogSlugs();
-  const posts = slugs
-    .map((slug) => getBlogPostBySlug(slug))
-    .filter((post): post is BlogPost => post !== null)
-    .sort((a, b) => {
-      const dateA = new Date(a.date).getTime();
-      const dateB = new Date(b.date).getTime();
-      return dateB - dateA; // Newest first
-    });
-
-  return posts;
-}
 

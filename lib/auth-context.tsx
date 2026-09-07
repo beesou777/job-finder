@@ -31,18 +31,9 @@ const AuthContext = createContext<AuthContextType>({
   update: async () => {},
 });
 
-export function getAuthToken(): string | null {
+function getAuthToken(): string | null {
   if (typeof window === "undefined") return null;
   return localStorage.getItem("token");
-}
-
-export function getAuthHeaders(customHeaders?: HeadersInit): HeadersInit {
-  const token = getAuthToken();
-  const headers = new Headers(customHeaders || {});
-  if (token && !headers.has("Authorization")) {
-    headers.set("Authorization", "Bearer " + token);
-  }
-  return headers;
 }
 
 export async function authFetch(url: string, init: RequestInit = {}): Promise<Response> {

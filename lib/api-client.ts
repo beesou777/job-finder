@@ -40,26 +40,3 @@ export async function getCategories(limit = 100) {
   const payload = await response.json();
   return payload.data || [];
 }
-
-export async function getRemoteJobs(options: { page?: number; limit?: number; search?: string } = {}) {
-  const params = query(options);
-  const response = await fetch(`/api/remote-jobs${params ? `?${params}` : ""}`, { cache: "no-store" });
-  if (!response.ok) throw new Error(`Unable to load remote jobs (${response.status})`);
-  const payload = await response.json();
-  const rawData = payload.data ?? payload;
-  const jobs = Array.isArray(rawData)
-    ? rawData
-    : Array.isArray(rawData?.jobs)
-      ? rawData.jobs
-      : Array.isArray(payload.jobs)
-        ? payload.jobs
-        : [];
-  const total =
-    rawData?.pagination?.total ??
-    payload.pagination?.total ??
-    payload.total ??
-    rawData?.total ??
-    jobs.length;
-  const pagination = rawData?.pagination ?? payload.pagination ?? null;
-  return { jobs, total: typeof total === "number" ? total : 0, pagination };
-}
