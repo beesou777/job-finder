@@ -2,9 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { generateCategoryMetadata } from "@/lib/seo";
 import Script from "next/script";
-import { getDataSource } from "@/lib/db";
-import { Job } from "@/server/db/entities/Job";
-import { Category } from "@/server/db/entities/Category";
+import { getJobs, getCategoryBySlug } from "@/server/services/data-fetching";
 import { JobCard } from "@/components/JobCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,12 +18,7 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   try {
-    const dataSource = await getDataSource();
-    const categoryRepository = dataSource.getRepository(Category);
-
-    const category = await categoryRepository.findOne({
-      where: { slug: params.slug },
-    });
+    const category = await getCategoryBySlug(params.slug);
 
     if (!category) {
       return {
@@ -34,18 +27,7 @@ export async function generateMetadata({
       };
     }
 
-    const jobRepository = dataSource.getRepository(Job);
-    const now = new Date();
-
-    // Count active jobs in this category
-    const allJobs = await jobRepository.find({
-      where: { categoryId: category.id },
-      take: 1000,
-    });
-    const validJobs = allJobs.filter((job) => !job.expiresAt || job.expiresAt > now);
-    const total = validJobs.length;
-    const shouldNoIndex =
-      total === 0 || /^\d+$/.test(params.slug.trim()) || /^\d+$/.test(category.name.trim());
+    const total = category.jobCount || 0;
     const metadata = generateCategoryMetadata(category.name, total);
 
     return {
@@ -61,39 +43,25 @@ export async function generateMetadata({
 }
 
 export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  let category: Category | null = null;
-  let jobs: Job[] = [];
+  let category: any = null;
+  let jobs: any[] = [];
   let total = 0;
   let locations: string[] = [];
 
   try {
-    const dataSource = await getDataSource();
-    const categoryRepository = dataSource.getRepository(Category);
-    const jobRepository = dataSource.getRepository(Job);
-
-    category = await categoryRepository.findOne({
-      where: { slug: params.slug },
-    });
+    category = await getCategoryBySlug(params.slug);
 
     if (!category) {
       notFound();
     }
 
-    const now = new Date();
-    const allJobs = await jobRepository.find({
-      where: { categoryId: category.id },
-      relations: ["category"],
-      take: 100,
-      order: { createdAt: "DESC" },
-    });
-
-    // Filter expired jobs
-    jobs = allJobs.filter((job) => !job.expiresAt || job.expiresAt > now);
-    total = jobs.length;
+    const result = await getJobs({ categoryId: category.id, limit: 100 });
+    jobs = result.jobs || [];
+    total = result.total || jobs.length;
 
     // Get unique locations
     const locationSet = new Set<string>();
-    jobs.forEach((job) => {
+    jobs.forEach((job: any) => {
       if (job.location) {
         locationSet.add(job.location);
       }

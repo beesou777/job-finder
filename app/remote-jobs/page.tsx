@@ -45,6 +45,9 @@ export default async function RemoteJobsPage({
     search: searchParams.q || "",
   });
 
+  const jobList = Array.isArray(jobs) ? jobs : [];
+  const safeTotal = typeof total === "number" ? total : jobList.length;
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       <RemoteJobsFiltering facetCounts={[]} />
@@ -62,11 +65,11 @@ export default async function RemoteJobsPage({
             </p>
           </div>
           <p className="text-sm font-bold text-zinc-300">
-            Total {total.toLocaleString()} Jobs found
+            Total {safeTotal.toLocaleString()} Jobs found
           </p>
         </div>
 
-        {jobs.length === 0 ? (
+        {jobList.length === 0 ? (
           <div className="text-center py-16 rounded-xl border border-white/10 bg-[#18181a]">
             <p className="text-xl text-zinc-400">
               No international remote jobs found matching your criteria.
@@ -75,17 +78,17 @@ export default async function RemoteJobsPage({
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
-              {jobs.map((job: any) => (
-                <RemoteJobCard key={job._id} job={job} />
+              {jobList.map((job: any) => (
+                <RemoteJobCard key={job._id || job.id} job={job} />
               ))}
             </div>
 
-            {total > ITEMS_PER_PAGE && (
+            {safeTotal > ITEMS_PER_PAGE && (
               <div className="mt-8">
                 <RemotePagination
                   currentPage={page}
-                  totalPages={Math.ceil(total / ITEMS_PER_PAGE)}
-                  totalItems={total}
+                  totalPages={Math.ceil(safeTotal / ITEMS_PER_PAGE)}
+                  totalItems={safeTotal}
                   itemsPerPage={ITEMS_PER_PAGE}
                 />
               </div>

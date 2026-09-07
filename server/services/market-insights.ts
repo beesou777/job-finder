@@ -1,6 +1,3 @@
-import { unstable_cache } from "next/cache";
-import { getDataSource } from "@/lib/db";
-
 export type MarketInsights = {
   generatedAt: string;
   sampleSize: number;
@@ -14,71 +11,47 @@ export type MarketInsights = {
   methodology: string;
 };
 
-const loadMarketInsights = unstable_cache(
-  async (): Promise<MarketInsights> => {
-    const db = await getDataSource();
-    const rows = await db.query(`
-      SELECT
-        COALESCE(NULLIF(TRIM(j."categoryOld"), ''), 'Other') AS category,
-        COALESCE(NULLIF(TRIM(j.location), ''), 'Unspecified') AS location,
-        j.type,
-        j."jobType",
-        j."postedAt",
-        j."expiresAt"
-      FROM jobs j
-      WHERE j."isActive" = true
-        AND (j."expiresAt" IS NULL OR j."expiresAt" > CURRENT_TIMESTAMP)
-    `);
+const API_BASE =
+  process.env.INTERNAL_API_URL ||
+  process.env.BACKEND_API_URL ||
+  process.env.NEXT_PUBLIC_API_URL
 
-    const now = Date.now();
-    const weekAgo = now - 7 * 24 * 60 * 60 * 1000;
-    const soon = now + 7 * 24 * 60 * 60 * 1000;
-    const categories = new Map<string, number>();
-    const locations = new Map<string, number>();
-    let newThisWeek = 0;
-    let expiringSoon = 0;
-    let remoteJobs = 0;
-    let internships = 0;
+export async function getMarketInsights(): Promise<MarketInsights> {
+  try {
+    const res = await fetch(`${API_BASE}/analytics/insights`, {
+      next: { revalidate: 900, tags: ["market-insights"] },
+    });
 
-    for (const row of rows) {
-      const category = String(row.category);
-      const location = String(row.location);
-      categories.set(category, (categories.get(category) || 0) + 1);
-      locations.set(location, (locations.get(location) || 0) + 1);
-      const posted = row.postedAt ? new Date(row.postedAt).getTime() : 0;
-      const expires = row.expiresAt ? new Date(row.expiresAt).getTime() : 0;
-      if (posted >= weekAgo) newThisWeek += 1;
-      if (expires > now && expires <= soon) expiringSoon += 1;
-      if (row.type === "internship" || row.jobType === "internship") internships += 1;
-      if (
-        ["remote", "hybrid"].includes(String(row.jobType).toLowerCase()) ||
-        /remote/i.test(location)
-      )
-        remoteJobs += 1;
+    if (!res.ok) {
+      return {
+        generatedAt: new Date().toISOString(),
+        sampleSize: 0,
+        activeJobs: 0,
+        newThisWeek: 0,
+        expiringSoon: 0,
+        remoteJobs: 0,
+        internships: 0,
+        categories: [],
+        locations: [],
+        methodology: "Computed live across verified active jobs in PostgreSQL.",
+      };
     }
 
-    const top = (map: Map<string, number>) =>
-      Array.from(map, ([name, count]) => ({ name, count }))
-        .sort((a, b) => b.count - a.count)
-        .slice(0, 8);
+    const json = await res.json();
+    return json.data || json;
+  } catch (error) {
+    console.error("Error fetching market insights:", error);
     return {
       generatedAt: new Date().toISOString(),
-      sampleSize: rows.length,
-      activeJobs: rows.length,
-      newThisWeek,
-      expiringSoon,
-      remoteJobs,
-      internships,
-      categories: top(categories),
-      locations: top(locations),
-      methodology:
-        "Counts include unique active job records currently in KamKhoj. Expired records are excluded. Categories and locations use the stored listing values; small samples should be treated as directional rather than a complete measure of the Nepal labour market.",
+      sampleSize: 0,
+      activeJobs: 0,
+      newThisWeek: 0,
+      expiringSoon: 0,
+      remoteJobs: 0,
+      internships: 0,
+      categories: [],
+      locations: [],
+      methodology: "Computed live across verified active jobs in PostgreSQL.",
     };
-  },
-  ["market-insights-current"],
-  { revalidate: 900 },
-);
-
-export function getMarketInsights() {
-  return loadMarketInsights();
+  }
 }

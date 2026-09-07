@@ -1,4 +1,6 @@
-import { getLinkedInJobDetails } from "@/server/services/data-fetching";
+"use client";
+
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Building2, MapPin, Calendar, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -49,7 +51,22 @@ function buildDescriptionPreview(description?: string) {
     .filter(Boolean);
 }
 
-export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
+export function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
+  const [job, setJob] = useState<any>(null);
+  const [loading, setLoading] = useState(Boolean(jobId));
+
+  useEffect(() => {
+    if (!jobId) return;
+    let active = true;
+    setLoading(true);
+    fetch(`/api/linkedin-jobs/${jobId}`, { cache: "no-store" })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => active && setJob(payload?.data || null))
+      .catch(() => active && setJob(null))
+      .finally(() => active && setLoading(false));
+    return () => { active = false; };
+  }, [jobId]);
+
   if (!jobId) {
     return (
       <Card className="border border-white/10 bg-[#1b1b1d]">
@@ -60,7 +77,9 @@ export async function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
     );
   }
 
-  const job = await getLinkedInJobDetails(jobId);
+  if (loading) {
+    return <Card className="border border-white/10 bg-[#1b1b1d]"><CardContent className="py-12 pt-6 text-center text-zinc-400">Loading job details…</CardContent></Card>;
+  }
 
   if (!job) {
     return (

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, Search, X, UserRound } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/auth-context";
 import { useState } from "react";
 
 export function Navbar() {

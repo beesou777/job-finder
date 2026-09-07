@@ -5,9 +5,8 @@ import { Suspense } from "react";
 import { MapPin } from "lucide-react";
 import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { generateCollectionMetadata } from "@/lib/seo";
-import { absoluteUrl, isUuid, titleCaseSlug } from "@/lib/site";
-import { getDataSource } from "@/lib/db";
-import { Job } from "@/server/db/entities/Job";
+import { isUuid, titleCaseSlug } from "@/lib/site";
+import { getJobById } from "@/server/services/data-fetching";
 import { addUtmParams } from "@/lib/utils";
 
 const knownLocations = [
@@ -61,9 +60,7 @@ export default async function LocationSlugPage({
   searchParams: { page?: string };
 }) {
   if (isUuid(params.location)) {
-    const dataSource = await getDataSource();
-    const jobRepository = dataSource.getRepository(Job);
-    const job = await jobRepository.findOne({ where: { id: params.location } });
+    const job = await getJobById(params.location);
     redirect(job ? addUtmParams(job.applyUrl, job.source, job.id) : "/jobs");
   }
 

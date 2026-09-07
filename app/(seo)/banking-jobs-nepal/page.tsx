@@ -4,6 +4,8 @@ import { getLandingPageRobots, seoLandingPages } from "@/lib/seo-pages";
 
 const config = seoLandingPages["banking-jobs-nepal"];
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata() {
   const robots = await getLandingPageRobots(config);
   return {

@@ -1,13 +1,15 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { JobsFiltering } from "@/components/jobs/JobsFiltering";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { getCategories } from "@/server/services/data-fetching";
+import { getCategories } from "@/lib/api-client";
 import { generateFAQSchema } from "@/lib/seo";
 import { SeoLandingPageConfig } from "@/lib/seo-pages";
-import { Suspense } from "react";
 
 type Props = {
   config: SeoLandingPageConfig;
@@ -34,8 +36,13 @@ const locations = [
   { value: "Remote", label: "Remote", count: 0 },
 ];
 
-export async function SEOLandingPage({ config, page = 1 }: Props) {
-  const categories = await getCategories({ limit: 100 });
+export function SEOLandingPage({ config, page = 1 }: Props) {
+  const [categories, setCategories] = useState<any[]>([]);
+  useEffect(() => {
+    getCategories(100)
+      .then(setCategories)
+      .catch(() => setCategories([]));
+  }, []);
   const faqSchema = generateFAQSchema(config.faqs);
 
   return (
@@ -108,9 +115,7 @@ export async function SEOLandingPage({ config, page = 1 }: Props) {
         />
 
         <section className="container mx-auto px-4 py-8">
-          <Suspense fallback={<JobsSkeleton />}>
-            <JobsList page={page} {...config.filter} />
-          </Suspense>
+          <JobsList page={page} {...config.filter} />
         </section>
 
         <section className="container mx-auto px-4 pb-14">

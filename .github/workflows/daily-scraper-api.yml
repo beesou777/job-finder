@@ -1,46 +1,46 @@
-name: Daily Job Scraper
+# name: Daily Job Scraper
 
-on:
-  schedule:
-    - cron: "0 0,8,16 * * *"   # ⏰ Runs 3 times a day at 00:00, 08:00, and 16:00 UTC
-  workflow_dispatch:        # 👉 So you can trigger it manually too
+# on:
+#   schedule:
+#     - cron: "0 0,8,16 * * *"   # ⏰ Runs 3 times a day at 00:00, 08:00, and 16:00 UTC
+#   workflow_dispatch:        # 👉 So you can trigger it manually too
 
-jobs:
-  run-scraper:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    env:
-      NODE_ENV: production
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+# jobs:
+#   run-scraper:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read
+#       issues: write
+#     env:
+#       NODE_ENV: production
+#       DATABASE_URL: ${{ secrets.DATABASE_URL }}
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-          cache: 'yarn'
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v6
+#         with:
+#           node-version: '24'
+#           cache: 'yarn'
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile --production=false
+#       - name: Install dependencies
+#         run: yarn install --frozen-lockfile --production=false
 
-      - name: Run scraper
-        run: yarn scrape
-        env:
-          NODE_ENV: production
+#       - name: Run scraper
+#         run: yarn scrape
+#         env:
+#           NODE_ENV: production
 
-      - name: Create issue if failed
-        if: failure()
-        uses: actions/github-script@v9
-        with:
-          script: |
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: "🚨 Daily Scrape Failed",
-              body: "The cron job failed. Go fix your API, babe. 😭",
-              labels: ["bug", "scraper"]
-            })
+#       - name: Create issue if failed
+#         if: failure()
+#         uses: actions/github-script@v9
+#         with:
+#           script: |
+#             await github.rest.issues.create({
+#               owner: context.repo.owner,
+#               repo: context.repo.repo,
+#               title: "🚨 Daily Scrape Failed",
+#               body: "The cron job failed. Go fix your API, babe. 😭",
+#               labels: ["bug", "scraper"]
+#             })

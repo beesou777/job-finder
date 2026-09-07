@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   MessageCircle,
   Send,
@@ -25,7 +22,7 @@ const SUGGESTIONS = [
   "LinkedIn jobs in tech",
 ];
 
-interface JobResult {
+export interface JobResult {
   id: string;
   title: string;
   company: string | null;
@@ -38,146 +35,11 @@ interface JobResult {
   salaryText?: string;
 }
 
-interface ToolInvocationPart {
-  type: string;
-  toolName?: string;
-  state?: string;
-  result?: { jobs?: JobResult[] };
-  output?: { jobs?: JobResult[] } | JobResult[];
-}
-
-interface TextPart {
-  type: "text";
-  text: string;
-}
-
-type MessagePart = TextPart | ToolInvocationPart;
-
-function isToolPart(part: MessagePart): part is ToolInvocationPart {
-  return (
-    "toolName" in part ||
-    (typeof part.type === "string" &&
-      (part.type.startsWith("tool-") || part.type === "dynamic-tool"))
-  );
-}
-
-function getJobsFromPart(part: unknown): JobResult[] {
-  if (!part || typeof part !== "object") return [];
-  const p = part as Record<string, unknown>;
-
-  const candidates = [
-    p.output,
-    p.result,
-    (p.toolInvocation as Record<string, unknown>)?.output,
-    (p.toolInvocation as Record<string, unknown>)?.result,
-    p.data,
-    p.jobs,
-  ];
-
-  for (const candidate of candidates) {
-    if (!candidate) continue;
-    if (Array.isArray(candidate)) {
-      const valid = candidate.filter((j): j is JobResult =>
-        Boolean(j && typeof j === "object" && "title" in j),
-      );
-      if (valid.length > 0) return valid;
-    }
-    if (
-      typeof candidate === "object" &&
-      "jobs" in candidate &&
-      Array.isArray((candidate as { jobs: unknown[] }).jobs)
-    ) {
-      const valid = (candidate as { jobs: unknown[] }).jobs.filter((j): j is JobResult =>
-        Boolean(j && typeof j === "object" && "title" in j),
-      );
-      if (valid.length > 0) return valid;
-    }
-  }
-  return [];
-}
-
-function AssistantMessageContent({
-  message,
-  messages,
-  msgIdx,
-  JobCard,
-}: {
-  message: { id: string; role: string; parts?: unknown[] };
-  messages: Array<{ id: string; role: string; parts?: unknown[] }>;
-  msgIdx: number;
-  JobCard: React.FC<{ job: JobResult }>;
-}) {
-  const [fallbackJobs, setFallbackJobs] = useState<JobResult[] | null>(null);
-  const fetchedFor = useRef<Set<string>>(new Set());
-
-  const parts = message.parts ?? [];
-  let allJobs: JobResult[] = [];
-  const textParts: string[] = [];
-
-  for (const part of parts) {
-    const p = part as MessagePart;
-    if (p.type === "text") {
-      textParts.push((p as TextPart).text);
-    } else {
-      const jobs = getJobsFromPart(part);
-      if (jobs.length > 0) allJobs = [...allJobs, ...jobs];
-    }
-  }
-
-  const prevMsg = msgIdx > 0 ? messages[msgIdx - 1] : null;
-  const lastUserMessage = prevMsg?.role === "user" ? prevMsg : null;
-  const userQuery = lastUserMessage
-    ? String(
-        (lastUserMessage.parts ?? [])
-          .filter((x: unknown) => (x as { type?: string }).type === "text")
-          .map((x: unknown) => (x as { text?: string }).text)
-          .join("") ||
-          (lastUserMessage as unknown as { content?: string })?.content ||
-          "",
-      )
-    : "";
-
-  useEffect(() => {
-    if (
-      allJobs.length > 0 ||
-      !userQuery.trim() ||
-      userQuery.trim().length < 2 ||
-      fetchedFor.current.has(message.id)
-    )
-      return;
-
-    fetchedFor.current.add(message.id);
-    fetch(`/api/chat/search?q=${encodeURIComponent(userQuery)}`)
-      .then((r) => r.json())
-      .then((data: any) => {
-        if (data.jobs?.length) setFallbackJobs(data.jobs);
-      })
-      .catch(() => {});
-  }, [message.id, allJobs.length, userQuery]);
-
-  const jobsToShow = allJobs.length > 0 ? allJobs : (fallbackJobs ?? []);
-
-  return (
-    <div className="space-y-3">
-      {textParts.map((text, i) => (
-        <div key={i} className="whitespace-pre-wrap leading-relaxed">
-          {text}
-        </div>
-      ))}
-      {jobsToShow.length > 0 && (
-        <div className="space-y-3 w-full max-w-full mt-2 min-w-0">
-          <p className="text-xs font-semibold text-zinc-400">
-            {jobsToShow.length} job{jobsToShow.length !== 1 ? "s" : ""} found
-          </p>
-          <div className="space-y-2.5 w-full max-w-full min-w-0">
-            {jobsToShow.slice(0, 8).map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
+export interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  jobs?: JobResult[];
 }
 
 function JobCard({ job }: { job: JobResult }) {
@@ -248,18 +110,42 @@ function JobCard({ job }: { job: JobResult }) {
   );
 }
 
+function AssistantMessageContent({ message }: { message: ChatMessage }) {
+  const jobs = message.jobs ?? [];
+
+  return (
+    <div className="space-y-3 min-w-0">
+      {message.content && (
+        <div className="whitespace-pre-wrap leading-relaxed">{message.content}</div>
+      )}
+      {jobs.length > 0 && (
+        <div className="space-y-3 w-full max-w-full mt-2 min-w-0">
+          <p className="text-xs font-semibold text-zinc-400">
+            {jobs.length} job{jobs.length !== 1 ? "s" : ""} found
+          </p>
+          <div className="space-y-2.5 w-full max-w-full min-w-0">
+            {jobs.slice(0, 8).map((job) => (
+              <JobCard key={job.id} job={job} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface JobSearchChatProps {
   embedded?: boolean;
 }
 
 export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { messages, sendMessage, status, error } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const isLoading = status !== "ready";
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const textarea = textareaRef.current;
@@ -273,15 +159,75 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
     textarea.style.height = `${nextHeight}px`;
   }, [input]);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
+
+  const handleSendMessage = async (textToSend: string) => {
+    const query = textToSend.trim();
+    if (!query || isLoading) return;
+
+    const userMessage: ChatMessage = {
+      id: `user-${Date.now()}`,
+      role: "user",
+      content: query,
+    };
+
+    const nextMessages = [...messages, userMessage];
+    setMessages(nextMessages);
+    setInput("");
+    setError(null);
+    setIsLoading(true);
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "44px";
+    }
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: query,
+          messages: nextMessages.map((m) => ({
+            role: m.role,
+            content: m.content,
+          })),
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => null);
+        throw new Error(
+          errorData?.message || errorData?.error || `Request failed with status ${res.status}`,
+        );
+      }
+
+      const data = await res.json();
+      const assistantMessage: ChatMessage = {
+        id: `asst-${Date.now()}`,
+        role: "assistant",
+        content:
+          data.jobs.length === 0
+            ? "I couldn't find any matching jobs."
+            : data.message,
+        jobs: Array.isArray(data.jobs) ? data.jobs : [],
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+    } catch (err: any) {
+      console.error("Failed to send chat message:", err);
+      setError(err?.message || "Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleSubmit = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (input.trim() && !isLoading) {
-      sendMessage({ text: input.trim() });
-      setInput("");
-      if (textareaRef.current) {
-        textareaRef.current.style.height = "44px";
-      }
-    }
+    handleSendMessage(input);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -309,8 +255,8 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
               </div>
               <div className="rounded-2xl rounded-tl-none bg-white/5 px-4 py-3 text-sm text-zinc-300">
                 Hi! I search across <strong>Nepal jobs</strong>, <strong>internships</strong>, and{" "}
-                <strong>LinkedIn</strong> using Gemini AI. Tell me what role, skills, location, or
-                job type you are looking for!
+                <strong>LinkedIn</strong> using AI. Tell me what role, skills, location, or job type
+                you are looking for!
               </div>
             </div>
             <p className="text-xs text-zinc-500 font-medium pl-11">Try:</p>
@@ -328,12 +274,14 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
             </div>
           </div>
         )}
+
         {error && (
           <div className="rounded-lg bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-200">
-            {error.message}
+            {error}
           </div>
         )}
-        {messages.map((message, msgIdx) => (
+
+        {messages.map((message) => (
           <div
             key={message.id}
             className={`flex gap-3 max-w-full ${message.role === "user" ? "flex-row-reverse" : ""}`}
@@ -357,27 +305,14 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
               }`}
             >
               {message.role === "user" ? (
-                <div className="whitespace-pre-wrap break-words">
-                  {(message.parts ?? [])
-                    .filter((p) => p.type === "text")
-                    .map((p) => (p as TextPart).text)
-                    .join("") ||
-                    (message as unknown as { content?: string })?.content ||
-                    ""}
-                </div>
+                <div className="whitespace-pre-wrap break-words">{message.content}</div>
               ) : (
-                <div className="space-y-3 min-w-0">
-                  <AssistantMessageContent
-                    message={message}
-                    messages={messages}
-                    msgIdx={msgIdx}
-                    JobCard={JobCard}
-                  />
-                </div>
+                <AssistantMessageContent message={message} />
               )}
             </div>
           </div>
         ))}
+
         {isLoading && (
           <div className="flex gap-3">
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
@@ -388,7 +323,10 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
             </div>
           </div>
         )}
+
+        <div ref={messagesEndRef} />
       </div>
+
       <form onSubmit={handleSubmit} className="p-3 border-t border-white/10 shrink-0 bg-[#141416]">
         <div className="flex items-end gap-2">
           <div className="relative flex-1">

@@ -15,8 +15,8 @@ import {
 } from "@/components/ui/select";
 
 interface LinkedInJobsFilteringProps {
-  companies: any[];
-  places: any[];
+  companies: Array<{ value: string; count?: number }>;
+  places: Array<{ value: string; count?: number }>;
 }
 
 export function LinkedInJobsFiltering({ companies, places }: LinkedInJobsFilteringProps) {

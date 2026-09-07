@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState, useCallback } from "react";
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/auth-context";
 import { Bookmark, ChevronLeft, ChevronRight, Sparkles, Briefcase, MapPin } from "lucide-react";
 import { CvUploadCard } from "@/components/CvUploadCard";
 

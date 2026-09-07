@@ -7,7 +7,7 @@ import { slugify } from "@/lib/utils";
 import { LinkedInPagination } from "./LinkedInPagination";
 
 interface LinkedInJobsListProps {
-  jobs: any[];
+  jobs: Array<Record<string, any>>;
   total: number;
   page: number;
   search?: string;

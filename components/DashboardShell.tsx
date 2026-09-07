@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut } from "@/lib/auth-context";
 import { Bookmark, LayoutDashboard, LogOut, MessageSquare, Settings } from "lucide-react";
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || "";

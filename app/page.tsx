@@ -11,7 +11,6 @@ import {
 } from "@/components/home/HomeStaticSections";
 import { FAQ } from "@/components/FAQ";
 import { MarketSnapshot } from "@/components/home/MarketSnapshot";
-import { getJobs } from "@/server/services/data-fetching";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -54,14 +53,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Revalidate every 5 min to reduce DB egress (ISR)
-export const revalidate = 300;
-
-export default async function Home({ searchParams }: { searchParams: { urgency?: string } }) {
+export default function Home({ searchParams }: { searchParams: { urgency?: string } }) {
   const urgency = searchParams.urgency || "7days";
-
-  // Prefetch first 10 jobs for SEO structured data (SSR)
-  const { jobs: latestJobs, total } = await getJobs({ limit: 10, type: "job" });
 
   const baseUrl = SITE_URL;
 
@@ -85,11 +78,10 @@ export default async function Home({ searchParams }: { searchParams: { urgency?:
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "KamKhoj job search",
-    description: `Browse ${total}+ current listings collected for Nepal job discovery and continue to the original source to apply.`,
+    description: "Browse current listings collected for Nepal job discovery and continue to the original source to apply.",
     url: baseUrl,
     mainEntity: {
       "@type": "ItemList",
-      numberOfItems: total,
       description: "Job listings aggregated from multiple Nepali job portals",
     },
   };

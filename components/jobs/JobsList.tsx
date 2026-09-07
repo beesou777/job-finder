@@ -1,6 +1,9 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { JobCard } from "@/components/JobCard";
 import { JobsPagination } from "./JobsPagination";
-import { getJobs, GetJobsOptions } from "@/server/services/data-fetching";
+import { getJobs, GetJobsOptions, JobItem } from "@/lib/api-client";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -10,22 +13,29 @@ interface JobsListProps extends GetJobsOptions {
   page: number;
 }
 
-export async function JobsList({ page, ...options }: JobsListProps) {
+export function JobsList({ page, ...options }: JobsListProps) {
   const ITEMS_PER_PAGE = 12;
   const offset = (page - 1) * ITEMS_PER_PAGE;
+  const [state, setState] = useState<{ jobs: JobItem[]; total: number; loading: boolean; error: boolean }>({ jobs: [], total: 0, loading: true, error: false });
 
-  const { jobs, total } = await getJobs({
-    ...options,
-    limit: ITEMS_PER_PAGE,
-    offset,
-  });
+  useEffect(() => {
+    let active = true;
+    setState({ jobs: [], total: 0, loading: true, error: false });
+    getJobs({ ...options, limit: ITEMS_PER_PAGE, offset })
+      .then(({ jobs, total }) => active && setState({ jobs, total, loading: false, error: false }))
+      .catch(() => active && setState({ jobs: [], total: 0, loading: false, error: true }));
+    return () => { active = false; };
+  }, [page, offset, options.search, options.categoryId, options.type, options.jobType, options.location, options.urgency]);
 
-  if (jobs.length === 0) {
+  if (state.loading) return <JobsSkeleton />;
+  const { jobs, total, error } = state;
+
+  if (error || jobs.length === 0) {
     return (
       <div className="rounded-xl border border-white/10 bg-[#18181a] py-16 text-center">
         <div className="mx-auto max-w-md px-4">
           <p className="mb-2 text-xl font-black text-white">
-            No jobs found matching your criteria.
+            {error ? "Unable to load jobs right now." : "No jobs found matching your criteria."}
           </p>
           <p className="mb-6 text-sm leading-6 text-zinc-400">
             Try adjusting your search terms or removing some filters to see more results.

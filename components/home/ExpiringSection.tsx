@@ -1,62 +1,13 @@
-import { Suspense } from "react";
 import { AlertCircle, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { JobCard } from "@/components/JobCard";
 import Link from "next/link";
-import { getJobs } from "@/server/services/data-fetching";
-import { Card, CardContent } from "@/components/ui/card";
+import { ClientJobGrid } from "@/components/jobs/ClientJobGrid";
 
 interface ExpiringSectionProps {
   urgency: string;
 }
 
-async function ExpiringJobsList({ urgency }: { urgency: string }) {
-  const { jobs } = await getJobs({ limit: 6, urgency });
-
-  if (jobs.length === 0) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-lg text-slate-600">No jobs found expiring in this period.</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {jobs.map((job) => (
-        <JobCard key={job.id} job={job as any} />
-      ))}
-    </div>
-  );
-}
-
-function ExpiringSkeleton() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {[1, 2, 3].map((i) => (
-        <Card key={i} className="border border-white/10 bg-[#1f1f21] h-full">
-          <CardContent className="pt-6">
-            <div className="space-y-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <div className="h-6 bg-white/10 rounded w-3/4 mb-2 animate-pulse"></div>
-                  <div className="h-4 bg-white/10 rounded w-1/2 animate-pulse"></div>
-                </div>
-                <div className="h-6 bg-white/10 rounded w-16 animate-pulse"></div>
-              </div>
-              <div className="space-y-2">
-                <div className="h-4 bg-white/10 rounded w-full animate-pulse"></div>
-                <div className="h-4 bg-white/10 rounded w-2/3 animate-pulse"></div>
-              </div>
-              <div className="h-10 bg-white/10 rounded w-full animate-pulse mt-4"></div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
-}
 
 export function ExpiringSection({ urgency }: ExpiringSectionProps) {
   const filters = [
@@ -113,9 +64,7 @@ export function ExpiringSection({ urgency }: ExpiringSectionProps) {
           ))}
         </div>
 
-        <Suspense key={urgency} fallback={<ExpiringSkeleton />}>
-          <ExpiringJobsList urgency={urgency} />
-        </Suspense>
+        <ClientJobGrid options={{ limit: 6, urgency }} emptyMessage="No jobs found expiring in this period." />
       </div>
     </section>
   );
