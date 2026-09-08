@@ -36,13 +36,35 @@ function getAuthToken(): string | null {
   return localStorage.getItem("token");
 }
 
+const BACKEND_API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api").replace(
+  /\/$/,
+  "",
+);
+
+export function resolveBackendUrl(url: string): string {
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
+  }
+  if (url.startsWith("/api/")) {
+    return `${BACKEND_API_BASE}${url.slice(4)}`;
+  }
+  if (url === "/api") {
+    return BACKEND_API_BASE;
+  }
+  if (url.startsWith("/")) {
+    return `${BACKEND_API_BASE}${url}`;
+  }
+  return `${BACKEND_API_BASE}/${url}`;
+}
+
 export async function authFetch(url: string, init: RequestInit = {}): Promise<Response> {
   const token = getAuthToken();
   const headers = new Headers(init.headers || {});
   if (token && !headers.has("Authorization")) {
     headers.set("Authorization", "Bearer " + token);
   }
-  return fetch(url, {
+  const targetUrl = resolveBackendUrl(url);
+  return fetch(targetUrl, {
     ...init,
     headers,
   });
@@ -62,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      const res = await fetch("/api/auth/me", {
+      const res = await fetch(resolveBackendUrl("/api/auth/me"), {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -108,7 +130,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (_provider?: string, options?: any) => {
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(resolveBackendUrl("/api/auth/login"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

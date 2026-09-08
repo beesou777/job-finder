@@ -107,7 +107,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || "Failed to upload and parse CV.");
+        throw new Error(data.message || data.error || "Failed to upload and parse CV.");
       }
 
       setCv(data.cv);

@@ -83,7 +83,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="google-adsense-account" content="ca-pub-7656502769250843" />
       </head>
-      <body className={manrope.className}>
+      <body className={`${manrope.variable} ${manrope.className} font-sans`}>
         {/* Google Analytics - Only load in production */}
         {process.env.NODE_ENV === "production" && (
           <>

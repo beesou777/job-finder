@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "@/lib/auth-context";
-import { Bookmark, LayoutDashboard, LogOut, MessageSquare, Settings } from "lucide-react";
+import { Bookmark, LayoutDashboard, LogOut, MessageSquare, Settings, Sparkles } from "lucide-react";
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || "";
   const { data: session } = useSession();
@@ -18,6 +18,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <nav className="space-y-1">
           <Item href="/dashboard" active={path === "/dashboard"} icon={<LayoutDashboard />}>
             Overview
+          </Item>
+          <Item
+            href="/dashboard/matches"
+            active={path.startsWith("/dashboard/matches")}
+            icon={<Sparkles className="text-primary" />}
+          >
+            AI Job Matches
           </Item>
           <Item
             href="/dashboard/saved"
@@ -52,7 +59,77 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </button>
         </div>
       </aside>
-      <div className="min-w-0 flex-1">{children}</div>
+      <div className="flex min-w-0 flex-1 flex-col">
+        {/* Mobile top header navigation */}
+        <header className="sticky top-0 z-40 flex flex-col gap-2 border-b border-white/10 bg-[#0b0b0a]/95 px-4 py-3 backdrop-blur md:hidden">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="text-xl font-black text-white">
+              kam<span className="text-primary">khoj</span>
+            </Link>
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="flex items-center gap-1.5 rounded-lg border border-white/10 px-2.5 py-1 text-xs text-zinc-400 hover:text-white"
+            >
+              <LogOut className="h-3 w-3" />
+              Log out
+            </button>
+          </div>
+          <div className="flex items-center gap-1 overflow-x-auto py-1 scrollbar-none">
+            <Link
+              href="/dashboard"
+              className={`rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
+                path === "/dashboard"
+                  ? "bg-primary/15 text-primary"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Overview
+            </Link>
+            <Link
+              href="/dashboard/matches"
+              className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
+                path.startsWith("/dashboard/matches")
+                  ? "bg-primary/15 text-primary"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              <Sparkles className="h-3 w-3 text-primary" />
+              Matches
+            </Link>
+            <Link
+              href="/dashboard/saved"
+              className={`rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
+                path.startsWith("/dashboard/saved")
+                  ? "bg-primary/15 text-primary"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Saved
+            </Link>
+            <Link
+              href="/dashboard/preferences"
+              className={`rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
+                path.startsWith("/dashboard/preferences")
+                  ? "bg-primary/15 text-primary"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Preferences
+            </Link>
+            <Link
+              href="/dashboard/interview-practice"
+              className={`rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
+                path.startsWith("/dashboard/interview-practice")
+                  ? "bg-primary/15 text-primary"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              Interview
+            </Link>
+          </div>
+        </header>
+        <div className="flex-1">{children}</div>
+      </div>
     </div>
   );
 }
