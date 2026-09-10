@@ -1,11 +1,10 @@
 "use client";
 import Link from "next/link";
-import { signIn } from "@/lib/auth-context";
 import { useSession } from "@/lib/auth-context";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthShell } from "@/components/AuthShell";
-import { Loader2 } from "lucide-react";
+import { Loader2, LockKeyhole, Mail } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -40,8 +39,11 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthShell title="Welcome back" subtitle="Pick up your job search where you left off.">
-      <form onSubmit={submit} className="space-y-4">
+    <AuthShell
+      title="Welcome back to KamKhoj."
+      subtitle="Continue your search, review matched opportunities, and keep your career profile up to date."
+    >
+      <form onSubmit={submit} className="space-y-5">
         <Input label="Email" type="email" value={email} onChange={setEmail} disabled={isLoading} />
         <Input
           label="Password"
@@ -50,11 +52,15 @@ export default function LoginPage() {
           onChange={setPassword}
           disabled={isLoading}
         />
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && (
+          <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+            {error}
+          </p>
+        )}
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full flex items-center justify-center gap-2 rounded-xl bg-primary py-3 font-bold text-zinc-950 hover:bg-white transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-3 font-bold text-white transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isLoading ? (
             <>
@@ -65,9 +71,9 @@ export default function LoginPage() {
             "Log in"
           )}
         </button>
-        <p className="text-center text-sm text-zinc-400">
+        <p className="text-center text-sm text-[#617493]">
           New here?{" "}
-          <Link className="text-primary" href="/register">
+          <Link className="font-bold text-primary hover:underline" href="/register">
             Create an account
           </Link>
         </p>
@@ -89,17 +95,22 @@ function Input({
   onChange: (v: string) => void;
   disabled?: boolean;
 }) {
+  const Icon = type === "email" ? Mail : LockKeyhole;
+
   return (
-    <label className="block text-sm text-zinc-300">
+    <label className="block text-sm font-semibold text-[#334f7d]">
       {label}
-      <input
-        required
-        type={type}
-        value={value}
-        disabled={disabled}
-        onChange={(e) => onChange(e.target.value)}
-        className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
-      />
+      <span className="relative mt-2 block">
+        <Icon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#404443]" />
+        <input
+          required
+          type={type}
+          value={value}
+          disabled={disabled}
+          onChange={(e) => onChange(e.target.value)}
+          className="h-14 w-full rounded-xl border border-[#cfdcd8] bg-[#f4f8f7] pl-11 pr-4 text-gray-900 outline-none transition focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-50"
+        />
+      </span>
     </label>
   );
 }
