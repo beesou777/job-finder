@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSession, authFetch } from "@/lib/auth-context";
 import {
-  Sparkles,
   Bookmark,
   ExternalLink,
   ChevronLeft,
@@ -247,7 +246,7 @@ export default function MatchesPage() {
       <main className="mx-auto max-w-7xl p-4 md:p-8">
         <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3">
           <RefreshCw className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-sm text-zinc-400">Loading AI job matches...</p>
+          <p className="text-sm text-zinc-400">Loading job matches...</p>
         </div>
       </main>
     );
@@ -258,12 +257,6 @@ export default function MatchesPage() {
       {/* Header */}
       <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-primary/20 text-primary">
-              <Sparkles className="h-3.5 w-3.5" />
-            </span>
-            <p className="text-xs font-bold uppercase tracking-wider text-primary">AI Matchmaker</p>
-          </div>
           <h1 className="mt-2 text-3xl font-black text-white md:text-4xl">Matched Opportunities</h1>
           <p className="mt-1 text-sm text-zinc-400">
             Jobs ranked and scored based on your CV profile, skills, and career signals.
@@ -345,7 +338,6 @@ export default function MatchesPage() {
                 onClick={() => setShowReplaceCvModal(true)}
                 className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-zinc-950 transition hover:bg-white"
               >
-                <Sparkles className="h-3.5 w-3.5" />
                 Replace CV
               </button>
               {cv.url && (
@@ -370,7 +362,6 @@ export default function MatchesPage() {
         <div className="mb-6 flex flex-col items-center justify-between gap-4 rounded-2xl border border-primary/20 bg-primary/5 p-5 sm:flex-row">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
               <h3 className="text-sm font-bold text-white">Upload Your CV for AI Matchmaking</h3>
             </div>
             <p className="text-xs text-zinc-400">
@@ -383,7 +374,6 @@ export default function MatchesPage() {
             onClick={() => setShowReplaceCvModal(true)}
             className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-zinc-950 shadow transition hover:bg-white"
           >
-            <Sparkles className="h-3.5 w-3.5" />
             Upload CV
           </button>
         </div>
@@ -482,7 +472,7 @@ export default function MatchesPage() {
               placeholder="Search in matches..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-black/40 py-1 pl-8 pr-3 text-xs text-white placeholder-zinc-500 focus:border-primary focus:outline-none"
+              className="w-full rounded-lg border border-[#d6e5f7] bg-white py-2 pl-8 pr-3 text-xs text-[#102e67] placeholder:text-[#91a1ba] focus:border-primary focus:outline-none"
             />
           </div>
         </div>
@@ -565,7 +555,6 @@ export default function MatchesPage() {
                             <div
                               className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-black ${colors.bg} ${colors.border} ${colors.text} w-fit`}
                             >
-                              <Sparkles className="h-3 w-3" />
                               {job.matchScore}%
                             </div>
                             {job.is80PercentMatch && (
@@ -747,7 +736,6 @@ export default function MatchesPage() {
                       <div
                         className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-black ${colors.bg} ${colors.border} ${colors.text}`}
                       >
-                        <Sparkles className="h-3 w-3" />
                         {job.matchScore}% Match
                       </div>
                       <span className="rounded border border-primary/20 bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
@@ -918,7 +906,6 @@ export default function MatchesPage() {
                       getScoreColor(selectedJob.matchScore).text
                     }`}
                   >
-                    <Sparkles className="h-3 w-3" />
                     {selectedJob.matchScore}% Match
                   </span>
                   <span className="rounded border border-primary/20 bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">

@@ -119,7 +119,7 @@ export default async function RemoteJobPage({ params }: { params: { slug: string
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
       />
 
-      <div className="min-h-screen bg-[#070708] pb-12 text-zinc-100">
+      <div className="public-detail-surface min-h-screen bg-[#f9fafb] pb-12 text-[#102e67]">
         <div className="sticky top-0 z-10 border-b border-white/10 bg-[#09090a]/90 backdrop-blur-xl">
           <div className="container mx-auto px-4 py-4">
             <nav className="flex items-center text-sm font-bold text-zinc-500 mb-2">

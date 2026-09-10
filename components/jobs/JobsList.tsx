@@ -16,7 +16,12 @@ interface JobsListProps extends GetJobsOptions {
 export function JobsList({ page, ...options }: JobsListProps) {
   const ITEMS_PER_PAGE = 12;
   const offset = (page - 1) * ITEMS_PER_PAGE;
-  const [state, setState] = useState<{ jobs: JobItem[]; total: number; loading: boolean; error: boolean }>({ jobs: [], total: 0, loading: true, error: false });
+  const [state, setState] = useState<{
+    jobs: JobItem[];
+    total: number;
+    loading: boolean;
+    error: boolean;
+  }>({ jobs: [], total: 0, loading: true, error: false });
 
   useEffect(() => {
     let active = true;
@@ -24,20 +29,31 @@ export function JobsList({ page, ...options }: JobsListProps) {
     getJobs({ ...options, limit: ITEMS_PER_PAGE, offset })
       .then(({ jobs, total }) => active && setState({ jobs, total, loading: false, error: false }))
       .catch(() => active && setState({ jobs: [], total: 0, loading: false, error: true }));
-    return () => { active = false; };
-  }, [page, offset, options.search, options.categoryId, options.type, options.jobType, options.location, options.urgency]);
+    return () => {
+      active = false;
+    };
+  }, [
+    page,
+    offset,
+    options.search,
+    options.categoryId,
+    options.type,
+    options.jobType,
+    options.location,
+    options.urgency,
+  ]);
 
   if (state.loading) return <JobsSkeleton />;
   const { jobs, total, error } = state;
 
   if (error || jobs.length === 0) {
     return (
-      <div className="rounded-xl border border-white/10 bg-[#18181a] py-16 text-center">
+      <div className="rounded-2xl border border-[#dce8f7] bg-white py-16 text-center shadow-sm">
         <div className="mx-auto max-w-md px-4">
-          <p className="mb-2 text-xl font-black text-white">
+          <p className="mb-2 text-xl font-black text-[#102e67]">
             {error ? "Unable to load jobs right now." : "No jobs found matching your criteria."}
           </p>
-          <p className="mb-6 text-sm leading-6 text-zinc-400">
+          <p className="mb-6 text-sm leading-6 text-[#617493]">
             Try adjusting your search terms or removing some filters to see more results.
           </p>
           <div className="flex gap-3 justify-center">
@@ -61,10 +77,12 @@ export function JobsList({ page, ...options }: JobsListProps) {
   return (
     <>
       <div className="mb-5 flex items-center justify-between gap-4">
-        <p className="text-sm font-semibold text-zinc-400">
+        <p className="text-sm font-semibold text-[#617493]">
           Showing job leads from public Nepali sources
         </p>
-        <p className="text-sm font-bold text-white">{total.toLocaleString()} results</p>
+        <p className="text-sm font-bold text-[#102e67]">
+          Showing 1 to {Math.min(ITEMS_PER_PAGE, total)} of {total.toLocaleString()} results
+        </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
         {jobs.map((job) => (
@@ -90,19 +108,19 @@ export function JobsSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {[...Array(12)].map((_, i) => (
-        <Card key={i} className="border border-white/10 bg-[#18181a] h-full">
+        <Card key={i} className="border border-[#e3edf8] bg-white h-full">
           <CardContent className="pt-6">
             <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
-                  <div className="h-6 bg-white/10 rounded w-3/4 mb-2 animate-pulse"></div>
-                  <div className="h-4 bg-white/10 rounded w-1/2 animate-pulse"></div>
+                  <div className="h-6 bg-[#e9f1fb] rounded w-3/4 mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-[#e9f1fb] rounded w-1/2 animate-pulse"></div>
                 </div>
-                <div className="h-6 bg-white/10 rounded w-16 animate-pulse"></div>
+                <div className="h-6 bg-[#e9f1fb] rounded w-16 animate-pulse"></div>
               </div>
               <div className="space-y-2">
-                <div className="h-4 bg-white/10 rounded w-full animate-pulse"></div>
-                <div className="h-4 bg-white/10 rounded w-2/3 animate-pulse"></div>
+                <div className="h-4 bg-[#e9f1fb] rounded w-full animate-pulse"></div>
+                <div className="h-4 bg-[#e9f1fb] rounded w-2/3 animate-pulse"></div>
               </div>
             </div>
           </CardContent>

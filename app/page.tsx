@@ -1,16 +1,16 @@
 import { Metadata } from "next";
 import { HomeHero } from "@/components/home/HomeHero";
-import { ExpiringSection } from "@/components/home/ExpiringSection";
-import { LatestJobs } from "@/components/home/LatestJobs";
-import { LatestInternships } from "@/components/home/LatestInternships";
+import { HowWorksSection } from "@/components/home/HomeStaticSections";
 import {
-  FeaturesSection,
-  EditorialStandardsSection,
-  ScrapingInfoSection,
-  ResourcesSection,
-} from "@/components/home/HomeStaticSections";
-import { FAQ } from "@/components/FAQ";
-import { MarketSnapshot } from "@/components/home/MarketSnapshot";
+  FeaturedJobsSection,
+  FinalCtaSection,
+  HomeFaqSection,
+  ImpactSection,
+  LatestOpportunitiesSection,
+  ResourcesAndStoriesSection,
+  TestimonialsSection,
+  WhySection,
+} from "@/components/home/HomeReferenceLayout";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -54,8 +54,6 @@ export const metadata: Metadata = {
 };
 
 export default function Home({ searchParams }: { searchParams: { urgency?: string } }) {
-  const urgency = searchParams.urgency || "7days";
-
   const baseUrl = SITE_URL;
 
   const structuredData = {
@@ -78,7 +76,8 @@ export default function Home({ searchParams }: { searchParams: { urgency?: strin
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "KamKhoj job search",
-    description: "Browse current listings collected for Nepal job discovery and continue to the original source to apply.",
+    description:
+      "Browse current listings collected for Nepal job discovery and continue to the original source to apply.",
     url: baseUrl,
     mainEntity: {
       "@type": "ItemList",
@@ -87,7 +86,7 @@ export default function Home({ searchParams }: { searchParams: { urgency?: strin
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="homepage min-h-screen">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -100,16 +99,14 @@ export default function Home({ searchParams }: { searchParams: { urgency?: strin
       />
 
       <HomeHero />
-      <ExpiringSection urgency={urgency} />
-      <FeaturesSection />
-      <LatestJobs />
-      <LatestInternships />
-      <MarketSnapshot />
-      <ScrapingInfoSection />
-      <EditorialStandardsSection />
-      <ResourcesSection />
-
-      <FAQ />
+      <FeaturedJobsSection />
+      <HowWorksSection />
+      <LatestOpportunitiesSection />
+      <WhySection />
+      <ResourcesAndStoriesSection />
+      <TestimonialsSection />
+      <HomeFaqSection />
+      <FinalCtaSection />
     </div>
   );
 }

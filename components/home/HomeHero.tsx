@@ -1,45 +1,95 @@
-import Link from "next/link";
-import { ArrowRight, Search } from "lucide-react";
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  BarChart3,
+  MapPin,
+  Search,
+  ShieldCheck,
+  UsersRound,
+} from "lucide-react";
 
 export function HomeHero() {
   return (
-    <section className="bg-zinc-950 px-2 pb-8 md:px-5">
-      <div className="hero-grid relative mx-auto min-h-[680px] max-w-[1880px] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/30">
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,rgba(255,255,255,.035)_44%,transparent_72%)]" />
-
-        <div className="relative z-10 mx-auto flex min-h-[680px] max-w-6xl flex-col justify-center px-6 py-20 md:px-10 lg:px-0">
-          <div className="max-w-5xl">
-            <div className="mb-5 flex items-center gap-3 font-mono text-xs font-black uppercase tracking-[0.18em] text-zinc-400 md:text-sm">
-              <span className="h-2.5 w-2.5 bg-primary" />
-              Nepal jobs, internships, and remote openings
-            </div>
-            <h1 className="max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.02em] text-zinc-100 md:text-7xl lg:text-8xl">
-              Your <span className="text-primary">Nepal job search</span> starts here.
-            </h1>
-            <p className="mt-8 max-w-3xl text-lg font-semibold leading-8 text-zinc-300 md:text-2xl">
-              Search fresh vacancies from Nepali job sources, compare the details that matter, and
-              apply through the original posting.
-            </p>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <Link
-                href="/jobs"
-                className="inline-flex min-h-14 items-center gap-3 rounded-full bg-white px-7 text-base font-black text-zinc-950 transition-colors hover:bg-primary"
-              >
-                <Search className="h-5 w-5" />
-                Browse Jobs
-              </Link>
-              <Link
-                href="/post-job"
-                className="inline-flex min-h-14 items-center gap-3 rounded-full border border-white/20 bg-transparent px-7 text-base font-black text-white transition-colors hover:border-primary hover:bg-primary hover:text-zinc-950"
-              >
-                Hiring Resources
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </div>
+    <section className="reference-hero relative overflow-hidden border-b border-slate-100">
+      <div className="absolute inset-0 bg-[url('/nepal-career-hero.png')] bg-cover bg-right bg-no-repeat" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,#f8fbff_0%,rgba(248,251,255,.96)_29%,rgba(248,251,255,.12)_66%,rgba(248,251,255,0)_100%)]" />
+      <div className="relative mx-auto max-w-7xl px-6 pb-12 pt-10 sm:px-8 lg:px-10 lg:pb-16 lg:pt-14">
+        <div className="max-w-[620px]">
+          <p className="home-eyebrow">
+            <span />
+            Nepal's job search platform
+          </p>
+          <h1 className="mt-4 text-5xl font-black leading-[.98] tracking-[-.055em] text-[#112d62] sm:text-6xl lg:text-[4.3rem]">
+            Better jobs
+            <br />
+            brighter tomorrows
+            <br />
+            for a <span className="text-primary">stronger Nepal.</span>
+          </h1>
+          <p className="mt-5 max-w-lg text-base leading-6 text-slate-600">
+            Discover meaningful job opportunities from top companies across Nepal. Your next career
+            move starts here.
+          </p>
+          <form
+            action="/jobs"
+            method="get"
+            className="mt-7 grid max-w-3xl gap-2 rounded-xl border border-blue-100 bg-white/95 p-2 shadow-[0_12px_35px_rgba(27,85,160,.12)] backdrop-blur sm:grid-cols-[1.3fr_1fr_auto]"
+          >
+            <label className="flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-slate-500 focus-within:bg-blue-50">
+              <Search className="h-4 w-4 text-primary" />
+              <input
+                name="search"
+                placeholder="Job title, skill or keyword"
+                className="w-full bg-transparent outline-none placeholder:text-slate-400"
+              />
+            </label>
+            <label className="flex items-center gap-2 rounded-lg border-t border-slate-100 px-3 py-2.5 text-sm text-slate-500 focus-within:bg-blue-50 sm:border-l sm:border-t-0">
+              <MapPin className="h-4 w-4 text-primary" />
+              <input
+                name="hero-location"
+                placeholder="Select location"
+                className="w-full bg-transparent outline-none placeholder:text-slate-400"
+              />
+            </label>
+            <button type="submit" className="primary-button justify-center">
+              Search jobs <ArrowRight className="h-4 w-4" />
+            </button>
+          </form>
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-[10px] text-slate-400">
+            <span className="font-semibold">Popular searches:</span>
+            <span className="search-chip">IT & Software</span>
+            <span className="search-chip">Banking</span>
+            <span className="search-chip">Education</span>
+            <span className="search-chip">Remote</span>
+            <span className="search-chip">Internship</span>
           </div>
+        </div>
+        <div className="mt-9 grid max-w-3xl grid-cols-2 gap-4 border-t border-slate-200/80 pt-5 sm:grid-cols-4">
+          <HeroStat icon={BarChart3} value="2,500+" label="Active job listings" />
+          <HeroStat icon={BriefcaseBusiness} value="500+" label="Trusted companies" />
+          <HeroStat icon={ShieldCheck} value="100%" label="Free for you" />
         </div>
       </div>
     </section>
+  );
+}
+
+function HeroStat({
+  icon: Icon,
+  value,
+  label,
+}: {
+  icon: typeof BarChart3;
+  value: string;
+  label: string;
+}) {
+  return (
+    <div className="flex items-start gap-2">
+      <Icon className="mt-0.5 h-4 w-4 text-primary" />
+      <div>
+        <p className="text-base font-black text-[#112d62]">{value}</p>
+        <p className="text-[10px] text-slate-500">{label}</p>
+      </div>
+    </div>
   );
 }

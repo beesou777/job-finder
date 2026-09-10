@@ -1,6 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Building2, MapPin, Calendar, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Building2, MapPin, Calendar, ArrowRight, CheckCircle2, Clock3 } from "lucide-react";
 import Link from "next/link";
 import { slugify } from "@/lib/utils";
 
@@ -46,9 +45,9 @@ export function LinkedInJobsList({
 
   if (jobs.length === 0) {
     return (
-      <Card className="border border-white/10 bg-[#1b1b1d]">
+      <Card className="border border-[#dce8f7] bg-white">
         <CardContent className="pt-6 text-center py-8">
-          <p className="text-zinc-400">No jobs found matching your criteria.</p>
+          <p className="text-[#617493]">No jobs found matching your criteria.</p>
         </CardContent>
       </Card>
     );
@@ -57,49 +56,53 @@ export function LinkedInJobsList({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
       {jobs.map((job) => (
-        <Card
-          key={job.id}
-          className="h-full flex flex-col border border-white/10 bg-[#1f1f21] text-zinc-100 hover:border-primary/60 transition-colors"
-        >
-          <div className="flex-1 flex flex-col pt-6 pb-6 px-6">
-            <div className="flex items-start justify-between gap-3 mb-3 min-h-[4.5rem]">
-              <div className="flex-1 min-w-0">
-                <h3 className="text-lg font-black mb-2 line-clamp-2 leading-snug text-zinc-50">
-                  {job.title}
-                </h3>
-                {job.company && (
-                  <div className="flex items-center gap-2 mt-2 text-zinc-400">
-                    <Building2 className="w-4 h-4 flex-shrink-0 text-zinc-500" />
-                    <span className="truncate text-sm font-medium">{job.company}</span>
-                  </div>
-                )}
-              </div>
+        <Card key={job.id} className="reference-listing-card group">
+          <div className="flex items-start gap-3">
+            <div className="company-mark listing-company-mark">
+              {String(job.company || "L")
+                .charAt(0)
+                .toUpperCase()}
             </div>
-
-            <div className="flex flex-wrap gap-2 mb-4">
-              {job.place && (
-                <Badge className="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/5 text-zinc-300 border border-white/10 font-normal rounded-full flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-zinc-500" />
-                  <span className="truncate">{job.place}</span>
-                </Badge>
-              )}
-              {job.job_date && (
-                <Badge className="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/5 text-zinc-300 border border-white/10 font-normal rounded-full flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-zinc-500" />
-                  <span>{formatRelativeTime(job.job_date)}</span>
-                </Badge>
-              )}
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-xs font-bold text-[#102e67]">
+                {job.company || "LinkedIn source"}
+              </p>
+              <p className="text-[10px] font-medium uppercase tracking-[0.08em] text-[#7183a3]">
+                LINKEDIN SOURCE
+              </p>
             </div>
-
-            <div className="mt-auto pt-4 border-t border-white/10">
-              <Link
-                href={`/linkedin-jobs/${slugify(job.title)}-${job.id}`}
-                className="flex items-center justify-between text-primary hover:text-zinc-50 font-black text-sm transition-colors"
-              >
-                <span>View Details</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+            <span className="inline-flex shrink-0 items-center gap-1 text-[11px] text-[#8b9bb6]">
+              <Clock3 className="h-3.5 w-3.5" /> {formatRelativeTime(job.job_date)}
+            </span>
+          </div>
+          <h3 className="mt-4 line-clamp-2 text-[17px] font-extrabold leading-tight text-[#102e67] transition-colors group-hover:text-primary">
+            {job.title}
+          </h3>
+          <div className="mt-3 space-y-1 text-[13px] text-[#617493]">
+            <p className="flex items-center gap-2">
+              <MapPin className="h-3.5 w-3.5" />
+              {job.place || "Nepal"}
+            </p>
+            <p className="flex items-center gap-2">
+              <Building2 className="h-3.5 w-3.5" />
+              Public LinkedIn lead
+            </p>
+          </div>
+          <div className="mt-4 flex min-h-6 flex-wrap gap-2">
+            <span className="job-chip">External source</span>
+            {job.place && <span className="job-chip">{job.place}</span>}
+          </div>
+          <div className="mt-auto flex items-center justify-between border-t border-[#e7eef8] pt-4">
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
+              <CheckCircle2 className="h-3.5 w-3.5 fill-emerald-500 text-white" />
+              Verify on source
+            </span>
+            <Link
+              href={`/linkedin-jobs/${slugify(job.title)}-${job.id}`}
+              className="inline-flex items-center gap-1 text-sm font-bold text-primary"
+            >
+              View job <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
         </Card>
       ))}
@@ -122,21 +125,21 @@ export function LinkedInJobsSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {[...Array(6)].map((_, i) => (
-        <Card key={i} className="border border-white/10 bg-[#1f1f21] h-full">
+        <Card key={i} className="border border-[#e3edf8] bg-white h-full">
           <CardContent className="pt-6">
             <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
-                  <div className="h-6 bg-white/10 rounded w-3/4 mb-2 animate-pulse"></div>
-                  <div className="h-4 bg-white/10 rounded w-1/2 animate-pulse"></div>
+                  <div className="h-6 bg-[#e9f1fb] rounded w-3/4 mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-[#e9f1fb] rounded w-1/2 animate-pulse"></div>
                 </div>
               </div>
               <div className="flex gap-2">
-                <div className="h-4 bg-white/10 rounded w-20 animate-pulse"></div>
-                <div className="h-4 bg-white/10 rounded w-20 animate-pulse"></div>
+                <div className="h-4 bg-[#e9f1fb] rounded w-20 animate-pulse"></div>
+                <div className="h-4 bg-[#e9f1fb] rounded w-20 animate-pulse"></div>
               </div>
               <div className="pt-4 border-t border-white/10">
-                <div className="h-4 bg-white/10 rounded w-1/4 animate-pulse"></div>
+                <div className="h-4 bg-[#e9f1fb] rounded w-1/4 animate-pulse"></div>
               </div>
             </div>
           </CardContent>

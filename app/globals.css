@@ -10,19 +10,19 @@
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 83 87% 67%;
-    --primary-foreground: 222 47% 8%;
+    --primary: 217 91% 55%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 210 30% 94%;
     --secondary-foreground: 222 47% 11%;
     --muted: 210 30% 95%;
     --muted-foreground: 215 16% 42%;
-    --accent: 82 62% 48%;
-    --accent-foreground: 222 47% 8%;
+    --accent: 221 83% 40%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214 28% 88%;
     --input: 214 28% 88%;
-    --ring: 83 78% 58%;
+    --ring: 217 91% 55%;
     --radius: 0.5rem;
   }
 
@@ -33,19 +33,154 @@
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 83 87% 67%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 217 91% 55%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 82 62% 48%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 221 83% 40%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 83 87% 67%;
+    --ring: 217 91% 55%;
+  }
+}
+
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10;
+  }
+  .section-white {
+    @apply bg-white text-slate-900;
+  }
+  .section-blue {
+    @apply bg-[#f4f9ff] text-slate-900;
+  }
+  .section-title {
+    @apply mt-2 text-3xl font-black tracking-[-.04em] text-[#112d62] sm:text-4xl;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-extrabold uppercase tracking-[.14em] text-accent;
+  }
+  .primary-button {
+    @apply inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-extrabold text-primary-foreground transition hover:-translate-y-0.5 hover:bg-accent;
+  }
+  .secondary-button {
+    @apply inline-flex items-center gap-2 rounded-lg border border-primary bg-white px-5 py-3 text-sm font-extrabold text-accent transition hover:-translate-y-0.5 hover:border-accent hover:bg-primary/10;
+  }
+  .arrow-link {
+    @apply inline-flex items-center gap-2 text-sm font-extrabold text-accent transition hover:gap-3 hover:text-primary-foreground;
+  }
+  .soft-card {
+    @apply rounded-xl border border-slate-100 bg-white shadow-[0_8px_30px_rgba(43,91,145,.06)] transition hover:-translate-y-0.5 hover:border-blue-100 hover:shadow-[0_14px_35px_rgba(43,91,145,.1)];
+  }
+  .icon-tile {
+    @apply flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-accent;
+  }
+  .cta-panel {
+    @apply rounded-2xl border border-blue-100 bg-[#eef7ff];
+  }
+  .home-eyebrow {
+    @apply flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[.13em] text-primary;
+  }
+  .home-eyebrow > span {
+    @apply h-1.5 w-1.5 bg-primary;
+  }
+  .home-section-title {
+    @apply mt-2 text-2xl font-black tracking-[-.035em] text-[#112d62] sm:text-3xl;
+  }
+  .home-text-link {
+    @apply items-center gap-2 whitespace-nowrap text-xs font-extrabold text-primary transition hover:gap-3 hover:text-accent;
+  }
+  .search-chip,
+  .job-chip {
+    @apply rounded-md bg-blue-50 px-2 py-1 text-[10px] font-semibold text-slate-600;
+  }
+  .reference-job-card {
+    @apply flex min-h-[270px] flex-col rounded-xl border border-slate-100 bg-white p-4 shadow-[0_7px_24px_rgba(31,75,130,.05)] transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_14px_30px_rgba(31,75,130,.1)];
+  }
+  .company-mark {
+    @apply flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-xs font-black text-white;
+  }
+  .reference-value-card,
+  .testimonial-card {
+    @apply rounded-xl border border-slate-100 bg-white p-5 shadow-[0_7px_24px_rgba(31,75,130,.04)];
+  }
+  .value-icon {
+    @apply flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-primary;
+  }
+  .resource-card {
+    @apply overflow-hidden rounded-xl border border-slate-100 bg-white shadow-[0_7px_24px_rgba(31,75,130,.05)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(31,75,130,.1)];
+  }
+  .avatar-placeholder {
+    @apply flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-xs font-black text-primary;
+  }
+  .faq-row {
+    @apply rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-[#112d62] shadow-[0_3px_12px_rgba(31,75,130,.03)];
+  }
+  .faq-row summary {
+    @apply flex cursor-pointer list-none items-center justify-between gap-3 font-bold;
+  }
+  .faq-row summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-row p {
+    @apply mt-3 border-t border-slate-100 pt-3 text-xs leading-5 text-slate-500;
+  }
+  .impact-panel,
+  .final-cta {
+    @apply relative mx-auto flex max-w-7xl flex-col gap-8 overflow-hidden rounded-xl border border-blue-100 bg-[#eef7ff] p-6 sm:p-8 lg:flex-row lg:items-center lg:justify-between;
+    background-image: url("/nepal-career-hero.png");
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    background-size: auto 130%;
+  }
+  .impact-panel > div:last-child {
+    @apply rounded-xl bg-white/90 p-3 shadow-[0_12px_28px_rgba(31,75,130,.14)] backdrop-blur-sm;
+  }
+  .impact-panel {
+    @apply min-h-[200px] lg:pr-[31%];
+  }
+  .impact-copy {
+    @apply relative z-10;
+  }
+  .impact-stats {
+    @apply relative z-10 grid grid-cols-3 gap-4 rounded-xl border border-white/80 bg-white/90 p-4 shadow-[0_12px_28px_rgba(31,75,130,.14)] backdrop-blur-sm lg:absolute lg:right-8 lg:top-1/2 lg:w-[38%] lg:-translate-y-1/2;
+  }
+  .impact-stats > div {
+    @apply min-w-0;
+  }
+  .impact-stats svg {
+    @apply h-5 w-5;
+  }
+  .final-cta {
+    @apply min-h-[190px] px-7 py-8;
+    background-image: url("/nepal-career-hero.png");
+    background-size: auto 250%;
+  }
+  .homepage section.bg-zinc-950 {
+    background-color: #fff !important;
+  }
+  .homepage section.bg-zinc-950 .text-white {
+    color: #112d62 !important;
+  }
+  .homepage section.bg-zinc-950 .text-zinc-200,
+  .homepage section.bg-zinc-950 .text-zinc-300,
+  .homepage section.bg-zinc-950 .text-zinc-400 {
+    color: #64748b !important;
+  }
+  .homepage section.bg-zinc-950 .bg-\[\#18181a\],
+  .homepage section.bg-zinc-950 .bg-\[\#141416\] {
+    background-color: #fff !important;
+  }
+  .homepage section.bg-zinc-950 .bg-zinc-900 {
+    background-color: #f4f9ff !important;
+  }
+  .homepage section.bg-zinc-950 .border-white\/10 {
+    border-color: #e5edf7 !important;
   }
 }
 
@@ -160,6 +295,221 @@
     }
     100% {
       transform: translate(0px, 0px) scale(1);
+    }
+  }
+
+  .reference-listing-card {
+    display: flex;
+    min-height: 246px;
+    flex-direction: column;
+    border: 1px solid #e1ebf7;
+    border-radius: 14px;
+    background: #fff;
+    padding: 18px;
+    box-shadow: 0 10px 26px rgba(31, 78, 140, 0.05);
+    transition:
+      transform 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .reference-listing-card:hover {
+    transform: translateY(-2px);
+    border-color: #9cc4f8;
+    box-shadow: 0 16px 34px rgba(31, 78, 140, 0.1);
+  }
+
+  .listing-company-mark {
+    height: 38px;
+    width: 38px;
+    border-radius: 9px;
+    background: #1769e8;
+    color: white;
+    box-shadow: none;
+  }
+
+  .listing-filter-hero {
+    position: relative;
+    overflow: visible;
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(239, 247, 255, 0.98) 0%,
+        rgba(239, 247, 255, 0.93) 54%,
+        rgba(239, 247, 255, 0.55) 100%
+      ),
+      url("/nepal-career-hero.png");
+    background-position:
+      center,
+      right center;
+    background-repeat: no-repeat;
+    background-size:
+      cover,
+      auto 100%;
+  }
+
+  .listing-filter-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .listing-search-box {
+    max-width: 1100px;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .listing-search-box .dark-panel-grid {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .listing-filter-hero input,
+  .listing-filter-hero select {
+    border-color: #d6e5f7 !important;
+    background: #fff !important;
+    color: #102e67 !important;
+  }
+
+  .listing-filter-hero .dark-panel-grid label {
+    color: #102e67 !important;
+  }
+
+  /* Public KamKhoj surfaces: keep legacy route components from reintroducing black panels. */
+  .bg-\[\#070708\],
+  .bg-\[\#0b0b0a\],
+  .bg-zinc-950 {
+    background-color: #f9fafb !important;
+  }
+
+  .bg-\[\#18181a\],
+  .bg-\[\#1b1b1d\],
+  .bg-\[\#1f1f21\],
+  .bg-\[\#242426\] {
+    background-color: #ffffff !important;
+    border-color: #dce8f7 !important;
+  }
+
+  .bg-zinc-950\/70,
+  .bg-zinc-950\/95,
+  .bg-\[\#0b0b0a\]\/95,
+  .bg-\[\#171715\]\/60 {
+    background-color: rgba(239, 247, 255, 0.96) !important;
+  }
+
+  .public-detail-surface .text-zinc-100,
+  .public-detail-surface .text-zinc-200,
+  .public-detail-surface .text-zinc-300,
+  .public-detail-surface .text-white {
+    color: #102e67 !important;
+  }
+
+  .public-detail-surface {
+    background-image:
+      linear-gradient(
+        90deg,
+        rgba(239, 247, 255, 0.98) 0%,
+        rgba(239, 247, 255, 0.9) 48%,
+        rgba(249, 250, 251, 0.45) 100%
+      ),
+      url("/nepal-career-hero.png");
+    background-position:
+      center top,
+      right top;
+    background-repeat: no-repeat;
+    background-size:
+      cover,
+      auto 430px;
+  }
+
+  .dashboard-surface .bg-\[\#141412\],
+  .dashboard-surface .bg-\[\#171715\],
+  .dashboard-surface .bg-\[\#1b1b18\],
+  .dashboard-surface .bg-\[\#1a1a17\],
+  .dashboard-surface .bg-zinc-800,
+  .dashboard-surface .bg-white\/5,
+  .dashboard-surface .bg-white\/10 {
+    background-color: #ffffff !important;
+    border-color: #dce8f7 !important;
+  }
+
+  .dashboard-surface .bg-black\/30,
+  .dashboard-surface .bg-black\/40,
+  .dashboard-surface .bg-black\/50,
+  .dashboard-surface .bg-black\/60 {
+    background-color: #ffffff !important;
+    border-color: #dce8f7 !important;
+  }
+
+  .dashboard-surface .text-white,
+  .dashboard-surface .text-zinc-100,
+  .dashboard-surface .text-zinc-200,
+  .dashboard-surface .text-zinc-300 {
+    color: #102e67 !important;
+  }
+
+  .dashboard-surface .text-zinc-400,
+  .dashboard-surface .text-zinc-500,
+  .dashboard-surface .text-zinc-600 {
+    color: #617493 !important;
+  }
+
+  .dashboard-surface .bg-primary.text-white,
+  .dashboard-surface .bg-primary .text-white,
+  .public-detail-surface .bg-primary.text-white {
+    color: #ffffff !important;
+  }
+
+  .footer-visual {
+    mask-image: linear-gradient(to right, transparent 0%, black 24%, black 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 24%, black 100%);
+  }
+
+  .bg-primary {
+    color: #ffffff !important;
+  }
+
+  .bg-zinc-950.text-white,
+  .bg-zinc-950.text-zinc-100,
+  .bg-\[\#070708\].text-zinc-100,
+  .bg-\[\#0b0b0a\].text-white {
+    color: #102e67 !important;
+  }
+
+  .bg-zinc-950.text-white .text-white,
+  .bg-zinc-950.text-white .text-zinc-100,
+  .bg-zinc-950.text-white .text-zinc-200,
+  .bg-zinc-950.text-white .text-zinc-300,
+  .bg-zinc-950.text-zinc-100 .text-white,
+  .bg-zinc-950.text-zinc-100 .text-zinc-100,
+  .bg-zinc-950.text-zinc-100 .text-zinc-200,
+  .bg-zinc-950.text-zinc-100 .text-zinc-300,
+  .bg-\[\#070708\].text-zinc-100 .text-white,
+  .bg-\[\#070708\].text-zinc-100 .text-zinc-100,
+  .bg-\[\#070708\].text-zinc-100 .text-zinc-200,
+  .bg-\[\#070708\].text-zinc-100 .text-zinc-300 {
+    color: #102e67 !important;
+  }
+
+  .bg-zinc-950.text-white .bg-primary.text-white,
+  .bg-zinc-950.text-white .bg-primary .text-white,
+  .bg-zinc-950.text-zinc-100 .bg-primary.text-white,
+  .bg-\[\#070708\].text-zinc-100 .bg-primary.text-white {
+    color: #ffffff !important;
+  }
+
+  @media (max-width: 700px) {
+    .listing-filter-hero {
+      background-image:
+        linear-gradient(90deg, rgba(239, 247, 255, 0.98), rgba(239, 247, 255, 0.92)),
+        url("/nepal-career-hero.png");
+      background-position:
+        center,
+        72% center;
     }
   }
 }

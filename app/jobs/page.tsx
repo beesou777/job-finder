@@ -61,7 +61,7 @@ export default function JobsPage({
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-[#f9fafb]">
       <JobsBrowserPage page={page} filters={filterOptions} />
     </div>
   );

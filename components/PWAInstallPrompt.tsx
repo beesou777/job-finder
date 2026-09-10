@@ -27,7 +27,7 @@ export function PWAInstallPrompt() {
     setInstallEvent(null);
   }
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto flex max-w-md items-center justify-between gap-4 rounded-2xl border border-primary/40 bg-zinc-900 p-4 text-white shadow-2xl">
+    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto flex max-w-md items-center justify-between gap-4 rounded-2xl border border-[#cfe1f7] bg-white p-4 text-[#102e67] shadow-xl md:hidden">
       <div>
         <p className="font-black">Install KamKhoj</p>
         <p className="mt-1 text-xs text-zinc-400">Keep job search one tap away on your phone.</p>

@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSession, authFetch } from "@/lib/auth-context";
 import {
-  Sparkles,
   Bookmark,
   TrendingUp,
   Briefcase,
@@ -220,33 +219,36 @@ export default function Overview() {
   return (
     <main className="mx-auto max-w-7xl p-4 md:p-8 space-y-8">
       {/* 1. HERO HEADER: Greeting & Profile Readiness */}
-      <div className="rounded-3xl border border-white/10 bg-gradient-to-r from-[#171715] via-[#141412] to-[#0f0f0e] p-6 md:p-8 shadow-xl">
-        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-          <div className="space-y-2">
+      <div className="relative overflow-hidden rounded-[28px] border border-[#cfe1f7] bg-white p-6 shadow-[0_18px_50px_rgba(31,78,140,0.08)] md:p-8">
+        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-2/5 bg-[radial-gradient(circle_at_70%_35%,rgba(23,105,232,0.12),transparent_58%)] lg:block" />
+        <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+          <div className="max-w-3xl space-y-3 border-l-4 border-primary pl-5">
+            <p className="font-mono text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+              Your career snapshot
+            </p>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="flex items-center gap-1 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">
-                <Sparkles className="h-3.5 w-3.5" />
+              <span className="rounded-full bg-[#eff7ff] px-2.5 py-1 text-xs font-bold text-primary">
                 Career Pulse
               </span>
               {profile?.experienceLevel && (
-                <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-xs font-medium text-zinc-400">
+                <span className="rounded-full border border-[#dce8f7] bg-white px-2.5 py-1 text-xs font-medium text-[#617493]">
                   {profile.experienceLevel} Level
                 </span>
               )}
             </div>
 
-            <h1 className="text-3xl font-black text-white md:text-4xl">
+            <h1 className="text-3xl font-black tracking-tight text-[#102e67] md:text-4xl">
               Welcome back, {profile?.name || "Bishwa"}
             </h1>
-            <p className="text-sm text-zinc-400 max-w-2xl">
+            <p className="max-w-2xl text-sm leading-6 text-[#617493]">
               Your profile is matched with active vacancies in Nepal and remote opportunities. Here
               is your market pulse and urgent jobs closing soon.
             </p>
 
             {profile?.role && (
-              <div className="flex items-center gap-2 pt-1 text-xs text-zinc-300">
-                <span className="text-zinc-500">Target Role:</span>
-                <span className="font-bold text-white flex items-center gap-1">
+              <div className="flex items-center gap-2 pt-2 text-sm text-[#617493]">
+                <span>Target role</span>
+                <span className="flex items-center gap-1 font-bold text-[#102e67]">
                   <BadgeCheck className="h-4 w-4 text-primary" />
                   {profile.role}
                 </span>
@@ -255,9 +257,9 @@ export default function Overview() {
           </div>
 
           {/* Profile Readiness Meter & CV actions */}
-          <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-black/40 p-4 sm:min-w-[280px]">
+          <div className="relative flex w-full max-w-sm flex-col gap-4 rounded-2xl border border-[#dce8f7] bg-[#f8fbff] p-5 sm:min-w-[300px]">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#617493]">
                 Profile Readiness
               </span>
               <span className="text-sm font-black text-primary">
@@ -265,13 +267,13 @@ export default function Overview() {
               </span>
             </div>
             {/* Progress Bar */}
-            <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-[#dce8f7]">
               <div
                 className="h-full rounded-full bg-primary transition-all duration-500"
                 style={{ width: `${profile?.profileScore || 85}%` }}
               />
             </div>
-            <div className="flex items-center justify-between text-[11px] text-zinc-500 pt-1">
+            <div className="flex items-center justify-between pt-1 text-[11px] text-[#617493]">
               <span className="truncate max-w-[130px]">
                 {profile?.cvFilename ? `CV: ${profile.cvFilename}` : "No CV uploaded"}
               </span>
@@ -281,7 +283,6 @@ export default function Overview() {
                   onClick={() => setShowReplaceCvModal(true)}
                   className="font-bold text-primary hover:underline flex items-center gap-1"
                 >
-                  <Sparkles className="h-3 w-3" />
                   Replace CV
                 </button>
                 <span className="text-zinc-600">·</span>
@@ -323,9 +324,7 @@ export default function Overview() {
             <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">
               80%+ High Matches
             </span>
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition">
-              <Sparkles className="h-4 w-4" />
-            </span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:scale-110 transition"></span>
           </div>
           <p className="mt-3 text-3xl font-black text-white">{metrics?.highMatchCount ?? "—"}</p>
           <div className="mt-2 flex items-center gap-1 text-xs font-semibold text-primary">
@@ -494,17 +493,16 @@ export default function Overview() {
           </div>
 
           {/* Skills Radar & Market Gap Insights */}
-          <div className="rounded-2xl border border-white/10 bg-[#171715] p-6 space-y-4">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-primary" />
+          <div className="space-y-4 rounded-2xl border border-[#dce8f7] bg-white p-6">
+            <h2 className="flex items-center gap-2 text-lg font-bold text-[#102e67]">
               Skill Match & Market Gap Insights
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
               {/* Your High Demand Skills */}
-              <div className="rounded-xl border border-white/5 bg-black/30 p-4 space-y-2.5">
-                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+              <div className="space-y-2.5 rounded-xl border border-[#dce8f7] bg-[#f8fbff] p-4">
+                <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#617493]">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                   Your Strong Skills (High Demand)
                 </span>
                 <div className="flex flex-wrap gap-1.5">
@@ -520,22 +518,22 @@ export default function Overview() {
               </div>
 
               {/* In-Demand Missing Skills */}
-              <div className="rounded-xl border border-white/5 bg-black/30 p-4 space-y-2.5">
-                <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
-                  <TrendingUp className="h-3.5 w-3.5 text-amber-400" />
+              <div className="space-y-2.5 rounded-xl border border-[#dce8f7] bg-[#fffaf0] p-4">
+                <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#617493]">
+                  <TrendingUp className="h-3.5 w-3.5 text-amber-600" />
                   Recommended Skills to Learn
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {(skillsInsight?.inDemandMissingSkills || []).map((skill, idx) => (
                     <span
                       key={idx}
-                      className="rounded-md border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-300"
+                      className="rounded-md border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700"
                     >
                       +{skill}
                     </span>
                   ))}
                 </div>
-                <p className="text-[11px] text-zinc-500 pt-1">
+                <p className="pt-1 text-[11px] text-[#617493]">
                   Frequently requested by Nepal & remote tech employers for your role.
                 </p>
               </div>
@@ -650,7 +648,6 @@ export default function Overview() {
                 onClick={() => setShowReplaceCvModal(true)}
                 className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 font-bold text-xs text-zinc-950 hover:bg-white transition"
               >
-                <Sparkles className="h-3.5 w-3.5" />
                 Replace CV
               </button>
             </div>

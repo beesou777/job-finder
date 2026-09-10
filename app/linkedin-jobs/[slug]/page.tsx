@@ -88,11 +88,11 @@ export default async function LinkedInJobPage({ params }: { params: { slug: stri
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
       />
 
-      <div className="min-h-screen bg-[#070708] pb-12 text-zinc-100">
+      <div className="public-detail-surface min-h-screen bg-[#f9fafb] pb-12 text-[#102e67]">
         {/* Navigation / Breadcrumbs */}
-        <div className="bg-[#09090a]/90 border-b border-white/10 mb-6 backdrop-blur-xl">
+        <div className="mb-6 border-b border-[#dce8f7] bg-white/90 backdrop-blur-xl">
           <div className="container mx-auto px-4 py-4">
-            <nav className="flex items-center space-x-2 text-sm font-bold text-zinc-500 mb-2">
+            <nav className="mb-2 flex items-center space-x-2 text-sm font-bold text-[#617493]">
               <Link href="/" className="hover:text-primary flex items-center">
                 <Home className="h-4 w-4 mr-1" />
                 Home
@@ -102,7 +102,7 @@ export default async function LinkedInJobPage({ params }: { params: { slug: stri
                 LinkedIn Jobs
               </Link>
               <span>/</span>
-              <span className="text-zinc-200 font-medium truncate max-w-[200px] md:max-w-md">
+              <span className="max-w-[200px] truncate font-medium text-[#102e67] md:max-w-md">
                 {job.title}
               </span>
             </nav>
@@ -112,7 +112,7 @@ export default async function LinkedInJobPage({ params }: { params: { slug: stri
                 variant="ghost"
                 size="sm"
                 asChild
-                className="rounded-full border border-primary bg-transparent font-black text-primary transition-colors hover:bg-primary hover:text-zinc-950"
+                className="rounded-full border border-primary bg-transparent font-black text-primary transition-colors hover:bg-primary hover:text-white"
               >
                 <Link href="/linkedin-jobs" className="flex items-center">
                   <ChevronLeft className="h-4 w-4 mr-1" />

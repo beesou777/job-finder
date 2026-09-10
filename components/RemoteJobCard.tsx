@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { MapPin, Building2, Calendar, ArrowRight, Briefcase } from "lucide-react";
+import { ArrowRight, Briefcase, CheckCircle2, Clock3, MapPin } from "lucide-react";
 import { slugify } from "@/lib/utils";
 
 interface RemoteJobCardProps {
@@ -9,7 +7,6 @@ interface RemoteJobCardProps {
     _id: string;
     jobTitle: string;
     companyName: string;
-    companyImage?: string;
     region?: string;
     candidateLocation?: string;
     tags?: string[];
@@ -20,100 +17,59 @@ interface RemoteJobCardProps {
 }
 
 export function RemoteJobCard({ job }: RemoteJobCardProps) {
-  // Format relative time
-  const formatRelativeTime = (dateString?: string) => {
-    if (!dateString) return "N/A";
-    const now = new Date();
-    const jobDate = new Date(dateString);
-    const diffInMs = now.getTime() - jobDate.getTime();
-    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-    const diffInDays = Math.floor(diffInHours / 24);
-
-    if (diffInHours < 24) {
-      return `Posted ${diffInHours}h ago`;
-    } else if (diffInDays < 7) {
-      return `Posted ${diffInDays}d ago`;
-    } else {
-      return jobDate.toLocaleDateString();
-    }
-  };
-
-  const postedDate = formatRelativeTime(job.createdAt);
   const location = job.region || job.candidateLocation || "Remote";
-  const slug = `${slugify(job.jobTitle)}-${job._id}`;
-
+  const days = job.createdAt
+    ? Math.max(0, Math.floor((Date.now() - new Date(job.createdAt).getTime()) / 86400000))
+    : 0;
   return (
-    <Card className="h-full flex flex-col border border-white/10 bg-[#1f1f21] text-zinc-100 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-2xl hover:shadow-black/30 group">
-      <div className="flex-1 flex flex-col pt-6 pb-6 px-6">
-        <div className="flex items-start justify-between gap-3 mb-3 min-h-[4.5rem]">
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-black mb-2 line-clamp-2 leading-snug text-zinc-50 group-hover:text-primary transition-colors">
-              {job.jobTitle}
-            </h3>
-            <div className="flex items-center gap-2 mt-2">
-              {job.companyImage ? (
-                <img
-                  src={job.companyImage}
-                  alt={job.companyName}
-                  className="w-6 h-6 rounded object-contain"
-                />
-              ) : (
-                <Building2 className="w-5 h-5 flex-shrink-0 text-zinc-500" />
-              )}
-              <span className="truncate text-sm font-bold text-zinc-400">{job.companyName}</span>
-            </div>
-          </div>
+    <article className="reference-listing-card group">
+      <div className="flex items-start gap-3">
+        <div className="company-mark listing-company-mark">
+          {job.companyName.charAt(0).toUpperCase()}
         </div>
-
-        <div className="flex flex-wrap gap-2 mb-4">
-          <Badge className="text-xs px-3 py-1.5 bg-white/5 hover:bg-white/5 text-zinc-300 border border-white/10 font-semibold rounded-full flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 flex-shrink-0 text-zinc-500" />
-            <span className="truncate">{location}</span>
-          </Badge>
-
-          {job.salary && job.salary !== "N/A" && (
-            <Badge className="text-xs px-3 py-1.5 bg-primary/10 text-primary border border-primary/20 font-semibold rounded-full flex items-center gap-1.5">
-              <span>{job.salary}</span>
-            </Badge>
-          )}
-
-          {job.neededExperience && job.neededExperience !== "N/A" && (
-            <Badge className="text-xs px-3 py-1.5 bg-white/5 text-zinc-300 border border-white/10 font-semibold rounded-full flex items-center gap-1.5">
-              <Briefcase className="w-3.5 h-3.5 flex-shrink-0" />
-              <span>{job.neededExperience}</span>
-            </Badge>
-          )}
-
-          <Badge className="text-xs px-3 py-1.5 bg-white/5 text-zinc-400 border border-white/10 font-semibold rounded-full flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-zinc-500" />
-            <span>{postedDate}</span>
-          </Badge>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-xs font-bold text-[#102e67]">{job.companyName}</p>
+          <p className="text-[10px] font-medium uppercase tracking-[0.08em] text-[#7183a3]">
+            REMOTE SOURCE
+          </p>
         </div>
-
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {job.tags?.slice(0, 3).map((tag, idx) => (
-            <span
-              key={idx}
-              className="text-[11px] px-2 py-0.5 bg-white/5 text-zinc-400 rounded-full border border-white/10"
-            >
-              {tag}
-            </span>
-          ))}
-          {job.tags && job.tags.length > 3 && (
-            <span className="text-[11px] px-2 py-0.5 text-zinc-500">+{job.tags.length - 3}</span>
-          )}
-        </div>
-
-        <div className="mt-auto pt-4 border-t border-white/10">
-          <Link
-            href={`/remote-jobs/${slug}`}
-            className="flex items-center justify-between rounded-full border border-primary bg-transparent px-4 py-2 text-zinc-50 hover:bg-primary hover:text-zinc-950 font-black text-sm transition-colors"
-          >
-            <span>View Details</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
+        <span className="inline-flex shrink-0 items-center gap-1 text-[11px] text-[#8b9bb6]">
+          <Clock3 className="h-3.5 w-3.5" /> {days === 0 ? "Today" : `${days} days ago`}
+        </span>
       </div>
-    </Card>
+      <h2 className="mt-4 line-clamp-2 text-[17px] font-extrabold leading-tight text-[#102e67] transition-colors group-hover:text-primary">
+        {job.jobTitle}
+      </h2>
+      <div className="mt-2 space-y-1 text-[13px] text-[#617493]">
+        <p className="flex items-center gap-2">
+          <MapPin className="h-3.5 w-3.5" />
+          {location}
+        </p>
+        <p className="flex items-center gap-2">
+          <Briefcase className="h-3.5 w-3.5" />
+          {job.salary || "Negotiable"}
+        </p>
+      </div>
+      <div className="mt-4 flex min-h-6 flex-wrap gap-2">
+        {job.tags?.slice(0, 2).map((tag) => (
+          <span className="job-chip" key={tag}>
+            {tag}
+          </span>
+        ))}
+        {job.neededExperience && <span className="job-chip">{job.neededExperience}</span>}
+      </div>
+      <div className="mt-auto flex items-center justify-between border-t border-[#e7eef8] pt-4">
+        <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600">
+          <CheckCircle2 className="h-3.5 w-3.5 fill-emerald-500 text-white" />
+          Verified source
+        </span>
+        <Link
+          href={`/remote-jobs/${slugify(job.jobTitle)}-${job._id}`}
+          className="inline-flex items-center gap-1 text-sm font-bold text-primary"
+        >
+          View job <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+    </article>
   );
 }

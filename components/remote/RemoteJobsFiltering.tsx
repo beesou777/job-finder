@@ -59,21 +59,21 @@ export function RemoteJobsFiltering({ facetCounts }: RemoteJobsFilteringProps) {
   const selectedTravelReq = searchParams.get("travel") || "Remote";
 
   return (
-    <div className="bg-zinc-950 border-b border-white/10 text-white">
+    <div className="listing-filter-hero border-b border-[#dbe8f7] bg-[#eff7ff] text-[#102e67]">
       <div className="container mx-auto px-4 py-8 md:py-10">
         <div className="mb-6">
           <p className="mb-3 font-mono text-sm font-black uppercase tracking-[0.18em] text-primary">
             Remote openings
           </p>
-          <h1 className="text-3xl md:text-5xl font-black text-white leading-tight">
+          <h1 className="text-3xl md:text-5xl font-black text-[#102e67] leading-tight">
             Find international remote jobs
           </h1>
-          <p className="text-zinc-400 mt-3 max-w-2xl">
+          <p className="text-[#617493] mt-3 max-w-2xl">
             Discover thousands of international remote opportunities from top companies worldwide
           </p>
         </div>
 
-        <div className="space-y-4 rounded-2xl border border-white/10 bg-[#18181a] p-3 md:p-4">
+        <div className="listing-search-box space-y-4 rounded-2xl border border-[#d6e5f7] bg-white p-3 shadow-sm md:p-4">
           <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
             <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 w-5 h-5" />

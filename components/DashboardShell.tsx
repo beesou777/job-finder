@@ -2,17 +2,24 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "@/lib/auth-context";
-import { Bookmark, LayoutDashboard, LogOut, MessageSquare, Settings, Sparkles } from "lucide-react";
+import {
+  Bookmark,
+  BriefcaseBusiness,
+  LayoutDashboard,
+  LogOut,
+  MessageSquare,
+  Settings,
+} from "lucide-react";
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || "";
   const { data: session } = useSession();
   return (
     <div className="flex min-h-screen">
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 overflow-hidden border-r border-white/10 bg-[#0b0b0a] p-5 md:flex md:flex-col">
-        <Link href="/" className="px-3 text-2xl font-black text-white">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 overflow-hidden border-r border-[#dce8f7] bg-white p-5 md:flex md:flex-col">
+        <Link href="/" className="px-3 text-2xl font-black text-[#102e67]">
           kam<span className="text-primary">khoj</span>
         </Link>
-        <p className="mb-10 mt-1 px-3 text-[10px] font-bold uppercase tracking-[.25em] text-zinc-600">
+        <p className="mb-10 mt-1 px-3 text-[10px] font-bold uppercase tracking-[.25em] text-[#7183a3]">
           My workspace
         </p>
         <nav className="space-y-1">
@@ -22,9 +29,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           <Item
             href="/dashboard/matches"
             active={path.startsWith("/dashboard/matches")}
-            icon={<Sparkles className="text-primary" />}
+            icon={<BriefcaseBusiness />}
           >
-            AI Job Matches
+            Job Matches
           </Item>
           <Item
             href="/dashboard/saved"
@@ -48,11 +55,11 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             Preferences
           </Item>
         </nav>
-        <div className="mt-auto border-t border-white/10 pt-4">
+        <div className="mt-auto border-t border-[#dce8f7] pt-4">
           <p className="truncate px-3 text-xs text-zinc-500">{session?.user?.email}</p>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="mt-3 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-zinc-400 hover:bg-white/5 hover:text-white"
+            className="mt-3 flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-[#617493] hover:bg-[#eff7ff] hover:text-primary"
           >
             <LogOut className="h-4 w-4" />
             Log out
@@ -61,9 +68,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Mobile top header navigation */}
-        <header className="sticky top-0 z-40 flex flex-col gap-2 border-b border-white/10 bg-[#0b0b0a]/95 px-4 py-3 backdrop-blur md:hidden">
+        <header className="sticky top-0 z-40 flex flex-col gap-2 border-b border-[#dce8f7] bg-white/95 px-4 py-3 backdrop-blur md:hidden">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-xl font-black text-white">
+            <Link href="/" className="text-xl font-black text-[#102e67]">
               kam<span className="text-primary">khoj</span>
             </Link>
             <button
@@ -79,8 +86,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               href="/dashboard"
               className={`rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
                 path === "/dashboard"
-                  ? "bg-primary/15 text-primary"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-primary/10 text-primary"
+                  : "text-[#617493] hover:text-primary"
               }`}
             >
               Overview
@@ -89,19 +96,18 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               href="/dashboard/matches"
               className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
                 path.startsWith("/dashboard/matches")
-                  ? "bg-primary/15 text-primary"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-primary/10 text-primary"
+                  : "text-[#617493] hover:text-primary"
               }`}
             >
-              <Sparkles className="h-3 w-3 text-primary" />
               Matches
             </Link>
             <Link
               href="/dashboard/saved"
               className={`rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
                 path.startsWith("/dashboard/saved")
-                  ? "bg-primary/15 text-primary"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-primary/10 text-primary"
+                  : "text-[#617493] hover:text-primary"
               }`}
             >
               Saved
@@ -110,8 +116,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               href="/dashboard/preferences"
               className={`rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
                 path.startsWith("/dashboard/preferences")
-                  ? "bg-primary/15 text-primary"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-primary/10 text-primary"
+                  : "text-[#617493] hover:text-primary"
               }`}
             >
               Preferences
@@ -120,8 +126,8 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               href="/dashboard/interview-practice"
               className={`rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
                 path.startsWith("/dashboard/interview-practice")
-                  ? "bg-primary/15 text-primary"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-primary/10 text-primary"
+                  : "text-[#617493] hover:text-primary"
               }`}
             >
               Interview
@@ -148,7 +154,9 @@ function Item({
     <Link
       href={href}
       className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold ${
-        active ? "bg-primary/10 text-primary" : "text-zinc-400 hover:bg-white/5 hover:text-white"
+        active
+          ? "bg-primary/10 text-primary"
+          : "text-[#617493] hover:bg-[#eff7ff] hover:text-primary"
       }`}
     >
       {icon}

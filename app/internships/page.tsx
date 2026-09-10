@@ -58,7 +58,7 @@ export default function InternshipsPage({
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-[#f9fafb]">
       <JobsBrowserPage
         page={page}
         filters={filterOptions}

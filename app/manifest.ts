@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Find the latest jobs and internships in Nepal",
     start_url: "/",
     display: "standalone",
-    background_color: "#09090b",
-    theme_color: "#B8F460",
+    background_color: "#f8fbff",
+    theme_color: "#1769e8",
     icons: [
       {
         src: "/favicon.svg",

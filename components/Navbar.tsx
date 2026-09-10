@@ -18,8 +18,6 @@ export function Navbar() {
     { href: "/linkedin-jobs", label: "LinkedIn Jobs" },
     { href: "/internships", label: "Internships" },
     { href: "/remote-jobs", label: "Remote" },
-    { href: "/blog", label: "Blog" },
-    { href: "/how-kamkhoj-works", label: "How it works" },
   ];
 
   const isAdminPage = pathname?.startsWith("/admin");
@@ -29,16 +27,16 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-zinc-950 px-2 py-3 md:px-5">
-      <div className="mx-auto max-w-[1840px] rounded-2xl border border-white/5 bg-zinc-950/95 px-4 shadow-2xl shadow-black/40 backdrop-blur">
+    <nav className="sticky top-0 z-50 w-full border-b border-slate-100 bg-white/95 px-2 py-2 backdrop-blur md:px-5">
+      <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-14 items-center justify-between gap-4">
           <Link
             href="/"
-            className="flex shrink-0 items-center gap-3 text-xl font-black tracking-tight text-white"
+            className="flex shrink-0 items-center gap-3 text-xl font-black tracking-tight text-[#112d62]"
           >
             <span>
-              <span className="text-white">kam</span>
-              <span className="text-primary">khoj</span>
+              <span>kam</span>
+              <span className="text-accent">khoj</span>
             </span>
           </Link>
 
@@ -52,9 +50,7 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={`rounded-md px-3 py-2 text-sm font-semibold transition-all whitespace-nowrap ${
-                      active
-                        ? "bg-white/10 text-primary"
-                        : "text-zinc-300 hover:bg-white/10 hover:text-white"
+                      active ? "text-primary" : "text-slate-600 hover:text-primary"
                     }`}
                   >
                     {link.label}
@@ -67,21 +63,14 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-2 shrink-0">
             <Link
               href={session ? "/dashboard" : "/login"}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2.5 text-xs font-bold text-zinc-200 hover:border-primary hover:text-primary"
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-700 hover:border-blue-300 hover:text-blue-700"
             >
               <UserRound className="h-4 w-4" />
               {session ? "Dashboard" : "Log in"}
             </Link>
             <Link
-              href="/jobs"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-zinc-300 hover:border-primary hover:bg-primary hover:text-zinc-950"
-              aria-label="Search jobs"
-            >
-              <Search className="h-4 w-4" />
-            </Link>
-            <Link
               href="/dashboard/interview-practice"
-              className="rounded-full border border-primary bg-primary px-5 py-2.5 text-xs font-black uppercase tracking-[0.18em] text-zinc-950 transition-colors hover:bg-white"
+              className="rounded-lg bg-primary px-5 py-2.5 text-xs font-black uppercase tracking-[0.12em] text-primary-foreground transition-colors hover:bg-accent"
             >
               Interview practice
             </Link>
@@ -110,9 +99,7 @@ export function Navbar() {
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`rounded-md px-4 py-3 text-base font-bold transition-all ${
-                      active
-                        ? "bg-white/10 text-primary"
-                        : "text-zinc-200 hover:bg-white/10 hover:text-white"
+                      active ? "text-primary" : "text-zinc-200 hover:text-primary"
                     }`}
                   >
                     {link.label}

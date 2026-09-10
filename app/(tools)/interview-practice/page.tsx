@@ -10,7 +10,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Loader2,
-  Sparkles,
   CheckCircle2,
   AlertCircle,
   BrainCircuit,
@@ -478,7 +477,6 @@ export default function InterviewPracticePage() {
                     onClick={() => setShowCvModal(true)}
                     className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-zinc-950 shadow hover:bg-white transition"
                   >
-                    <Sparkles className="h-3.5 w-3.5" />
                     Upload CV First
                   </button>
                 </div>
@@ -625,10 +623,7 @@ export default function InterviewPracticePage() {
                       Generating tailored questions...
                     </>
                   ) : (
-                    <>
-                      <Sparkles className="h-4 w-4" />
-                      Start Interview Session
-                    </>
+                    <>Start Interview Session</>
                   )}
                 </button>
               </div>
@@ -987,7 +982,6 @@ export default function InterviewPracticePage() {
                         <details className="group rounded-2xl border border-primary/20 bg-primary/5 p-4">
                           <summary className="font-bold text-primary cursor-pointer list-none flex items-center justify-between">
                             <span className="flex items-center gap-1.5">
-                              <Sparkles className="h-3.5 w-3.5" />
                               View Ideal Model Answer (High-Scoring Sample)
                             </span>
                             <span className="text-primary group-open:rotate-180 transition">▼</span>

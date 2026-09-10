@@ -62,10 +62,10 @@ export function Pagination({
 
   return (
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
-      <div className="text-sm text-zinc-500">
-        Showing <span className="font-semibold text-white">{startItem}</span> to{" "}
-        <span className="font-semibold text-white">{endItem}</span> of{" "}
-        <span className="font-semibold text-white">{totalItems}</span> results
+      <div className="text-sm text-[#617493]">
+        Showing <span className="font-semibold text-[#102e67]">{startItem}</span> to{" "}
+        <span className="font-semibold text-[#102e67]">{endItem}</span> of{" "}
+        <span className="font-semibold text-[#102e67]">{totalItems}</span> results
       </div>
 
       <div className="flex items-center gap-2">
@@ -74,7 +74,7 @@ export function Pagination({
           size="sm"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="gap-1 border-white/10 bg-[#18181a] text-zinc-300 hover:bg-white/10 hover:text-white"
+          className="gap-1 border-[#d6e5f7] bg-white text-[#617493] hover:bg-[#eff7ff] hover:text-[#102e67]"
         >
           <ChevronLeft className="h-4 w-4" />
           <span className="hidden sm:inline">Previous</span>
@@ -102,7 +102,7 @@ export function Pagination({
                 className={`min-w-[2.5rem] ${
                   isActive
                     ? "bg-primary text-zinc-950"
-                    : "border-white/10 bg-[#18181a] text-zinc-300 hover:bg-white/10 hover:text-white"
+                    : "border-[#d6e5f7] bg-white text-[#617493] hover:bg-[#eff7ff] hover:text-[#102e67]"
                 }`}
               >
                 {pageNumber}
@@ -116,7 +116,7 @@ export function Pagination({
           size="sm"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="gap-1 border-white/10 bg-[#18181a] text-zinc-300 hover:bg-white/10 hover:text-white"
+          className="gap-1 border-[#d6e5f7] bg-white text-[#617493] hover:bg-[#eff7ff] hover:text-[#102e67]"
         >
           <span className="hidden sm:inline">Next</span>
           <ChevronRight className="h-4 w-4" />

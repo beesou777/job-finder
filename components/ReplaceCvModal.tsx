@@ -6,7 +6,6 @@ import {
   FileText,
   Trash2,
   ExternalLink,
-  Sparkles,
   Loader2,
   AlertCircle,
   CheckCircle2,
@@ -172,7 +171,7 @@ export function ReplaceCvModal({
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/20 text-primary">
-              <Sparkles className="h-5 w-5" />
+              <CheckCircle2 className="h-5 w-5" />
             </span>
             <div>
               <h2 className="text-lg font-bold text-white">

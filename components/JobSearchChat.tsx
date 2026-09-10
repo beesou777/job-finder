@@ -6,7 +6,7 @@ import {
   MessageCircle,
   Send,
   Loader2,
-  Sparkles,
+  CircleCheck,
   ExternalLink,
   MapPin,
   Building2,
@@ -53,28 +53,28 @@ function JobCard({ job }: { job: JobResult }) {
       href={applyUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className="block p-3.5 sm:p-4 rounded-xl border border-white/10 bg-[#1b1b1d] hover:border-primary/60 hover:bg-[#202024] transition-all text-left group w-full max-w-full box-border"
+      className="group block w-full max-w-full box-border rounded-xl border border-[#dce8f7] bg-white p-3.5 text-left transition-all hover:border-primary/50 hover:bg-[#f8fbff] sm:p-4"
     >
       <div className="flex items-start justify-between gap-2.5 min-w-0">
         <div className="min-w-0 flex-1">
-          <p className="font-semibold text-zinc-100 group-hover:text-primary line-clamp-2 leading-snug break-words">
+          <p className="line-clamp-2 break-words font-semibold leading-snug text-[#102e67] group-hover:text-primary">
             {job.title}
           </p>
           {job.company && (
-            <p className="flex items-center gap-1.5 mt-1.5 text-sm text-zinc-400 min-w-0">
-              <Building2 className="h-3.5 w-3.5 shrink-0 text-zinc-500" />
+            <p className="mt-1.5 flex min-w-0 items-center gap-1.5 text-sm text-[#617493]">
+              <Building2 className="h-3.5 w-3.5 shrink-0 text-[#7183a3]" />
               <span className="truncate">{job.company}</span>
             </p>
           )}
           <div className="flex flex-wrap items-center gap-1.5 mt-2">
             {job.location && (
-              <span className="inline-flex items-center gap-1 text-xs text-zinc-400 max-w-full min-w-0">
-                <MapPin className="h-3 w-3 shrink-0 text-zinc-500" />
+              <span className="inline-flex max-w-full min-w-0 items-center gap-1 text-xs text-[#617493]">
+                <MapPin className="h-3 w-3 shrink-0 text-[#7183a3]" />
                 <span className="truncate">{job.location}</span>
               </span>
             )}
             {job.jobType && (
-              <span className="text-[11px] px-2 py-0.5 rounded-md bg-white/5 text-zinc-300 border border-white/10 capitalize shrink-0">
+              <span className="text-[11px] px-2 py-0.5 rounded-md bg-[#eff7ff] text-[#536b91] border border-[#dce8f7] capitalize shrink-0">
                 {job.jobType}
               </span>
             )}
@@ -91,13 +91,13 @@ function JobCard({ job }: { job: JobResult }) {
             )}
           </div>
           {descSnippet && (
-            <p className="mt-2 text-xs text-zinc-500 line-clamp-2 leading-relaxed break-words">
+            <p className="mt-2 line-clamp-2 break-words text-xs leading-relaxed text-[#7183a3]">
               {descSnippet}
             </p>
           )}
         </div>
         <div className="flex flex-col items-end gap-2 shrink-0">
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-zinc-400 border border-white/10 shrink-0">
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#eff7ff] text-[#617493] border border-[#dce8f7] shrink-0">
             {job.source}
           </span>
           <span className="flex items-center gap-1 text-xs font-bold text-primary group-hover:underline shrink-0">
@@ -120,7 +120,7 @@ function AssistantMessageContent({ message }: { message: ChatMessage }) {
       )}
       {jobs.length > 0 && (
         <div className="space-y-3 w-full max-w-full mt-2 min-w-0">
-          <p className="text-xs font-semibold text-zinc-400">
+          <p className="text-xs font-semibold text-[#617493]">
             {jobs.length} job{jobs.length !== 1 ? "s" : ""} found
           </p>
           <div className="space-y-2.5 w-full max-w-full min-w-0">
@@ -209,10 +209,7 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
       const assistantMessage: ChatMessage = {
         id: `asst-${Date.now()}`,
         role: "assistant",
-        content:
-          data.jobs.length === 0
-            ? "I couldn't find any matching jobs."
-            : data.message,
+        content: data.jobs.length === 0 ? "I couldn't find any matching jobs." : data.message,
         jobs: Array.isArray(data.jobs) ? data.jobs : [],
       };
 
@@ -253,20 +250,20 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
                 <MessageCircle className="h-4 w-4 text-primary" />
               </div>
-              <div className="rounded-2xl rounded-tl-none bg-white/5 px-4 py-3 text-sm text-zinc-300">
+              <div className="rounded-2xl rounded-tl-none bg-[#eff7ff] px-4 py-3 text-sm text-[#334f7d]">
                 Hi! I search across <strong>Nepal jobs</strong>, <strong>internships</strong>, and{" "}
                 <strong>LinkedIn</strong> using AI. Tell me what role, skills, location, or job type
                 you are looking for!
               </div>
             </div>
-            <p className="text-xs text-zinc-500 font-medium pl-11">Try:</p>
+            <p className="pl-11 text-xs font-medium text-[#7183a3]">Try:</p>
             <div className="flex flex-wrap gap-2 pl-11">
               {SUGGESTIONS.map((suggestion) => (
                 <button
                   key={suggestion}
                   type="button"
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="text-left text-sm px-3 py-2 rounded-full border border-white/10 hover:border-primary/60 hover:bg-primary/10 text-zinc-300 transition-colors"
+                  className="text-left text-sm px-3 py-2 rounded-full border border-[#dce8f7] hover:border-primary/60 hover:bg-blue-50 text-[#536b91] transition-colors"
                 >
                   {suggestion}
                 </button>
@@ -288,20 +285,20 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
           >
             <div
               className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                message.role === "user" ? "bg-primary text-zinc-950" : "bg-white/10"
+                message.role === "user" ? "bg-primary text-white" : "bg-[#eff7ff]"
               }`}
             >
               {message.role === "user" ? (
                 <span className="text-xs font-semibold">U</span>
               ) : (
-                <Sparkles className="h-4 w-4 text-primary" />
+                <CircleCheck className="h-4 w-4 text-primary" />
               )}
             </div>
             <div
               className={`rounded-2xl px-4 py-3 text-sm min-w-0 ${
                 message.role === "user"
-                  ? "max-w-[85%] rounded-tr-none bg-primary text-zinc-950 break-words"
-                  : "flex-1 rounded-tl-none bg-white/5 text-zinc-300"
+                  ? "max-w-[85%] break-words rounded-tr-none bg-primary text-white"
+                  : "flex-1 rounded-tl-none bg-[#eff7ff] text-[#334f7d]"
               }`}
             >
               {message.role === "user" ? (
@@ -315,10 +312,10 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
 
         {isLoading && (
           <div className="flex gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/10">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#eff7ff]">
               <Loader2 className="h-4 w-4 text-primary animate-spin" />
             </div>
-            <div className="rounded-2xl rounded-tl-none bg-white/5 px-4 py-3">
+            <div className="rounded-2xl rounded-tl-none bg-[#eff7ff] px-4 py-3">
               <Loader2 className="h-4 w-4 animate-spin text-primary" />
             </div>
           </div>
@@ -327,7 +324,7 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
         <div ref={messagesEndRef} />
       </div>
 
-      <form onSubmit={handleSubmit} className="p-3 border-t border-white/10 shrink-0 bg-[#141416]">
+      <form onSubmit={handleSubmit} className="p-3 border-t border-[#dce8f7] shrink-0 bg-white">
         <div className="flex items-end gap-2">
           <div className="relative flex-1">
             <textarea
@@ -338,13 +335,13 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
               placeholder="Search jobs, skills, or ask questions..."
               disabled={isLoading}
               rows={1}
-              className="w-full resize-none rounded-xl border border-white/10 bg-black/60 px-3.5 py-[11px] text-sm text-zinc-100 placeholder:text-zinc-500 focus:border-primary/60 focus:outline-none disabled:opacity-50 transition-[border-color] leading-5 min-h-[44px] max-h-[140px] overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className="w-full resize-none rounded-xl border border-[#d6e5f7] bg-white px-3.5 py-[11px] text-sm text-[#102e67] placeholder:text-[#91a1ba] focus:border-primary/60 focus:outline-none disabled:opacity-50 transition-[border-color] leading-5 min-h-[44px] max-h-[140px] overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             />
           </div>
           <Button
             type="submit"
             disabled={isLoading || !input.trim()}
-            className="h-[44px] w-[44px] p-0 flex items-center justify-center rounded-xl bg-primary text-zinc-950 hover:bg-white transition-all disabled:opacity-40 shrink-0 self-end"
+            className="h-[44px] w-[44px] p-0 flex items-center justify-center rounded-xl bg-primary text-white hover:bg-accent transition-all disabled:opacity-40 shrink-0 self-end"
           >
             {isLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -353,11 +350,11 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
             )}
           </Button>
         </div>
-        <p className="text-[11px] text-zinc-500 mt-1.5 pl-1">
+        <p className="text-[11px] text-[#7183a3] mt-1.5 pl-1">
           Press{" "}
-          <kbd className="px-1 py-0.5 rounded bg-white/10 text-zinc-400 text-[10px]">Enter</kbd> to
-          search,{" "}
-          <kbd className="px-1 py-0.5 rounded bg-white/10 text-zinc-400 text-[10px]">
+          <kbd className="px-1 py-0.5 rounded bg-[#eff7ff] text-[#617493] text-[10px]">Enter</kbd>{" "}
+          to search,{" "}
+          <kbd className="px-1 py-0.5 rounded bg-[#eff7ff] text-[#617493] text-[10px]">
             Shift + Enter
           </kbd>{" "}
           for new line
@@ -371,15 +368,15 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
   }
 
   return (
-    <div className="border border-white/10 bg-[#111113] shadow-2xl rounded-2xl overflow-hidden flex flex-col h-[500px] md:h-[560px]">
-      <div className="py-4 px-5 border-b border-white/10 bg-primary/5 shrink-0">
+    <div className="ai-chat-shell border border-[#dce8f7] bg-white shadow-xl rounded-2xl overflow-hidden flex flex-col h-[500px] md:h-[560px]">
+      <div className="py-4 px-5 border-b border-[#dce8f7] bg-[#f5f9ff] shrink-0">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-zinc-950">
-            <Sparkles className="h-5 w-5" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white">
+            <CircleCheck className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="font-black text-zinc-50">AI Job Search</h3>
-            <p className="text-sm text-zinc-500">Jobs, internships & LinkedIn</p>
+            <h3 className="font-black text-[#102e67]">AI Job Search</h3>
+            <p className="text-sm text-[#617493]">Jobs, internships & LinkedIn</p>
           </div>
         </div>
       </div>

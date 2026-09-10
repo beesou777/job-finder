@@ -49,7 +49,7 @@ export default async function RemoteJobsPage({
   const safeTotal = typeof total === "number" ? total : jobList.length;
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white">
+    <div className="min-h-screen bg-[#f9fafb] text-[#102e67]">
       <RemoteJobsFiltering facetCounts={[]} />
 
       <div className="container mx-auto px-4 py-8">
@@ -58,20 +58,20 @@ export default async function RemoteJobsPage({
             <p className="mb-2 text-sm font-bold uppercase tracking-[0.16em] text-primary">
               Global remote work
             </p>
-            <h1 className="text-4xl font-black tracking-tight text-white">Remote Jobs</h1>
-            <p className="mt-3 max-w-2xl text-zinc-400">
+            <h1 className="text-4xl font-black tracking-tight text-[#102e67]">Remote Jobs</h1>
+            <p className="mt-3 max-w-2xl text-[#617493]">
               Browse international remote roles and review company requirements, salary text,
               region, and experience before opening the detail page.
             </p>
           </div>
-          <p className="text-sm font-bold text-zinc-300">
+          <p className="text-sm font-bold text-[#617493]">
             Total {safeTotal.toLocaleString()} Jobs found
           </p>
         </div>
 
         {jobList.length === 0 ? (
-          <div className="text-center py-16 rounded-xl border border-white/10 bg-[#18181a]">
-            <p className="text-xl text-zinc-400">
+          <div className="text-center py-16 rounded-xl border border-[#dce8f7] bg-white">
+            <p className="text-xl text-[#617493]">
               No international remote jobs found matching your criteria.
             </p>
           </div>
@@ -104,21 +104,21 @@ function RemoteJobsSkeleton() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {[...Array(6)].map((_, i) => (
-        <Card key={i} className="border border-white/10 bg-[#18181a] h-full">
+        <Card key={i} className="border border-[#e3edf8] bg-white h-full">
           <CardContent className="pt-6">
             <div className="space-y-4">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
-                  <div className="h-6 bg-white/10 rounded w-3/4 mb-2 animate-pulse"></div>
-                  <div className="h-4 bg-white/10 rounded w-1/2 animate-pulse"></div>
+                  <div className="h-6 bg-[#e9f1fb] rounded w-3/4 mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-[#e9f1fb] rounded w-1/2 animate-pulse"></div>
                 </div>
               </div>
               <div className="flex gap-2">
-                <div className="h-4 bg-white/10 rounded w-20 animate-pulse"></div>
-                <div className="h-4 bg-white/10 rounded w-20 animate-pulse"></div>
+                <div className="h-4 bg-[#e9f1fb] rounded w-20 animate-pulse"></div>
+                <div className="h-4 bg-[#e9f1fb] rounded w-20 animate-pulse"></div>
               </div>
               <div className="pt-4 border-t border-white/10">
-                <div className="h-4 bg-white/10 rounded w-1/4 animate-pulse"></div>
+                <div className="h-4 bg-[#e9f1fb] rounded w-1/4 animate-pulse"></div>
               </div>
             </div>
           </CardContent>

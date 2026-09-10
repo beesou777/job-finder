@@ -6,7 +6,7 @@ import {
   FileText,
   Trash2,
   ExternalLink,
-  Sparkles,
+  BadgeCheck,
   Loader2,
   AlertCircle,
   Briefcase,
@@ -225,7 +225,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
             type="button"
             className="mt-5 inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-zinc-950 transition hover:bg-primary/90"
           >
-            <Sparkles className="h-4 w-4" />
+            <BadgeCheck className="h-4 w-4" />
             Select CV to Upload
           </button>
         </div>
@@ -273,7 +273,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
                 onClick={() => fileInputRef.current?.click()}
                 className="flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-zinc-300 transition hover:bg-white/10 hover:text-white"
               >
-                <Sparkles className="h-3.5 w-3.5 text-primary" />
+                <BadgeCheck className="h-3.5 w-3.5 text-primary" />
                 Replace CV
               </button>
               <button
