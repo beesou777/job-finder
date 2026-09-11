@@ -347,13 +347,13 @@ export function TestimonialsSection() {
       "Marketing Executive, Kathmandu",
     ],
     [
-      "A clean, reliable platform with genuine job listings. Highly recommended for anyone looking for work in Nepal.",
-      "Ramesh Adhikari",
+      "Mero purkheli ghar Ramechhap ho. Kam khoj ma yo website bata job paye, aile Kathmandu ma ghar banauna lageko chu. Mero pragati ko lagi yo website ko owner lai dherai dherai dhanyabad.",
+      "Sujal Poudel",
       "Software Engineer, Lalitpur",
     ],
     [
-      "The resources and career tips are incredibly helpful. KamKhoj is more than just a job portal — it truly supports you.",
-      "Anjali Thapa",
+      "Namaste mero name Anir Jung Thapa. Ma 5 barsa dekhi berojgar vayera baseko thye khana khane paisa ni thyena, eakdin mero sathy le malai usko phone bata kam khoj website ma mero lagi kam khojdiyo. Aaja ma sanga jhamsikhel ma 5 ota ghar ko malik xu. I want to thank that great man who developer kham khoj. Please reveal your identity I want to give one house. Thank you.",
+      "Anir Jung Thapa",
       "Program Officer, Pokhara",
     ],
   ];
