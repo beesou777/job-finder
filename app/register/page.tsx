@@ -3,12 +3,13 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthShell } from "@/components/AuthShell";
-import { Loader2, LockKeyhole, Mail } from "lucide-react";
+import { Eye, EyeOff, Loader2, LockKeyhole, Mail } from "lucide-react";
 
 export default function RegisterPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,12 +65,21 @@ export default function RegisterPage() {
             <input
               required
               minLength={8}
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               disabled={isLoading}
               onChange={(e) => setPassword(e.target.value)}
-              className="h-14 w-full rounded-xl border border-[#cfdcd8] bg-[#f4f8f7] pl-11 pr-4 text-gray-900 outline-none transition focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-50"
+              className="h-14 w-full rounded-xl border border-[#cfdcd8] bg-[#f4f8f7] pl-11 pr-12 text-gray-900 outline-none transition focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-50"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((visible) => !visible)}
+              disabled={isLoading}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-2 text-[#617493] transition hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
           </span>
         </label>
         {error && (

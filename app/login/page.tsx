@@ -4,7 +4,7 @@ import { useSession } from "@/lib/auth-context";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthShell } from "@/components/AuthShell";
-import { Loader2, LockKeyhole, Mail } from "lucide-react";
+import { Eye, EyeOff, Loader2, LockKeyhole, Mail } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -96,6 +96,8 @@ function Input({
   disabled?: boolean;
 }) {
   const Icon = type === "email" ? Mail : LockKeyhole;
+  const [showPassword, setShowPassword] = useState(false);
+  const inputType = type === "password" && showPassword ? "text" : type;
 
   return (
     <label className="block text-sm font-semibold text-[#334f7d]">
@@ -104,12 +106,23 @@ function Input({
         <Icon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#404443]" />
         <input
           required
-          type={type}
+          type={inputType}
           value={value}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="h-14 w-full rounded-xl border border-[#cfdcd8] bg-[#f4f8f7] pl-11 pr-4 text-gray-900 outline-none transition focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-50"
+          className={`h-14 w-full rounded-xl border border-[#cfdcd8] bg-[#f4f8f7] pl-11 text-gray-900 outline-none transition focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/15 disabled:cursor-not-allowed disabled:opacity-50 ${type === "password" ? "pr-12" : "pr-4"}`}
         />
+        {type === "password" && (
+          <button
+            type="button"
+            onClick={() => setShowPassword((visible) => !visible)}
+            disabled={disabled}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-2 text-[#617493] transition hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+          </button>
+        )}
       </span>
     </label>
   );

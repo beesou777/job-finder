@@ -18,11 +18,12 @@ import {
   X,
 } from "lucide-react";
 import { useSession } from "@/lib/auth-context";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const previousPathname = useRef(pathname);
   const { data: session } = useSession();
 
   const isActive = (path: string) => pathname === path;
@@ -63,7 +64,10 @@ export function Navbar() {
   ];
 
   useEffect(() => {
-    setMobileMenuOpen(false);
+    if (previousPathname.current !== pathname) {
+      setMobileMenuOpen(false);
+      previousPathname.current = pathname;
+    }
   }, [pathname]);
 
   useEffect(() => {
