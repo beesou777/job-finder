@@ -58,7 +58,7 @@ export function HowWorksSection() {
             <p className="eyebrow">A simple path to a brighter career</p>
             <h2 className="section-title">How KamKhoj works</h2>
           </div>
-          <Link href="/how-kamkhoj-works" className="arrow-link hidden sm:flex">
+          <Link href="/how-kamkhoj-works" className="arrow-link hidden sm:flex hover:text-primary">
             See how it works <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

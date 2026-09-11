@@ -27,8 +27,7 @@ export function HomeHero() {
             for a <span className="text-primary">stronger Nepal.</span>
           </h1>
           <p className="mt-5 max-w-lg text-base leading-6 text-slate-600">
-            Discover meaningful job opportunities from top companies across Nepal. Your next career
-            move starts here.
+            Sajilai job khojna login garnuhos, CV upload garnuhos, ra recommend gareka job ma apply garnuhos. yeta search gryerw dhukha na paunus.
           </p>
           <form
             action="/jobs"
@@ -47,7 +46,7 @@ export function HomeHero() {
               <MapPin className="h-4 w-4 text-primary" />
               <input
                 name="hero-location"
-                placeholder="Select location"
+                placeholder="Search location"
                 className="w-full bg-transparent outline-none placeholder:text-slate-400"
               />
             </label>

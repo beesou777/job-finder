@@ -65,7 +65,7 @@ export function Footer() {
               Nepal job discovery for vacancies, internships, remote roles, and practical career
               routes. Applications continue at the original source.
             </p>
-            <div className="mt-6 flex items-center gap-3">
+            {/* <div className="mt-6 flex items-center gap-3">
               {socials.map(({ label, href, icon: Icon }) => (
                 <Link
                   key={label}
@@ -76,7 +76,7 @@ export function Footer() {
                   <Icon className="h-4 w-4" />
                 </Link>
               ))}
-            </div>
+            </div> */}
           </div>
 
           <FooterGroup title="Explore" links={exploreLinks} />
