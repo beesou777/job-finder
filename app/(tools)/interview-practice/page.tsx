@@ -468,7 +468,7 @@ export default function InterviewPracticePage() {
                   <div className="space-y-1">
                     <h3 className="text-sm font-bold text-amber-300">No CV Attached Yet</h3>
                     <p className="text-xs text-zinc-400 max-w-xl">
-                      Upload your resume so Gemini AI can tailor the interview questions directly to
+                      Upload your resume so we can tailor the interview questions directly to
                       your real experience, technologies, and career seniority.
                     </p>
                   </div>
@@ -609,13 +609,13 @@ export default function InterviewPracticePage() {
               {/* Start Button */}
               <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p className="text-xs text-zinc-500">
-                  Questions will be generated using Gemini AI grounded on your actual background.
+                  Questions will be generated using our AI grounded on your actual background.
                 </p>
                 <button
                   type="button"
                   disabled={loading}
                   onClick={handleStartInterview}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3 text-sm font-bold text-zinc-950 transition hover:bg-white disabled:opacity-50 shadow-lg shadow-primary/20"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-primary px-7 py-3 text-sm font-bold text-zinc-950 transition hover:bg-primary/90 disabled:opacity-50 shadow-lg shadow-primary/20"
                 >
                   {loading ? (
                     <>
@@ -758,7 +758,7 @@ export default function InterviewPracticePage() {
                   <button
                     type="button"
                     onClick={handleNextQuestion}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-bold text-zinc-950 transition hover:bg-white shadow"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-xs font-bold text-zinc-950 transition hover:bg-primary/80 shadow"
                   >
                     {currentIndex + 1 === questions.length ? (
                       <>
@@ -788,7 +788,7 @@ export default function InterviewPracticePage() {
             <div className="space-y-2 max-w-md">
               <h2 className="text-2xl font-black text-white">Analyzing Your Interview</h2>
               <p className="text-xs text-zinc-400">
-                Gemini AI is evaluating your technical accuracy, answer structure (STAR), domain
+                We are evaluating your technical accuracy, answer structure (STAR), domain
                 specificity, and generating personalized constructive recommendations.
               </p>
             </div>

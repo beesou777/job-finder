@@ -92,7 +92,7 @@ export function ReplaceCvModal({
       setUploadStep(`Uploading "${file.name}" to secure storage...`);
 
       const timer1 = setTimeout(() => {
-        setUploadStep("Gemini AI analyzing skills, experience & target role...");
+        setUploadStep("Analyzing skills, experience & target role...");
       }, 1200);
 
       const timer2 = setTimeout(() => {
@@ -178,7 +178,7 @@ export function ReplaceCvModal({
                 {currentCvFilename ? "Replace CV Profile" : "Upload CV Profile"}
               </h2>
               <p className="text-xs text-zinc-400">
-                Auto-match jobs with Gemini AI skills extraction
+                Auto-match jobs with your skills extraction
               </p>
             </div>
           </div>
@@ -307,7 +307,7 @@ export function ReplaceCvModal({
                   e.stopPropagation();
                   fileInputRef.current?.click();
                 }}
-                className="mt-4 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-zinc-950 shadow-sm transition hover:bg-white"
+                className="mt-4 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-zinc-950 shadow-sm transition hover:bg-primary/90 disabled:opacity-50"
               >
                 <FileCheck2 className="h-3.5 w-3.5" />
                 Select CV File
@@ -334,7 +334,7 @@ export function ReplaceCvModal({
             </button>
           ) : (
             <span className="text-[11px] text-zinc-500">
-              Fast Cloudflare R2 + Gemini AI parsing
+              Fast Cloudflare R2 + our AI parsing
             </span>
           )}
 

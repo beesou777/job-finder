@@ -95,7 +95,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
 
       // Status indicator update
       const timer = setTimeout(() => {
-        setUploadStatus("Analyzing CV & extracting skills with Gemini AI...");
+        setUploadStatus("Analyzing CV & extracting skills with our AI...");
       }, 1200);
 
       const res = await authFetch("/api/me/cv", {
@@ -194,7 +194,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
           </div>
           <p className="mt-4 font-bold text-white">{uploadStatus}</p>
           <p className="mt-1 text-xs text-zinc-500">
-            Securely uploaded to Cloudflare R2 and processed with Gemini AI.
+            Securely uploaded to Cloudflare R2 and processed with our AI.
           </p>
         </div>
       ) : !cv ? (
@@ -219,7 +219,7 @@ export function CvUploadCard({ onCvChanged, activeMode, onModeChange }: CvUpload
           <h3 className="mt-4 text-lg font-bold text-white">Upload your CV to auto-match jobs</h3>
           <p className="mt-1 max-w-md text-sm text-zinc-400">
             Upload your resume (<span className="text-zinc-300">PDF, DOCX, TXT under 4MB</span>).
-            Gemini AI will analyze your role & skills to find your perfect job matches.
+            We will analyze your role & skills to find your perfect job matches.
           </p>
           <button
             type="button"

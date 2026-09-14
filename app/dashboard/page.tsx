@@ -478,7 +478,7 @@ export default function Overview() {
                             href={job.applyUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-zinc-950 transition hover:bg-white"
+                            className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-zinc-950 transition hover:bg-primary/80 hover:text-primary"
                           >
                             Apply
                             <ExternalLink className="h-3.5 w-3.5" />
@@ -646,7 +646,7 @@ export default function Overview() {
               <button
                 type="button"
                 onClick={() => setShowReplaceCvModal(true)}
-                className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 font-bold text-xs text-zinc-950 hover:bg-white transition"
+                className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 font-bold text-xs text-zinc-950 hover:bg-primary/90 transition"
               >
                 Replace CV
               </button>

@@ -1,6 +1,6 @@
 export const SITE_URL = "https://www.kamkhoj.com";
 export const SITE_NAME = "KamKhoj";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/kamkhoj.png`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/kamkhoj-og.jpg`;
 
 export function absoluteUrl(path = "/") {
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
