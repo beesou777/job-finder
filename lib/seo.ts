@@ -138,7 +138,9 @@ export function generateJobPostingSchema(job: {
   applyUrl: string;
   type?: string | null;
   id: string;
+  isRemote?: boolean;
 }) {
+  const isRemote = job.isRemote || job.type === "remote";
   const baseSchema = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
@@ -168,14 +170,21 @@ export function generateJobPostingSchema(job: {
       "@type": "Organization",
       name: job.company || "Company",
     },
-    jobLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: job.location || "Nepal",
-        addressCountry: "NP",
-      },
-    },
+    ...(isRemote
+      ? {
+          jobLocationType: "TELECOMMUTE",
+          applicantLocationRequirements: { "@type": "Country", name: "Nepal" },
+        }
+      : {
+          jobLocation: {
+            "@type": "Place",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: job.location || "Nepal",
+              addressCountry: "NP",
+            },
+          },
+        }),
     url: `${BASE_URL}/job/${job.id}`,
     directApply: false,
   };
@@ -240,6 +249,43 @@ export function generateFAQSchema(faqs: Array<{ question: string; answer: string
         text: faq.answer,
       },
     })),
+  };
+}
+
+export function generateOrganizationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: absoluteUrl("/kamkhoj.png"),
+    description: "Nepal job search and career resources from KamKhoj.",
+  };
+}
+
+export function generateBlogPostingSchema(post: {
+  title: string;
+  description: string;
+  date: string;
+  slug: string;
+}) {
+  const url = absoluteUrl(`/blog/${post.slug}`);
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    url,
+    image: [DEFAULT_OG_IMAGE],
+    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: { "@type": "ImageObject", url: absoluteUrl("/kamkhoj.png") },
+    },
   };
 }
 

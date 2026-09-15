@@ -136,10 +136,10 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* Google AdSense - Injected into head via beforeInteractive strategy */}
+        {/* Google AdSense is non-critical and should not delay initial rendering. */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7656502769250843"
-          strategy="beforeInteractive"
+          strategy="lazyOnload"
           crossOrigin="anonymous"
         />
         <Providers>

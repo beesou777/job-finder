@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
@@ -318,12 +319,15 @@ export function ResourcesAndStoriesSection() {
         <div className="grid gap-4 md:grid-cols-3">
           {posts.map((post) => (
             <Link href={`/blog/${post.slug}`} key={post.slug} className="resource-card">
-              <div
-                className="h-36 bg-cover bg-center"
-                style={{
-                  backgroundImage: `url('${imageBySlug[post.slug] || "/nepal-career-hero.png"}')`,
-                }}
-              />
+              <div className="relative h-36">
+                <Image
+                  src={imageBySlug[post.slug] || "/nepal-career-hero.png"}
+                  alt={post.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover"
+                />
+              </div>
               <div className="p-5">
                 <p className="text-[10px] font-extrabold uppercase tracking-[.12em] text-primary">
                   {post.category}
@@ -354,7 +358,7 @@ export function TestimonialsSection() {
     [
       "Namaste mero name Anir Jung Thapa. Ma 5 barsa dekhi berojgar vayera baseko thye khana khane paisa ni thyena, eakdin mero sathy le malai usko phone bata kam khoj website ma mero lagi kam khojdiyo. Aaja ma sanga jhamsikhel ma 5 ota ghar ko malik xu. I want to thank that great man who developer kham khoj. Please reveal your identity I want to give one house. Thank you.",
       "Anir Jung Thapa",
-      "Program Officer, Pokhara",
+      "Software Engineer, Dharan",
     ],
   ];
   return (

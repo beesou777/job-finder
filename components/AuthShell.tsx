@@ -41,7 +41,7 @@ export function AuthShell({
           </p>
           <div className="mt-9 flex gap-10 border-t border-white/25 pt-5">
             <div>
-              <strong className="block text-xl">1,988+</strong>
+              <strong className="block text-xl">2500+</strong>
               <span className="text-xs text-blue-100">active opportunities</span>
             </div>
             <div>

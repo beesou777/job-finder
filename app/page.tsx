@@ -12,6 +12,7 @@ import {
   WhySection,
 } from "@/components/home/HomeReferenceLayout";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
+import { generateOrganizationSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "KamKhoj | Find Jobs and Internships in Nepal",
@@ -84,6 +85,7 @@ export default function Home({ searchParams }: { searchParams: { urgency?: strin
       description: "Job listings aggregated from multiple Nepali job portals",
     },
   };
+  const organizationSchema = generateOrganizationSchema();
 
   return (
     <div className="homepage min-h-screen">
@@ -96,6 +98,10 @@ export default function Home({ searchParams }: { searchParams: { urgency?: strin
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(collectionPageSchema),
         }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
 
       <HomeHero />

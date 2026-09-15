@@ -173,6 +173,7 @@ export default async function JobDetailPage({ params }: { params: { id: string }
           expiresAt: job.expiresAt,
           applyUrl: job.applyUrl,
           type: job.jobType || job.type,
+          isRemote: job.jobType === "remote" || job.type === "remote",
         })
       : null;
 

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Calendar, Clock } from "lucide-react";
 import Script from "next/script";
-import { generateFAQSchema } from "@/lib/seo";
+import { generateBlogPostingSchema, generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo";
 import { getBlogPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { absoluteUrl, DEFAULT_OG_IMAGE } from "@/lib/site";
@@ -36,6 +36,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   if (!post) notFound();
   const relatedPosts = getRelatedPosts(params.slug, 3);
   const faqSchema = post.faqs ? generateFAQSchema(post.faqs) : null;
+  const articleSchema = generateBlogPostingSchema(post);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: absoluteUrl("/") },
+    { name: "Blog", url: absoluteUrl("/blog") },
+    { name: post.title, url: absoluteUrl(`/blog/${params.slug}`) },
+  ]);
 
   return (
     <>
@@ -46,6 +52,16 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
+      <Script
+        id="blog-posting-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <Script
+        id="breadcrumb-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <article className="min-h-screen bg-zinc-950 text-white">
         <div className="mx-auto max-w-4xl px-4 py-10 md:py-16">
           <Link

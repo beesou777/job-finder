@@ -7,11 +7,19 @@ import {
   ShieldCheck,
   UsersRound,
 } from "lucide-react";
+import Image from "next/image";
 
 export function HomeHero() {
   return (
     <section className="reference-hero relative overflow-hidden border-b border-slate-100">
-      <div className="absolute inset-0 bg-[url('/nepal-career-hero.png')] bg-cover bg-right bg-no-repeat" />
+      <Image
+        src="/nepal-career-hero.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-right"
+      />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,#f8fbff_0%,rgba(248,251,255,.96)_29%,rgba(248,251,255,.12)_66%,rgba(248,251,255,0)_100%)]" />
       <div className="relative mx-auto max-w-7xl px-6 pb-12 pt-10 sm:px-8 lg:px-10 lg:pb-16 lg:pt-14">
         <div className="max-w-[620px]">
@@ -65,7 +73,7 @@ export function HomeHero() {
         </div>
         <div className="mt-9 grid max-w-3xl grid-cols-2 gap-4 border-t border-slate-200/80 pt-5 sm:grid-cols-4">
           <HeroStat icon={BarChart3} value="2,500+" label="Active job listings" />
-          <HeroStat icon={BriefcaseBusiness} value="500+" label="Trusted companies" />
+          <HeroStat icon={BriefcaseBusiness} value="Many" label="Hiring sources" />
           <HeroStat icon={ShieldCheck} value="100%" label="Free for you" />
         </div>
       </div>
