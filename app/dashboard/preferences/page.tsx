@@ -137,6 +137,9 @@ export default function Preferences() {
           {saved ? "Saved" : "Save preferences"}
         </button>
       </div>
+      <Link href="/dashboard/profile" className="mt-8 inline-flex rounded-lg border border-border bg-card px-5 py-3 font-semibold text-card-foreground hover:bg-secondary focus-visible:ring-2 focus-visible:ring-ring">
+        Edit career profile and AI preferences
+      </Link>
     </main>
   );
 }

@@ -13,7 +13,7 @@ KamKhoj is an open-source Nepal job discovery platform. It collects public job l
 ## Tech stack
 
 Next.js 14 (App Router), TypeScript, PostgreSQL, TypeORM, Tailwind CSS, Cheerio/Axios, NextAuth, and optional Gemini/OpenRouter integrations.
-
+skBlwW0DbRObKj14 - sup
 ## Requirements
 
 - Node.js 18 or newer (Node 20 LTS is recommended)

@@ -9,6 +9,7 @@ import {
   LogOut,
   MessageSquare,
   Settings,
+  UserRound,
 } from "lucide-react";
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || "";
@@ -25,6 +26,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <nav className="space-y-1">
           <Item href="/dashboard" active={path === "/dashboard"} icon={<LayoutDashboard />}>
             Overview
+          </Item>
+          <Item href="/dashboard/profile" active={path.startsWith("/dashboard/profile")} icon={<UserRound />}>
+            Career profile
           </Item>
           <Item
             href="/dashboard/matches"
@@ -93,6 +97,13 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               Overview
             </Link>
             <Link
+              href="/dashboard/profile"
+              aria-current={path.startsWith("/dashboard/profile") ? "page" : undefined}
+              className={`whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-semibold transition ${path.startsWith("/dashboard/profile") ? "bg-primary/10 text-primary" : "text-[#617493] hover:text-primary"}`}
+            >
+              Profile
+            </Link>
+            <Link
               href="/dashboard/matches"
               className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
                 path.startsWith("/dashboard/matches")
@@ -153,6 +164,7 @@ function Item({
   return (
     <Link
       href={href}
+      aria-current={active ? "page" : undefined}
       className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold ${
         active
           ? "bg-primary/10 text-primary"
