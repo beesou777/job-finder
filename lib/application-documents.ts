@@ -2,17 +2,20 @@ import { authFetch } from './auth-context';
 
 export type DocumentContent = { resume: string; coverLetter: string };
 export type DocumentJob = { ref: string; title: string; company: string; location: string; description: string; requirements: string; applyUrl: string | null; expiresAt: string | null; availability: 'active' | 'unknown' };
+export type ApplicationCapability = { destinationUrl: string; domain: string; provider: string; permissionStatus: string; mode: 'manual_handoff' | 'assisted_review' | 'permitted_native_submit' | 'unsupported'; status: string; requiredFields: { key: string; label: string; type: string; required: boolean; sensitive?: boolean }[]; fileConstraints: { accepted?: string[]; maxBytes?: number }; riskGates: string[]; notes: string | null; service: { chargingEnabled: boolean; quote: unknown; availableModes: string[]; message: string } };
 export type DocumentPack = {
   id: string; version: number; profileVersion: number; job: DocumentJob;
   content: DocumentContent;
   evidence: { matchedSkills: string[]; sourcePaths: string[]; notes: string[]; questions: string[]; language: 'en' | 'ne' };
   origin: 'template-v1' | 'user-edit'; reviewedAt: string | null; reviewedVersion: number | null;
   reviewValid: boolean; profileCurrent: boolean; jobCurrent: boolean; jobStatus: string; updatedAt: string;
+  capability: ApplicationCapability;
 };
 export type PackSummary = { id: string; title: string; company: string; version: number; profileVersion: number; reviewedAt: string | null; profileCurrent: boolean; updatedAt: string };
 export type DocumentContext = {
   job: DocumentJob;
   profile: { version: number; confirmed: boolean; fullName: string; aiSettings: { tailorResume: boolean; coverLetter: boolean; gapQuestions: boolean; language: 'auto' | 'en' | 'ne' } } | null;
+  capability: ApplicationCapability;
 };
 export type DocumentHistory = { version: number; origin: string; createdAt: string }[];
 export type DocumentRevision = { version: number; content: DocumentContent; origin: string; createdAt: string };
@@ -66,6 +69,7 @@ export async function loadDocumentContext(jobRef: string, signal?: AbortSignal):
   if (!object(data) || !job(data.job)) throw new Error('Could not read this vacancy.');
   const p = data.profile;
   if (p !== null && (!object(p) || !integer(p.version) || typeof p.confirmed !== 'boolean' || typeof p.fullName !== 'string' || !object(p.aiSettings) || !['tailorResume', 'coverLetter', 'gapQuestions'].every((key) => typeof (p.aiSettings as Record<string, unknown>)[key] === 'boolean') || !['auto', 'en', 'ne'].includes(String(p.aiSettings.language)))) throw new Error('Could not read your profile settings.');
+  if (!object(data.capability) || typeof data.capability.mode !== 'string' || !Array.isArray(data.capability.requiredFields) || !object(data.capability.service)) throw new Error('Could not read the application destination capability.');
   return data as DocumentContext;
 }
 export async function loadDocumentPack(id: string, signal?: AbortSignal) { return requirePack(await request(`/${encodeURIComponent(id)}`, 'GET', undefined, signal)); }

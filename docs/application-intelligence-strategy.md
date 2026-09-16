@@ -40,7 +40,7 @@ Charge for a defined reviewed pack, supported send or measured assistance. Show 
 
 ## Build order
 
-1. Add a source/capability registry and destination inspection records.
+1. Add a source/capability registry and destination inspection records. **Started:** `application_capabilities` now records destination mode, required fields, files, risk gates, evidence and receipt signals; the API exposes it in document context.
 2. Build a read-only inspector for employer URLs and one approved test destination.
 3. Add destination fields and review questions to document packs.
 4. Evaluate one AI provider with malicious instructions, missing facts, conflicting dates and long descriptions; add cost instrumentation.
@@ -48,6 +48,8 @@ Charge for a defined reviewed pack, supported send or measured assistance. Show 
 6. Select one permitted email/native/employer channel and implement receipt reconciliation.
 7. Add transactional credits and exact action quotes.
 8. Pilot one destination with authorized users before considering bounded auto mode.
+
+The first product-facing capability response is intentionally conservative. Guru Infosys is `assisted_review`: the service may prepare grounded documents and point the user to the official form, but CAPTCHA, CSRF session handling, confirmation and final submission remain user-controlled. This is the boundary for the paid service: preparation can be priced later, while unattended submission is disabled until permission, adapter reliability, duplicate prevention and a receipt definition are demonstrated.
 
 No universal browser bot is planned. Automation is destination-specific, permissioned and measured. Before enabling it, require permission evidence, at least 50 authorized attempts across ten users, no duplicates or unauthorized sends, no critical factual errors, 95% resolved eligible outcomes, a kill switch, support procedure, audit trail and visible refund/unknown-outcome policy.
 

@@ -82,3 +82,9 @@ The image-generation preview is a concept, not implementation evidence. Its inve
 - Run final typecheck, build, tests and visual checks when the user is ready for verification.
 
 Existing unrelated README, backend `.env.example` and backend `package.json` edits were not changed by this implementation.
+## 16 September 2026 — application capability boundary
+
+- Added the `application_capabilities` backend entity, migration and authenticated read endpoint.
+- Added the first concrete Guru Infosys capability mapping: required identity/contact fields, resume and cover-letter file rules, experience field, portfolio URL, CAPTCHA, CSRF session and confirmation gates, plus receipt signals.
+- Document context and saved document responses now expose the destination mode and a paid-service boundary. The UI explains assisted review/manual handoff and links to the official application page; it does not claim that document generation submits an application.
+- No typecheck, build, lint, test, migration or browser verification was run, per instruction.

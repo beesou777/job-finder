@@ -60,6 +60,12 @@ Generation logs only generator name, duration and zero provider calls/credits. T
 
 ## Rollout and continuation
 
+### Application capability and paid-service boundary
+
+The document context now includes an application capability record. It describes the inspected destination URL, provider classification, required fields, upload limits, CAPTCHA/CSRF and other risk gates, receipt signals, and the supported mode. Guru Infosys is the first recorded destination: KamKhoj can prepare the pack and open the official form, while the user must complete CAPTCHA, confirm accuracy, and submit. A public form is never treated as permission for unattended commercial submission.
+
+The response also exposes a service boundary. `chargingEnabled` is false and there is no quote or ledger capture in this phase. The product can later charge for a defined reviewed pack, assisted handoff, or permitted native send only after showing an exact quote, receiving approval, reserving credits transactionally, and recording a receipt or refund/unknown outcome. Creating documents and opening the employer page remain free. Unknown destinations default to manual handoff until inspection evidence exists.
+
 New migration: `1789600000000-application-document-packs.ts`. Requires the existing career-profile-revisions migration and a reviewed migration history. New entities are registered in `ALL_ENTITIES`. No schema synchronization or application database mutation was performed.
 
 `APPLICATION_DOCUMENTS_ENABLED` defaults off. After reviewing/applying migrations in development, set it to `true` and restart the backend. Setting it back to `false` disables the document API while retaining data. The disabled API returns a clear 503; its dashboard links still appear. Reverting the migration destroys document packs/revisions and must not be used merely to disable the feature.
