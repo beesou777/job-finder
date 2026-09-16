@@ -20,6 +20,16 @@ const buttonClass = "rounded-lg border border-input px-4 py-2 text-sm font-semib
 
 export function CareerProfileEditor() {
   const { status, data: session } = useSession();
+  // Remount the entire workspace before another account can see or save its draft.
+  // This also clears nested tag inputs and cancels the previous account's requests.
+  const accountKey = status === "authenticated"
+    ? JSON.stringify([session?.user?.id, session?.user?.email])
+    : status;
+  return <CareerProfileWorkspace key={accountKey} />;
+}
+
+function CareerProfileWorkspace() {
+  const { status, data: session } = useSession();
   const accountEmail = session?.user?.email;
   const [data, setData] = useState<CareerProfileResponse | null>(null);
   const [step, setStep] = useState(0);
@@ -202,12 +212,12 @@ export function CareerProfileEditor() {
             {suggestions && <div className="space-y-3 border-t border-border pt-4">
               <h3 className="font-semibold">Unconfirmed suggestions from {suggestions.filename}</h3>
               <p className="text-sm text-muted-foreground">Using these replaces your draft title, summary and skills. Review them before saving.</p>
-              <p className="font-medium">{suggestions.professionalTitle || "No title extracted"}</p>
-              <p className="whitespace-pre-wrap text-sm">{suggestions.summary || "No summary extracted"}</p>
-              <p className="text-sm">{suggestions.skills.join(", ") || "No skills extracted"}</p>
+              <p className="font-medium">{suggestions.profile.professionalTitle || "No title extracted"}</p>
+              <p className="whitespace-pre-wrap text-sm">{suggestions.profile.summary || "No summary extracted"}</p>
+              <p className="text-sm">{suggestions.profile.skills.join(", ") || "No skills extracted"}</p>
               <button type="button" className={buttonClass} onClick={() => {
                 if ((p.professionalTitle || p.summary || p.skills.length) && !window.confirm("Replace your draft title, summary and skills with these CV suggestions?")) return;
-                setData({ ...data, profile: { ...p, professionalTitle: suggestions.professionalTitle, summary: suggestions.summary, skills: suggestions.skills } });
+                setData({ ...data, profile: { ...p, ...suggestions.profile } });
                 setDirty(true); setConfirmed(false); setSuggestions(null); setNotice("Suggestions added to your draft. Review and save when ready.");
               }}>Use these suggestions in my draft</button>
               <button type="button" className={`${buttonClass} ml-2`} onClick={() => setSuggestions(null)}>Dismiss</button>

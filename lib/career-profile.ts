@@ -87,12 +87,20 @@ export async function saveCareerProfile(data: CareerProfileResponse, confirmFact
   }
 }
 
-export async function loadCvSuggestions(signal?: AbortSignal): Promise<{ filename: string; professionalTitle: string; summary: string; skills: string[] } | null> {
+export async function loadCvSuggestions(signal?: AbortSignal): Promise<{ filename: string; profile: CareerProfile } | null> {
   const body = await responseBody(await authFetch("/api/me/profile/cv-suggestions", { signal, cache: "no-store" }));
   if (!record(body)) throw new Error("The CV service returned an unexpected response.");
   if (body.source === null) return null;
   if (!record(body.source) || typeof body.source.filename !== "string" || !record(body.suggestions)) throw new Error("CV suggestions are unavailable.");
   const suggestion = body.suggestions;
-  if (typeof suggestion.professionalTitle !== "string" || typeof suggestion.summary !== "string" || !strings(suggestion.skills)) throw new Error("CV suggestions are incomplete. Enter your details manually.");
-  return { filename: body.source.filename, professionalTitle: suggestion.professionalTitle, summary: suggestion.summary, skills: suggestion.skills };
+  if (!isProfile(suggestion)) throw new Error("CV suggestions are incomplete. Enter your details manually.");
+  return { filename: body.source.filename, profile: suggestion };
+}
+function isProfile(value: unknown): value is CareerProfile {
+  return record(value) && stringFields(value, ["fullName", "phone", "location", "professionalTitle", "summary"]) &&
+    strings(value.skills) && strings(value.languages) &&
+    entries(value.experience, ["title", "organization", "startMonth", "endMonth", "description"]) &&
+    Array.isArray(value.experience) && value.experience.every((item: unknown) => record(item) && typeof item.current === "boolean") &&
+    entries(value.education, ["qualification", "institution", "startMonth", "endMonth", "description"]) &&
+    entries(value.projects, ["name", "description"]) && entries(value.links, ["label", "url"]);
 }

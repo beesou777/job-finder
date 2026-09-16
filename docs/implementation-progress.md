@@ -1,5 +1,34 @@
 # Implementation progress
 
+## Confirmed profile matching - 16 September 2026
+
+The matching service now loads the latest career-profile revision for the authenticated user. When that revision is confirmed, its reviewed professional title, skills and summary are used as the matching source of truth; CV fields remain the fallback for users without a confirmed profile. The existing preferences-only mode remains unchanged. Backend typecheck and build pass after this change. Matching evaluation against a representative job fixture and browser verification remain pending.
+
+## Profile verification continuation - 16 September 2026
+
+Current repositories:
+
+- Frontend: `C:/Users/bishwa shah/OneDrive/Desktop/job-finder`.
+- Backend: `C:/Users/bishwa shah/Desktop/job-finder-backend` (the older path below is historical).
+
+Continued the profile foundation rather than moving into billing or automated applications. Fixed account-switch isolation in `CareerProfileEditor`: the full workspace now remounts on account identity changes, clearing profile data, nested inputs and pending requests. Previously a failed load for the next account could leave the previous account's draft visible and editable.
+
+Removed an incomplete duplicate array declaration from the backend CV verification script that prevented compilation. Removed one stale generated Next route type for the deleted `/partner` page; no source route or TypeScript exclusion was added.
+
+Added `career-profile.integration.spec.ts` and `yarn test:profile` in the backend. The integration suite uses the real Nest controller, JWT guard/strategy, validation pipe, profile service, TypeORM transactions and profile migration. It creates synthetic users and an isolated PostgreSQL schema, then removes that schema. It does not load `.env` or use the application's configured database. The account table is a minimal fixture; this is not a test of the complete initial migration, authentication signup/login, or the full deployed app.
+
+Verification completed:
+
+- Frontend `yarn typecheck` and `yarn build`: passed. Existing hook/image lint warnings, outdated Browserslist data and a webpack cache warning remain.
+- Backend `yarn typecheck` and `yarn build`: passed.
+- Profile suite: 20 reported tests passed, zero skipped, against a separate temporary PostgreSQL 18 instance on localhost port 55439. This includes 11 existing tests, eight integration scenarios and their parent test.
+- HTTP evidence: unauthenticated, malformed-token, expired-token and missing-account requests rejected; validation paths preserved; client-injected ownership rejected; authenticated save/reload and stale-write conflict verified; profile responses marked `no-store`; CV suggestions scoped to their owner.
+- Database evidence: concurrent first saves serialize; failed inserts roll back; a retry can reuse the uncommitted version; draft saves preserve prior confirmation history; deleting a fixture account cascades only its revisions; profile migration down/up succeeds in the isolated fixture schema.
+
+Run the backend suite with `yarn test:profile`. Database cases explicitly skip unless `PROFILE_TEST_DATABASE_URL` points to an isolated local PostgreSQL database. See backend `docs/profile-verification.md` for the command and test boundaries.
+
+Still pending for this slice: browser regression checks for account switching and save/reload, desktop/mobile visual review, and application of the migration to a reviewed development database. No application database migration or deployment was performed. Authentication/session hardening, extraction provenance and the wider roadmap remain separate work.
+
 ## Career profile foundation — implemented, verification deferred
 
 Backend repository: `C:/Users/DETECH-002/Desktop/job-backend`.
