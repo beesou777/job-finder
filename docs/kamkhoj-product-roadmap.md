@@ -154,6 +154,8 @@ Benchmark candidate models on truthful extraction, useful tailoring, Nepali/Engl
 
 ## 7. Applying on a user's behalf
 
+The business goal is assisted and, only where permitted and proven, bounded automatic application. Before documents are tailored or dispatch is considered, inspect the employer's actual application destination and record its fields, authentication, file rules, legal declarations, receipts, permission and supported mode. A job portal listing, public career page or ATS read endpoint does not by itself authorize submission. See [application intelligence strategy](./application-intelligence-strategy.md). The current implementation does not use Gemini and does not submit applications.
+
 ### Capability matrix
 
 | Destination | Launch behavior | Automatic submission gate |

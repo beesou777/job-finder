@@ -74,10 +74,34 @@ export async function loadCareerProfile(signal?: AbortSignal): Promise<CareerPro
 }
 
 export async function saveCareerProfile(data: CareerProfileResponse, confirmFacts: boolean, signal?: AbortSignal): Promise<CareerProfileResponse> {
+  if (!data || !Number.isInteger(data.version) || !data.profile || !data.aiSettings || typeof confirmFacts !== "boolean") {
+    throw new ProfileRequestError("Your profile is still loading. Reload the profile page before saving.", 0);
+  }
+  const payload = {
+    expectedVersion: data.version,
+    profile: data.profile,
+    aiSettings: {
+      tailorResume: Boolean(data.aiSettings.tailorResume),
+      coverLetter: Boolean(data.aiSettings.coverLetter),
+      gapQuestions: Boolean(data.aiSettings.gapQuestions),
+      language: data.aiSettings.language || "auto",
+      reviewBeforeSubmit: true as const,
+      autoApply: false as const,
+    },
+    confirmFacts,
+  };
   try {
+    if (confirmFacts) {
+      const confirmation = await responseBody(await authFetch("/api/me/profile/confirm", {
+        method: "POST", signal, headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ expectedVersion: data.version }),
+      }));
+      if (!isResponse(confirmation)) throw new Error("Unexpected confirmation response");
+      return confirmation;
+    }
     const body = await responseBody(await authFetch("/api/me/profile", {
       method: "PUT", signal, headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ expectedVersion: data.version, profile: data.profile, aiSettings: data.aiSettings, confirmFacts }),
+      body: JSON.stringify(payload),
     }));
     if (!isResponse(body)) throw new Error("Unexpected save response");
     return body;

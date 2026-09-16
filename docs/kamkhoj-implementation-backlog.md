@@ -2,6 +2,8 @@
 
 Companion to the [product roadmap](./kamkhoj-product-roadmap.md). Prepared 15 September 2026. All items below are proposed work, not claims of implemented features.
 
+Implementation update, 16 September: the first application-document slice now has code for deterministic drafting, saved revisions, review and text/printable HTML downloads. This partially addresses D01-D04; acceptance evidence is still pending. See [the document handoff](./application-documents.md). The user deferred checks, builds, tests and migration execution during this implementation turn.
+
 ## Working rules
 
 Inspect the actual backend before editing API contracts or database tables. Reuse existing architecture and Yarn configuration. Make small reviewed changes; use migrations and feature flags for new behavior. Never test a submission adapter by sending unauthorized or fictitious applications to real employers.
@@ -36,6 +38,8 @@ Do not silently add OCR services for scanned CVs. Start with a clear manual-entr
 
 ## P2: matching and documents
 
+Before D02/D04 are expanded, add destination inspection and capability classification to each selected job. Document generation must receive the bounded vacancy snapshot and capability result, so the user sees whether the next step is manual handoff, assisted review, permitted native submission or unsupported. AI provider work is downstream of this inspection and must not acquire submission authority.
+
 | ID | Deliverable | Acceptance evidence | Dependency |
 | --- | --- | --- | --- |
 | M01 | Canonical job records | Duplicate examples, expiry, source provenance, unknown salary and Nepal eligibility cases handled | F02 |
@@ -63,6 +67,8 @@ Run generation against fixture CVs/jobs that include malicious instructions, con
 Minimum billing tests: two simultaneous spends cannot overspend; repeated callback grants once; browser success URL alone grants nothing; wrong amount/provider/order is rejected; delayed success reconciles safely; refund is not duplicated; worker crash releases or reconciles reservations; admin adjustment leaves an audit trail.
 
 ## P4: safe delivery
+
+Application intelligence is the prerequisite for S01-S05: inspect and classify the actual employer destination before building an adapter or charging for a send. A listing source does not by itself authorize submission. See [application intelligence strategy](./application-intelligence-strategy.md).
 
 | ID | Deliverable | Acceptance evidence | Dependency |
 | --- | --- | --- | --- |

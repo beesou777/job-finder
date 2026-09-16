@@ -10,6 +10,7 @@ import {
   MessageSquare,
   Settings,
   UserRound,
+  FileText,
 } from "lucide-react";
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const path = usePathname() || "";
@@ -36,6 +37,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             icon={<BriefcaseBusiness />}
           >
             Job Matches
+          </Item>
+          <Item href="/dashboard/documents" active={path.startsWith("/dashboard/documents")} icon={<FileText />}>
+            Documents
           </Item>
           <Item
             href="/dashboard/saved"
@@ -112,6 +116,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               }`}
             >
               Matches
+            </Link>
+            <Link href="/dashboard/documents" aria-current={path.startsWith("/dashboard/documents") ? "page" : undefined} className={`whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-semibold ${path.startsWith("/dashboard/documents") ? "bg-primary/10 text-primary" : "text-[#617493] hover:text-primary"}`}>
+              Documents
             </Link>
             <Link
               href="/dashboard/saved"

@@ -698,6 +698,9 @@ export default function MatchesPage() {
                                 fill={isSaved ? "currentColor" : "none"}
                               />
                             </button>
+                            <Link href={`/dashboard/documents?jobRef=${encodeURIComponent(job.id)}`} className="rounded-lg border border-primary px-3 py-1.5 text-xs font-semibold text-primary">
+                              Prepare documents
+                            </Link>
                             <a
                               href={job.applyUrl}
                               target="_blank"
@@ -832,6 +835,9 @@ export default function MatchesPage() {
                     )}
 
                   {/* Bottom Footer: Deadline & Apply Button */}
+                  <Link href={`/dashboard/documents?jobRef=${encodeURIComponent(job.id)}`} className="mt-4 inline-flex rounded-lg border border-primary px-3 py-2 text-xs font-semibold text-primary">
+                    Prepare documents
+                  </Link>
                   <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
                     <span className="flex items-center gap-1 text-xs text-zinc-500">
                       <Calendar className="h-3.5 w-3.5" />
@@ -1110,6 +1116,9 @@ export default function MatchesPage() {
                 >
                   Close
                 </button>
+                <Link href={`/dashboard/documents?jobRef=${encodeURIComponent(selectedJob.id)}`} className="rounded-xl border border-primary px-4 py-2 text-xs font-semibold text-primary">
+                  Prepare documents
+                </Link>
                 <a
                   href={selectedJob.applyUrl}
                   target="_blank"
