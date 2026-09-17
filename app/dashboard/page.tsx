@@ -26,9 +26,11 @@ import {
   Trash2,
   Loader2,
   X,
+  Package,
 } from "lucide-react";
 import { CvUploadCard } from "@/components/CvUploadCard";
 import { ReplaceCvModal } from "@/components/ReplaceCvModal";
+import { loadProductOrders, type ProductOrder } from "@/lib/products";
 
 interface UrgentJob {
   id: string;
@@ -83,6 +85,7 @@ export default function Overview() {
   const [overviewData, setOverviewData] = useState<OverviewData | null>(null);
   const [savedIds, setSavedIds] = useState<string[]>([]);
   const [savingId, setSavingId] = useState<string | null>(null);
+  const [activeOrders, setActiveOrders] = useState<ProductOrder[]>([]);
 
   // Auth redirect
   useEffect(() => {
@@ -102,6 +105,11 @@ export default function Overview() {
           .then((r) => (r.ok ? r.json() : { jobs: [] }))
           .catch(() => ({ jobs: [] })),
       ]);
+
+      // Also load purchased orders (best-effort, don't block main data)
+      loadProductOrders()
+        .then((orders) => setActiveOrders(orders.filter((o) => o.status === "complete")))
+        .catch(() => {});
 
       const rawSaved = (savedRes.jobs || []).map((x: any) => (typeof x === "string" ? x : x.id));
       setSavedIds(rawSaved);
@@ -371,6 +379,78 @@ export default function Overview() {
           </p>
         </div>
       </div>
+
+      {/* ACTIVE SERVICES WIDGET — show what the user has purchased and where to go */}
+      {activeOrders.length > 0 && (
+        <div className="rounded-2xl border border-emerald-200 bg-gradient-to-r from-emerald-50 via-white to-emerald-50/30 p-5 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                <Package className="h-4 w-4" />
+              </span>
+              <div>
+                <h2 className="text-sm font-bold text-[#102e67]">Your Active Services</h2>
+                <p className="text-xs text-zinc-500">
+                  Start here — your purchased services are ready to use.
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/dashboard/products"
+              className="text-xs font-semibold text-primary hover:underline flex items-center gap-1"
+            >
+              Manage orders
+              <ChevronRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {activeOrders.map((order) => {
+              const isCV = order.productCode === "professional_cv";
+              const isPack = order.productCode === "application_pack";
+              const isBundle = order.productCode === "job_hunt_pack";
+              const name = isCV
+                ? "Professional CV Review"
+                : isPack
+                  ? "Job Application Pack"
+                  : "Job Hunt Bundle";
+              const emoji = isCV ? "📄" : isPack ? "📋" : "🚀";
+              const step = isCV
+                ? "Go to Documents → create a pack → review → download."
+                : isPack
+                  ? "Open Matches → find a job → click Prepare Documents."
+                  : "Start in Matches → prep up to 5 job packs → track in Applications.";
+              const link = isCV
+                ? { label: "Open Documents", href: "/dashboard/documents" }
+                : { label: "View Matches", href: "/dashboard/matches" };
+              return (
+                <div
+                  key={order.id}
+                  className="flex flex-col gap-2 rounded-xl border border-emerald-100 bg-white p-4 shadow-xs"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">{emoji}</span>
+                    <div>
+                      <p className="text-xs font-bold text-zinc-800">{name}</p>
+                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-semibold text-emerald-800">
+                        <CheckCircle2 className="h-3 w-3" />
+                        Active
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-[11px] leading-relaxed text-zinc-500">{step}</p>
+                  <Link
+                    href={link.href}
+                    className="mt-auto inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-white hover:bg-primary/90 transition"
+                  >
+                    {link.label}
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* 3. MAIN SECTION: 2 COLUMNS (Urgent Matches vs Career Launchpad & Skills) */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">

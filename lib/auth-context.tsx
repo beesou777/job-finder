@@ -134,7 +134,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: options?.email,
+          email: typeof options?.email === "string" ? options.email.trim().toLowerCase() : options?.email,
           password: options?.password,
         }),
       });

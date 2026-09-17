@@ -1,451 +1,1212 @@
-# KamKhoj: Nepal-first job seeker platform roadmap
+# KamKhoj: Commercial-First Product Roadmap
 
-Prepared: 15 September 2026. Status: researched proposal, not an implementation or a revenue guarantee.
+**Updated:** 16 September 2026  
+**Status:** commercial-first product plan and implementation roadmap  
+**Primary objective:** prove that KamKhoj can create repeatable paid value for job seekers before investing heavily in broad automation.
 
-## 1. The decision
+---
 
-Build KamKhoj as a trusted application assistant for Nepal job seekers: find suitable openings, maintain an accurate career profile, prepare strong documents, submit through supported channels, and track what happened. Sell time saved and reliable service, not promises of employment or enormous application counts.
+## 1. Product decision
 
-Start with assisted applications. Add automatic submission destination by destination, with permission, explicit user authorization, and evidence of delivery. Do not launch a universal browser bot as the foundation of the business.
+KamKhoj should not be positioned primarily as another Nepal job board or scraper.
 
-Google signup should be optional. Reading Gmail should be a separate, optional integration introduced later. A user should be able to benefit without giving access to their inbox.
+The product should become a **job-search operating system for people in Nepal**:
 
-Sprout is a product reference, not a partner. Its public site advertises discovery, tailored documents, automation and tracking. The supplied screenshots demonstrate editable profile sections and AI preferences. They do not establish how Sprout implements submission or what agreements it has. No Sprout integration or partnership has been verified. [Sprout](https://www.usesprout.com/)
+> **Find relevant jobs → understand the match → prepare a stronger application → apply through the official channel → track the outcome → prepare for interviews.**
 
-### Recommended launch boundaries
+The existing job aggregation infrastructure is the supply layer underneath the product. The user-facing value is the ability to turn a candidate's real profile and current vacancies into useful actions.
 
-| Decision | Recommendation |
-| --- | --- |
-| Initial customer | Adult Nepal-based early-career and mid-career IT/digital job seekers; validate this segment before expanding |
-| Initial geography | Nepal jobs and remote jobs explicitly accepting applicants located in Nepal |
-| Core promise | Relevant opportunities, truthful application packs, less repetitive work, clear tracking |
-| Free product | Browse/save jobs, editable profile, basic matching and tracking; one bounded text interview monthly |
-| First paid product | Reviewed, downloadable tailored application packs |
-| First submission channels | Verified partner-employer intake and explicitly advertised application email, with user approval |
-| Portal applications | Manual handoff initially; permitted integrations added individually |
-| Pricing | Prepaid service credits, with an explicit price before each action |
-| Mail tracking | Manual status and selective user forwarding first; Gmail synchronization later |
-| Interviews | Text first, turn-based voice next, optional recording last |
-| Growth objective | More useful applications and interviews, not more spam |
+### Immediate commercial principle
 
-## 2. What exists and what remains unverified
+KamKhoj must prove revenue before expanding into expensive or operationally risky features.
 
-This assessment is based on files inspected in this repository. It is not a production security audit. Several screens call a separately hosted backend whose implementation is not present here. A working screen or installed package does not prove a secure, complete backend feature.
+The first milestones are:
 
-| Area | Evidence in current repository | Assessment |
-| --- | --- | --- |
-| Web foundation | `package.json`: Next.js 14, React 18, TypeScript, Yarn | Reuse; do not rewrite the frontend |
-| Authentication | `lib/auth-context.tsx`: custom login, registration and session calls | Email/password integration exists; Google OAuth not demonstrated |
-| Session storage | Same file stores bearer token in localStorage and a JavaScript-written cookie | Security foundation work before adding mail permissions and payments |
-| CV upload | `components/CvUploadCard.tsx`, `/api/me/cv` calls | Upload/delete UI exists; storage, parsing accuracy and ownership enforcement unverified |
-| Preferences | `app/dashboard/preferences/page.tsx` | Existing preferences screen; extend verified backend contracts |
-| Matching/saved jobs | `app/dashboard/matches/page.tsx` | Existing UI and service calls; matching quality and implementation unverified |
-| Job data | `server/services/data-fetching.ts` calls external jobs/category APIs | Useful integration; source permissions and backend ingestion unverified |
-| Apply action | `app/apply/[id]/route.ts` adds UTM parameters and redirects | An outbound click, not a completed application |
-| Interview practice | `app/(tools)/interview-practice/page.tsx` calls session/evaluate endpoints | Text workflow exists; scoring quality, quotas and backend unverified |
-| Credits/payments | No implementation established in inspected flow | Plan as new capability until backend audit proves otherwise |
-| Gmail/portal adapters | No implementation established | New capabilities |
+1. Earn the first **NPR 1,000** from real users.
+2. Reach **NPR 10,000 cumulative revenue**.
+3. Reach **NPR 50,000 monthly gross revenue** with acceptable delivery cost and support burden.
+4. Only then expand aggressively into automation, employer products, mail integrations, and more expensive AI features.
 
-The job-fetching service can return an empty list after an API failure. Plan a distinct unavailable/error state; do not tell users there are no jobs when the backend is down.
+These are operating milestones, not revenue guarantees.
 
-`ARCHITECTURE.md` must be reconciled against the current deployment. Its descriptions are not sufficient evidence of backend code existing here. Do not estimate a percentage complete until the backend repository, schema, deployments and tests are inspected.
+---
 
-## 3. The complete user journey
+## 2. What KamKhoj is now
 
-1. Visitor sees real jobs, transparent pricing and supported application methods.
-2. User creates an account with email or Google; no mailbox permission requested.
-3. User chooses role, experience level, location and employment preferences.
-4. User uploads a CV or enters a profile manually. Extracted information is a draft.
-5. User confirms critical facts, resolves missing details and saves the profile.
-6. KamKhoj explains suitable jobs and flags unknown requirements.
-7. User selects a job, sees its application channel and receives a credit quote.
-8. AI prepares a document pack grounded in confirmed profile facts.
-9. User reviews changes, screening answers and destination before approval.
-10. KamKhoj either hands off to a portal, delivers through an approved channel, or asks for missing user action.
-11. The tracker shows evidence-backed status, documents used and credit transactions.
-12. User records or imports responses, prepares for interviews and updates preferences.
+KamKhoj has five product layers.
 
-An external link click must never automatically become “Applied.” A prepared document must never become “Submitted.” Employer receipt must never become “Employer read it.”
+| Layer    | User value                                                         |
+| -------- | ------------------------------------------------------------------ |
+| Discover | Current Nepal and Nepal-eligible remote jobs                       |
+| Match    | Jobs relevant to the candidate's actual profile                    |
+| Apply    | Better CVs, cover letters, emails and application answers          |
+| Track    | Saved, prepared, applied, acknowledged, interview, rejected, offer |
+| Prepare  | Job-specific interview practice                                    |
 
-## 4. Onboarding and editable profile
+Everything else should support these five layers.
 
-### Staged setup
+### Positioning
 
-Use a short initial wizard, then a permanent profile editor. Do not require every field in the screenshots before showing useful jobs. Save progress after each stage and allow resume later on another device.
+Do not market KamKhoj as:
 
-| Stage | Collect | Required to continue |
-| --- | --- | --- |
-| Account | Name, verified email, chosen authentication method | Account verification |
-| Job goals | Desired roles, seniority, work type, preferred locations, remote preference | At least one role and location/work-mode choice |
-| Import | PDF/DOCX CV or manual entry | Either path, with clear parse failures |
-| Confirm facts | Employment, dates, education, skills, contact details | User confirmation of facts used in applications |
-| Preferences | Salary range/currency/period, availability, exclusions, relocation | Only requirements relevant to the selected workflow |
-| AI and consent | Language, document settings, review mode, credit limits | Defaults acknowledged before paid work or submission |
+- an AI revolution,
+- a guaranteed job finder,
+- a universal auto-apply bot,
+- a huge scraped job database,
+- or an ATS score generator.
+
+A better message is:
+
+> **KamKhoj understands your career profile, finds jobs that fit you, and helps you prepare stronger applications for them.**
+
+Later, after employer-side validation:
+
+> **KamKhoj helps employers receive structured applications from relevant candidates.**
+
+---
+
+## 3. The business model: free discovery, paid action
+
+The free product should build trust and intent. Paid products should charge for meaningful, bounded deliverables.
+
+### Free product
+
+Launch with:
+
+- browse and search jobs,
+- CV upload,
+- structured editable profile,
+- job preferences,
+- basic matching,
+- clear match explanations,
+- possible gaps and unknown requirements,
+- saved jobs,
+- basic application tracking,
+- one limited CV analysis or sample application preview.
+
+Do not lock ordinary job discovery behind payment.
+
+### Paid Product A: Professional CV
+
+**Beta price hypothesis: NPR 599**
+
+Deliver:
+
+- CV structure review,
+- grammar and clarity improvement,
+- stronger experience bullets grounded in real facts,
+- ATS-readable layout,
+- skill and section recommendations,
+- polished PDF export,
+- one bounded revision,
+- initial human review by KamKhoj while quality is still being validated.
+
+Do not invent achievements, employers, credentials, dates, salary, projects or skills.
+
+### Paid Product B: Job-Specific Application Pack
+
+**Beta price hypothesis: NPR 249 per job**
+
+Deliver:
+
+- job-specific CV tailoring,
+- cover letter where appropriate,
+- application email or message,
+- screening-answer suggestions based only on confirmed facts,
+- match explanation,
+- important gaps and unknown requirements,
+- official application destination.
+
+The candidate reviews and submits during the initial phase.
+
+### Paid Product C: Job Hunt Pack
+
+**Beta price hypothesis: NPR 1,499**
+
+Suggested delivery:
+
+- one professional CV review,
+- up to 10 curated relevant jobs,
+- up to 5 job-specific application packs,
+- application tracker,
+- one text interview practice session,
+- bounded human quality review during beta.
+
+Do not sell unlimited generation.
+
+### Pricing rules
+
+These are experiments, not permanent prices.
+
+Before broad launch:
+
+- measure how long each delivery actually takes,
+- measure AI/model cost,
+- measure support and revision time,
+- record refund requests,
+- record repeat purchase behavior,
+- test willingness to pay with real users.
+
+Avoid a complicated credit economy at launch. Users should understand exactly what they are buying.
+
+Credits can be introduced later if repeated actions make the model simpler rather than more confusing.
+
+---
+
+## 4. Revenue logic
+
+KamKhoj should initially optimize for **revenue per satisfied customer**, not tiny transaction volume.
+
+A low-price micro-credit model requires a large active user base. KamKhoj does not need that dependency during validation.
+
+### Example gross-revenue scenarios for the NPR 1,499 pack
+
+| Paying customers in a month | Approximate gross sales |
+| --------------------------: | ----------------------: |
+|                          10 |              NPR 14,990 |
+|                          20 |              NPR 29,980 |
+|                          35 |              NPR 52,465 |
+|                          50 |              NPR 74,950 |
+
+These are arithmetic illustrations, not conversion forecasts and not profit estimates.
+
+Track contribution, not just sales:
+
+`contribution = product revenue - model cost - payment cost - support cost - refund allowance - human review cost`
+
+Human review is a real cost even if the founder performs it.
+
+---
+
+## 5. The minimum sellable KamKhoj
+
+The launch flow should be extremely small.
+
+```text
+Upload CV
+   ↓
+Confirm extracted profile
+   ↓
+See relevant current jobs
+   ↓
+Understand why each job matches
+   ↓
+Choose a job
+   ↓
+Preview paid application help
+   ↓
+Pay
+   ↓
+Receive reviewed application pack
+   ↓
+Apply on the official destination
+   ↓
+Track the result
+```
+
+If this flow cannot produce paying repeat users, Gmail, browser automation and voice interviews will not fix the business.
+
+---
+
+## 6. The most important product screen
+
+After onboarding, the dashboard should immediately combine job inventory, profile quality, matching and the paid action.
+
+Example:
+
+```text
+Your profile is 82% complete
+
+23 matching jobs
+6 strong matches
+4 new today
+
+Backend Developer
+XYZ Nepal
+
+Strong match
+✓ Node.js
+✓ PostgreSQL
+✓ 2+ years experience
+✓ Kathmandu
+△ Docker preferred
+? Salary not disclosed
+
+[View Job]   [Prepare Application]
+```
+
+This dashboard is more commercially important than a complicated homepage.
+
+### Every match should show
+
+- why the job is relevant,
+- important requirements that are satisfied,
+- possible gaps,
+- unknown requirements,
+- location/work-mode compatibility,
+- salary status,
+- official application method,
+- verification/freshness information.
+
+Never represent a relevance score as the probability of being hired.
+
+---
+
+## 7. Candidate profile foundation
+
+A candidate profile should be a reusable career record, not merely extracted CV text.
 
 ### Profile sections
 
-Provide Personal Information, Summary, Experience, Education, Skills and Certifications, Projects, Links, Languages, Volunteering, Achievements, Documents, and Application Preferences. Optional sections stay optional. Group related sections on mobile instead of reproducing a long desktop sidebar unchanged.
+- Personal information
+- Summary
+- Experience
+- Education
+- Skills
+- Certifications
+- Projects
+- Links
+- Languages
+- Volunteering
+- Achievements
+- Documents
+- Job preferences
+- Application preferences
+
+### Required data rules
+
+Store separately:
+
+- employer,
+- role,
+- employment dates,
+- responsibilities,
+- achievements,
+- institution,
+- qualification,
+- skills,
+- location,
+- desired location,
+- remote preference,
+- expected salary,
+- currency,
+- pay period,
+- availability.
+
+For Nepal, support:
+
+- Unicode names,
+- +977 phone numbers,
+- Nepal administrative locations,
+- NPR,
+- monthly and yearly salary,
+- explicit Bikram Sambat handling where supported.
+
+### AI extraction rules
+
+Every extracted fact should have:
+
+- source document/version,
+- extraction confidence,
+- user confirmation state.
+
+Missing information remains unknown.
+
+AI must not fabricate:
+
+- employment,
+- achievements,
+- qualifications,
+- salaries,
+- work authorization,
+- projects,
+- certifications,
+- or eligibility.
+
+---
+
+## 8. Job inventory quality is the product foundation
+
+KamKhoj fails if job data is unreliable.
+
+Prioritize trust over raw job count.
+
+A smaller inventory of accurate current vacancies is more valuable than a huge database containing stale, duplicate or incorrectly parsed listings.
+
+### Minimum job record
+
+Preserve:
+
+- canonical employer,
+- title,
+- source URL,
+- source identifier where available,
+- source type,
+- original publication date,
+- deadline/expiry,
+- last verified timestamp,
+- job location,
+- work mode,
+- salary when published,
+- employment type,
+- experience requirement,
+- required/preferred skills,
+- qualification requirements,
+- application destination,
+- application method,
+- source and collection provenance.
+
+### Scraper quality gates
+
+A scraped page should not automatically become a job.
 
-Store employer, role, dates, current-role flag, responsibilities and achievements separately. Store education institution, qualification and dates separately. Keep salary amount, currency, pay period and negotiability separate. Distinguish current location, desired work location and work authorization: one cannot be inferred from another.
+High-priority signals:
 
-For Nepal, support Unicode names, +977 phone numbers, municipality/district/province, NPR salary and monthly/yearly periods. Store normalized dates consistently; if accepting Bikram Sambat input, label the calendar and validate conversion. Do not silently interpret an ambiguous date.
+1. valid role/job title,
+2. meaningful job description,
+3. identifiable employer,
+4. publication date or deadline where provided,
+5. application destination or application instructions,
+6. location where available.
 
-Every extracted fact needs provenance: source document/version, extraction confidence and user-confirmed status. Conflicting CV versions prompt reconciliation rather than overwriting confirmed data. Missing information stays unknown; AI must not invent employment, credentials, achievements, salary or eligibility.
+Reject or quarantine:
 
-Do not collect citizenship scans, caste, religion, marital status or other sensitive details by default. A particular employer form may require a user decision; ask only at that point and explain the destination. Avoid a general “Attributes” bucket that accumulates unnecessary sensitive information.
+- generic vacancy index pages,
+- company homepages,
+- board/executive pages,
+- news articles,
+- stale openings,
+- pages whose actual job must still be discovered through another link,
+- duplicated openings,
+- pages where the description extractor captured navigation or unrelated site text.
 
-### Editing rules
+The scraper should follow the actual vacancy link and extract the individual job page before publishing when required.
 
-- Maintain profile versions and document versions.
-- Editing a profile invalidates approval for pending applications that depend on changed facts.
-- Submitted applications retain an immutable snapshot of exactly what was sent.
-- Let the user choose a base CV for different role families.
-- Provide export, deletion and clear storage controls.
-- Deleting a profile cannot recall documents already delivered to an employer; explain this before submission.
+---
 
-Acceptance: users can complete setup without a CV, correct extraction errors, resume interrupted setup, preview documents and understand which version a pending application uses.
+## 9. Matching strategy
 
-## 5. Job inventory and matching
+Do not make matching unnecessarily complex during beta.
 
-### Inventory quality first
+### Step 1: hard constraints
 
-For each opportunity, preserve its source URL, source identifier, original publication/deadline information, last verification timestamp, employer identity, location, eligibility, ingestion rights and supported application method. These are proposed requirements, not claims about the current database.
+Use explicit rules for:
 
-Normalize duplicates across permitted sources using employer, role, location and source identifiers. Keep provenance and avoid merging different openings merely because their titles match. Expired or unverifiable openings must not enter automatic submission queues. Display unknown salary honestly.
+- user-excluded employers,
+- location,
+- work mode,
+- job type,
+- explicit work authorization,
+- mandatory education,
+- mandatory experience,
+- clearly required skills where absence is disqualifying.
 
-Audit existing ingestion permissions before expanding it. A publicly visible vacancy does not necessarily permit republication or automated collection.
+Unknown information is not a positive match.
 
-### Recommended matching approach
+### Step 2: relevance ranking
 
-Use structured rules for hard constraints and an explainable ranking for relevance. Start with existing database search and normalized skills; add embeddings only if measured matching quality requires them.
+For jobs that pass hard constraints, rank using explainable factors such as:
 
-Hard constraints include user-excluded employers, location, explicit work authorization, job type and confirmed mandatory qualifications. An unknown requirement is a question, not a positive match. Do not infer nationality or eligibility from a name or a remote label.
+- role fit,
+- skill fit,
+- experience fit,
+- location/work-mode fit,
+- compensation preference where known.
 
-For jobs passing hard constraints, an initial proposed ranking weights role fit 35%, skills 30%, experience 15%, location/work mode 10%, and compensation preference 10%. Treat missing values explicitly; these weights are a testable product hypothesis, not a validated probability of being hired.
+The exact weights should be treated as an experiment.
 
-Show “Why this matches,” “Possible gaps,” “Unknown requirements,” and “Application method.” Never label a relevance score as a hiring probability. Capture save, dismiss and correction feedback without penalizing candidates for protected characteristics.
+### Step 3: user feedback
 
-Build a consented, anonymized evaluation set of at least 50 profile/job pairs before tuning. Ask target users to label useful versus unsuitable recommendations. Proposed beta gate: at least 70% of top-five recommendations rated worth considering, with no known hard-constraint violation in automatic queues.
+Capture:
 
-## 6. AI documents and settings
+- save,
+- dismiss,
+- apply,
+- not relevant,
+- wrong location,
+- wrong seniority,
+- wrong domain,
+- salary mismatch,
+- expired job,
+- incorrect requirement.
 
-### Settings to ship
+This feedback is more useful than endlessly adjusting a hidden AI prompt.
 
-| Setting | Default | Behavior |
-| --- | --- | --- |
-| Tailored cover letter | On when requested/appropriate | Short, job-specific, grounded in verified facts |
-| Tailored resume | On for paid application pack | Reorder/emphasize true information; show a diff |
-| Language | Match job language when confidently detected | User override; unsupported/unclear language prompts choice |
-| Review before submission | On | Mandatory throughout initial beta |
-| Gap questions | On when information is missing | Ask user, never invent an answer |
-| Tone | Clear and professional | Optional concise/formal variants |
-| Automatic mode | Off | Unavailable until channel and reliability gates pass |
-| Spending limits | Explicit per-action quote; no background spending | Later daily and monthly credit caps |
-| Employer exclusions | Empty with visible editor | Enforced before preparing and sending |
-| Notifications | Transactional status enabled | Marketing preferences separate |
+---
 
-Pipeline: normalized job plus confirmed profile → structured draft → factual checks → deterministic document rendering → preview/diff → user approval. Keep model/provider, prompt version and token cost internally for debugging, without exposing private content in logs.
+## 10. Paid document pipeline
 
-Use ordinary ATS-readable layouts: selectable text, clear headings, predictable dates, no essential information inside images. Support PDF first; add DOCX export when renderer quality is tested. Do not claim a universal ATS score or guaranteed screening success.
+The document system should behave as a controlled transformation pipeline.
 
-Treat CVs, job descriptions and emails as untrusted input. Their text must not authorize tools, change payment settings or override system rules. The model proposes content; application code validates facts, permissions, destinations and spending.
+```text
+Confirmed candidate profile
+        +
+Normalized job requirements
+        ↓
+Structured draft
+        ↓
+Factual validation
+        ↓
+Deterministic document rendering
+        ↓
+Difference/preview
+        ↓
+Human review during beta
+        ↓
+User delivery
+```
 
-Benchmark candidate models on truthful extraction, useful tailoring, Nepali/English quality, schema adherence, latency and total cost. Choose the cheapest model that passes; do not select Grok solely because a quoted token rate looks low. No custom model training is necessary for launch.
+### Resume tailoring
 
-## 7. Applying on a user's behalf
+Allowed:
 
-The business goal is assisted and, only where permitted and proven, bounded automatic application. Before documents are tailored or dispatch is considered, inspect the employer's actual application destination and record its fields, authentication, file rules, legal declarations, receipts, permission and supported mode. A job portal listing, public career page or ATS read endpoint does not by itself authorize submission. See [application intelligence strategy](./application-intelligence-strategy.md). The current implementation does not use Gemini and does not submit applications.
+- reorder real information,
+- emphasize relevant experience,
+- improve wording,
+- make achievements clearer where the underlying fact is known,
+- remove irrelevant detail,
+- improve formatting.
 
-### Capability matrix
+Not allowed:
 
-| Destination | Launch behavior | Automatic submission gate |
-| --- | --- | --- |
-| Verified employer using KamKhoj intake | Native application with approval | Employer agreement, secure intake, receipt and support process |
-| Employer explicitly accepting email applications | Prepare email and attachments; user sends initially | Verified address, authorization and approved sending integration |
-| Merojob | Manual handoff; review existing sourcing permissions | Written permission appropriate to intended integration |
-| JobsNepal / KumariJob | Manual handoff | Current terms, permission and technical access verified; not established in this research |
-| Greenhouse | Hosted application form unless employer integration exists | Employer-provided submission credentials and supported fields |
-| Lever | Hosted application form unless employer integration exists | Employer-provided credentials and form compatibility |
-| LinkedIn | Manual handoff | Officially permitted access; no unauthorized automation |
-| Other ATS/custom portals | Manual handoff | Destination-specific approval, integration and reliable receipts |
+- add unknown skills,
+- inflate seniority,
+- invent metrics,
+- alter employment dates,
+- fabricate projects,
+- claim experience the user does not have.
 
-Merojob's terms restrict commercial reuse and automated data collection. Do not interpret absence of a specific “auto-apply” clause as permission. [Merojob terms](https://merojob.com/terms-and-conditions)
+### Rendering
 
-Greenhouse exposes public job reads, but application submission requires a Job Board API key. Lever's submission API also requires an employer-side API key. Public vacancy access is not universal applicant-side submission access. [Greenhouse API](https://developers.greenhouse.io/job-board.html), [Lever API](https://github.com/lever/postings-api)
+Start with:
 
-LinkedIn prohibits unauthorized software that scrapes or automates activity. A browser extension operating inside the user's browser does not remove that restriction. [LinkedIn policy](https://www.linkedin.com/help/linkedin/answer/a1341387/prohibited-software-and-extensions?lang=en)
+- clean ATS-readable PDF,
+- selectable text,
+- predictable headings,
+- simple date formatting,
+- no important text inside graphics.
 
-### Three modes
+Add DOCX only when rendering is stable.
 
-1. **Assist:** create documents, suggest answers, open the destination. User submits. Label final status user-reported unless independently confirmed.
-2. **Review and send:** user approves the exact employer, job, documents, answers, price and channel. KamKhoj submits through a supported integration.
-3. **Bounded auto-apply:** later, user authorizes selected role/location criteria, approved profile version, supported channels, exclusions, daily count, spending cap and authorization expiry. Provide one-click pause/revoke. Novel screening questions or changed material facts return to review.
+---
 
-Start automatic mode with a proposed maximum of three applications per day, not hundreds. This is a quality limit, not permission to violate destination rules. Require renewal after 30 days as an initial product policy.
+## 11. Manual review is a feature during beta
 
-### Submission reliability
+Do not automate away learning too early.
 
-Use a durable queue and a destination-specific adapter. Each attempt has an idempotency key, approved snapshot and receipt strategy. Validate vacancy availability and consent immediately before dispatch. Prevent duplicate applications across retries and known duplicate listings.
+For the first paying customers:
 
-Represent states separately:
+1. AI generates the document.
+2. KamKhoj performs a quick human quality review.
+3. Errors are corrected before delivery.
+4. Every correction is categorized.
+5. Frequent corrections become automated validation rules.
 
-`draft → needs_information → ready_for_review → approved → queued → submitting → submitted`
+Track correction categories such as:
 
-Additional outcomes: `needs_user_action`, `failed`, `submission_unknown`, `cancelled`. These are proposed states. A timeout after clicking submit is `submission_unknown`, not automatically failed: reconcile before retrying to avoid duplicates.
+- invented information,
+- weak bullet writing,
+- irrelevant emphasis,
+- missing requirement,
+- formatting problem,
+- language problem,
+- duplicate information,
+- inaccurate job interpretation.
 
-Recruiting outcomes form another timeline: `acknowledged`, `interview`, `rejected`, `offer`, `withdrawn`, with event source and confidence. Do not overwrite submission history when an email arrives.
+The goal is to remove human review gradually through measured reliability, not assumption.
 
-Pause at CAPTCHA, MFA, account creation, assessments, signatures and unresolved legal declarations. Never bypass CAPTCHA, capture portal passwords, fabricate answers or take hiring tests on someone's behalf. Support user handoff rather than unattended evasion.
+---
 
-A future extension should request only supported-domain access and keep portal sessions in the user's browser. Explain that assisted desktop browsing is not cloud automation and may not work on mobile. Cloud browsers are a later, separately costed feature requiring stronger isolation and explicit session handling.
+## 12. Application behavior at launch
 
-### Portal research before implementation
+KamKhoj should prepare high-quality applications before attempting universal submission.
 
-Study 30 representative application flows without sending fake applications. Record destination, required fields, file constraints, login/MFA, receipt behavior and permission status. Prioritize by the share of relevant jobs actually covered, not adapter count. Build one permitted adapter, prove it, then expand.
+### Launch mode: Assist
 
-For partnerships, request rights to display vacancies, freshness/deletion rules, submission access, candidate consent obligations, receipt/status APIs, rate limits, branding and fees. Do not contact partners or imply an agreement without a separate authorized outreach step.
+For each supported job:
 
-## 8. Google identity, sending email and receiving replies
+1. verify that the vacancy is still active,
+2. identify the official destination,
+3. prepare the candidate-specific application,
+4. show documents and answers,
+5. let the candidate review,
+6. open the official application destination,
+7. let the candidate mark the application as submitted,
+8. distinguish user-reported status from verified delivery evidence.
 
-### Separate permissions
+A click on an external link is not an application.
 
-Google identity is for authentication. Mail sending and mail reading are additional permissions. Keep email/password available; connect identities carefully using provider subject identifiers and verified ownership, not blind matching of email strings. [Google sign-in overview](https://developers.google.com/identity/gsi/web/guides/overview)
+A generated document is not a submission.
 
-Gmail's send scope is sensitive; read, metadata and compose scopes are restricted. Even creating Gmail drafts can introduce restricted-scope requirements. Server-side handling of restricted data can require a security assessment, subject to Google's exceptions. Treat verification and assessment as a launch/budget dependency. [Gmail scopes](https://developers.google.com/workspace/gmail/api/auth/scopes), [restricted-scope verification](https://developers.google.com/identity/protocols/oauth2/production-readiness/restricted-scope-verification)
+### Later: Review and send
 
-### Rollout
+Only for destinations where KamKhoj has a permitted and reliable sending mechanism.
 
-**First:** downloadable attachments, copyable email, manual tracker and optional selective forwarding to a private per-user application address. Validate forwarding association, authenticate receiving webhooks and treat forwarded content as untrusted. Forwarding itself is not proof that a claimed sender is authentic.
+The user approves:
 
-**Next:** optional Gmail sending after the required approval. Show exact recipient/subject/body/attachments and capture authorization. If sending from KamKhoj's domain, identify KamKhoj transparently as acting for the applicant, use a verified reply address and configure domain authentication. Do not spoof the user's Gmail address.
+- employer,
+- vacancy,
+- profile version,
+- documents,
+- answers,
+- destination,
+- price.
 
-**Later:** optional Gmail read synchronization after verification, security readiness and budget approval. Minimize fetched/stored content, offer disconnect/delete, and explain that query filters narrow processing but do not narrow the underlying OAuth permission. Respect Google's API user-data restrictions. [Google user-data policy](https://developers.google.com/workspace/workspace-api-user-data-developer-policy)
+### Much later: bounded automatic submission
 
-Associate messages using provider message/thread identifiers and known recipients, job/company context and application timestamps. Low-confidence associations require user correction. Provide a link to the original message rather than copying entire inboxes.
+Only after destination-specific reliability and permission have been proven.
 
-Gmail push notifications require a maintained watch and history processing; renew the watch and recover missed events. Notifications are signals to fetch changes, not a complete email payload. [Gmail push guide](https://developers.google.com/workspace/gmail/api/guides/push)
+Pause for:
 
-Never infer employer interest from an automated acknowledgment. Track “sent,” “delivery problem,” “acknowledged” and “interview invitation” separately. Draft follow-ups for approval initially; do not automatically accept interview times, send attachments or reply to every message.
+- CAPTCHA,
+- MFA,
+- signatures,
+- legal declarations,
+- assessments,
+- unknown screening questions,
+- missing candidate facts.
 
-## 9. Credits, payments and earning money
+Never fabricate answers or bypass these controls.
 
-### Product rules
+---
 
-Credits are internal service units, not withdrawable money or a transferable financial wallet. Display action price, deliverable, refund rule and remaining balance before work begins. Never promise employment, interviews or refunds conditional on getting a job.
+## 13. Application tracker
 
-Suggested beta pricing is a hypothesis to test with Nepal users, not a validated market price:
+The tracker should represent reality rather than optimistic guesses.
 
-| Offering | Proposed price | Intended delivery |
-| --- | --- | --- |
-| Free | NPR 0 | Profile, basic matching/tracking, one text interview per calendar month |
-| Starter | NPR 299 / 20 credits | Occasional paid assistance |
-| Active | NPR 799 / 60 credits | More frequent use without a recurring commitment |
-| Application document pack | 3 credits | Tailored resume plus cover letter where useful, preview and export |
-| Standalone cover letter | 1 credit | Reviewable draft/export; not charged again inside a pack |
-| Supported send | Additional 1 credit | Only after supported delivery confirmation; not yet priced for cloud browser automation |
-| Additional bounded text interview | 2 credits | Up to eight questions with a feedback report |
+Suggested preparation/submission states:
 
-At these prices a pack costs approximately NPR 40–45 and a pack plus supported send NPR 53–60. Free manual submission remains possible. Do not charge a send fee for merely opening an external portal. Managed human assistance and expensive browser workflows need separate pricing after measurement.
+`draft → needs_information → ready_for_review → prepared → applied_user_reported`
 
-Allow one pre-delivery revision inside a pack's bounded generation budget. A failed generation is not a delivered service. Charge separately only when the user explicitly requests a new pack or a new scope. Show a demo/sample before purchase; optional trial credits need a capped promotional budget.
+Later supported channels may add:
 
-For beta, avoid expiring purchased credits while the service operates; define promotional-credit expiry clearly. Publish an unused-balance/service-discontinuation policy reviewed for applicable obligations. Do not describe a credits purchase as a subscription unless it actually renews.
+`approved → queued → submitting → submitted_verified`
 
-### Ledger design
+Other outcomes:
 
-Keep append-only transactions for purchase, grant, reservation, capture, release, refund and adjustment. Use integer credit units and integer currency minor units. Enforce balance checks transactionally. Browser state must never be the authority for balance or payment success.
+- needs_user_action,
+- failed,
+- submission_unknown,
+- cancelled.
 
-Reserve before work; capture document credits when the usable artifact is delivered. Reserve a separate send fee and capture only on channel-defined confirmation. Release failed or cancelled work. For an unknown send outcome, reconcile within a defined support window; if evidence remains unavailable after 24 hours, release the send fee and leave status unknown. Do not silently retry or later charge without fresh authorization.
+Recruitment outcomes should remain a separate timeline:
 
-Make payment callbacks, jobs and refunds idempotent. A repeated webhook must not mint credits twice. Check provider, merchant order, amount, currency and final transaction status server-side. Khalti documents lookup verification and successful completion status; eSewa documents signed requests and transaction verification. [Khalti checkout](https://docs.khalti.com/khalti-epayment/), [eSewa ePay](https://developer.esewa.com.np/pages/Epay)
+- acknowledged,
+- interview,
+- rejected,
+- offer,
+- withdrawn.
 
-Use one Nepal gateway first, recommended Khalti if merchant onboarding is available; otherwise choose the gateway that approves your business and economics. Merchant approval, fees, settlement, refunds, tax treatment and business requirements need direct confirmation. They are not assumed free or already approved.
+Do not automatically mark an application as read because an automated acknowledgment arrived.
 
-## 10. Budget and unit economics
+---
 
-Registered users do not determine API cost; actions, retries, document sizes, audio minutes and support do. The following are planning scenarios, not supplier quotes. USD and NPR are kept separate; use the actual settlement exchange rate when setting margins.
+## 14. First-customer strategy
 
-For illustration, the checked xAI price page lists Grok 4.3 short-context input at $1.25/million tokens and output at $2.50/million. A document workflow with 20,000 input tokens and 3,000 billed output tokens costs $0.0325 before retries/tools. The output budget must include billable reasoning where applicable. This is an estimate, not a measured KamKhoj request. [xAI pricing](https://docs.x.ai/developers/pricing)
+Do not depend on paid advertising for validation.
 
-Use a provisional **$0.05 per completed document pack** allowance, then measure p50/p95 costs. Stop or reprice if the allowance is exceeded persistently.
+Start with a narrow group that has a clear problem.
 
-| Monthly scenario | 100 registered users | 200 registered users |
-| --- | --- | --- |
-| Assumed active users | 40 | 80 |
-| Packs per active user | 10 | 10 |
-| Total packs | 400 | 800 |
-| Document AI allowance | $20 | $40 |
-| Initial/revised profile parsing allowance | $3 | $6 |
-| Monthly free text interview ceiling, assuming all registered users use it at $0.05 each | $5 | $10 |
-| Hosting/database allowance | $15–30 | $15–40 |
-| Storage/email/monitoring allowance | $5–15 | $5–20 |
-| Subtotal | $48–73 | $76–116 |
-| With 20% contingency | About $58–88 | About $92–139 |
+Suggested first audiences:
 
-These figures exclude engineering wages, marketing, gateway fees, taxes, paid job feeds, legal advice, Gmail assessment, human application work and cloud browser automation. Profile/interview allowances are assumptions requiring measurement. Existing paid hosting could reduce incremental cost; free tiers may reduce early bills but are not a reliability or commercial-use guarantee.
+- BCA / BSc CSIT / BIT graduates,
+- junior developers,
+- QA applicants,
+- designers,
+- digital marketers,
+- accountants,
+- administrative candidates,
+- internship seekers,
+- people who have sent many applications without receiving interviews.
 
-Usage stress case: if all 200 users request 20 packs, 4,000 packs alone consume approximately $200 at the allowance. Set provider hard limits, per-user quotas, maximum retries and daily spend alerts before beta. Set an initial internal warning at $50/month and pause nonessential free AI at a founder-approved ceiling; do not interrupt already-paid delivery without explaining/refunding it.
+### Initial sales message
 
-### Revenue reality
+Focus on the outcome:
 
-If 10 of 100 registered users buy the NPR 799 pack, gross cash sales are NPR 7,990. If 20 of 200 do, sales are NPR 15,980. These are arithmetic scenarios, not conversion forecasts, and do not necessarily correspond to the usage table above.
+> Upload your CV, see current jobs that fit your actual profile, and get your CV/application tailored for the jobs you want to apply to.
 
-Cash collected for credits is not automatically earned revenue: unused credits remain a future service obligation. Track issued, consumed and outstanding credits separately with your accountant.
+Avoid vague AI/startup language.
 
-For each action calculate:
+### First 10 paying customers
 
-`contribution = consumed-credit revenue - model cost - delivery cost - payment allocation - support/refund allowance`
+For each customer, record:
 
-Break-even paying customers equal monthly fixed operating cost divided by average monthly contribution per paying customer, in the same currency. A plan that requires frequent manual troubleshooting can lose money even when AI tokens are cheap.
+- acquisition source,
+- product purchased,
+- price,
+- delivery time,
+- model cost,
+- human-review minutes,
+- number of corrections,
+- refund/revision request,
+- whether they applied,
+- whether they would buy again,
+- whether an interview occurred later.
 
-Commercial gate: measured contribution margin of at least 60% for document packs and positive contribution for every supported send channel, after realistic refunds and support allocation. These are founder targets, not industry facts. If willingness to pay does not cover delivery, change scope or price before expanding.
+Talk to the customer after delivery.
 
-## 11. AI interviews
+---
 
-Keep the existing text experience as the starting point. Generate role/CV-specific questions, ask one at a time, evaluate against a transparent rubric and provide an improvement plan. Do not market automated feedback as an employer certification.
+## 15. Validation gates
 
-For the free monthly entitlement, propose eight questions and one report per verified adult account per calendar month in Asia/Kathmandu. Interrupted sessions can resume without consuming a second entitlement. Avoid unlimited regenerations. Enforce quotas server-side and count completed delivery consistently.
+Do not interpret signups as product-market fit.
 
-Then add turn-based voice: record one answer, transcribe, evaluate, speak the next question. This is easier to bound than an always-connected live voice room. Speech APIs are not assumed free; self-hosted models still require compute and maintenance. Price voice separately using measured transcription, synthesis, model and storage costs.
+### Gate A: usefulness
 
-Only later add live voice/video. Camera and screen recording should be opt-in for practice, with visible indicators, stop controls and deletion. Recordings do not prove identity, honesty or lack of cheating. Do not analyze facial emotion or claim employability from appearance. Offer text/audio alternatives for low-bandwidth and accessibility.
+Before major expansion:
 
-Before implementation, inspect camera/microphone Permissions-Policy headers, secure context requirements, browser support and upload limits. Set a proposed seven-day default recording retention with user deletion; retain feedback separately only with a stated policy. Do not offer employer-facing proctoring until its consent, accuracy and legal requirements have been independently reviewed.
+- users should regularly find relevant jobs,
+- high-severity hard-constraint mistakes should be rare,
+- paid documents should need few critical factual corrections.
 
-## 12. Technical blueprint
+### Gate B: willingness to pay
 
-Reuse the frontend and inspect the existing backend before choosing new infrastructure. Recommended initial shape: one modular backend, relational database, private document storage, a durable worker and provider adapters. No microservice fleet, vector database or dedicated GPU is required merely to launch.
+Evidence should include:
 
-### Proposed entities, not existing schema
+- real purchases,
+- repeat purchases,
+- low refund rates,
+- users choosing paid application help without being pushed.
 
-| Entity group | Purpose and invariants |
-| --- | --- |
-| Identity/session | User, linked identity, secure session, account verification |
-| Profile | Versioned profile facts, preferences and provenance |
-| Documents | Private object key, owner, content hash, version, parse result, retention |
-| Jobs/sources | Canonical job, source references, permission/capability record, verification dates |
-| AI preferences | Versioned settings, language, budget and automation limits |
-| Consent | User, authorized action/channel, scope, snapshot, expiry and revocation |
-| Applications | Job/user, immutable pack, answer snapshot, state and approval |
-| Attempts/events | Destination, idempotency key, timestamps, receipt, error category |
-| Billing | Price version, ledger, reservation, payment order and provider receipt |
-| Mail | Connection metadata, encrypted tokens, minimal message associations |
-| Interviews | Entitlement, session, answers, report and optional recording references |
+### Gate C: unit economics
 
-Keep module boundaries: identity, profile, inventory, matching, documents, applications, billing, messaging and interviews. Reuse verified existing `/api/me/*` contracts where possible. Publish an OpenAPI contract after backend inspection instead of coding against invented endpoints.
+Measure:
 
-The request handler should validate/enqueue, not run a long application browser session. Workers need leases, retry limits, cancellation, timeouts and an operator-visible dead-letter queue. At-least-once delivery requires idempotent effects; do not promise exactly-once external submissions when a portal supplies no such guarantee.
+- contribution per CV,
+- contribution per application pack,
+- support minutes,
+- AI cost,
+- payment cost,
+- revision cost.
 
-At this scale, use a durable database-backed queue if it fits the real backend; adopt another queue only for a demonstrated need. Isolate destination credentials and document access. Keep network destinations allowlisted; block private-network URL fetches and unsafe redirects to reduce SSRF risk.
+### Gate D: retention
 
-### Security and operational requirements
+A job seeker eventually leaving after finding work can be success.
 
-- Migrate toward server-issued Secure, HttpOnly sessions with appropriate SameSite and CSRF protections; account for actual cross-origin backend deployment.
-- Encrypt OAuth refresh tokens at rest; never send provider secrets to the browser or logs.
-- Enforce ownership on every profile, document, credit and application operation.
-- Validate MIME/content/size; quarantine unsafe files and prevent public document URLs.
-- Keep model prompts, private CVs and mailbox bodies out of ordinary analytics/error logs.
-- Separate admin roles; audit support access and financial adjustments.
-- Provide deletion/export, backup restoration, incident response and token revocation.
-- Test prompt injection from jobs/CVs/emails against spending and tool permissions.
-- Rate-limit free AI and authentication without invasive device fingerprinting.
-- Distinguish a denied permission, expired credential, portal change and provider outage in UI and support tools.
+Therefore monitor:
 
-Proposed retention defaults: private documents until user deletion/account closure; raw extraction intermediates 24 hours; selected mail bodies up to 30 days only where needed; voice/video recordings seven days. Financial records may require longer retention: obtain local accounting/legal advice before publishing exact commitments. Deletion must include derived data and a documented backup-expiry process.
+- return visits while actively job seeking,
+- repeat application purchases,
+- number of useful matches,
+- application completion,
+- interview outcomes.
 
-## 13. Delivery phases and completion gates
+---
 
-Estimates below are engineer-weeks for one experienced full-stack engineer with access to the real backend. They exclude external approval waiting and assume no major rewrite. They are not fixed delivery commitments.
+## 16. B2B experiment: start earlier, build later
 
-| Phase | Scope | Effort | Must be true before moving on |
-| --- | --- | --- | --- |
-| 0. Reality and permissions | Backend audit, authentication review, source rights, user interviews, baseline metrics | 1–2 weeks | Real feature inventory; safe source plan; first segment confirmed |
-| 1. Profile foundation | Optional Google login, staged onboarding, versioned profile/CV, privacy controls | 2–3 weeks | Users can correct/export/delete data; ownership/session tests pass |
-| 2. Matching and packs | Verified inventory, explainable matches, AI settings, document diff/export | 2–3 weeks | No invented critical facts in evaluation; usable documents and measured costs |
-| 3. Tracker and credits | Application lifecycle, manual handoff, ledger, one payment gateway, refunds | 2–3 weeks | No duplicate credits; accurate statuses; transparent paid delivery |
-| 4. Supported sending | One partner/native/email channel, receipts, consent and reconciliation | 2–4 weeks | Real opt-in pilot proves safe delivery and failure handling |
-| 5. Portal integrations | Permission review, one or two adapters, user handoff, bounded auto mode | 3–6 weeks | Permission and reliability gates met per destination |
-| 6. Mail intelligence | Selective forwarding first; optional verified Gmail integration | 1–2 weeks forwarding; 2–4 weeks Gmail engineering | Correct associations, deletion/revocation; Google requirements satisfied |
-| 7. Interview expansion | Reliable text quotas, then voice, optional recording | 1–2 weeks text hardening; 2–4 voice; 3–5 recording | Quality, cost, accessibility and privacy gates pass |
-| 8. Scale and growth | More permitted channels, employer partnerships, referral/cohort optimization | Ongoing | Retention and contribution justify each expansion |
+Candidate products can generate initial revenue, but candidate lifetime is naturally limited: successful users eventually get jobs.
 
-Phases 0–3 imply roughly 7–11 full-time engineer-weeks for a paid assisted beta, subject to backend condition and payment approval. Reliable multi-portal automation is a several-month project with external dependencies, not another toggle. Mail and interview work can follow demonstrated demand; neither should block document-pack revenue.
+Employer-side revenue may become more durable.
 
-### Phase 0 checklist
+Do not build a full employer ATS immediately.
 
-Locate backend code and production topology; verify migrations, auth, storage and AI billing. Record which UI flows work end-to-end with test accounts. Audit source agreements, expired jobs, duplicate jobs and error states. Interview ten target job seekers and five employers. Validate willingness to pay for packs without automation. Choose one permitted submission pilot and open payment/OAuth prerequisite work.
+### Early employer experiment
 
-### Phase 1 checklist
+Once KamKhoj has a useful candidate pool:
 
-Ship save-and-resume onboarding, profile provenance, extraction review, versioning and secure access. Test with five users on mobile and slow connections. Treat missing CV text and conflicting dates as normal supported states. Provide public privacy/support pages before asking for additional sensitive access.
+1. allow selected employers to submit a vacancy,
+2. normalize its requirements,
+3. match consenting candidates,
+4. let candidates approve applications,
+5. send employers structured candidate applications,
+6. measure employer satisfaction.
 
-### Phase 2 checklist
+Initially this can be manually operated.
 
-Build the labeled matching/document evaluation set. Compare model candidates. Implement factual checks, revision budget, preview and exports. Run at least 50 document cases including employment gaps, Nepali names, mixed-language content and missing salary. Block release for invented employers, qualifications or eligibility in the test set.
+### Potential paid employer products later
 
-### Phase 3 checklist
+- paid job listing,
+- promoted listing clearly labeled as sponsored,
+- candidate matching,
+- shortlist preparation,
+- structured applicant inbox,
+- application management,
+- recruiter workflow tools.
 
-Launch a tracker distinguishing manual claims from receipts. Implement sandbox payments, ledger reservations/refunds and duplicate-webhook/concurrent-spend tests. Beta with 20–30 invited users; charge only after explaining exactly what is delivered. Publish support and refund procedures. Confirm willingness to pay before broad acquisition.
+Never sell candidate data without appropriate consent.
 
-### Phases 4–5 checklist
+Do not secretly rank paid employers as better matches.
 
-Prove one channel using real applications authorized by their owners. Proposed release gate: at least 50 authorized submissions across at least ten users, zero duplicate sends, zero critical factual misrepresentations, and at least 95% resolved outcomes for eligible attempts. Include failures in reporting and show the excluded/unsupported share. A small pilot is not proof of universal reliability.
+---
 
-Enable bounded auto mode only after the same channel passes consent-revocation, stale-job, unknown-outcome and duplicate-prevention tests. Any duplicate, unauthorized send or critical data exposure pauses the affected channel. Maintain a kill switch and manual support path.
+## 17. Features intentionally deferred
 
-### Phases 6–8 checklist
+These are not bad ideas. They are simply not required to validate revenue.
 
-Ship forwarding before broad mailbox access. Validate email association against at least 100 consented examples, including unrelated messages, phishing and ambiguous company names. Add voice only after measuring interview usage and unit economics. Expand portal coverage according to requested jobs and support burden, not a competitor checklist.
+### Defer until demonstrated demand
 
-## 14. Nepal-first distribution and differentiation
+- Gmail read synchronization,
+- Gmail automatic sending,
+- live voice interviews,
+- video interview recording,
+- universal browser agents,
+- LinkedIn automation,
+- multi-ATS automatic submission,
+- large credit economy,
+- complex subscriptions,
+- mobile portal-session automation,
+- microservice decomposition,
+- vector databases without measured need,
+- dedicated GPU infrastructure.
 
-Win a narrow segment before claiming to be Nepal's best platform. Start with a cohort of 20–30 job seekers from colleges, developer communities and early-career networks. Offer onboarding assistance to observe where they struggle; count that labor in your economics.
+### Why
 
-Differentiate through verified deadlines, Nepal eligibility, realistic salary handling, bilingual support, local payments, accurate profiles and visible submission proof. Build a small employer network that accepts structured applications directly; it reduces reliance on restricted portals and can improve feedback quality.
+Each adds some combination of:
 
-Interview users who abandon onboarding, decline payment or request refunds. Track why recommendations fail: location, seniority, salary, stale vacancy or poor documents. Publish honest educational content and permissioned success stories, not invented user counts or testimonials.
+- external approvals,
+- legal/terms risk,
+- operational support,
+- engineering complexity,
+- privacy risk,
+- provider cost,
+- failure modes that do not directly prove willingness to pay.
 
-Keep public job/content pages indexable when appropriate and private profiles, CVs, dashboards and application history protected. Structured data must match visible facts. SEO and AI-search exposure can support acquisition but cannot guarantee rankings or citations; do not budget revenue on automatic search visibility.
+---
 
-Offer referral credit only after meaningful activation or a verified purchase, with a capped budget. Avoid unlimited signup rewards. Seek campus/employer partnerships with explicit terms; do not resell candidate data or quietly prioritize sponsored jobs as best matches.
+## 18. Minimal technical architecture
 
-### Metrics that matter
+Reuse the current frontend and inspect the real backend before rewriting infrastructure.
 
-| Metric | Why it matters |
-| --- | --- |
-| Verified profile completion | Measures whether onboarding produces usable facts |
-| Time to first useful match/pack | Measures initial value, not page views |
-| Match acceptance and dismissal reasons | Measures relevance |
-| Critical document correction rate | Measures trust and factual quality |
-| Supported share of desired applications | Measures genuine automation coverage |
-| Confirmed submissions / all attempted submissions | Measures reliability, including failures |
-| Unknown outcomes and duplicate sends | Exposes operational risk |
-| Interviews per 100 confirmed applications | Useful outcome, with source and observation window |
-| Paid conversion and repeat credit purchase | Measures willingness to pay and retention |
-| Contribution per action and support minutes | Measures whether growth earns money |
+The commercial beta needs:
 
-Interview and offer rates are observational; they cannot prove KamKhoj caused the outcome. Report sample sizes and follow-up windows. A job seeker leaving because they found work can be a success, not ordinary churn.
+- authentication,
+- secure sessions,
+- user/profile module,
+- private CV/document storage,
+- job inventory,
+- matching service,
+- document-generation service,
+- application tracker,
+- payment integration,
+- basic admin/support tooling,
+- audit trail.
 
-## 15. Immediate execution order
+### Suggested module boundaries
 
-1. Inspect the separate backend and replace assumptions with a verified inventory.
-2. Audit source permissions and current authentication before collecting more sensitive data.
-3. Validate the initial customer segment and pack pricing with ten conversations.
-4. Implement secure, editable profile onboarding and confirmed CV facts.
-5. Build reviewed document packs and explainable matching.
-6. Add tracker, atomic credits and one verified payment gateway.
-7. Run a small paid assisted beta and measure costs/outcomes.
-8. Add one permitted submission channel, then bounded automation.
-9. Add optional mail synchronization and voice interviews only when justified.
+- identity,
+- profile,
+- documents,
+- inventory,
+- matching,
+- applications,
+- billing,
+- interviews later,
+- employer tools later.
 
-Detailed engineering tickets and acceptance tests are in [the implementation backlog](./kamkhoj-implementation-backlog.md).
+A modular monolith is sufficient unless real scale demonstrates another requirement.
 
-## 16. Research boundaries and unresolved dependencies
+---
 
-Official product/developer sources are linked beside the claims they support. Pricing was checked for this planning exercise and must be rechecked before purchasing or publishing prices. The source sites' terms are not a substitute for local legal advice.
+## 19. Core entities
 
-Not established: production backend behavior; real user count or conversion; paid source rights; any Sprout/ATS/portal partnership; JobsNepal or KumariJob automation permission; merchant approval/fees; Google verification outcome; Gmail assessment cost; model quality on KamKhoj data; real delivery cost or reliability.
+These are target concepts, not claims about the current backend schema.
 
-The attempted JobsNepal and KumariJob terms URLs could not be retrieved in this research. Their status is unknown, not approved. Merojob's terms were accessible and identify restrictions relevant to sourcing and automation. No portal accounts were accessed, applications submitted, inboxes connected, payments initiated or partners contacted while preparing this roadmap.
+| Entity              | Purpose                                    |
+| ------------------- | ------------------------------------------ |
+| User                | Identity and account state                 |
+| ProfileVersion      | Confirmed structured career facts          |
+| CandidatePreference | Role/location/work/salary preferences      |
+| Document            | CV/source/rendered artifact and version    |
+| Job                 | Canonical normalized vacancy               |
+| JobSource           | Provenance and source-specific identifiers |
+| Match               | Explainable candidate-job relevance result |
+| ProductOrder        | Purchased CV/application/job-hunt product  |
+| ApplicationPack     | Job-specific documents and answers         |
+| Application         | Candidate-job lifecycle                    |
+| ApplicationEvent    | Status changes with source/confidence      |
+| Payment             | Payment provider/order/result              |
+| Refund              | Reversal history                           |
+| ReviewEvent         | Human or automated quality corrections     |
+| Employer            | Canonical employer identity                |
 
-The recommendation is intentionally commercially staged: earn trust and initial revenue from reliable assistance, then use measured demand and margins to fund broader automation.
+---
+
+## 20. Security requirements before monetization
+
+At minimum:
+
+- secure, HttpOnly server-issued sessions where architecture permits,
+- CSRF protection appropriate to deployment,
+- ownership checks on every profile/document/order/application,
+- private CV storage,
+- MIME/type/size validation,
+- no public permanent CV URLs,
+- secrets only on the server,
+- no CV content in ordinary analytics/error logs,
+- payment verification server-side,
+- idempotent payment callbacks,
+- audit history for manual financial adjustments,
+- rate limits for free AI actions,
+- export and deletion controls.
+
+Treat job descriptions and uploaded documents as untrusted input. Their text cannot authorize purchases, tools or external actions.
+
+---
+
+## 21. Payment launch
+
+Use one payment method first.
+
+For Nepal, KamKhoj uses **eSewa** as the single primary payment gateway.
+
+> [!NOTE]
+> **Gateway Status:**
+>
+> - **Active Gateway:** eSewa sandbox (`EPAYTEST`) with signed HMAC-SHA256 checkout and server-to-server transaction status verification.
+> - **Test Credentials:**
+>   - eSewa ID: `9841000000` (or `9841000001` through `9841000005`)
+>   - MPIN / Password: `1122`
+>   - OTP / Token: `123456`
+> - **Khalti Exclusion:** Khalti is **not** integrated into payment processing. The word "Khalti" only exists in Nepal company directory fixtures (companies hiring tech workers) and one CV fixture bullet.
+
+Before each paid action show:
+
+- exact product,
+- exact price,
+- what is delivered,
+- revision allowance,
+- refund policy,
+- expected user action after delivery.
+
+Do not mark payment successful from browser state alone.
+
+A failed generation is not a delivered product. Orders persist server-side and link directly to fulfillment workflows in Documents and Matches.
+
+---
+
+## 22. First commercial implementation phases
+
+### Phase 0 — Reality check
+
+**Goal:** verify what already works.
+
+- inspect production/backend behavior,
+- inspect authentication,
+- inspect CV storage/parsing,
+- inspect matching implementation,
+- inspect job freshness and duplicates,
+- inspect current job scrapers,
+- verify application URLs,
+- verify payment-readiness requirements.
+
+**Gate:** accurate list of production-ready and missing capabilities.
+
+### Phase 1 — Sellable profile and matching
+
+Build/fix:
+
+- CV upload,
+- extraction review,
+- editable structured profile,
+- job preferences,
+- explainable matching,
+- trustworthy job-detail page,
+- dashboard money screen.
+
+**Gate:** test users repeatedly find relevant current jobs.
+
+### Phase 2 — Paid CV product
+
+Build:
+
+- product/order model,
+- payment flow,
+- document generation,
+- deterministic rendering,
+- human-review queue,
+- download/delivery,
+- one revision flow.
+
+**Gate:** first real paid CV orders.
+
+### Phase 3 — Paid application pack
+
+Build:
+
+- job-specific tailoring,
+- cover letter/application email,
+- screening-answer suggestions,
+- application destination validation,
+- review/delivery flow.
+
+**Gate:** real users purchase packs and use them to apply.
+
+### Phase 4 — Job Hunt Pack and tracker
+
+Build:
+
+- bundle ordering,
+- curated job set,
+- application tracker,
+- repeat-purchase flow,
+- simple text interview.
+
+**Gate:** repeat purchase and acceptable contribution margin.
+
+### Phase 5 — Employer pilot
+
+Build only what a pilot needs:
+
+- employer identity,
+- vacancy intake,
+- job normalization,
+- candidate matching,
+- candidate approval,
+- structured shortlist delivery.
+
+**Gate:** employers confirm that KamKhoj sends useful candidates and at least some demonstrate willingness to pay.
+
+### Phase 6 — Controlled automation
+
+Only after the previous gates:
+
+- one permitted send channel,
+- delivery receipts,
+- idempotent queue,
+- clear failure states,
+- optional bounded automation.
+
+### Phase 7 — Optional integrations
+
+Only if justified by measured usage:
+
+- Gmail,
+- more payment products,
+- voice interview,
+- more ATS adapters,
+- employer workflow tools.
+
+---
+
+## 23. 30-day founder execution plan
+
+### Days 1–5: make the current product trustworthy
+
+- audit scraper output,
+- remove/flag stale and invalid jobs,
+- improve individual job-page extraction,
+- audit matching errors,
+- confirm CV parsing/editing flow,
+- create the commercial dashboard.
+
+### Days 6–10: build the first paid deliverable
+
+- implement Professional CV order,
+- implement payment or controlled manual beta payment,
+- build generation + review + PDF delivery,
+- create refund/revision rules.
+
+### Days 11–15: sell to the first users
+
+- recruit 10–20 active job seekers,
+- onboard them directly,
+- deliver manually where necessary,
+- ask for payment instead of giving everything free,
+- record objections.
+
+### Days 16–20: application pack
+
+- add per-job tailoring,
+- add application email/cover-letter generation,
+- improve match explanations,
+- record delivery time and corrections.
+
+### Days 21–25: repeat and improve
+
+- contact previous customers,
+- test Job Hunt Pack,
+- measure repeat purchase,
+- fix the most frequent quality failures,
+- remove features nobody uses.
+
+### Days 26–30: decision point
+
+Review:
+
+- number of paying customers,
+- gross revenue,
+- repeat customers,
+- refund/revision rate,
+- contribution per product,
+- match complaints,
+- document correction rate,
+- interviews reported,
+- acquisition channels.
+
+Then decide what deserves the next month of development.
+
+---
+
+## 24. Commercial dashboard metrics
+
+Do not optimize for page views alone.
+
+### Acquisition
+
+- new visitors,
+- CV uploads,
+- completed profiles,
+- source of user.
+
+### Product value
+
+- time to first useful match,
+- match save rate,
+- match dismissal reasons,
+- jobs opened,
+- official application clicks.
+
+### Monetization
+
+- checkout views,
+- paid conversion,
+- revenue by product,
+- repeat purchase rate,
+- average revenue per paying user,
+- refund rate.
+
+### Quality
+
+- document correction rate,
+- critical factual error rate,
+- stale-job reports,
+- duplicate-job reports,
+- unsupported application destinations,
+- average human-review minutes.
+
+### Outcome
+
+- applications reported,
+- acknowledged applications,
+- interviews,
+- offers,
+- outcome source and observation window.
+
+Do not claim that KamKhoj caused an interview or offer without evidence supporting that conclusion.
+
+---
+
+## 25. Kill / change criteria
+
+Avoid continuing merely because a lot of code has already been written.
+
+After a meaningful beta sample, reconsider the offer if:
+
+- users like free matching but consistently refuse to pay for application help,
+- human review remains too expensive at the tested prices,
+- generated documents require frequent factual correction,
+- job quality remains too unreliable to earn trust,
+- paid customers do not use the delivered applications,
+- repeat purchase is near zero despite active job seeking.
+
+Possible responses:
+
+- change pricing,
+- narrow the audience,
+- improve the paid deliverable,
+- focus on B2B sooner,
+- remove expensive AI actions,
+- specialize in one job category,
+- provide more human-assisted service at a higher price.
+
+Do not answer weak demand by simply adding more features.
+
+---
+
+## 26. Long-term direction
+
+If the candidate product works, KamKhoj can evolve into a two-sided employment platform.
+
+```text
+Job inventory
+      ↓
+Candidate profile + preferences
+      ↓
+Explainable matching
+      ↓
+Application assistance
+      ↓
+Candidate-approved application
+      ↓
+Employer receives structured applicant
+      ↓
+Interview / outcome tracking
+```
+
+Candidate revenue can come from:
+
+- professional CV products,
+- tailored applications,
+- job-hunt bundles,
+- interview preparation,
+- premium career tools.
+
+Employer revenue can later come from:
+
+- vacancy posting,
+- candidate matching,
+- shortlist services,
+- applicant-management tools,
+- recruiting workflows.
+
+This reduces dependence on third-party portal automation and creates a more defensible product than scraping alone.
+
+---
+
+## 27. Immediate execution order
+
+1. Audit the real backend and job data quality.
+2. Fix stale/invalid/poorly extracted vacancies.
+3. Ship a structured editable candidate profile.
+4. Ship explainable matching and the dashboard money screen.
+5. Launch the Professional CV beta product.
+6. Get the first paying users and review every delivery.
+7. Launch the Job-Specific Application Pack.
+8. Test the Job Hunt Pack.
+9. Measure repeat purchase, contribution and user outcomes.
+10. Run a lightweight employer matching pilot.
+11. Add supported submission automation only after demand and reliability justify it.
+12. Add Gmail, voice and broader automation only when they solve measured user problems.
+
+---
+
+## 28. Final product principle
+
+KamKhoj should not try to win by having the most features or the largest scraped database.
+
+It should win by being trusted for three things:
+
+1. **The jobs are real and current.**
+2. **The matches make sense for the candidate.**
+3. **The paid application help is good enough that people willingly buy it again.**
+
+The short-term objective is not to prove that KamKhoj can automate the entire job-search industry.
+
+The short-term objective is to prove:
+
+> **A real job seeker will pay KamKhoj because it materially improves an application they were already motivated to make.**
+
+Once that is true repeatedly, automation and scale become engineering problems rather than guesses about what the market wants.
+
+---
+
+## 29. Features retained from the original long-term roadmap
+
+The following original principles remain valid and should be preserved as KamKhoj grows:
+
+- Google identity and Gmail permissions must remain separate.
+- CV/profile facts require user confirmation and provenance.
+- External application clicks must not be labeled submitted automatically.
+- Automatic application should be destination-specific and permission-aware.
+- CAPTCHA, MFA, assessments, signatures and legal declarations require user handoff.
+- Application attempts require idempotency and duplicate protection when automation is introduced.
+- Financial events should be server-authoritative and idempotent.
+- Sensitive candidate data should not enter ordinary logs.
+- Gmail access, if introduced, should be optional and minimal.
+- Interview AI should not be marketed as an employer certification.
+- Job-source permissions should be reviewed rather than assumed from public availability.
+- Employer partnerships should be explicit rather than implied.
+- Candidate data should never be quietly resold.
+
+These are long-term guardrails. They no longer block the simpler commercial beta described above.

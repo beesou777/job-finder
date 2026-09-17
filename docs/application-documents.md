@@ -60,6 +60,12 @@ Generation logs only generator name, duration and zero provider calls/credits. T
 
 ## Rollout and continuation
 
+### Destination snapshot update — 16 September 2026
+
+New packs retain the evaluated destination in revision evidence and list required fields, upload constraints and user-action gates. Subsequent manual document revisions preserve this original evidence. Current registry state is evaluated separately when reading/reviewing a pack; `capabilityCurrent` is false when the snapshot differs or is absent. Older packs remain available, but require replacement before recording a current review. Deploy the matching backend/frontend contract together. Existing JSONB evidence stores the snapshot without another schema migration.
+
+This is conservative registry evaluation, not live inspection. Records expire after at most seven days. Unknown destinations remain manual; invalid destinations are unsupported. No registry entry can enable native submission, bypass CAPTCHA or charge credits. All new behavior and regression tests remain unexecuted under the user's deferred-verification instruction.
+
 ### Application capability and paid-service boundary
 
 The document context now includes an application capability record. It describes the inspected destination URL, provider classification, required fields, upload limits, CAPTCHA/CSRF and other risk gates, receipt signals, and the supported mode. Guru Infosys is the first recorded destination: KamKhoj can prepare the pack and open the official form, while the user must complete CAPTCHA, confirm accuracy, and submit. A public form is never treated as permission for unattended commercial submission.

@@ -10,6 +10,7 @@ import {
   MessageSquare,
   Settings,
   UserRound,
+  ClipboardList,
   FileText,
 } from "lucide-react";
 export function DashboardShell({ children }: { children: React.ReactNode }) {
@@ -31,6 +32,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           <Item href="/dashboard/profile" active={path.startsWith("/dashboard/profile")} icon={<UserRound />}>
             Career profile
           </Item>
+          <Item href="/dashboard/applications" active={path.startsWith("/dashboard/applications")} icon={<ClipboardList />}>
+            Applications
+          </Item>
           <Item
             href="/dashboard/matches"
             active={path.startsWith("/dashboard/matches")}
@@ -40,6 +44,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           </Item>
           <Item href="/dashboard/documents" active={path.startsWith("/dashboard/documents")} icon={<FileText />}>
             Documents
+          </Item>
+          <Item href="/dashboard/products" active={path.startsWith("/dashboard/products")} icon={<BriefcaseBusiness />}>
+            Services
           </Item>
           <Item
             href="/dashboard/saved"
@@ -107,6 +114,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             >
               Profile
             </Link>
+            <Link href="/dashboard/applications" aria-current={path.startsWith("/dashboard/applications") ? "page" : undefined} className={`whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-semibold transition ${path.startsWith("/dashboard/applications") ? "bg-primary/10 text-primary" : "text-[#617493] hover:text-primary"}`}>Applications</Link>
             <Link
               href="/dashboard/matches"
               className={`flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition ${
@@ -119,6 +127,9 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             </Link>
             <Link href="/dashboard/documents" aria-current={path.startsWith("/dashboard/documents") ? "page" : undefined} className={`whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-semibold ${path.startsWith("/dashboard/documents") ? "bg-primary/10 text-primary" : "text-[#617493] hover:text-primary"}`}>
               Documents
+            </Link>
+            <Link href="/dashboard/products" aria-current={path.startsWith("/dashboard/products") ? "page" : undefined} className={`whitespace-nowrap rounded-lg px-2.5 py-1 text-xs font-semibold ${path.startsWith("/dashboard/products") ? "bg-primary/10 text-primary" : "text-[#617493] hover:text-primary"}`}>
+              Services
             </Link>
             <Link
               href="/dashboard/saved"

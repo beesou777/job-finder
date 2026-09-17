@@ -1,5 +1,57 @@
 # Implementation progress
 
+## Services purchase history, eSewa sandbox testing & UI clarity pass — 16 September 2026
+
+Completed the commercial beta delivery overhaul:
+- **Services & Purchases Page (`/dashboard/products`)**: Wired `loadProductOrders()` and updated the backend order status mapping (`deliveryStatus: 'ready'` on completion, with `providerReference`). Purchases now display in a dedicated "Your Purchased Services & Orders" section with real-time status badges (`Paid & Verified`, `Pending Verification`, `Failed`), metadata, manual re-verification action, and immediate fulfillment buttons linking to Documents or Matches.
+- **eSewa Sandbox Testing Integration**: Integrated an in-UI test helper displaying sandbox credentials (Test ID: `9841000000`, MPIN: `1122`, OTP: `123456`). Confirmed Khalti is excluded from all payment logic and only exists in Nepal company fixtures.
+- **Application Documents Clarity (`/dashboard/documents`)**: Added an educational explainer and 3-step visual workflow (1. Career Profile → 2. Vacancy Selection → 3. Review & Print ATS PDF). Overhauled the empty state with direct CTAs and rendered existing packs with clear status badges (`Ready to Apply`, `Draft in Review`, `Profile Updated`).
+- **Application Tracker Clarity (`/dashboard/applications`)**: Added an introductory guide explaining user-reported tracking vs. official application submission. Added a 4-card pipeline metrics summary bar (Total, Active Pipeline, Interviews, Offers), color-coded stage pills, and a guided empty state.
+- **Automated Verification**: Backend `npm run typecheck` and frontend `yarn typecheck` passed with zero errors. Migrations 1 through 8 are confirmed applied in the database.
+
+## Manual application tracker — 16 September 2026
+
+Implemented the next commercial-first phase: owner-scoped tracked applications. Users can add a reviewed document pack to the tracker, open the official destination themselves, record submission, and maintain outcome statuses and private notes. Statuses remain user-reported; no email or employer receipt is claimed. Duplicate job tracking is idempotent per user, updates use an `expectedUpdatedAt` conflict check, and account ownership is enforced by every query.
+
+Added `job_seeker_applications` entity/migration, authenticated `/api/me/applications` endpoints, frontend API client, dashboard tracker route/navigation, and a link from the reviewed document editor. No credits, payment, application submission, Gmail access or portal automation was added. No build, typecheck, tests, migration or browser verification was run.
+
+The tracker boundary is now hardened: attaching a pack requires the pack's latest version to have an explicit review timestamp, and tracker destination URLs accept only credential-free HTTP(S) links. The tracker still records user-reported outcomes only; it never claims a send or receipt.
+
+Next: verify this tracker slice, then implement B01 (versioned product catalog/quotes) before B02 (transactional credits). The tracker remains usable for free and is intentionally not coupled to payment until delivery/refund semantics are tested.
+
+## Versioned product catalog — 16 September 2026
+
+Added the first B01 slice: Professional CV (NPR 599), Job-Specific Application Pack (NPR 249), and Job Hunt Pack (NPR 1,499) are exposed through an authenticated versioned catalog. A quote endpoint persists the selected catalog version, amount, deliverables and 15-minute expiry for auditability. The frontend adds a Services screen and clearly states that charging is disabled; no payment or credit balance is granted.
+
+Next: verify quote expiry and ownership, then implement B02 reservation/capture/release/refund ledger semantics before connecting eSewa or any other gateway.
+
+## eSewa sandbox checkout — 16 September 2026
+
+Added job-seeker payment orders and an eSewa checkout flow for the versioned product catalog. Checkout creates a pending owner-scoped order from a live quote, signs the eSewa form server-side, redirects through the eSewa sandbox, validates the signed callback, then calls eSewa transaction status before marking the order and quote complete. Browser redirects alone do not mark payment successful. Khalti is not part of the active payment path.
+
+Added `1790000000000-job-seeker-payment-orders.ts`, authenticated checkout/verification endpoints, a public eSewa callback redirect, and the Services-page payment form. The existing partner eSewa billing remains separate. Apply the new migrations and configure sandbox frontend/backend URLs before testing; no build, typecheck, tests or migrations were run.
+
+Remaining commercial gate: B02 transactional credits/reservations/refunds, then fulfillment/order delivery and support reconciliation. Automatic portal submission, Gmail, and recorded voice/video interviews remain later roadmap phases and are not represented as enabled by this checkout.
+
+## Bounded inspector phase — 16 September 2026
+
+Added admin-only `POST /api/me/application-capabilities/inspect`. It loads a stored vacancy URL, requires an explicit current host/path read-permission approval, and performs bounded HTTPS/robots inspection with public IPv4 pinning, redirect checks, deadline and byte limits. It parses a single application form into requirements and user-action gates, preserves manual/operator records and writes a short-lived capability snapshot. The document workflow reads results through its existing capability integration.
+
+Default off: `APPLICATION_INSPECTION_ENABLED` and `APPLICATION_INSPECTION_APPROVALS` must be configured deliberately. No forms, mail, credits or applications are submitted. Added regression cases but ran no tests, build, typecheck, migration or live HTTP inspection. See [destination-inspector.md](./destination-inspector.md) for configuration, restrictions and remaining network/integration verification. This completes the code slice, not release approval or the full product roadmap.
+
+## Destination snapshot continuation — 16 September 2026
+
+Continued from the capability/document-pack boundary in the current local repositories (`DETECH-002/Desktop/job-finder` and `DETECH-002/Desktop/job-backend`). Other machine paths below are historical notes, not this session's filesystem.
+
+- Replaced substring-based employer matching with exact normalized destination/source URL matching. Other roles and lookalike domains do not inherit the sample inspection.
+- Added bounded registry validation, seven-day maximum inspection validity, revoked/future/expired fallback, conservative URL classification and explicit unsupported results for invalid destinations. This classifier does not resolve DNS or provide an SSRF-safe fetcher.
+- Kept native dispatch and charging disabled, regardless of registry claims. The sample Guru inspection expires on 23 September 2026; it was not reinspected in this session.
+- New document revisions pin the evaluated destination snapshot in their existing JSON evidence. Requirements, file constraints and mandatory user-action gates are recorded before creation. No new migration is needed for this snapshot.
+- Document review now becomes invalid when destination evidence changes or expires. Older packs without a snapshot remain readable/exportable but need a fresh pack before review. Frontend review controls respect this state.
+- Added policy regression cases; did not execute them. No build, typecheck, tests, migration, browser checks or external requests were run.
+
+Next: implement an explicitly authorized, bounded read-only inspector with DNS/redirect protections; then destination-aware answer drafts and the application tracker. Current URL checks alone must never be used to authorize server-side fetching. Profile confirmation's newer stale-version recovery also needs review before submission features: approval must refer to facts actually reviewed, not silently confirm a newer unseen revision.
+
 ## Application strategy clarification - 16 September 2026
 
 Recorded the intended product direction in [application intelligence strategy](./application-intelligence-strategy.md): inspect the employer's actual application destination before tailoring documents or considering submission; classify each destination as manual handoff, assisted review, permitted native submission or unsupported; then ground documents in the confirmed profile and vacancy, require explicit approval, and reconcile receipts. The current `template-v1` generator uses no Gemini/external model and performs no application submission. Future paid value is reliable, destination-specific assistance and permitted bounded automation, not a universal browser bot.

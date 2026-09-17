@@ -8,7 +8,7 @@ export type DocumentPack = {
   content: DocumentContent;
   evidence: { matchedSkills: string[]; sourcePaths: string[]; notes: string[]; questions: string[]; language: 'en' | 'ne' };
   origin: 'template-v1' | 'user-edit'; reviewedAt: string | null; reviewedVersion: number | null;
-  reviewValid: boolean; profileCurrent: boolean; jobCurrent: boolean; jobStatus: string; updatedAt: string;
+  reviewValid: boolean; profileCurrent: boolean; jobCurrent: boolean; capabilityCurrent: boolean; jobStatus: string; updatedAt: string;
   capability: ApplicationCapability;
 };
 export type PackSummary = { id: string; title: string; company: string; version: number; profileVersion: number; reviewedAt: string | null; profileCurrent: boolean; updatedAt: string };
@@ -33,7 +33,7 @@ function pack(value: unknown): value is DocumentPack {
     typeof value.content.resume === 'string' && typeof value.content.coverLetter === 'string' &&
     ['matchedSkills', 'sourcePaths', 'notes', 'questions'].every((key) => strings(value.evidence && (value.evidence as Record<string, unknown>)[key])) &&
     ['en', 'ne'].includes(String(value.evidence.language)) && ['template-v1', 'user-edit'].includes(String(value.origin)) &&
-    ['reviewValid', 'profileCurrent', 'jobCurrent'].every((key) => typeof value[key] === 'boolean') &&
+    ['reviewValid', 'profileCurrent', 'jobCurrent', 'capabilityCurrent'].every((key) => typeof value[key] === 'boolean') &&
     nullableString(value.reviewedAt) && (value.reviewedVersion === null || integer(value.reviewedVersion)) && typeof value.jobStatus === 'string';
 }
 export class DocumentRequestError extends Error {

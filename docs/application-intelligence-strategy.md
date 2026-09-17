@@ -41,7 +41,7 @@ Charge for a defined reviewed pack, supported send or measured assistance. Show 
 ## Build order
 
 1. Add a source/capability registry and destination inspection records. **Started:** `application_capabilities` now records destination mode, required fields, files, risk gates, evidence and receipt signals; the API exposes it in document context.
-2. Build a read-only inspector for employer URLs and one approved test destination.
+2. Build a read-only inspector for employer URLs and one approved test destination. **Code added:** admin-only, disabled-by-default bounded HTML inspector; see [destination inspector](./destination-inspector.md). Network/integration verification and actual operator approval of a test destination remain pending.
 3. Add destination fields and review questions to document packs.
 4. Evaluate one AI provider with malicious instructions, missing facts, conflicting dates and long descriptions; add cost instrumentation.
 5. Ship assist mode with an application tracker and user-reported status.
