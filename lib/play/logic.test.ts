@@ -22,6 +22,51 @@ import {
 import { evaluateAchievements } from "./achievements";
 import { getDailyChallenges, hashDate, mulberry32 } from "./daily";
 import { levelFromXp, totalXpForLevel, updateStreak, xpForNext, xpForSession } from "./xp";
+import {
+  HANGMAN_WORDS,
+  NEPAL_QUESTIONS,
+  QUIZ_QUESTIONS,
+  SCRAMBLE_WORDS,
+  TYPING_QUOTES,
+  TYPING_WORDS,
+} from "./data";
+
+describe("content pools (anti-repetition)", () => {
+  it("each game pool holds at least 100 items", () => {
+    expect(SCRAMBLE_WORDS.length).toBeGreaterThanOrEqual(100);
+    expect(HANGMAN_WORDS.length).toBeGreaterThanOrEqual(100);
+    expect(QUIZ_QUESTIONS.length).toBeGreaterThanOrEqual(100);
+    expect(NEPAL_QUESTIONS.length).toBeGreaterThanOrEqual(100);
+    expect(TYPING_WORDS.length).toBeGreaterThanOrEqual(100);
+  });
+  it("word pools have no duplicate words", () => {
+    expect(new Set(SCRAMBLE_WORDS.map((w) => w.word)).size).toBe(SCRAMBLE_WORDS.length);
+    expect(new Set(HANGMAN_WORDS.map((w) => w.word)).size).toBe(HANGMAN_WORDS.length);
+    expect(new Set(TYPING_WORDS).size).toBe(TYPING_WORDS.length);
+  });
+  it("quiz pools have unique ids, valid answers and no duplicate questions", () => {
+    for (const pool of [QUIZ_QUESTIONS, NEPAL_QUESTIONS]) {
+      const ids = pool.map((q) => q.id);
+      expect(new Set(ids).size).toBe(pool.length);
+      const texts = pool.map((q) => q.question);
+      expect(new Set(texts).size).toBe(pool.length);
+      for (const q of pool) {
+        expect(q.choices.length).toBeGreaterThanOrEqual(2);
+        expect(q.answer).toBeGreaterThanOrEqual(0);
+        expect(q.answer).toBeLessThan(q.choices.length);
+      }
+    }
+  });
+  it("hangman words are single uppercase tokens", () => {
+    for (const w of HANGMAN_WORDS) {
+      expect(w.word).toMatch(/^[A-Z]{2,14}$/);
+    }
+  });
+  it("typing quotes are non-empty", () => {
+    expect(TYPING_QUOTES.length).toBeGreaterThanOrEqual(10);
+    for (const q of TYPING_QUOTES) expect(q.length).toBeGreaterThan(20);
+  });
+});
 
 describe("2048", () => {
   it("merges a row left once per pair", () => {
