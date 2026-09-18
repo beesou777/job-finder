@@ -33,6 +33,7 @@ export function Navbar() {
     { href: "/linkedin-jobs", label: "LinkedIn Jobs" },
     { href: "/internships", label: "Internships" },
     { href: "/remote-jobs", label: "Remote" },
+    { href: "/play", label: "Play" },
   ];
 
   const mobileNavLinks = [
@@ -55,6 +56,12 @@ export function Navbar() {
       icon: GraduationCap,
     },
     { href: "/remote-jobs", label: "Remote", description: "Work from anywhere", icon: Home },
+    {
+      href: "/play",
+      label: "Play",
+      description: "Games, puzzles & daily challenges",
+      icon: Compass,
+    },
     {
       href: "/dashboard/interview-practice",
       label: "Interview Practice",

@@ -512,4 +512,19 @@
         72% center;
     }
   }
+
+  /* KamKhoj Play: tasteful theme hooks + reduced-motion support. */
+  .play-reduced *,
+  .play-reduced *::before,
+  .play-reduced *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .play-shell * {
+      animation-duration: 0.001s !important;
+      transition-duration: 0.001s !important;
+    }
+  }
 }

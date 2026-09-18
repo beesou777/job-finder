@@ -16,6 +16,7 @@ export function AppChrome({ children }: { children: React.ReactNode }) {
     "/linkedin-jobs",
     "/skills",
     "/company",
+    "/play",
   ].some((route) => pathname?.startsWith(route));
   return (
     <>

@@ -11,6 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "knip": "knip --reporter compact",
+    "test:play": "vitest run lib/play/logic.test.ts",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {
@@ -47,7 +48,9 @@
     "knip": "^6.32.0",
     "prettier": "^3.9.6",
     "tailwindcss-animate": "^1.0.7",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1"
   },
   "engines": {
     "node": ">=18.0.0"
