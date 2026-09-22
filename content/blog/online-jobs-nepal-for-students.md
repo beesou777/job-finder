@@ -102,7 +102,7 @@ On **KamKhoj**, students can explore online and flexible jobs using the followin
 
 * **[Remote Jobs](https://www.kamkhoj.com/jobs?jobType=remote)**
 * **[Hybrid Jobs](https://www.kamkhoj.com/jobs?jobType=hybrid)**
-* **[Onsite Jobs](http://kamkhoj.com/jobs?jobType=onsite)**
+* **[Onsite Jobs](https://www.kamkhoj.com/jobs?jobType=onsite)**
 
 For students seeking learning-focused roles and early career exposure, KamKhoj also provides dedicated internship listings:
 

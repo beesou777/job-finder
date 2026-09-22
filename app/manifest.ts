@@ -2,8 +2,8 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "kamkhoj",
-    short_name: "kamkhoj",
+    name: "KamKhoj",
+    short_name: "KamKhoj",
     description: "Find the latest jobs and internships in Nepal",
     start_url: "/",
     display: "standalone",

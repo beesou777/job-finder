@@ -5,6 +5,8 @@ import { Code2 } from "lucide-react";
 import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { generateCollectionMetadata } from "@/lib/seo";
 import { titleCaseSlug } from "@/lib/site";
+import { getJobs } from "@/server/services/data-fetching";
+import { SEO_MIN_ACTIVE_JOBS } from "@/lib/role-pages";
 
 export const revalidate = 300;
 
@@ -16,21 +18,25 @@ export function generateStaticParams() {
 
 export async function generateMetadata({
   params,
+  searchParams,
 }: {
   params: { skill: string };
+  searchParams: Record<string, string | string[] | undefined>;
 }): Promise<Metadata> {
   const skillName = titleCaseSlug(params.skill);
+  const { total } = await getJobs({ search: skillName, limit: 1 });
+  const hasParameters = Object.keys(searchParams).length > 0;
   return {
     ...generateCollectionMetadata({
       path: `/skills/${params.skill}`,
-      title: `${skillName} Jobs in Nepal | Latest Skill-Based Vacancies | KamKhoj`,
+      title: `${skillName} Jobs in Nepal | Skill-Based Vacancies`,
       description: `Find ${skillName} jobs in Nepal. Search vacancies, internships, remote roles, and companies hiring for ${skillName} skills.`,
       keywords: [`${skillName} jobs nepal`, `${skillName} jobs kathmandu`, "skills jobs nepal"],
     }),
-    robots: {
-      index: false,
-      follow: true,
-    },
+    robots:
+      !hasParameters && total >= SEO_MIN_ACTIVE_JOBS
+        ? { index: true, follow: true }
+        : { index: false, follow: true },
   };
 }
 

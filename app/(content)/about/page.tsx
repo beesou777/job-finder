@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CheckCircle2, Mail, ShieldCheck, Info, Search, UserRound } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { absoluteUrl } from "@/lib/site";
+import { generateOrganizationSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "About KamKhoj | Nepal Job Search Engine",
@@ -14,6 +15,10 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="bg-zinc-950 min-h-screen text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(generateOrganizationSchema()) }}
+      />
       <section className="bg-zinc-950 border-b border-white/10">
         <div className="container mx-auto px-4 py-16 md:py-20">
           <div className="max-w-3xl">

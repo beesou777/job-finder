@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const report = await getMarketInsights();
   return {
-    title: "Nepal Job Market Insights | KamKhoj",
+    title: "Nepal Job Market Insights",
     description:
       "Current job-market signals from KamKhoj listings, including active jobs, categories, locations, internships, remote work, and expiring vacancies.",
     alternates: { canonical: "/insights" },

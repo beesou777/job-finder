@@ -3,7 +3,7 @@ import Link from "next/link";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Editorial Policy | KamKhoj",
+  title: "Editorial Policy",
   description:
     "KamKhoj editorial policy for job listing aggregation, source attribution, corrections, and career content review.",
   alternates: { canonical: absoluteUrl("/editorial-policy") },

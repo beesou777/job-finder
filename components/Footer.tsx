@@ -16,16 +16,14 @@ const exploreLinks = [
   { href: "/dashboard/interview-practice", label: "Interview practice" },
 ];
 
-// const popularLinks = [
-//   { href: "/jobs-in-nepal", label: "Jobs in Nepal" },
-//   { href: "/jobs-in-kathmandu", label: "Kathmandu jobs" },
-//   { href: "/it-jobs-nepal", label: "IT jobs" },
-//   { href: "/banking-jobs-nepal", label: "Banking jobs" },
-//   { href: "/jobs/category/government", label: "Government jobs" },
-//   { href: "/jobs/category/healthcare", label: "Healthcare jobs" },
-//   { href: "/jobs/category/teaching", label: "Teaching jobs" },
-//   { href: "/jobs/category/engineering", label: "Engineering jobs" },
-// ];
+const popularLinks = [
+  { href: "/jobs-in-nepal", label: "Jobs in Nepal" },
+  { href: "/jobs-in-kathmandu", label: "Kathmandu jobs" },
+  { href: "/it-jobs-nepal", label: "IT jobs" },
+  { href: "/roles/frontend-developer", label: "Frontend developer jobs" },
+  { href: "/roles/software-engineer", label: "Software engineer jobs" },
+  { href: "/roles/accountant", label: "Accountant jobs" },
+];
 
 const trustLinks = [
   { href: "/how-kamkhoj-works", label: "How it works" },
@@ -59,7 +57,7 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.25fr_0.8fr_0.8fr_0.85fr]">
           <div>
             <Link href="/" className="text-5xl font-black tracking-[-.07em] text-[#112d62]">
-              kam<span className="text-primary">khoj</span>
+              Kam<span className="text-primary">Khoj</span>
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-6 text-slate-500">
               Nepal job discovery for vacancies, internships, remote roles, and practical career
@@ -80,7 +78,7 @@ export function Footer() {
           </div>
 
           <FooterGroup title="Explore" links={exploreLinks} />
-          {/* <FooterGroup title="Popular" links={popularLinks} /> */}
+          <FooterGroup title="Popular" links={popularLinks} />
           <FooterGroup title="Trust" links={trustLinks} />
         </div>
 

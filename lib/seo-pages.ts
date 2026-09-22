@@ -1,5 +1,9 @@
+import type { Metadata } from "next";
+import { getJobs } from "@/server/services/data-fetching";
+
 export type SeoLandingPageConfig = {
   slug: string;
+  path?: string;
   title: string;
   description: string;
   h1: string;
@@ -15,6 +19,15 @@ export type SeoLandingPageConfig = {
   related: Array<{ href: string; label: string }>;
 };
 
+export type SeoSearchParams = {
+  page?: string;
+  search?: string;
+  category?: string;
+  jobType?: string;
+  location?: string;
+  urgency?: string;
+};
+
 const commonLinks = [
   { href: "/jobs", label: "Latest jobs in Nepal" },
   { href: "/internships", label: "Internships in Nepal" },
@@ -26,7 +39,7 @@ const commonLinks = [
 export const seoLandingPages: Record<string, SeoLandingPageConfig> = {
   "jobs-in-nepal": {
     slug: "jobs-in-nepal",
-    title: "Jobs in Nepal | Latest Job Vacancies 2026 | KamKhoj",
+    title: "Jobs in Nepal | Latest Job Vacancies",
     description:
       "Find latest jobs in Nepal from MeroJob, JobsNepal, Kantipur Job, KumariJob and more. Search vacancies by role, company, category, and location.",
     h1: "Jobs in Nepal",
@@ -229,7 +242,13 @@ export const seoLandingPages: Record<string, SeoLandingPageConfig> = {
 };
 
 /** Keep thin/empty landing pages out of search indexes while preserving discovery links. */
-export async function getLandingPageRobots(config: SeoLandingPageConfig): Promise<Metadata["robots"]> {
+export async function getLandingPageRobots(
+  config: SeoLandingPageConfig,
+  searchParams: SeoSearchParams = {},
+): Promise<Metadata["robots"]> {
+  if (hasIndexChangingSearchParams(searchParams)) {
+    return { index: false, follow: true };
+  }
   try {
     const { total } = await getJobs({ ...config.filter, limit: 1 });
     return total >= 10 ? { index: true, follow: true } : { index: false, follow: true };
@@ -238,5 +257,24 @@ export async function getLandingPageRobots(config: SeoLandingPageConfig): Promis
     return { index: false, follow: true };
   }
 }
-import type { Metadata } from "next";
-import { getJobs } from "@/server/services/data-fetching";
+
+export function hasIndexChangingSearchParams(
+  searchParams: Record<string, string | string[] | undefined> = {},
+) {
+  return Object.entries(searchParams).some(([key, value]) => {
+    if (value === undefined || value === "") return false;
+    return ["page", "search", "category", "jobType", "location", "urgency"].includes(key);
+  });
+}
+
+export async function isLandingPageIndexable(
+  config: SeoLandingPageConfig,
+  minimumActiveJobs = 10,
+) {
+  try {
+    const { total } = await getJobs({ ...config.filter, limit: 1 });
+    return total >= minimumActiveJobs;
+  } catch {
+    return false;
+  }
+}

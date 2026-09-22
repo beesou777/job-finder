@@ -395,14 +395,46 @@ export function TestimonialsSection() {
 
 export function HomeFaqSection() {
   const questions = [
-    "Is KamKhoj free for job seekers?",
-    "Do you offer internships as well?",
-    "How do I apply for a job?",
-    "How can companies post jobs?",
-    "Are the job listings verified?",
-    "Is my personal data safe?",
-    "Can I get job alerts?",
-    "How can I contact support?",
+    {
+      question: "Is KamKhoj free for job seekers?",
+      answer:
+        "Yes. You can browse jobs, internships, and career resources without a paid subscription.",
+    },
+    {
+      question: "Do you offer internships as well?",
+      answer:
+        "Yes. KamKhoj has a dedicated internships section with listings collected from public Nepali sources.",
+    },
+    {
+      question: "How do I apply for a job?",
+      answer:
+        "Open a listing and use its apply link to continue to the original employer or job-portal page. The source page controls the final application process.",
+    },
+    {
+      question: "How can companies post jobs?",
+      answer:
+        "The post-a-job directory explains the available source platforms. KamKhoj currently focuses on discovering public listings rather than accepting applications directly.",
+    },
+    {
+      question: "Are the job listings verified?",
+      answer:
+        "KamKhoj checks public sources and shows source information when available, but you should confirm the deadline, eligibility, salary, and instructions on the original listing.",
+    },
+    {
+      question: "Is my personal data safe?",
+      answer:
+        "You can browse public listings without an account. Review the privacy policy for how account and service data are handled.",
+    },
+    {
+      question: "Can I get job alerts?",
+      answer:
+        "Account features may help organize preferences and matches. Availability can change, so browse the latest listings for the current results.",
+    },
+    {
+      question: "How can I contact support?",
+      answer:
+        "Use the contact page for listing corrections, source questions, removal requests, and general feedback.",
+    },
   ];
   return (
     <section className="bg-white py-14">
@@ -423,16 +455,13 @@ export function HomeFaqSection() {
           </Link>
         </div>
         <div className="grid gap-3 md:grid-cols-2">
-          {questions.map((question) => (
-            <details key={question} className="faq-row">
+          {questions.map((item) => (
+            <details key={item.question} className="faq-row">
               <summary>
-                {question}
+                {item.question}
                 <ChevronDown className="h-4 w-4 shrink-0 text-primary" />
               </summary>
-              <p>
-                KamKhoj helps you discover opportunities and verify the final application details on
-                the original source.
-              </p>
+              <p>{item.answer}</p>
             </details>
           ))}
         </div>

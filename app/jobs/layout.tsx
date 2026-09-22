@@ -1,21 +1,13 @@
 import { Metadata } from "next";
-import { DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, SITE_NAME, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Jobs in Nepal | Browse Latest Job Openings | kamkhoj",
+  title: "Jobs in Nepal | Browse Latest Job Openings",
   description:
     "Browse thousands of jobs in Nepal. Filter by category, location, job type. Find your next opportunity in Kathmandu, Pokhara, and cities across Nepal.",
-  keywords: [
-    "jobs in nepal",
-    "nepal jobs",
-    "jobs kathmandu",
-    "job portal nepal",
-    "nepal job search",
-    "jobs pokhara",
-    "nepal employment",
-  ],
   openGraph: {
-    title: "Jobs in Nepal | kamkhoj",
+    title: "Jobs in Nepal | KamKhoj",
+    siteName: SITE_NAME,
     description: "Browse thousands of job opportunities in Nepal",
     url: absoluteUrl("/jobs"),
     images: [{ url: DEFAULT_OG_IMAGE }],

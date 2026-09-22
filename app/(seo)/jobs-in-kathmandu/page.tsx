@@ -1,13 +1,13 @@
 import { SEOLandingPage } from "@/components/SEOLandingPage";
 import { generateCollectionMetadata } from "@/lib/seo";
-import { getLandingPageRobots, seoLandingPages } from "@/lib/seo-pages";
+import { getLandingPageRobots, SeoSearchParams, seoLandingPages } from "@/lib/seo-pages";
 
 const config = seoLandingPages["jobs-in-kathmandu"];
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata() {
-  const robots = await getLandingPageRobots(config);
+export async function generateMetadata({ searchParams }: { searchParams: SeoSearchParams }) {
+  const robots = await getLandingPageRobots(config, searchParams);
   return {
     ...generateCollectionMetadata({
       path: "/jobs-in-kathmandu",
@@ -19,6 +19,12 @@ export async function generateMetadata() {
   };
 }
 
-export default function Page({ searchParams }: { searchParams: { page?: string } }) {
-  return <SEOLandingPage config={config} page={Number(searchParams.page || 1)} />;
+export default function Page({ searchParams }: { searchParams: SeoSearchParams }) {
+  return (
+    <SEOLandingPage
+      config={config}
+      page={Number(searchParams.page || 1)}
+      searchParams={searchParams}
+    />
+  );
 }

@@ -17,7 +17,7 @@ export async function generateMetadata({
   return {
     ...generateCollectionMetadata({
       path: `/company/${params.company}`,
-      title: `${companyName} Jobs in Nepal | Careers and Vacancies | KamKhoj`,
+      title: `${companyName} Jobs in Nepal | Careers and Vacancies`,
       description: `Find latest ${companyName} jobs in Nepal. Browse active vacancies, internships, and related openings aggregated by KamKhoj.`,
       keywords: [`${companyName} jobs`, `${companyName} careers`, "company jobs nepal"],
     }),

@@ -15,7 +15,8 @@ export function generateLinkedInJobMetadata(job: {
   id: number;
   slug?: string | null;
 }): Metadata {
-  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.place ? ` - ${job.place}` : ""} | LinkedIn Jobs | ${SITE_NAME}`;
+  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}${job.place ? ` - ${job.place}` : ""}`;
+  const socialTitle = `${title} | ${SITE_NAME}`;
   const description = job.description
     ? `${job.description.substring(0, 155).replace(/\n/g, ' ')}...`
     : `Apply for ${job.title}${job.company ? ` at ${job.company}` : ""}${job.place ? ` in ${job.place}` : ""}. LinkedIn job opportunity.`;
@@ -26,7 +27,7 @@ export function generateLinkedInJobMetadata(job: {
     title,
     description,
     openGraph: {
-      title,
+      title: socialTitle,
       description,
       type: "article",
       url: `${BASE_URL}/linkedin-jobs/${jobSlug}`,
@@ -34,7 +35,7 @@ export function generateLinkedInJobMetadata(job: {
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description,
     },
     alternates: {
@@ -50,21 +51,15 @@ export function generateCategoryMetadata(
   categoryName: string,
   total: number
 ): Metadata {
-  const title = `${categoryName} Jobs in Nepal | ${total}+ ${categoryName} Opportunities ${new Date().getFullYear()}`;
-  const description = `Find ${categoryName} jobs in Nepal. Browse ${total}+ ${categoryName} job openings in Kathmandu, Pokhara, and across Nepal. Updated daily. Apply now.`;
+  const title = `${categoryName} Jobs in Nepal`;
+  const description = `Find ${categoryName} jobs in Nepal and review ${total.toLocaleString()} current listings collected from public job sources before applying on the original site.`;
 
   return {
     title,
     description,
-    keywords: [
-      `${categoryName.toLowerCase()} jobs nepal`,
-      `${categoryName.toLowerCase()} jobs kathmandu`,
-      `${categoryName.toLowerCase()} careers nepal`,
-      `nepal ${categoryName.toLowerCase()} jobs`,
-    ],
     openGraph: {
-      title: `${categoryName} Jobs in Nepal | kamkhoj`,
-      description: `Latest ${categoryName} job opportunities in Nepal`,
+      title: `${categoryName} Jobs in Nepal | ${SITE_NAME}`,
+      description,
       url: `${BASE_URL}/jobs/category/${slugify(categoryName)}`,
       images: [{ url: DEFAULT_OG_IMAGE }],
     },
@@ -81,21 +76,15 @@ export function generateLocationMetadata(
   city: string,
   total: number
 ): Metadata {
-  const title = `Jobs in ${city}, Nepal | ${total}+ Job Opportunities ${city} ${new Date().getFullYear()}`;
-  const description = `Find jobs in ${city}, Nepal. Browse ${total}+ job openings in ${city} from top companies. IT jobs, marketing jobs, and more. Updated daily.`;
+  const title = `Jobs in ${city}, Nepal`;
+  const description = `Find jobs in ${city}, Nepal and review ${total.toLocaleString()} current listings collected from public job sources before applying on the original site.`;
 
   return {
     title,
     description,
-    keywords: [
-      `jobs in ${city.toLowerCase()}`,
-      `${city.toLowerCase()} jobs nepal`,
-      `jobs ${city.toLowerCase()}`,
-      `nepal jobs ${city.toLowerCase()}`,
-    ],
     openGraph: {
-      title: `Jobs in ${city}, Nepal | kamkhoj`,
-      description: `Latest job opportunities in ${city}, Nepal`,
+      title: `Jobs in ${city}, Nepal | ${SITE_NAME}`,
+      description,
       url: `${BASE_URL}/jobs/${slugify(city)}`,
       images: [{ url: DEFAULT_OG_IMAGE }],
     },
@@ -141,11 +130,21 @@ export function generateJobPostingSchema(job: {
   isRemote?: boolean;
 }) {
   const isRemote = job.isRemote || job.type === "remote";
+  const employmentType =
+    job.type === "internship"
+      ? "INTERN"
+      : job.type === "part-time"
+        ? "PART_TIME"
+        : job.type === "full-time"
+          ? "FULL_TIME"
+          : job.type === "contract"
+            ? "CONTRACTOR"
+            : undefined;
   const baseSchema = {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: job.title,
-    description: job.description || job.title,
+    description: job.description,
     identifier: {
       "@type": "PropertyValue",
       name: SITE_NAME,
@@ -160,15 +159,10 @@ export function generateJobPostingSchema(job: {
               : job.expiresAt.toISOString(),
         }
       : {}),
-    employmentType:
-      job.type === "internship"
-        ? "INTERN"
-        : job.type === "part-time"
-          ? "PART_TIME"
-          : "FULL_TIME",
+    ...(employmentType ? { employmentType } : {}),
     hiringOrganization: {
       "@type": "Organization",
-      name: job.company || "Company",
+      name: job.company,
     },
     ...(isRemote
       ? {
@@ -180,7 +174,7 @@ export function generateJobPostingSchema(job: {
             "@type": "Place",
             address: {
               "@type": "PostalAddress",
-              addressLocality: job.location || "Nepal",
+              ...(job.location ? { addressLocality: job.location } : {}),
               addressCountry: "NP",
             },
           },
@@ -208,28 +202,34 @@ export function generateLinkedInJobPostingSchema(job: {
     "@context": "https://schema.org",
     "@type": "JobPosting",
     title: job.title,
-    description: job.description || job.title,
+    description: job.description,
     identifier: {
       "@type": "PropertyValue",
       name: SITE_NAME,
       value: `linkedin-${job.id}`,
     },
-    datePosted: job.job_date
-      ? (typeof job.job_date === "string" ? job.job_date : job.job_date.toISOString())
-      : new Date().toISOString(),
-    hiringOrganization: {
-      "@type": "Organization",
-      name: job.company || "Company",
-    },
-    jobLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: job.place || "Nepal",
-        addressCountry: "NP",
-      },
-    },
-    url: job.apply_link,
+    ...(job.job_date
+      ? {
+          datePosted:
+            typeof job.job_date === "string" ? job.job_date : job.job_date.toISOString(),
+        }
+      : {}),
+    ...(job.company
+      ? { hiringOrganization: { "@type": "Organization", name: job.company } }
+      : {}),
+    ...(job.place
+      ? {
+          jobLocation: {
+            "@type": "Place",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: job.place,
+              addressCountry: "NP",
+            },
+          },
+        }
+      : {}),
+    url: absoluteUrl(`/linkedin-jobs/${job.id}`),
   };
 }
 
@@ -256,10 +256,36 @@ export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${SITE_URL}/#organization`,
     name: SITE_NAME,
-    url: SITE_URL,
-    logo: absoluteUrl("/kamkhoj.png"),
-    description: "Nepal job search and career resources from KamKhoj.",
+    url: `${SITE_URL}/`,
+    logo: {
+      "@type": "ImageObject",
+      url: absoluteUrl("/favicon.svg"),
+      width: 64,
+      height: 64,
+    },
+    description: "A Nepal-focused job discovery and search platform.",
+  };
+}
+
+export function generateWebSiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: `${SITE_URL}/`,
+    name: SITE_NAME,
+    alternateName: ["KamKhoj.com", "kamkhoj.com"],
+    publisher: { "@id": `${SITE_URL}/#organization` },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/jobs?search={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
   };
 }
 
@@ -298,7 +324,6 @@ export function generateCollectionMetadata(input: {
   return {
     title: input.title,
     description: input.description,
-    keywords: input.keywords,
     openGraph: {
       title: input.title,
       description: input.description,

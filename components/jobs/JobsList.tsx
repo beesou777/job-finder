@@ -1,9 +1,6 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { JobCard } from "@/components/JobCard";
 import { JobsPagination } from "./JobsPagination";
-import { getJobs, GetJobsOptions, JobItem } from "@/lib/api-client";
+import { getJobs, GetJobsOptions } from "@/server/services/data-fetching";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -13,45 +10,17 @@ interface JobsListProps extends GetJobsOptions {
   page: number;
 }
 
-export function JobsList({ page, ...options }: JobsListProps) {
+export async function JobsList({ page, ...options }: JobsListProps) {
   const ITEMS_PER_PAGE = 12;
   const offset = (page - 1) * ITEMS_PER_PAGE;
-  const [state, setState] = useState<{
-    jobs: JobItem[];
-    total: number;
-    loading: boolean;
-    error: boolean;
-  }>({ jobs: [], total: 0, loading: true, error: false });
+  const { jobs, total } = await getJobs({ ...options, limit: ITEMS_PER_PAGE, offset });
 
-  useEffect(() => {
-    let active = true;
-    setState({ jobs: [], total: 0, loading: true, error: false });
-    getJobs({ ...options, limit: ITEMS_PER_PAGE, offset })
-      .then(({ jobs, total }) => active && setState({ jobs, total, loading: false, error: false }))
-      .catch(() => active && setState({ jobs: [], total: 0, loading: false, error: true }));
-    return () => {
-      active = false;
-    };
-  }, [
-    page,
-    offset,
-    options.search,
-    options.categoryId,
-    options.type,
-    options.jobType,
-    options.location,
-    options.urgency,
-  ]);
-
-  if (state.loading) return <JobsSkeleton />;
-  const { jobs, total, error } = state;
-
-  if (error || jobs.length === 0) {
+  if (jobs.length === 0) {
     return (
       <div className="rounded-2xl border border-[#dce8f7] bg-white py-16 text-center shadow-sm">
         <div className="mx-auto max-w-md px-4">
           <p className="mb-2 text-xl font-black text-[#102e67]">
-            {error ? "Unable to load jobs right now." : "No jobs found matching your criteria."}
+            No jobs found matching your criteria.
           </p>
           <p className="mb-6 text-sm leading-6 text-[#617493]">
             Try adjusting your search terms or removing some filters to see more results.
@@ -81,7 +50,8 @@ export function JobsList({ page, ...options }: JobsListProps) {
           Showing job leads from public Nepali sources
         </p>
         <p className="text-sm font-bold text-[#102e67]">
-          Showing 1 to {Math.min(ITEMS_PER_PAGE, total)} of {total.toLocaleString()} results
+          Showing {offset + 1} to {Math.min(offset + ITEMS_PER_PAGE, total)} of{" "}
+          {total.toLocaleString()} results
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">

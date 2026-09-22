@@ -6,8 +6,7 @@ import { RemoteJobDetail } from "@/components/remote/RemoteJobDetail";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import Script from "next/script";
-import { generateLinkedInJobMetadata, generateLinkedInJobPostingSchema } from "@/lib/seo";
+import { generateLinkedInJobMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -18,13 +17,13 @@ export async function generateMetadata({
   const id = slugParts[slugParts.length - 1];
 
   if (!id) {
-    return { title: "Job Not Found | kamkhoj" };
+    return { title: "Job Not Found", robots: { index: false, follow: true } };
   }
 
   const job = await getRemoteJobDetails(id);
 
   if (!job) {
-    return { title: "Job Not Found | kamkhoj" };
+    return { title: "Job Not Found", robots: { index: false, follow: true } };
   }
 
   return {
@@ -83,42 +82,13 @@ export default async function RemoteJobPage({ params }: { params: { slug: string
     ],
   };
 
-  // Job Posting Schema
-  const jobPostingSchema = {
-    "@context": "https://schema.org",
-    "@type": "JobPosting",
-    title: job.jobTitle,
-    description: job.description || job.jobTitle,
-    datePosted: job.createdAt,
-    hiringOrganization: {
-      "@type": "Organization",
-      name: job.companyName,
-      logo: job.companyImage,
-    },
-    jobLocation: {
-      "@type": "Place",
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: job.region || job.candidateLocation || "Remote",
-        addressCountry: "Global",
-      },
-    },
-    url: job.applyNowLink,
-  };
-
   return (
     <>
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <Script
-        id="job-posting-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
-      />
-
       <div className="public-detail-surface min-h-screen bg-[#f9fafb] pb-12 text-[#102e67]">
         <div className="sticky top-0 z-10 border-b border-white/10 bg-[#09090a]/90 backdrop-blur-xl">
           <div className="container mx-auto px-4 py-4">

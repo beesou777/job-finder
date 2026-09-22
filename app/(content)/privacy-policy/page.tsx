@@ -3,7 +3,7 @@ import type React from "react";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | KamKhoj",
+  title: "Privacy Policy",
   description:
     "Read how KamKhoj handles privacy, analytics, advertising, job listing data, and user contact information.",
   alternates: { canonical: absoluteUrl("/privacy-policy") },

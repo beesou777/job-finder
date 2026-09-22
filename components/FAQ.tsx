@@ -12,12 +12,12 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
   {
-    question: "How does kamkhoj work?",
+    question: "How does KamKhoj work?",
     answer:
       "KamKhoj organizes publicly available job listings from Nepali sources so candidates can search, compare, and then continue to the original posting for the final application process.",
   },
   {
-    question: "Is kamkhoj free to use?",
+    question: "Is KamKhoj free to use?",
     answer:
       "Yes. KamKhoj is free to browse and does not require a paid subscription to search jobs, internships, or career guides.",
   },

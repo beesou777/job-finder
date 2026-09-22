@@ -1,9 +1,6 @@
-"use client";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { ArrowRight, BriefcaseBusiness, Clock3, MapPin } from "lucide-react";
-import { getJobs, JobItem, GetJobsOptions } from "@/lib/api-client";
+import { getJobs, JobItem, GetJobsOptions } from "@/server/services/data-fetching";
 
 type ApiJob = JobItem & {
   title?: string;
@@ -17,7 +14,7 @@ type ApiJob = JobItem & {
   createdAt?: string;
 };
 
-export function HomeApiJobRail({
+export async function HomeApiJobRail({
   eyebrow,
   title,
   description,
@@ -28,17 +25,8 @@ export function HomeApiJobRail({
   description: string;
   options: GetJobsOptions;
 }) {
-  const [jobs, setJobs] = useState<ApiJob[] | null>(null);
-
-  useEffect(() => {
-    let active = true;
-    getJobs(options)
-      .then(({ jobs: result }) => active && setJobs(result as ApiJob[]))
-      .catch(() => active && setJobs([]));
-    return () => {
-      active = false;
-    };
-  }, [options.limit, options.type, options.urgency]);
+  const { jobs } = await getJobs(options);
+  const visibleJobs = jobs as ApiJob[];
 
   return (
     <section className="bg-white py-14">
@@ -56,15 +44,9 @@ export function HomeApiJobRail({
             View all jobs <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        {jobs === null ? (
+        {visibleJobs.length ? (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {Array.from({ length: 4 }, (_, index) => (
-              <div key={index} className="h-[270px] animate-pulse rounded-xl bg-blue-50" />
-            ))}
-          </div>
-        ) : jobs.length ? (
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {jobs.slice(0, 4).map((job) => (
+            {visibleJobs.slice(0, 4).map((job) => (
               <ApiJobCard key={job.id} job={job} />
             ))}
           </div>

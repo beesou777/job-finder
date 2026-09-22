@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { generateCategoryMetadata } from "@/lib/seo";
-import Script from "next/script";
 import { getJobs, getCategoryBySlug } from "@/server/services/data-fetching";
 import { JobCard } from "@/components/JobCard";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,7 +21,7 @@ export async function generateMetadata({
 
     if (!category) {
       return {
-        title: "Category Not Found | kamkhoj",
+        title: "Category Not Found",
         robots: { index: false, follow: true },
       };
     }
@@ -36,7 +35,7 @@ export async function generateMetadata({
     };
   } catch (error) {
     return {
-      title: "Category | kamkhoj",
+      title: "Category",
       robots: { index: false, follow: true },
     };
   }
@@ -86,7 +85,7 @@ export default async function CategoryPage({ params }: { params: { slug: string 
 
   return (
     <>
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}

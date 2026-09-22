@@ -32,13 +32,13 @@ export async function generateMetadata({
   params: { location: string };
 }): Promise<Metadata> {
   if (isUuid(params.location)) {
-    return { title: "Apply for Job | KamKhoj", robots: { index: false, follow: true } };
+    return { title: "Apply for Job", robots: { index: false, follow: true } };
   }
 
   const locationName = titleCaseSlug(params.location);
   const metadata = generateCollectionMetadata({
     path: `/jobs/${params.location}`,
-    title: `Jobs in ${locationName}, Nepal | Latest Vacancies | KamKhoj`,
+    title: `Jobs in ${locationName}, Nepal | Latest Vacancies`,
     description: `Find latest jobs in ${locationName}, Nepal. Browse vacancies by company, category, skills, and source from major Nepali job portals.`,
     keywords: [
       `jobs in ${locationName.toLowerCase()}`,

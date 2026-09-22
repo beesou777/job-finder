@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Terms of Use | KamKhoj",
+  title: "Terms of Use",
   description: "Terms of use for KamKhoj, a Nepal job search and career resource website.",
   alternates: { canonical: absoluteUrl("/terms") },
 };

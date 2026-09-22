@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { generateLocationMetadata } from "@/lib/seo";
-import Script from "next/script";
 import { getJobs } from "@/server/services/data-fetching";
 import { JobCard } from "@/components/JobCard";
 import { Card, CardContent } from "@/components/ui/card";
@@ -30,7 +29,7 @@ export async function generateMetadata({
 
   if (!VALID_CITIES.includes(city)) {
     return {
-      title: "Location Not Found | kamkhoj",
+      title: "Location Not Found",
       robots: {
         index: false,
         follow: true,
@@ -51,7 +50,7 @@ export async function generateMetadata({
     };
   } catch (error) {
     return {
-      title: `Jobs in ${formatCityName(city)} | kamkhoj`,
+      title: `Jobs in ${formatCityName(city)}`,
       description: `Find jobs in ${formatCityName(city)}, Nepal`,
       robots: {
         index: false,
@@ -105,7 +104,7 @@ export default async function LocationPage({ params }: { params: { city: string 
 
   return (
     <>
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}

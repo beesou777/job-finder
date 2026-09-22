@@ -1,18 +1,13 @@
 import { Metadata } from "next";
 import { PlatformCard } from "@/components/PlatformCard";
 import { Info, Shield, CheckCircle } from "lucide-react";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Where to Post a Job in Nepal | Professional Hiring Directory | kamkhoj",
+  title: "Where to Post a Job in Nepal | Professional Hiring Directory",
   description:
-    "A professional directory of top job portals and hiring platforms in Nepal. Find the right audience for your vacancies across specialized and general job boards.",
-  keywords: [
-    "post a job nepal",
-    "job portals nepal",
-    "hiring platforms nepal",
-    "nepal recruitment directory",
-    "where to hire in nepal",
-  ],
+    "A directory of job portals and hiring platforms in Nepal where employers can review options for publishing vacancies.",
+  alternates: { canonical: absoluteUrl("/post-job") },
 };
 
 const platforms = [
@@ -179,7 +174,7 @@ export default function PostJobPage() {
                   </h3>
                   <div className="space-y-4 text-zinc-300 leading-7">
                     <p>
-                      At kamkhoj, we believe in supporting the entire employment ecosystem. Our
+                      At KamKhoj, we believe in supporting the entire employment ecosystem. Our
                       platform acts as a bridge, providing visibility to vacancies while honoring
                       the platforms that host them.
                     </p>

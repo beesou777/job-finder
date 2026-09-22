@@ -43,7 +43,7 @@ function PlayNav() {
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#102e67] text-white">
             <Gamepad2 className="h-4 w-4" />
           </span>
-          <span>kamkhoj <span className="text-blue-600">play</span></span>
+          <span>KamKhoj <span className="text-blue-600">Play</span></span>
         </Link>
         <nav className="ml-4 hidden items-center gap-1 text-[13px] font-bold text-slate-500 sm:flex" aria-label="Play sections">
           <NavLink href="/play">Games</NavLink>

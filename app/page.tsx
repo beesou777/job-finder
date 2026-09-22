@@ -12,32 +12,24 @@ import {
   WhySection,
 } from "@/components/home/HomeReferenceLayout";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
-import { generateOrganizationSchema } from "@/lib/seo";
+import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "KamKhoj | Find Jobs and Internships in Nepal",
+  title: { absolute: "KamKhoj | Find Jobs and Internships in Nepal" },
   description:
     "Search Nepal jobs and internships, compare the details that matter, and continue to the original source for the final application process.",
-  keywords: [
-    "jobs in nepal",
-    "nepal jobs",
-    "nepal job search",
-    "internships nepal",
-    "remote jobs nepal",
-    "career resources nepal",
-  ],
   openGraph: {
     title: "KamKhoj | Find Jobs and Internships in Nepal",
     description:
       "Browse Nepal jobs, internships, and practical career resources, then verify final details at the original source.",
     url: "https://www.kamkhoj.com/",
-    siteName: "kamkhoj",
+    siteName: SITE_NAME,
     images: [
       {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "kamkhoj - Nepal's Job Finder",
+        alt: "KamKhoj job search in Nepal",
       },
     ],
     locale: "en_US",
@@ -55,23 +47,7 @@ export const metadata: Metadata = {
 };
 
 export default function Home({ searchParams }: { searchParams: { urgency?: string } }) {
-  const baseUrl = SITE_URL;
-
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: SITE_NAME,
-    description: "Nepal job search and career resources from KamKhoj",
-    url: baseUrl,
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${baseUrl}/jobs?search={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
-  };
+  const structuredData = generateWebSiteSchema();
 
   const collectionPageSchema = {
     "@context": "https://schema.org",
@@ -79,7 +55,7 @@ export default function Home({ searchParams }: { searchParams: { urgency?: strin
     name: "KamKhoj job search",
     description:
       "Browse current listings collected for Nepal job discovery and continue to the original source to apply.",
-    url: baseUrl,
+    url: `${SITE_URL}/`,
     mainEntity: {
       "@type": "ItemList",
       description: "Job listings aggregated from multiple Nepali job portals",

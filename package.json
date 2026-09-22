@@ -12,6 +12,8 @@
     "format:check": "prettier --check .",
     "knip": "knip --reporter compact",
     "test:play": "vitest run lib/play/logic.test.ts",
+    "test:seo": "vitest run lib/seo.test.ts",
+    "test:seo:smoke": "node scripts/seo-smoke.mjs",
     "typeorm": "typeorm-ts-node-commonjs"
   },
   "dependencies": {

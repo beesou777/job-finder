@@ -3,22 +3,15 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, ArrowRight } from "lucide-react";
 import { getVisibleBlogPosts } from "@/lib/blog";
-import { DEFAULT_OG_IMAGE, absoluteUrl } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, SITE_NAME, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Career Blog | Job Search Tips & Guides | kamkhoj",
+  title: "Career Blog | Job Search Tips & Guides",
   description:
     "Career advice, job search tips, and guides for finding jobs in Nepal. Learn how to write resumes, ace interviews, and grow your career.",
-  keywords: [
-    "career advice nepal",
-    "job search tips nepal",
-    "resume writing nepal",
-    "interview tips nepal",
-    "career guide nepal",
-    "jobs nepal blog",
-  ],
   openGraph: {
-    title: "Career Blog | kamkhoj",
+    title: "Career Blog | KamKhoj",
+    siteName: SITE_NAME,
     description: "Career advice and job search tips for Nepal",
     url: absoluteUrl("/blog"),
     images: [{ url: DEFAULT_OG_IMAGE }],

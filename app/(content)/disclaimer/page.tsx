@@ -3,7 +3,7 @@ import { absoluteUrl } from "@/lib/site";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Disclaimer | KamKhoj",
+  title: "Disclaimer",
   description:
     "Disclaimer for KamKhoj job listings, external sources, career content, and advertising.",
   alternates: { canonical: absoluteUrl("/disclaimer") },

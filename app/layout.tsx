@@ -10,19 +10,13 @@ const manrope = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  applicationName: SITE_NAME,
   title: {
     default: "KamKhoj | Nepal Job Search and Career Resources",
     template: "%s | KamKhoj",
   },
   description:
     "KamKhoj helps Nepal job seekers browse vacancies, internships, and career resources, then continue to the original source for application details.",
-  keywords: [
-    "jobs in nepal",
-    "internships nepal",
-    "nepal job search",
-    "career resources nepal",
-    "remote jobs nepal",
-  ],
   authors: [{ name: SITE_NAME }],
   creator: SITE_NAME,
   publisher: SITE_NAME,
@@ -50,7 +44,7 @@ export const metadata: Metadata = {
         url: DEFAULT_OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: "kamkhoj - Nepal's Job Finder - Find Jobs in Nepal",
+        alt: "KamKhoj job search in Nepal",
       },
     ],
   },
@@ -62,6 +56,15 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: SITE_URL,
+  },
+  appleWebApp: {
+    capable: true,
+    title: SITE_NAME,
+    statusBarStyle: "default",
+  },
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml", sizes: "any" }],
+    shortcut: "/favicon.svg",
   },
   verification: {
     // Add your verification codes here when available
@@ -78,7 +81,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="theme-color" content="#1769e8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="google-adsense-account" content="ca-pub-7656502769250843" />

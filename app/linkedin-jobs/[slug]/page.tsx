@@ -2,12 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLinkedInJobDetails } from "@/server/services/data-fetching";
 import { LinkedInJobDetail } from "@/components/linkedin/LinkedInJobDetail";
-import {
-  generateLinkedInJobMetadata,
-  generateBreadcrumbSchema,
-  generateLinkedInJobPostingSchema,
-} from "@/lib/seo";
-import Script from "next/script";
+import { generateLinkedInJobMetadata, generateBreadcrumbSchema } from "@/lib/seo";
 import Link from "next/link";
 import { ChevronLeft, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,12 +15,12 @@ export async function generateMetadata({
   const slugParts = params.slug.split("-");
   const id = parseInt(slugParts[slugParts.length - 1]);
   if (isNaN(id)) {
-    return { title: "Job Not Found | kamkhoj" };
+    return { title: "Job Not Found", robots: { index: false, follow: true } };
   }
 
   const job = await getLinkedInJobDetails(id);
   if (!job) {
-    return { title: "Job Not Found | kamkhoj" };
+    return { title: "Job Not Found", robots: { index: false, follow: true } };
   }
 
   return {
@@ -65,29 +60,13 @@ export default async function LinkedInJobPage({ params }: { params: { slug: stri
     },
   ]);
 
-  const jobPostingSchema = generateLinkedInJobPostingSchema({
-    title: job.title,
-    description: job.description,
-    company: job.company,
-    place: job.place,
-    job_date: job.job_date,
-    apply_link: job.apply_link || job.job_link || "",
-    id: job.id,
-  });
-
   return (
     <>
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <Script
-        id="job-posting-schema"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingSchema) }}
-      />
-
       <div className="public-detail-surface min-h-screen bg-[#f9fafb] pb-12 text-[#102e67]">
         {/* Navigation / Breadcrumbs */}
         <div className="mb-6 border-b border-[#dce8f7] bg-white/90 backdrop-blur-xl">

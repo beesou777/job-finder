@@ -81,7 +81,7 @@ export function JobsFiltering({
                 `${selectedCategoryName} Jobs`
               ) : (
                 <>
-                  Find verified job leads with <span className="text-primary">kamkhoj</span>
+                  Find verified job leads with <span className="text-primary">KamKhoj</span>
                 </>
               ))}
           </h1>

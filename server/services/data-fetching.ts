@@ -104,12 +104,37 @@ export const getCategoryBySlug = cache(async (slug: string) => {
     const res = await fetch(`${API_BASE}/categories/${encodeURIComponent(slug)}`, {
       next: { revalidate: 300, tags: ["category-detail"] },
     });
-    if (!res.ok) return null;
-    const json = await res.json();
-    return json.data || null;
+    if (res.ok) {
+      const json = await res.json();
+      if (json.data) return json.data;
+    }
+
+    // Some backend deployments expose only the categories collection endpoint.
+    // Resolve the slug from that canonical collection instead of turning valid
+    // category URLs into false 404s.
+    const categories = await getCategories(100);
+    return (
+      categories.find(
+        (category: any) => String(category?.slug || "").toLowerCase() === slug.toLowerCase(),
+      ) || null
+    );
   } catch (error) {
     console.error("Error in getCategoryBySlug:", error);
     return null;
+  }
+});
+
+export const getCategories = cache(async (limit = 100) => {
+  try {
+    const res = await fetch(`${API_BASE}/categories?limit=${limit}`, {
+      next: { revalidate: 300, tags: ["categories"] },
+    });
+    if (!res.ok) return [];
+    const json = await res.json();
+    return Array.isArray(json.data) ? json.data : Array.isArray(json) ? json : [];
+  } catch (error) {
+    console.error("Error in getCategories:", error);
+    return [];
   }
 });
 

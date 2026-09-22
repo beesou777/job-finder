@@ -1,19 +1,23 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import Script from "next/script";
 import { JobsList, JobsSkeleton } from "@/components/jobs/JobsList";
 import { JobsFiltering } from "@/components/jobs/JobsFiltering";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { getCategories } from "@/lib/api-client";
-import { generateFAQSchema } from "@/lib/seo";
+import { getCategories } from "@/server/services/data-fetching";
+import { generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site";
 import { SeoLandingPageConfig } from "@/lib/seo-pages";
 
 type Props = {
   config: SeoLandingPageConfig;
   page?: number;
+  searchParams?: {
+    search?: string;
+    category?: string;
+    jobType?: string;
+    location?: string;
+    urgency?: string;
+  };
 };
 
 const jobTypes = [
@@ -36,21 +40,34 @@ const locations = [
   { value: "Remote", label: "Remote", count: 0 },
 ];
 
-export function SEOLandingPage({ config, page = 1 }: Props) {
-  const [categories, setCategories] = useState<any[]>([]);
-  useEffect(() => {
-    getCategories(100)
-      .then(setCategories)
-      .catch(() => setCategories([]));
-  }, []);
+export async function SEOLandingPage({ config, page = 1, searchParams = {} }: Props) {
+  const categories = await getCategories(100);
   const faqSchema = generateFAQSchema(config.faqs);
+  const pagePath = config.path || `/${config.slug}`;
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: absoluteUrl("/") },
+    { name: config.h1, url: absoluteUrl(pagePath) },
+  ]);
+  const listingFilters = {
+    ...config.filter,
+    search: searchParams.search || config.filter.search,
+    categoryId: searchParams.category,
+    jobType: searchParams.jobType || config.filter.jobType,
+    location: searchParams.location || config.filter.location,
+    urgency: searchParams.urgency,
+  };
 
   return (
     <>
-      <Script
+      <script
         id={`${config.slug}-faq-schema`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        id={`${config.slug}-breadcrumb-schema`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="min-h-screen bg-zinc-950 text-white">
         <section className="border-b border-white/10 bg-zinc-950">
@@ -109,13 +126,13 @@ export function SEOLandingPage({ config, page = 1 }: Props) {
           categories={categories}
           jobTypes={jobTypes}
           locations={locations}
-          basePath={`/${config.slug}`}
+          basePath={pagePath}
           title={`Search ${config.h1}`}
           searchPlaceholder={`Search ${config.keyword} by title, company, or skill...`}
         />
 
         <section className="container mx-auto px-4 py-8">
-          <JobsList page={page} {...config.filter} />
+          <JobsList page={page} {...listingFilters} />
         </section>
 
         <section className="container mx-auto px-4 pb-14">

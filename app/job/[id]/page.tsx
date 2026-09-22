@@ -20,18 +20,15 @@ import {
   Tags,
   UserRound,
 } from "lucide-react";
-import { absoluteUrl } from "@/lib/site";
-import { generateJobPostingSchema } from "@/lib/seo";
+import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME } from "@/lib/site";
+import { generateBreadcrumbSchema, generateJobPostingSchema } from "@/lib/seo";
+import { isActiveJob, isJobSeoIndexable } from "@/lib/job-seo";
 import { JobCard } from "@/components/JobCard";
 import { getJobById, getJobs } from "@/server/services/data-fetching";
 
 const getJob = cache(async (id: string) => {
   return getJobById(id);
 });
-
-function hasMeaningfulDescription(description?: string | null) {
-  return Boolean(description && description.replace(/\s+/g, " ").trim().length >= 160);
-}
 
 type DescriptionSection = {
   title: string;
@@ -135,18 +132,38 @@ const getRelatedJobs = cache(async (job: any) => {
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const job = await getJob(params.id);
   if (!job) return { title: "Job not found", robots: { index: false, follow: true } };
-  const active = job.isActive && (!job.expiresAt || new Date(job.expiresAt) > new Date());
-  const indexable = active && hasMeaningfulDescription(job.description);
+  const indexable = isJobSeoIndexable(job);
+  const title = `${job.title}${job.company ? ` at ${job.company}` : ""}`;
+  const description = (
+    job.description ||
+    `${title}${job.location ? ` in ${job.location}` : ""}. Verify complete details on the original source.`
+  )
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 155);
+  const url = absoluteUrl(`/job/${job.id}`);
   return {
-    title: `${job.title}${job.company ? ` at ${job.company}` : ""}`,
-    description: (
-      job.description ||
-      `${job.title}${job.company ? ` at ${job.company}` : ""}${job.location ? ` in ${job.location}` : ""}. Verify complete details on the original source.`
-    )
-      .replace(/\s+/g, " ")
-      .slice(0, 155),
-    alternates: { canonical: absoluteUrl(`/job/${job.id}`) },
-    robots: indexable ? undefined : { index: false, follow: true },
+    title,
+    description,
+    alternates: { canonical: url },
+    robots: indexable ? { index: true, follow: true } : { index: false, follow: true },
+    openGraph: {
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      url,
+      type: "article",
+      siteName: SITE_NAME,
+      images: [
+        { url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME} job listing` },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} | ${SITE_NAME}`,
+      description,
+      images: [DEFAULT_OG_IMAGE],
+    },
   };
 }
 
@@ -155,27 +172,30 @@ export default async function JobDetailPage({ params }: { params: { id: string }
   if (!job) notFound();
 
   const now = new Date();
-  const active = job.isActive && (!job.expiresAt || new Date(job.expiresAt) > now);
-  const completeDescription = hasMeaningfulDescription(job.description);
+  const active = isActiveJob(job, now);
   const descriptionSections = getDescriptionSections(job.description);
   const relatedJobs = await getRelatedJobs(job);
-  const schema =
-    active && completeDescription
-      ? generateJobPostingSchema({
-          id: job.id,
-          title: job.title,
-          description: job.description,
-          company: job.company,
-          location: job.location,
-          salaryText: job.salaryText,
-          deadline: job.deadline,
-          createdAt: job.postedAt || job.createdAt,
-          expiresAt: job.expiresAt,
-          applyUrl: job.applyUrl,
-          type: job.jobType || job.type,
-          isRemote: job.jobType === "remote" || job.type === "remote",
-        })
-      : null;
+  const schema = isJobSeoIndexable(job, now)
+    ? generateJobPostingSchema({
+        id: job.id,
+        title: job.title,
+        description: job.description,
+        company: job.company,
+        location: job.location,
+        salaryText: job.salaryText,
+        deadline: job.deadline,
+        createdAt: job.postedAt || job.createdAt,
+        expiresAt: job.expiresAt,
+        applyUrl: job.applyUrl,
+        type: job.jobType || job.type,
+        isRemote: job.jobType === "remote" || job.type === "remote",
+      })
+    : null;
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: absoluteUrl("/") },
+    { name: "Jobs", url: absoluteUrl("/jobs") },
+    { name: job.title, url: absoluteUrl(`/job/${job.id}`) },
+  ]);
 
   const facts = [
     job.location ? { label: "Location", value: job.location, icon: MapPin } : null,
@@ -191,8 +211,12 @@ export default async function JobDetailPage({ params }: { params: { id: string }
           icon: CalendarDays,
         }
       : null,
-    job.postedAt
-      ? { label: "Listed", value: new Date(job.postedAt).toLocaleDateString(), icon: Clock3 }
+    job.postedAt || job.createdAt
+      ? {
+          label: "Listed",
+          value: new Date(job.postedAt || job.createdAt).toLocaleDateString(),
+          icon: Clock3,
+        }
       : null,
   ].filter(Boolean) as Array<{ label: string; value: string; icon: typeof MapPin }>;
 
@@ -204,13 +228,27 @@ export default async function JobDetailPage({ params }: { params: { id: string }
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <article className="mx-auto max-w-6xl px-4 py-7 sm:px-6 lg:py-9">
-        <Link
-          href="/jobs"
-          className="mb-6 inline-flex items-center gap-2 whitespace-nowrap text-sm font-bold text-[#617493] hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+        <nav
+          aria-label="Breadcrumb"
+          className="mb-6 flex items-center gap-2 text-sm font-bold text-[#617493]"
         >
-          <ArrowLeft className="h-4 w-4" /> Back to jobs
-        </Link>
+          <Link href="/" className="hover:text-primary">
+            Home
+          </Link>
+          <span aria-hidden="true">/</span>
+          <Link href="/jobs" className="inline-flex items-center gap-2 hover:text-primary">
+            <ArrowLeft className="h-4 w-4" /> Jobs
+          </Link>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page" className="truncate text-[#334f7d]">
+            {job.title}
+          </span>
+        </nav>
 
         <header className="grid min-w-0 gap-7 border-b border-[#dce8f7] pb-8 lg:grid-cols-[minmax(0,1fr)_300px] lg:items-end">
           <div className="min-w-0">
@@ -221,7 +259,7 @@ export default async function JobDetailPage({ params }: { params: { id: string }
               <span
                 className={`rounded-full border px-3 py-1 text-xs font-bold ${active ? "border-emerald-200 bg-emerald-50 text-emerald-700" : "border-amber-200 bg-amber-50 text-amber-700"}`}
               >
-                {active ? "Active at last check" : "May be closed"}
+                {active ? "Active at last check" : "Expired or closed"}
               </span>
             </div>
             <h1 className="min-w-0 max-w-2xl [overflow-wrap:anywhere] text-3xl font-black leading-[1.08] tracking-tight sm:text-4xl lg:text-5xl">
@@ -301,7 +339,9 @@ export default async function JobDetailPage({ params }: { params: { id: string }
                 </li>
                 <li className="flex items-start gap-2">
                   <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  <span>KamKhoj never charges application fees or asks for bank details.</span>
+                  <span>
+                    Apply only on the linked source and do not send payment to access a vacancy.
+                  </span>
                 </li>
               </ul>
             </div>

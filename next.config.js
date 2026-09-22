@@ -8,6 +8,16 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["typeorm"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "kamkhoj.com" }],
+        destination: "https://www.kamkhoj.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async rewrites() {
     const backendUrl =
       process.env.INTERNAL_API_URL ||

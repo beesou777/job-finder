@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Calendar, Clock } from "lucide-react";
-import Script from "next/script";
 import { generateBlogPostingSchema, generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo";
 import { getBlogPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { MarkdownContent } from "@/components/MarkdownContent";
@@ -14,9 +13,9 @@ export async function generateMetadata({
   params: { slug: string };
 }): Promise<Metadata> {
   const post = getBlogPostBySlug(params.slug);
-  if (!post) return { title: "Blog Post Not Found | KamKhoj" };
+  if (!post) return { title: "Blog Post Not Found", robots: { index: false, follow: true } };
   return {
-    title: `${post.title} | KamKhoj Blog`,
+    title: `${post.title} | Career Blog`,
     description: post.description,
     openGraph: {
       title: post.title,
@@ -46,18 +45,18 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
   return (
     <>
       {faqSchema && (
-        <Script
+        <script
           id="faq-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
       )}
-      <Script
+      <script
         id="blog-posting-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
-      <Script
+      <script
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
