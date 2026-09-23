@@ -1,15 +1,17 @@
-import { AlertCircle, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ClientJobGrid } from "@/components/jobs/ClientJobGrid";
+import { JobCard } from "@/components/JobCard";
+import { getJobs } from "@/server/services/data-fetching";
 
 interface ExpiringSectionProps {
   urgency: string;
 }
 
 
-export function ExpiringSection({ urgency }: ExpiringSectionProps) {
+// Server Component — no browser /api request.
+export async function ExpiringSection({ urgency }: ExpiringSectionProps) {
+  const { jobs } = await getJobs({ limit: 6, urgency });
   const filters = [
     { label: "Today", value: "today" },
     { label: "3 Days", value: "3days" },
@@ -64,7 +66,17 @@ export function ExpiringSection({ urgency }: ExpiringSectionProps) {
           ))}
         </div>
 
-        <ClientJobGrid options={{ limit: 6, urgency }} emptyMessage="No jobs found expiring in this period." />
+        {jobs.length ? (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {jobs.map((job) => (
+              <JobCard key={job.id} job={job as any} />
+            ))}
+          </div>
+        ) : (
+          <div className="py-12 text-center text-lg text-zinc-400">
+            No jobs found expiring in this period.
+          </div>
+        )}
       </div>
     </section>
   );

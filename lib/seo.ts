@@ -294,8 +294,20 @@ export function generateBlogPostingSchema(post: {
   description: string;
   date: string;
   slug: string;
+  author?: string;
+  authorRole?: string;
 }) {
   const url = absoluteUrl(`/blog/${post.slug}`);
+  // Attributable authorship: editorial team as Organization by default,
+  // a named Person when a post declares its own author in frontmatter.
+  const isTeamAuthor = !post.author || post.author === "KamKhoj Editorial Team";
+  const author = isTeamAuthor
+    ? { "@type": "Organization", name: "KamKhoj Editorial Team", url: SITE_URL }
+    : {
+        "@type": "Person",
+        name: post.author,
+        ...(post.authorRole ? { jobTitle: post.authorRole } : {}),
+      };
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -305,7 +317,7 @@ export function generateBlogPostingSchema(post: {
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     url,
     image: [DEFAULT_OG_IMAGE],
-    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    author,
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,

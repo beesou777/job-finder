@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Calendar, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Clock, UserRound } from "lucide-react";
 import { generateBlogPostingSchema, generateBreadcrumbSchema, generateFAQSchema } from "@/lib/seo";
 import { getBlogPostBySlug, getRelatedPosts } from "@/lib/blog";
 import { MarkdownContent } from "@/components/MarkdownContent";
@@ -78,6 +78,11 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">{post.description}</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-zinc-500">
+              <span className="inline-flex items-center gap-2 font-bold text-zinc-300">
+                <UserRound className="h-4 w-4 text-primary" />
+                By {post.author}
+                {post.authorRole ? ` · ${post.authorRole}` : ""}
+              </span>
               <span className="inline-flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
                 {new Date(post.date).toLocaleDateString("en-US", {

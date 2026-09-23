@@ -3,7 +3,6 @@ import { cache } from "react";
 const API_BASE =
   process.env.INTERNAL_API_URL ||
   process.env.BACKEND_API_URL ||
-  process.env.NEXT_PUBLIC_API_URL ||
   "http://127.0.0.1:4000/api";
 
 export interface GetJobsOptions {
@@ -213,3 +212,85 @@ export const getRemoteJobDetails = cache(async (id: string) => {
     return null;
   }
 });
+
+export interface GetLinkedInJobsOptions {
+  search?: string | null;
+  company?: string | null;
+  place?: string | null;
+  datePosted?: string | null;
+  limit?: number;
+  offset?: number;
+}
+
+export interface LinkedInJobsResult {
+  jobs: Array<Record<string, any>>;
+  total: number;
+  filters: {
+    companies: Array<{ value: string; count?: number }>;
+    places: Array<{ value: string; count?: number }>;
+  };
+}
+
+/**
+ * Server-only LinkedIn jobs fetch. Runs on the server so the browser never
+ * makes a `/api/linkedin-jobs` XHR — listing HTML arrives pre-rendered.
+ */
+export async function getLinkedInJobs(
+  options: GetLinkedInJobsOptions = {},
+): Promise<LinkedInJobsResult> {
+  const empty: LinkedInJobsResult = {
+    jobs: [],
+    total: 0,
+    filters: { companies: [], places: [] },
+  };
+  try {
+    const params = new URLSearchParams();
+    if (options.search) params.set("search", options.search);
+    if (options.company) params.set("company", options.company);
+    if (options.place) params.set("place", options.place);
+    if (options.datePosted) params.set("datePosted", options.datePosted);
+    // Clamp pagination server-side so scrapers can't dump the corpus in one call.
+    const limit = Math.min(Math.max(options.limit ?? 20, 1), 20);
+    const offset = Math.min(Math.max(options.offset ?? 0, 0), 10000);
+    params.set("limit", String(limit));
+    params.set("offset", String(offset));
+
+    const qs = params.toString();
+    const res = await fetch(`${API_BASE}/linkedin-jobs${qs ? `?${qs}` : ""}`, {
+      next: { revalidate: 120, tags: ["linkedin-jobs"] },
+    });
+    if (!res.ok) return empty;
+    const payload = await res.json();
+    const root = (payload ?? {}) as Record<string, unknown>;
+    const data = root.data;
+    const body =
+      data && typeof data === "object" && !Array.isArray(data)
+        ? (data as Record<string, unknown>)
+        : root;
+    const jobsRaw = Array.isArray(data) ? data : (body.jobs as unknown);
+    const rawFilters = (body.filters ?? root.filters ?? {}) as Record<string, unknown>;
+    const normalize = (items: unknown): Array<{ value: string; count?: number }> =>
+      Array.isArray(items)
+        ? items.flatMap((item) => {
+            if (!item || typeof item !== "object") return [];
+            const option = item as Record<string, unknown>;
+            const value = option.value ?? option.name;
+            return typeof value === "string"
+              ? [{ value, ...(typeof option.count === "number" ? { count: option.count } : {}) }]
+              : [];
+          })
+        : [];
+    const totalRaw = (body.total ?? root.total) as unknown;
+    return {
+      jobs: Array.isArray(jobsRaw) ? (jobsRaw as Array<Record<string, any>>) : [],
+      total: typeof totalRaw === "number" && Number.isFinite(totalRaw) ? totalRaw : 0,
+      filters: {
+        companies: normalize(rawFilters.companies),
+        places: normalize(rawFilters.places),
+      },
+    };
+  } catch (error) {
+    console.error("Error in getLinkedInJobs:", error);
+    return empty;
+  }
+}

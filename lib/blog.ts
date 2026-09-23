@@ -4,6 +4,8 @@ import matter from 'gray-matter';
 
 const MIN_BLOG_WORD_COUNT = 350;
 
+export const DEFAULT_BLOG_AUTHOR = "KamKhoj Editorial Team";
+
 export interface BlogPost {
   slug: string;
   title: string;
@@ -11,6 +13,8 @@ export interface BlogPost {
   date: string;
   category: string;
   readTime: string;
+  author: string;
+  authorRole?: string;
   content: string; // Markdown content
   wordCount: number;
   noindex: boolean;
@@ -77,6 +81,10 @@ export function getBlogPostBySlug(slug: string): BlogPost | null {
       date: data.date || new Date().toISOString(),
       category: data.category || 'General',
       readTime: data.readTime || '5 min read',
+      // Optional per-post `author` / `authorRole` frontmatter; falls back to
+      // the editorial team so every article carries an attributable byline.
+      author: data.author || DEFAULT_BLOG_AUTHOR,
+      authorRole: data.authorRole || undefined,
       content: trimmedContent, // Keep as markdown
       wordCount,
       noindex,

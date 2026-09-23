@@ -11,8 +11,9 @@ import {
   TestimonialsSection,
   WhySection,
 } from "@/components/home/HomeReferenceLayout";
-import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 import { generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo";
+import { getJobs } from "@/server/services/data-fetching";
 
 export const metadata: Metadata = {
   title: { absolute: "KamKhoj | Find Jobs and Internships in Nepal" },
@@ -46,8 +47,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home({ searchParams }: { searchParams: { urgency?: string } }) {
+export default async function Home({ searchParams }: { searchParams: { urgency?: string } }) {
   const structuredData = generateWebSiteSchema();
+
+  // Real listing items for the CollectionPage schema so crawlers and answer
+  // engines receive the inventory graph as data, not just rendered cards.
+  // Cached server-side (60s); adds no browser Network request.
+  const { jobs } = await getJobs({ limit: 10, type: "job" });
 
   const collectionPageSchema = {
     "@context": "https://schema.org",
@@ -59,6 +65,13 @@ export default function Home({ searchParams }: { searchParams: { urgency?: strin
     mainEntity: {
       "@type": "ItemList",
       description: "Job listings aggregated from multiple Nepali job portals",
+      numberOfItems: jobs.length,
+      itemListElement: jobs.map((job: any, index: number) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: absoluteUrl(`/job/${job.id}`),
+        ...(job.title ? { name: String(job.title) } : {}),
+      })),
     },
   };
   const organizationSchema = generateOrganizationSchema();

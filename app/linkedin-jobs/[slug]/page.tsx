@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLinkedInJobDetails } from "@/server/services/data-fetching";
-import { LinkedInJobDetail } from "@/components/linkedin/LinkedInJobDetail";
+import { LinkedInJobDetailView } from "@/components/linkedin/LinkedInJobDetailView";
 import { generateLinkedInJobMetadata, generateBreadcrumbSchema } from "@/lib/seo";
 import Link from "next/link";
 import { ChevronLeft, Home } from "lucide-react";
@@ -104,7 +104,7 @@ export default async function LinkedInJobPage({ params }: { params: { slug: stri
 
         <div className="container mx-auto px-4">
           <div>
-            <LinkedInJobDetail jobId={id} />
+            <LinkedInJobDetailView job={job} />
           </div>
         </div>
       </div>

@@ -1,10 +1,13 @@
-import { Star, ArrowRight } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ClientJobGrid } from "@/components/jobs/ClientJobGrid";
+import { JobCard } from "@/components/JobCard";
+import { getJobs } from "@/server/services/data-fetching";
 
-export function LatestJobs() {
+// Server Component — data is fetched on the server, so no /api request
+// ever appears in the browser Network tab.
+export async function LatestJobs() {
+  const { jobs } = await getJobs({ limit: 6, type: "job" });
   return (
     <section className="bg-zinc-950 py-20 text-white">
       <div className="container mx-auto px-4">
@@ -35,7 +38,15 @@ export function LatestJobs() {
           </Link>
         </div>
 
-        <ClientJobGrid options={{ limit: 6, type: "job" }} emptyMessage="No jobs found." />
+        {jobs.length ? (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {jobs.map((job) => (
+              <JobCard key={job.id} job={job as any} />
+            ))}
+          </div>
+        ) : (
+          <div className="py-12 text-center text-lg text-zinc-400">No jobs found.</div>
+        )}
       </div>
     </section>
   );

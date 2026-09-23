@@ -1,9 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ClientJobGrid } from "@/components/jobs/ClientJobGrid";
+import { JobCard } from "@/components/JobCard";
+import { getJobs } from "@/server/services/data-fetching";
 
-export function LatestInternships() {
+// Server Component — no browser /api request.
+export async function LatestInternships() {
+  const { jobs } = await getJobs({ limit: 6, type: "internship" });
   return (
     <section className="bg-zinc-950 py-20 text-white">
       <div className="container mx-auto px-4">
@@ -34,7 +37,15 @@ export function LatestInternships() {
           </Link>
         </div>
 
-        <ClientJobGrid options={{ limit: 6, type: "internship" }} emptyMessage="No internships found." />
+        {jobs.length ? (
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {jobs.map((job) => (
+              <JobCard key={job.id} job={job as any} />
+            ))}
+          </div>
+        ) : (
+          <div className="py-12 text-center text-lg text-zinc-400">No internships found.</div>
+        )}
       </div>
     </section>
   );

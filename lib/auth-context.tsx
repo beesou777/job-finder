@@ -36,25 +36,27 @@ function getAuthToken(): string | null {
   return localStorage.getItem("token");
 }
 
-const BACKEND_API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api").replace(
-  /\/$/,
-  "",
-);
-
+/**
+ * Same-origin auth helpers.
+ *
+ * Auth requests always go to `/api/...` on this same domain (rewritten by
+ * Next.js to the real backend server-side). The real backend host is NEVER
+ * referenced in browser code, so it never appears in DevTools Network.
+ */
 export function resolveBackendUrl(url: string): string {
-  if (url.startsWith("http://") || url.startsWith("https://")) {
+  // Already same-origin — keep as-is so Network only shows our own domain.
+  if (url === "/api" || url.startsWith("/api/")) {
     return url;
   }
-  if (url.startsWith("/api/")) {
-    return `${BACKEND_API_BASE}${url.slice(4)}`;
-  }
-  if (url === "/api") {
-    return BACKEND_API_BASE;
+  // Absolute backend URL passed by legacy callers — strip it back to same-origin.
+  const apiIndex = url.indexOf("/api");
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return apiIndex >= 0 ? url.slice(apiIndex) : "/api";
   }
   if (url.startsWith("/")) {
-    return `${BACKEND_API_BASE}${url}`;
+    return `/api${url}`;
   }
-  return `${BACKEND_API_BASE}/${url}`;
+  return `/api/${url}`;
 }
 
 export async function authFetch(url: string, init: RequestInit = {}): Promise<Response> {

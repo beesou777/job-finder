@@ -14,7 +14,7 @@ export type MarketInsights = {
 const API_BASE =
   process.env.INTERNAL_API_URL ||
   process.env.BACKEND_API_URL ||
-  process.env.NEXT_PUBLIC_API_URL
+  "http://127.0.0.1:4000/api";
 
 export async function getMarketInsights(): Promise<MarketInsights> {
   try {

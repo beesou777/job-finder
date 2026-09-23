@@ -503,7 +503,7 @@ export default function MatchesPage() {
         </div>
       ) : filteredJobs.length === 0 ? (
         /* Empty State */
-        <div className="rounded-2xl border border-dashed border-white/10 bg-[#171715]/40 p-12 text-center">
+        <div className="rounded-2xl border border-dashed border-white/10 bg-white p-12 text-center">
           <Briefcase className="mx-auto h-10 w-10 text-zinc-600" />
           <h3 className="mt-3 text-lg font-bold text-white">No job matches found</h3>
           <p className="mt-1 text-sm text-zinc-400">

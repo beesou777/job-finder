@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { HomeApiJobRail } from "@/components/home/HomeApiJobRail";
 import { getVisibleBlogPosts } from "@/lib/blog";
+import { generateFAQSchema } from "@/lib/seo";
 
 const featuredJobs = [
   [
@@ -393,51 +394,58 @@ export function TestimonialsSection() {
   );
 }
 
+const homeFaqs = [
+  {
+    question: "Is KamKhoj free for job seekers?",
+    answer:
+      "Yes. You can browse jobs, internships, and career resources without a paid subscription.",
+  },
+  {
+    question: "Do you offer internships as well?",
+    answer:
+      "Yes. KamKhoj has a dedicated internships section with listings collected from public Nepali sources.",
+  },
+  {
+    question: "How do I apply for a job?",
+    answer:
+      "Open a listing and use its apply link to continue to the original employer or job-portal page. The source page controls the final application process.",
+  },
+  {
+    question: "How can companies post jobs?",
+    answer:
+      "The post-a-job directory explains the available source platforms. KamKhoj currently focuses on discovering public listings rather than accepting applications directly.",
+  },
+  {
+    question: "Are the job listings verified?",
+    answer:
+      "KamKhoj checks public sources and shows source information when available, but you should confirm the deadline, eligibility, salary, and instructions on the original listing.",
+  },
+  {
+    question: "Is my personal data safe?",
+    answer:
+      "You can browse public listings without an account. Review the privacy policy for how account and service data are handled.",
+  },
+  {
+    question: "Can I get job alerts?",
+    answer:
+      "Account features may help organize preferences and matches. Availability can change, so browse the latest listings for the current results.",
+  },
+  {
+    question: "How can I contact support?",
+    answer:
+      "Use the contact page for listing corrections, source questions, removal requests, and general feedback.",
+  },
+];
+
 export function HomeFaqSection() {
-  const questions = [
-    {
-      question: "Is KamKhoj free for job seekers?",
-      answer:
-        "Yes. You can browse jobs, internships, and career resources without a paid subscription.",
-    },
-    {
-      question: "Do you offer internships as well?",
-      answer:
-        "Yes. KamKhoj has a dedicated internships section with listings collected from public Nepali sources.",
-    },
-    {
-      question: "How do I apply for a job?",
-      answer:
-        "Open a listing and use its apply link to continue to the original employer or job-portal page. The source page controls the final application process.",
-    },
-    {
-      question: "How can companies post jobs?",
-      answer:
-        "The post-a-job directory explains the available source platforms. KamKhoj currently focuses on discovering public listings rather than accepting applications directly.",
-    },
-    {
-      question: "Are the job listings verified?",
-      answer:
-        "KamKhoj checks public sources and shows source information when available, but you should confirm the deadline, eligibility, salary, and instructions on the original listing.",
-    },
-    {
-      question: "Is my personal data safe?",
-      answer:
-        "You can browse public listings without an account. Review the privacy policy for how account and service data are handled.",
-    },
-    {
-      question: "Can I get job alerts?",
-      answer:
-        "Account features may help organize preferences and matches. Availability can change, so browse the latest listings for the current results.",
-    },
-    {
-      question: "How can I contact support?",
-      answer:
-        "Use the contact page for listing corrections, source questions, removal requests, and general feedback.",
-    },
-  ];
+  const questions = homeFaqs;
+  const faqSchema = generateFAQSchema(questions);
   return (
     <section className="bg-white py-14">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <div className="site-container">
         <div className="mb-7 flex items-end justify-between">
           <div>

@@ -25,7 +25,12 @@ function query(options: object) {
   return params.toString();
 }
 
-/** Browser-only API client. Requests go through Next's /api rewrite to the backend. */
+/**
+ * @deprecated for public pages — prefer async Server Components using
+ * `@/server/services/data-fetching` so no `/api` XHR appears in DevTools.
+ * Kept only for legacy client widgets; all calls stay same-origin (`/api/...`)
+ * so the real backend host is never exposed in the Network tab.
+ */
 export async function getJobs(options: GetJobsOptions = {}) {
   const params = query(options);
   const response = await fetch(`/api/jobs${params ? `?${params}` : ""}`, { cache: "no-store" });

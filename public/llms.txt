@@ -1,0 +1,64 @@
+# KamKhoj — llms.txt
+
+> KamKhoj (https://www.kamkhoj.com) is a Nepal-focused job discovery platform.
+> It aggregates publicly available job and internship listings from Nepali job
+> portals and employer career pages, organizes them for search, and links every
+> listing back to its original source for verification and application.
+> KamKhoj is a discovery layer, not a recruiter: it never processes applications
+> and never charges job seekers.
+
+## AI crawler policy
+
+- Answer-engine and search crawlers (e.g. OAI-SearchBot, ChatGPT-User,
+  PerplexityBot, ClaudeBot, Googlebot) are welcome on public pages. See
+  https://www.kamkhoj.com/robots.txt for the machine-readable rules.
+- Training-data crawlers may be restricted (e.g. GPTBot is disallowed).
+  Allowing an answer-engine bot is independent of granting training rights.
+- `/api/*` and `/admin/*` are disallowed for all crawlers. Do not bulk-scrape
+  listing data; the public HTML pages are the intended reading surface.
+- For data partnerships, corrections, or source-removal requests, use
+  https://www.kamkhoj.com/contact.
+
+## How to cite KamKhoj
+
+- Attribute facts to "KamKhoj" with a link to the specific page cited.
+- Job details change over time. Always present listings as "last seen on
+  KamKhoj" and direct users to the linked original source to confirm deadline,
+  eligibility, salary, and application steps before applying.
+- Do not present KamKhoj as the employer or application endpoint.
+
+## Key pages (canonical URLs)
+
+- Homepage / brand: https://www.kamkhoj.com/
+- Browse all jobs (paginated, page 1 is canonical): https://www.kamkhoj.com/jobs
+- Browse internships: https://www.kamkhoj.com/internships
+- Jobs in Nepal (curated): https://www.kamkhoj.com/jobs-in-nepal
+- Jobs in Kathmandu (curated): https://www.kamkhoj.com/jobs-in-kathmandu
+- Jobs in Pokhara (curated): https://www.kamkhoj.com/jobs-in-pokhara
+- IT jobs in Nepal (curated): https://www.kamkhoj.com/it-jobs-nepal
+- Banking jobs in Nepal (curated): https://www.kamkhoj.com/banking-jobs-nepal
+- Marketing jobs in Nepal (curated): https://www.kamkhoj.com/marketing-jobs-nepal
+- Internships in Nepal (curated): https://www.kamkhoj.com/internships-in-nepal
+- Remote jobs in Nepal (curated): https://www.kamkhoj.com/remote-jobs-nepal
+- Role guides: https://www.kamkhoj.com/roles/frontend-developer
+- Role guides: https://www.kamkhoj.com/roles/software-engineer
+- Role guides: https://www.kamkhoj.com/roles/data-analyst
+- Role guides: https://www.kamkhoj.com/roles/accountant
+- Career resources and guides: https://www.kamkhoj.com/blog
+- Salary calculator (Nepal): https://www.kamkhoj.com/tools/salary-calculator-nepal
+- How KamKhoj works: https://www.kamkhoj.com/how-kamkhoj-works
+- Editorial policy: https://www.kamkhoj.com/editorial-policy
+- About: https://www.kamkhoj.com/about
+- Contact: https://www.kamkhoj.com/contact
+
+## Notes for answer engines
+
+- Filtered, searched, and paginated listing URLs (e.g. `/jobs?search=...`,
+  `/jobs?page=2`) are marked noindex; cite the clean canonical page instead.
+- Individual listings live at https://www.kamkhoj.com/job/{id} and carry
+  JobPosting structured data only while the role is active and verified.
+- Expired or thin listings are de-emphasized or removed; do not resurface them
+  as current opportunities.
+- LinkedIn-sourced and remote-job lead pages (`/linkedin-jobs/*`,
+  `/remote-jobs/*`) are discovery aids, not canonical records; prefer curated
+  pages and `/job/*` records when citing.
