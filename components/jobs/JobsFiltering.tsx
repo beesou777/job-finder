@@ -61,11 +61,11 @@ export function JobsFiltering({
   const cleanCategories = Array.from(
     new Map(
       categories
-        .filter((category: any) => {
+        .map((category: any) => {
           const name = String(category?.name || "").trim();
-          return name.length > 1 && !/\d/.test(name) && !name.startsWith("#");
+          return [name.toLowerCase(), { ...category, name }] as const;
         })
-        .map((category: any) => [String(category.name).trim().toLowerCase(), category]),
+        .filter(([name]) => name.length > 1),
     ).values(),
   );
   return (
@@ -339,9 +339,6 @@ function FilterSelect({
   onChange: (value: string) => void;
   options: { value: string; label: string }[];
 }) {
-  const filteredOptions = options.filter(
-    (option) => option.value === "" || !/\d/.test(option.label),
-  );
   return (
     <label className="block">
       <span className="mb-2 block font-mono text-[10px] font-black uppercase tracking-[0.18em] text-[#617493]">
@@ -357,8 +354,7 @@ function FilterSelect({
           className="flex h-12 w-full items-center justify-between rounded-xl border border-[#d6e5f7] bg-white px-4 py-2 text-left text-sm font-bold text-[#102e67] outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
         >
           <span className="truncate">
-            {filteredOptions.find((option) => option.value === value)?.label ||
-              filteredOptions[0]?.label}
+            {options.find((option) => option.value === value)?.label || options[0]?.label}
           </span>
           <ChevronDown
             className={`h-4 w-4 shrink-0 text-[#7183a3] transition-transform ${open ? "rotate-180" : ""}`}
@@ -369,7 +365,7 @@ function FilterSelect({
             role="listbox"
             className="absolute left-0 top-[calc(100%+6px)] z-[70] max-h-60 w-full overflow-y-auto rounded-xl border border-[#d6e5f7] bg-white p-1 shadow-xl shadow-[#1f4e8c]/10"
           >
-            {filteredOptions.map((option) => (
+            {options.map((option) => (
               <button
                 type="button"
                 role="option"
