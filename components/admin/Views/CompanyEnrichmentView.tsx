@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { backendFetch } from "@/lib/backend-fetch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -72,7 +73,7 @@ export function CompanyEnrichmentView() {
       // Use the new endpoint that matches jobs with JSON data
       // Add cache-busting timestamp and no-cache headers
       const timestamp = new Date().getTime();
-      const res = await fetch(`/api/companies/enriched-from-jobs?t=${timestamp}`, {
+      const res = await backendFetch(`/api/companies/enriched-from-jobs?t=${timestamp}`, {
         cache: "no-store",
         headers: {
           "Cache-Control": "no-cache",
@@ -122,7 +123,7 @@ export function CompanyEnrichmentView() {
     try {
       // Add cache-busting timestamp and no-cache headers
       const timestamp = new Date().getTime();
-      const res = await fetch(`/api/companies/enriched-from-jobs?t=${timestamp}`, {
+      const res = await backendFetch(`/api/companies/enriched-from-jobs?t=${timestamp}`, {
         cache: "no-store",
         headers: {
           "Cache-Control": "no-cache",
@@ -167,7 +168,7 @@ export function CompanyEnrichmentView() {
 
   const handleExport = async (type: string, format: "csv" | "json" = "csv") => {
     try {
-      const res = await fetch(`/api/companies/export?type=${type}&format=${format}`);
+      const res = await backendFetch(`/api/companies/export?type=${type}&format=${format}`);
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");

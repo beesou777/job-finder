@@ -7,6 +7,7 @@ const nextConfig = {
   },
   experimental: {
     serverComponentsExternalPackages: ["typeorm"],
+    serverActions: { bodySizeLimit: "6mb" },
   },
   async redirects() {
     return [
@@ -18,24 +19,10 @@ const nextConfig = {
       },
     ];
   },
-  async rewrites() {
-    // Server-only: the backend host lives only here (never NEXT_PUBLIC_*),
-    // so it never ships to the browser bundle or appears in DevTools.
-    const backendUrl =
-      process.env.INTERNAL_API_URL ||
-      process.env.BACKEND_API_URL ||
-      "http://localhost:4000/api";
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${backendUrl}/:path*`,
-      },
-    ];
-  },
   async headers() {
     return [
       {
-        // Never index raw JSON; only rendered pages are crawlable.
+        // Keep unknown frontend API paths out of search results.
         source: "/api/:path*",
         headers: [
           { key: "X-Robots-Tag", value: "noindex, nofollow, nosnippet, noarchive" },

@@ -1,3 +1,5 @@
+import { backendFetch } from "@/lib/backend-fetch";
+
 export interface GetJobsOptions {
   jobType?: string | null;
   urgency?: string | null;
@@ -28,19 +30,22 @@ function query(options: object) {
 /**
  * @deprecated for public pages — prefer async Server Components using
  * `@/server/services/data-fetching` so no `/api` XHR appears in DevTools.
- * Kept only for legacy client widgets; all calls stay same-origin (`/api/...`)
- * so the real backend host is never exposed in the Network tab.
+ * Kept for legacy client widgets that request the separate backend directly.
  */
 export async function getJobs(options: GetJobsOptions = {}) {
   const params = query(options);
-  const response = await fetch(`/api/jobs${params ? `?${params}` : ""}`, { cache: "no-store" });
+  const response = await backendFetch(`/api/jobs${params ? `?${params}` : ""}`, {
+    cache: "no-store",
+  });
   if (!response.ok) throw new Error(`Unable to load jobs (${response.status})`);
   const payload = await response.json();
   return { jobs: (payload.data || []) as JobItem[], total: payload.total || payload.data?.length || 0 };
 }
 
 export async function getCategories(limit = 100) {
-  const response = await fetch(`/api/categories?limit=${limit}`, { cache: "no-store" });
+  const response = await backendFetch(`/api/categories?limit=${limit}`, {
+    cache: "no-store",
+  });
   if (!response.ok) throw new Error(`Unable to load categories (${response.status})`);
   const payload = await response.json();
   return payload.data || [];

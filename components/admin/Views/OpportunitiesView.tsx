@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { backendFetch } from "@/lib/backend-fetch";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -92,7 +93,7 @@ export function OpportunitiesView() {
       if (filter.minScore) params.append("minScore", filter.minScore);
       params.append("limit", "200");
 
-      const res = await fetch(`/api/admin/opportunities?${params.toString()}`);
+      const res = await backendFetch(`/api/admin/opportunities?${params.toString()}`);
       const data: OpportunitiesResponse = await res.json();
 
       if (data.success) {

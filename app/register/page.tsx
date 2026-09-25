@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AuthShell } from "@/components/AuthShell";
 import { Eye, EyeOff, Loader2, LockKeyhole, Mail } from "lucide-react";
+import { backendFetch } from "@/lib/backend-fetch";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      const r = await fetch("/api/auth/register", {
+      const r = await backendFetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

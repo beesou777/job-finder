@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Download, FileText, TrendingUp, Users } from "lucide-react";
 import { useState, useEffect } from "react";
+import { backendFetch } from "@/lib/backend-fetch";
 
 export function ReportsView() {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -9,7 +10,7 @@ export function ReportsView() {
 
   useEffect(() => {
     // Fetch categories for the table (can be optimized to pass as prop)
-    fetch("/api/analytics?range=30d")
+    backendFetch("/api/analytics?range=30d")
       .then((res) => res.json())
       .then((data: any) => {
         if (data.success) setCategories(data.data.categoryStats || []);
@@ -19,7 +20,7 @@ export function ReportsView() {
   const handleDownload = async (type: string) => {
     setIsDownloading(true);
     try {
-      const response = await fetch(`/api/analytics/export?type=${type}`);
+      const response = await backendFetch(`/api/analytics/export?type=${type}`);
       if (response.ok) {
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);

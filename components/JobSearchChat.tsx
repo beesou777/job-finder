@@ -13,6 +13,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import { addUtmParams } from "@/lib/utils";
+import { backendFetch } from "@/lib/backend-fetch";
 
 const SUGGESTIONS = [
   "Frontend developer with React and Node.js",
@@ -184,7 +185,7 @@ export function JobSearchChat({ embedded = false }: JobSearchChatProps) {
     }
 
     try {
-      const res = await fetch("/api/chat", {
+      const res = await backendFetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

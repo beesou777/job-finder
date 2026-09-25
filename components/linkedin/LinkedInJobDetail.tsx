@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addUtmParams } from "@/lib/utils";
+import { backendFetch } from "@/lib/backend-fetch";
 
 interface LinkedInJobDetailProps {
   jobId?: number;
@@ -69,7 +70,7 @@ export function LinkedInJobDetail({ jobId }: LinkedInJobDetailProps) {
     if (!jobId) return;
     let active = true;
     setLoading(true);
-    fetch(`/api/linkedin-jobs/${jobId}`, { cache: "no-store" })
+    backendFetch(`/api/linkedin-jobs/${jobId}`, { cache: "no-store" })
       .then((response) => (response.ok ? response.json() : null))
       .then((payload) => active && setJob(payload?.data || null))
       .catch(() => active && setJob(null))

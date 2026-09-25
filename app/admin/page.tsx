@@ -17,6 +17,7 @@ import { NavigationPage } from "@/components/admin/Views/NavigationPage";
 import { CompanyEnrichmentView } from "@/components/admin/Views/CompanyEnrichmentView";
 import { OpportunitiesView } from "@/components/admin/Views/OpportunitiesView";
 import { Menu } from "lucide-react";
+import { backendFetch } from "@/lib/backend-fetch";
 
 export default function AdminPage() {
   const router = useRouter();
@@ -56,7 +57,7 @@ export default function AdminPage() {
   const fetchAnalytics = async (range: string) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/analytics?range=${range}`);
+      const res = await backendFetch(`/api/analytics?range=${range}`);
       const data: any = await res.json();
       if (data.success) {
         setAnalyticsData(data.data);
@@ -74,7 +75,7 @@ export default function AdminPage() {
 
     try {
       const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "admin123";
-      const res = await fetch("/api/scrape", {
+      const res = await backendFetch("/api/scrape", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

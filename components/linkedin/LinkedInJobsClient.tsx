@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { AlertCircle } from "lucide-react";
 import { LinkedInJobsFiltering } from "./LinkedInJobsFiltering";
 import { LinkedInJobsList, LinkedInJobsSkeleton } from "./LinkedInJobsList";
+import { backendFetch } from "@/lib/backend-fetch";
 
 const ITEMS_PER_PAGE = 20;
 
@@ -76,9 +77,7 @@ export function LinkedInJobsClient() {
       setError(null);
 
       try {
-        // The browser calls this same-origin rewrite, so it is visible in DevTools
-        // Network while avoiding a cross-origin browser request to the backend.
-        const response = await fetch(`/api/linkedin-jobs?${params.toString()}`, {
+        const response = await backendFetch(`/api/linkedin-jobs?${params.toString()}`, {
           signal: controller.signal,
         });
         if (!response.ok) throw new Error(`The jobs service returned ${response.status}.`);

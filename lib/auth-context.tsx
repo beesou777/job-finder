@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { backendFetch } from "@/lib/backend-fetch";
 
 export interface User {
   id: string | number;
@@ -36,37 +37,13 @@ function getAuthToken(): string | null {
   return localStorage.getItem("token");
 }
 
-/**
- * Same-origin auth helpers.
- *
- * Auth requests always go to `/api/...` on this same domain (rewritten by
- * Next.js to the real backend server-side). The real backend host is NEVER
- * referenced in browser code, so it never appears in DevTools Network.
- */
-export function resolveBackendUrl(url: string): string {
-  // Already same-origin — keep as-is so Network only shows our own domain.
-  if (url === "/api" || url.startsWith("/api/")) {
-    return url;
-  }
-  // Absolute backend URL passed by legacy callers — strip it back to same-origin.
-  const apiIndex = url.indexOf("/api");
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    return apiIndex >= 0 ? url.slice(apiIndex) : "/api";
-  }
-  if (url.startsWith("/")) {
-    return `/api${url}`;
-  }
-  return `/api/${url}`;
-}
-
 export async function authFetch(url: string, init: RequestInit = {}): Promise<Response> {
   const token = getAuthToken();
   const headers = new Headers(init.headers || {});
   if (token && !headers.has("Authorization")) {
     headers.set("Authorization", "Bearer " + token);
   }
-  const targetUrl = resolveBackendUrl(url);
-  return fetch(targetUrl, {
+  return backendFetch(url, {
     ...init,
     headers,
   });
@@ -86,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return;
       }
 
-      const res = await fetch(resolveBackendUrl("/api/auth/me"), {
+      const res = await backendFetch("/api/auth/me", {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -132,7 +109,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (_provider?: string, options?: any) => {
     try {
-      const res = await fetch(resolveBackendUrl("/api/auth/login"), {
+      const res = await backendFetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -218,7 +195,7 @@ export function useSession() {
 
 export async function signIn(_provider?: string, options?: any) {
   try {
-    const res = await fetch("/api/auth/login", {
+    const res = await backendFetch("/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
